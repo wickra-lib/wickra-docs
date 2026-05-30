@@ -1,0 +1,16 @@
+{
+  "name": "wickra-docs",
+  "private": true,
+  "type": "module",
+  "description": "Wickra documentation site (VitePress, deployed via Cloudflare Pages).",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "migrate": "node scripts/migrate-wiki.mjs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.5.0",
+    "vue": "^3.5.0"
+  }
+}
