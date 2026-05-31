@@ -16,10 +16,11 @@ export default defineConfig({
   base: '/',
   cleanUrls: true,
 
-  // v1: the migrated wiki uses GitHub-wiki short links; until the link
-  // transform is fully tightened (findings P8.4) we don't fail the build on
-  // dead links. Flip to `false` once the CI link-check lands.
-  ignoreDeadLinks: true,
+  // Internal links are now tightened (findings P8.2): the build fails on any
+  // dead relative link, so `npm run build` in ci.yml is the internal-link gate
+  // on every PR. External http(s) URLs are checked separately on a schedule by
+  // links.yml (third-party rot is non-deterministic, so it does not block PRs).
+  ignoreDeadLinks: false,
 
   lastUpdated: true,
 
