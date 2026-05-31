@@ -5,6 +5,9 @@ hero:
   name: Wickra
   text: Streaming-first technical indicators
   tagline: One Rust core. The same O(1) update for live ticks and backtests. Python, Node, WASM, and Rust bindings — install-free.
+  image:
+    src: /wickra-mark.svg
+    alt: Wickra
   actions:
     - theme: brand
       text: Get started
