@@ -57,9 +57,9 @@ export default defineConfig({
           '214 streaming-first technical indicators. Rust core, Python / Node / WASM bindings.',
       },
     ],
-    ['meta', { property: 'og:image', content: 'https://docs.wickra.org/og-banner.png' }],
+    ['meta', { property: 'og:image', content: 'https://docs.wickra.org/og-banner.webp' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:image', content: 'https://docs.wickra.org/og-banner.png' }],
+    ['meta', { name: 'twitter:image', content: 'https://docs.wickra.org/og-banner.webp' }],
   ],
 
   themeConfig: {

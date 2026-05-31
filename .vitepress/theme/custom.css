@@ -128,29 +128,6 @@
   opacity: 0.5;
 }
 
-/* ---- Home brand banner (above the hero) --------------------------------- */
-.wk-hero-banner {
-  max-width: 1000px;
-  margin: 12px auto 0;
-  padding: 0 24px;
-}
-.wk-hero-banner img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 16px;
-  border: 1px solid var(--vp-c-divider);
-  box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.55);
-}
-@media (max-width: 640px) {
-  .wk-hero-banner {
-    padding: 0 16px;
-  }
-  .wk-hero-banner img {
-    border-radius: 12px;
-  }
-}
-
 /* ---- Back-to-top floating control --------------------------------------- */
 .wk-backtotop {
   position: fixed;

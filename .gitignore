@@ -4,4 +4,4 @@ node_modules/
 *.log
 
 # generated at build by scripts/gen-og-banner.mjs
-public/og-banner.png
+public/og-banner.*
