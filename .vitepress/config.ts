@@ -116,11 +116,9 @@ export default defineConfig({
 
     outline: { level: [2, 3] },
 
-    footer: {
-      message:
-        'Released under the PolyForm Noncommercial License 1.0.0. Wickra is an ' +
-        'indicator toolkit, not a trading system — production use is at your own risk.',
-      copyright: 'Copyright © 2026 kingchenc',
-    },
+    // The footer is rendered by a custom component (theme/SiteFooter.vue via
+    // the layout-bottom slot) so it can carry the badge row + the per-page
+    // "Updated" date, which a static themeConfig.footer string cannot. Kept
+    // visually identical to the wickra.org footer.
   },
 })

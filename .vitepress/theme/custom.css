@@ -57,3 +57,63 @@
   border-color: var(--vp-c-brand-1) !important;
   box-shadow: 0 12px 28px -16px var(--vp-c-brand-soft);
 }
+
+/* ---- Site footer (custom, replaces the default VPFooter) ----------------
+   Kept identical to the wickra.org footer. */
+
+/* Sticky footer: make the layout a full-height flex column so the footer is
+   pinned to the bottom of the viewport on short pages instead of floating up. */
+.Layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.Layout > .VPContent {
+  flex: 1 0 auto;
+}
+
+/* The per-page git "Updated" date is shown inside the custom footer instead of
+   the default doc-footer position. */
+.VPDocFooter .VPLastUpdated {
+  display: none;
+}
+
+.wk-footer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--vp-c-divider);
+  padding: 32px 24px;
+  text-align: center;
+  background: var(--vp-c-bg);
+}
+.wk-footer-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+.wk-footer-badges a {
+  display: inline-flex;
+}
+.wk-footer-badges img {
+  height: 20px;
+  display: block;
+}
+.wk-footer-license {
+  max-width: 660px;
+  margin: 0 auto 6px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.wk-footer-copy {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+}
+.wk-footer-updated {
+  margin: 6px 0 0;
+  color: var(--vp-c-text-3);
+  font-size: 12px;
+}
