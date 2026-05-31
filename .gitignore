@@ -2,3 +2,6 @@ node_modules/
 .vitepress/dist/
 .vitepress/cache/
 *.log
+
+# generated at build by scripts/gen-og-banner.mjs
+public/og-banner.png
