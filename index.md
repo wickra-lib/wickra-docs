@@ -30,6 +30,8 @@ features:
     details: Feed one value at a time, or a whole array via BatchExt. Chain indicators with the Chain combinator. Identical numbers either way.
 ---
 
+<!-- markdownlint-disable-file MD041 -- VitePress `layout: home` page: the hero is the heading, so there is no leading H1. -->
+
 <div class="wk-badges" style="text-align: center; max-width: 1140px; margin: 0 auto; padding: 24px 24px 8px;">
 
 [![CI](https://github.com/wickra-lib/wickra/actions/workflows/ci.yml/badge.svg)](https://github.com/wickra-lib/wickra/actions/workflows/ci.yml)
