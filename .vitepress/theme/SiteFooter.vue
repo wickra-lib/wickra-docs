@@ -43,8 +43,9 @@ const updated = computed(() => {
       ><img :src="b.src" :alt="b.alt" loading="lazy" /></a>
     </div>
     <p class="wk-footer-meta">
-      <span>Released under the PolyForm Noncommercial License 1.0.0 — not a trading system, use at your own risk.</span>
-      <span class="wk-sep">·</span>
+      Released under the PolyForm Noncommercial License 1.0.0 — not a trading system, use at your own risk.
+    </p>
+    <p class="wk-footer-meta wk-footer-meta-sub">
       <span>Copyright © 2026 kingchenc</span>
       <template v-if="updated">
         <span class="wk-sep">·</span>

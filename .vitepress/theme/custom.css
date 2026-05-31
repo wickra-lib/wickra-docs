@@ -65,7 +65,7 @@
    sidebar/aside clearance and the back-to-top offset all track it across
    breakpoints. */
 :root {
-  --wk-footer-h: 56px;
+  --wk-footer-h: 76px;
 }
 
 /* The per-page git "Updated" date is shown inside the custom footer instead of
@@ -117,11 +117,38 @@
   margin: 0;
   color: var(--vp-c-text-2);
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 1.55;
+}
+.wk-footer-meta-sub {
+  margin-top: 2px;
+  color: var(--vp-c-text-3);
 }
 .wk-footer-meta .wk-sep {
   margin: 0 8px;
   opacity: 0.5;
+}
+
+/* ---- Home brand banner (above the hero) --------------------------------- */
+.wk-hero-banner {
+  max-width: 1000px;
+  margin: 12px auto 0;
+  padding: 0 24px;
+}
+.wk-hero-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--vp-c-divider);
+  box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.55);
+}
+@media (max-width: 640px) {
+  .wk-hero-banner {
+    padding: 0 16px;
+  }
+  .wk-hero-banner img {
+    border-radius: 12px;
+  }
 }
 
 /* ---- Back-to-top floating control --------------------------------------- */
@@ -164,7 +191,7 @@
    footer is taller — grow the reserved height accordingly. */
 @media (max-width: 768px) {
   :root {
-    --wk-footer-h: 96px;
+    --wk-footer-h: 116px;
   }
   .wk-footer {
     padding: 8px 14px;
@@ -185,7 +212,7 @@
 /* Small phones. */
 @media (max-width: 420px) {
   :root {
-    --wk-footer-h: 118px;
+    --wk-footer-h: 140px;
   }
   .wk-footer-meta {
     font-size: 11px;
@@ -197,7 +224,7 @@
 @media (min-width: 2000px) {
   :root {
     --vp-layout-max-width: 1760px;
-    --wk-footer-h: 62px;
+    --wk-footer-h: 84px;
   }
   .wk-footer-badges img {
     height: 21px;
@@ -209,7 +236,7 @@
 @media (min-width: 3200px) {
   :root {
     --vp-layout-max-width: 2240px;
-    --wk-footer-h: 74px;
+    --wk-footer-h: 96px;
   }
   .wk-footer-badges img {
     height: 25px;
