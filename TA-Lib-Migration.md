@@ -66,19 +66,82 @@ NumPy array (one column per output) from `batch`.
 
 ## What Wickra has that TA-Lib does not
 
-- **Trailing stops** — `SuperTrend`, `ChandelierExit`, `ChandeKrollStop`,
-  `AtrTrailingStop` (TA-Lib only has `SAR`).
-- **Volume oscillators** — `ChaikinMoneyFlow`, `ForceIndex`,
-  `EaseOfMovement`, `VolumePriceTrend`, plus the windowed `RollingVwap`.
-- **Other modern indicators** — `Choppiness Index`, `Vertical Horizontal
-  Filter`, `Coppock`, `PMO`, `Z-Score`, `Mass Index`, `Vortex`, `TSI`,
-  `Smma`, `Trima`, `Zlema`, `Vwma`, `BollingerBandwidth`, `%B`.
+Wickra ships several whole *families* that have no TA-Lib equivalent. These
+are the main reasons to reach for Wickra over a TA-Lib port:
+
+- **Risk & performance metrics** — a full streaming risk suite TA-Lib has
+  nothing comparable to: [SharpeRatio](Indicator-SharpeRatio),
+  [SortinoRatio](Indicator-SortinoRatio), [CalmarRatio](Indicator-CalmarRatio),
+  [TreynorRatio](Indicator-TreynorRatio),
+  [InformationRatio](Indicator-InformationRatio),
+  [OmegaRatio](Indicator-OmegaRatio), [MaxDrawdown](Indicator-MaxDrawdown),
+  [AverageDrawdown](Indicator-AverageDrawdown),
+  [DrawdownDuration](Indicator-DrawdownDuration),
+  [UlcerIndex](Indicator-UlcerIndex), [PainIndex](Indicator-PainIndex),
+  [ValueAtRisk](Indicator-ValueAtRisk),
+  [ConditionalValueAtRisk](Indicator-ConditionalValueAtRisk),
+  [KellyCriterion](Indicator-KellyCriterion),
+  [ProfitFactor](Indicator-ProfitFactor),
+  [GainLossRatio](Indicator-GainLossRatio),
+  [RecoveryFactor](Indicator-RecoveryFactor), plus
+  [Beta](Indicator-Beta), [Alpha](Indicator-Alpha) and
+  [RSquared](Indicator-RSquared).
+- **DeMark studies** — the full Tom DeMark toolkit:
+  [TdSequential](Indicator-TdSequential), [TdSetup](Indicator-TdSetup),
+  [TdCountdown](Indicator-TdCountdown), [TdCombo](Indicator-TdCombo),
+  [TdDeMarker](Indicator-TdDeMarker),
+  [TdDifferential](Indicator-TdDifferential), [TdLines](Indicator-TdLines),
+  [TdOpen](Indicator-TdOpen), [TdPressure](Indicator-TdPressure),
+  [TdRei](Indicator-TdRei),
+  [TdRangeProjection](Indicator-TdRangeProjection),
+  [TdRiskLevel](Indicator-TdRiskLevel) and
+  [DemarkPivots](Indicator-DemarkPivots).
+- **Candlestick patterns** — Wickra implements the common single- and
+  multi-bar patterns directly (each emits a signed signal, no separate
+  `CDL*` call per pattern): [Doji](Indicator-Doji),
+  [Hammer](Indicator-Hammer), [InvertedHammer](Indicator-InvertedHammer),
+  [HangingMan](Indicator-HangingMan), [ShootingStar](Indicator-ShootingStar),
+  [Engulfing](Indicator-Engulfing), [Harami](Indicator-Harami),
+  [PiercingDarkCloud](Indicator-PiercingDarkCloud),
+  [MorningEveningStar](Indicator-MorningEveningStar),
+  [Marubozu](Indicator-Marubozu), [SpinningTop](Indicator-SpinningTop),
+  [Tweezer](Indicator-Tweezer), [ThreeInside](Indicator-ThreeInside),
+  [ThreeOutside](Indicator-ThreeOutside) and
+  [ThreeSoldiersOrCrows](Indicator-ThreeSoldiersOrCrows).
+- **Market-profile / session studies** — [ValueArea](Indicator-ValueArea),
+  [InitialBalance](Indicator-InitialBalance),
+  [OpeningRange](Indicator-OpeningRange) and
+  [MarketFacilitationIndex](Indicator-MarketFacilitationIndex).
+- **Trailing stops** — [SuperTrend](Indicator-SuperTrend),
+  [ChandelierExit](Indicator-ChandelierExit),
+  [ChandeKrollStop](Indicator-ChandeKrollStop),
+  [AtrTrailingStop](Indicator-AtrTrailingStop) (TA-Lib only has `SAR`).
+- **Volume oscillators** — [ChaikinMoneyFlow](Indicator-ChaikinMoneyFlow),
+  [ForceIndex](Indicator-ForceIndex), [EaseOfMovement](Indicator-EaseOfMovement),
+  [VolumePriceTrend](Indicator-VolumePriceTrend), plus the windowed
+  [RollingVwap](Indicator-RollingVwap).
+- **Other modern indicators** — [ChoppinessIndex](Indicator-ChoppinessIndex),
+  [VerticalHorizontalFilter](Indicator-VerticalHorizontalFilter),
+  [Coppock](Indicator-Coppock), [Pmo](Indicator-Pmo), [ZScore](Indicator-ZScore),
+  [MassIndex](Indicator-MassIndex), [Vortex](Indicator-Vortex), [Tsi](Indicator-Tsi),
+  [Smma](Indicator-Smma), [Trima](Indicator-Trima), [Zlema](Indicator-Zlema),
+  [Vwma](Indicator-Vwma), [BollingerBandwidth](Indicator-BollingerBandwidth),
+  [PercentB](Indicator-PercentB).
+
+See the [Indicators Overview](Indicators-Overview) for the complete catalogue
+organised by family.
 
 ## What TA-Lib has that Wickra does not (yet)
 
-- Pattern recognition (`CDL*` candlestick patterns).
-- Hilbert-transform-based indicators (`HT_DCPERIOD`, `HT_TRENDLINE`, …).
+- The *long tail* of `CDL*` candlestick patterns. Wickra covers the common
+  ones (see the candlestick list above), but TA-Lib's ~60-pattern catalogue
+  includes many rare formations Wickra does not yet implement.
 - A few trivial transforms (`AVGPRICE`, `MIDPOINT`, `MIDPRICE`).
+
+(Hilbert-transform studies are covered: Wickra ships
+[HilbertDominantCycle](Indicator-HilbertDominantCycle),
+[InstantaneousTrendline](Indicator-InstantaneousTrendline) and the related
+Ehlers cycle indicators.)
 
 If you need one of these,
 [open an issue](https://github.com/wickra-lib/wickra/issues) — most are
