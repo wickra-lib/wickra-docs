@@ -26,7 +26,7 @@ let svg = readFileSync(resolve(here, 'og-banner.svg'), 'utf-8')
 svg = svg.replace(/\d+ indicators/g, `${count} indicators`)
 
 const png = new Resvg(svg, {
-  fitTo: { mode: 'width', value: 1280 },
+  fitTo: { mode: 'width', value: 3840 },
   font: { loadSystemFonts: true },
 })
   .render()
