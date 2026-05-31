@@ -58,18 +58,14 @@
   box-shadow: 0 12px 28px -16px var(--vp-c-brand-soft);
 }
 
-/* ---- Site footer (custom, replaces the default VPFooter) ----------------
+/* ---- Site footer (custom, fixed + always-visible) -----------------------
    Kept identical to the wickra.org footer. */
 
-/* Sticky footer: make the layout a full-height flex column so the footer is
-   pinned to the bottom of the viewport on short pages instead of floating up. */
-.Layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-.Layout > .VPContent {
-  flex: 1 0 auto;
+/* Reserve the footer height as a variable so the content bottom-padding, the
+   sidebar/aside clearance and the back-to-top offset all track it across
+   breakpoints. */
+:root {
+  --wk-footer-h: 56px;
 }
 
 /* The per-page git "Updated" date is shown inside the custom footer instead of
@@ -78,42 +74,151 @@
   display: none;
 }
 
+/* Fixed bar pinned to the bottom of the viewport — always visible while
+   scrolling, on every page. */
 .wk-footer {
-  flex-shrink: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  box-sizing: border-box;
   border-top: 1px solid var(--vp-c-divider);
-  padding: 32px 24px;
-  text-align: center;
   background: var(--vp-c-bg);
+  padding: 8px 20px;
+  text-align: center;
 }
+
+/* Clear space so the fixed footer never hides content / sidebar / outline. */
+.VPContent {
+  padding-bottom: calc(var(--wk-footer-h) + 16px);
+}
+.VPSidebar,
+.VPDocAside {
+  padding-bottom: calc(var(--wk-footer-h) + 24px) !important;
+}
+
 .wk-footer-badges {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 18px;
+  gap: 6px 8px;
+  margin: 0 0 5px;
 }
 .wk-footer-badges a {
   display: inline-flex;
 }
 .wk-footer-badges img {
-  height: 20px;
+  height: 18px;
   display: block;
 }
-.wk-footer-license {
-  max-width: 660px;
-  margin: 0 auto 6px;
-  color: var(--vp-c-text-2);
-  font-size: 13px;
-  line-height: 1.6;
-}
-.wk-footer-copy {
+.wk-footer-meta {
   margin: 0;
   color: var(--vp-c-text-2);
-  font-size: 13px;
-}
-.wk-footer-updated {
-  margin: 6px 0 0;
-  color: var(--vp-c-text-3);
   font-size: 12px;
+  line-height: 1.5;
+}
+.wk-footer-meta .wk-sep {
+  margin: 0 8px;
+  opacity: 0.5;
+}
+
+/* ---- Back-to-top floating control --------------------------------------- */
+.wk-backtotop {
+  position: fixed;
+  right: 22px;
+  bottom: calc(var(--wk-footer-h) + 20px);
+  z-index: 31;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-brand-1);
+  cursor: pointer;
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.wk-backtotop:hover {
+  transform: translateY(-2px);
+  background: var(--vp-c-brand-soft);
+  border-color: var(--vp-c-brand-1);
+}
+.wk-bt-fade-enter-active,
+.wk-bt-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.wk-bt-fade-enter-from,
+.wk-bt-fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* ---- Responsive: phones / tablets / desktop / 2K / 4K ------------------- */
+
+/* Tablet & below: the badge row wraps and the meta line may wrap too, so the
+   footer is taller — grow the reserved height accordingly. */
+@media (max-width: 768px) {
+  :root {
+    --wk-footer-h: 96px;
+  }
+  .wk-footer {
+    padding: 8px 14px;
+  }
+  .wk-footer-badges img {
+    height: 17px;
+  }
+  .wk-footer-meta .wk-sep {
+    margin: 0 6px;
+  }
+  .wk-backtotop {
+    right: 14px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Small phones. */
+@media (max-width: 420px) {
+  :root {
+    --wk-footer-h: 118px;
+  }
+  .wk-footer-meta {
+    font-size: 11px;
+  }
+}
+
+/* Ultra-wide (2K / 4K): let the centered layout use more of the screen and
+   scale the footer up a touch so it doesn't look lost on large displays. */
+@media (min-width: 2000px) {
+  :root {
+    --vp-layout-max-width: 1760px;
+    --wk-footer-h: 62px;
+  }
+  .wk-footer-badges img {
+    height: 21px;
+  }
+  .wk-footer-meta {
+    font-size: 13px;
+  }
+}
+@media (min-width: 3200px) {
+  :root {
+    --vp-layout-max-width: 2240px;
+    --wk-footer-h: 74px;
+  }
+  .wk-footer-badges img {
+    height: 25px;
+  }
+  .wk-footer-meta {
+    font-size: 15px;
+  }
+  .wk-backtotop {
+    width: 54px;
+    height: 54px;
+  }
 }

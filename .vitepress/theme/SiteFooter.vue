@@ -42,11 +42,14 @@ const updated = computed(() => {
         rel="noreferrer"
       ><img :src="b.src" :alt="b.alt" loading="lazy" /></a>
     </div>
-    <p class="wk-footer-license">
-      Released under the PolyForm Noncommercial License 1.0.0. Wickra is an
-      indicator toolkit, not a trading system — production use is at your own risk.
+    <p class="wk-footer-meta">
+      <span>Released under the PolyForm Noncommercial License 1.0.0 — not a trading system, use at your own risk.</span>
+      <span class="wk-sep">·</span>
+      <span>Copyright © 2026 kingchenc</span>
+      <template v-if="updated">
+        <span class="wk-sep">·</span>
+        <span>Updated {{ updated }}</span>
+      </template>
     </p>
-    <p class="wk-footer-copy">Copyright © 2026 kingchenc</p>
-    <p v-if="updated" class="wk-footer-updated">Updated {{ updated }}</p>
   </footer>
 </template>
