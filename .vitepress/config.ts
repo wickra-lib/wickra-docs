@@ -118,11 +118,9 @@ export default defineConfig({
 
     footer: {
       message:
-        'Released under the PolyForm Noncommercial 1.0.0 License. ' +
-        '<a href="https://crates.io/crates/wickra">crates.io</a> · ' +
-        '<a href="https://pypi.org/project/wickra/">PyPI</a> · ' +
-        '<a href="https://www.npmjs.com/package/wickra">npm</a>',
-      copyright: 'Wickra — streaming-first technical indicators.',
+        'Released under the PolyForm Noncommercial License 1.0.0. Wickra is an ' +
+        'indicator toolkit, not a trading system — production use is at your own risk.',
+      copyright: 'Copyright © 2026 kingchenc',
     },
   },
 })
