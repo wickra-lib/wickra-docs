@@ -99,6 +99,7 @@ console.log(mdd.batch([100, 110, 100, 95, 88, 90, 92, 95, 100, 105, 106]));
 use wickra::{Indicator, MaxDrawdown};
 
 let mut mdd = MaxDrawdown::new(252).unwrap();
+let equity_stream: Vec<f64> = Vec::new(); // your equity-curve feed
 for equity in equity_stream {
     let dd = mdd.update(equity).unwrap();
     if dd > 0.10 { /* warning: > 10% drawdown */ }

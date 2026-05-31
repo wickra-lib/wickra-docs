@@ -96,6 +96,7 @@ const b = new wickra.Beta(50);
 use wickra::{Beta, Indicator};
 
 let mut b = Beta::new(252).unwrap();
+let return_stream: Vec<(f64, f64)> = Vec::new(); // your stream of periodic returns
 for (asset_return, bench_return) in return_stream {
     if let Some(v) = b.update((asset_return, bench_return)) {
         // v is 1-year Beta on daily returns

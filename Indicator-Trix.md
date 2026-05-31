@@ -50,9 +50,9 @@ pass it explicitly.
 From `impl Indicator for Trix`:
 
 ```rust
-type Input  = f64;
-type Output = f64;
-fn update(&mut self, input: f64) -> Option<f64>;
+use wickra::{Indicator, Trix};
+// Trix: Input = f64, Output = f64
+const _: fn(&mut Trix, f64) -> Option<f64> = <Trix as Indicator>::update;
 ```
 
 Python's `TRIX.batch(prices)` returns a 1-D `float64` `np.ndarray`

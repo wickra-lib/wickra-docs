@@ -48,13 +48,9 @@ takes both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for LinRegChannel {
-    type Input  = f64;
-    type Output = LinRegChannelOutput;
-    fn update(&mut self, value: f64) -> Option<LinRegChannelOutput>;
-}
-
-pub struct LinRegChannelOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, LinRegChannel, LinRegChannelOutput};
+// LinRegChannel: Input = f64, Output = LinRegChannelOutput
+const _: fn(&mut LinRegChannel, f64) -> Option<LinRegChannelOutput> = <LinRegChannel as Indicator>::update;
 ```
 
 - **Python streaming.** `update(value)` returns `(upper, middle, lower)` or `None`.

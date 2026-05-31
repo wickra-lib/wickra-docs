@@ -94,6 +94,7 @@ console.log(r.batch([100, 110, 105, 95, 88, 100, 120, 130]));
 use wickra::{Indicator, RecoveryFactor};
 
 let mut r = RecoveryFactor::new();
+let equity_stream: Vec<f64> = Vec::new(); // your equity-curve feed
 for equity in equity_stream {
     if let Some(v) = r.update(equity) {
         if v > 1.0 { /* strategy has recovered all losses + profit */ }

@@ -44,13 +44,9 @@ configuration.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Keltner {
-    type Input  = Candle;
-    type Output = KeltnerOutput;
-    fn update(&mut self, candle: Candle) -> Option<KeltnerOutput>;
-}
-
-pub struct KeltnerOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, Keltner, Candle, KeltnerOutput};
+// Keltner: Input = Candle, Output = KeltnerOutput
+const _: fn(&mut Keltner, Candle) -> Option<KeltnerOutput> = <Keltner as Indicator>::update;
 ```
 
 - **Python streaming.** Returns `(upper, middle, lower)` tuple or `None`.

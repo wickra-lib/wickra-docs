@@ -41,11 +41,9 @@ explicitly. The public class is `McGinleyDynamic` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for McGinleyDynamic {
-    type Input  = f64;
-    type Output = f64;
-    fn update(&mut self, input: f64) -> Option<f64>;
-}
+use wickra::{Indicator, McGinleyDynamic};
+// McGinleyDynamic: Input = f64, Output = f64
+const _: fn(&mut McGinleyDynamic, f64) -> Option<f64> = <McGinleyDynamic as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

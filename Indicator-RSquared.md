@@ -94,6 +94,7 @@ console.log(r.batch(series)[50]);
 use wickra::{Indicator, RSquared};
 
 let mut r = RSquared::new(20).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = r.update(px) {
         if v > 0.7 { /* strong trend regime */ }

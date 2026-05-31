@@ -118,6 +118,8 @@ console.log(ib.batch([102, 103, 104, 105, 106], [99, 100, 101, 102, 103]));
 use wickra::{Candle, InitialBalance, Indicator};
 
 let mut ib = InitialBalance::classic();  // 12-bar IB
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
+fn is_new_session(_bar: Candle) -> bool { false } // your session-boundary predicate
 for bar in candle_stream {
     if is_new_session(bar) {
         ib.reset();

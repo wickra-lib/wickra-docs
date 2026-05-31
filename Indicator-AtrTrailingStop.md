@@ -46,11 +46,9 @@ itself, not the window's extreme, and reports one line rather than two.
 From `crates/wickra-core/src/indicators/atr_trailing_stop.rs`:
 
 ```rust
-impl Indicator for AtrTrailingStop {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, AtrTrailingStop, Candle};
+// AtrTrailingStop: Input = Candle, Output = f64
+const _: fn(&mut AtrTrailingStop, Candle) -> Option<f64> = <AtrTrailingStop as Indicator>::update;
 ```
 
 `AtrTrailingStop` is a **candle-input** indicator (it reads `high`, `low`,

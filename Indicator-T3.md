@@ -51,11 +51,9 @@ arguments explicitly.
 From `crates/wickra-core/src/indicators/t3.rs`:
 
 ```rust
-impl Indicator for T3 {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, T3};
+// T3: Input = f64, Output = f64
+const _: fn(&mut T3, f64) -> Option<f64> = <T3 as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

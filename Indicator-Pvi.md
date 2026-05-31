@@ -95,6 +95,7 @@ const pvi = new wickra.Pvi();
 use wickra::{Candle, Indicator, Pvi};
 
 let mut pvi = Pvi::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = pvi.update(bar) {
         // v is the crowd-money cumulative index

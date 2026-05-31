@@ -38,11 +38,9 @@ in Node.
 From `crates/wickra-core/src/indicators/vpt.rs`:
 
 ```rust
-impl Indicator for VolumePriceTrend {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, VolumePriceTrend, Candle};
+// VolumePriceTrend: Input = Candle, Output = f64
+const _: fn(&mut VolumePriceTrend, Candle) -> Option<f64> = <VolumePriceTrend as Indicator>::update;
 ```
 
 `VolumePriceTrend` is a **candle-input** indicator: it reads `close` and

@@ -132,6 +132,7 @@ console.log('max:', Math.max(...out.filter(x => x != null)));
 use wickra::{Candle, Indicator, TdCountdown};
 
 let mut td = TdCountdown::classic();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = td.update(bar) {
         if v == 13.0 { /* buy countdown complete */ }

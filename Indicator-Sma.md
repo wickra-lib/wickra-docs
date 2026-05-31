@@ -44,11 +44,9 @@ drift to begin with.
 From `crates/wickra-core/src/indicators/sma.rs`:
 
 ```rust
-impl Indicator for Sma {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, Sma};
+// Sma: Input = f64, Output = f64
+const _: fn(&mut Sma, f64) -> Option<f64> = <Sma as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. The Python binding maps

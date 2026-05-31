@@ -40,11 +40,9 @@ Python, `new ta.ADL()` in Node.
 From `crates/wickra-core/src/indicators/adl.rs`:
 
 ```rust
-impl Indicator for Adl {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, Adl, Candle};
+// Adl: Input = Candle, Output = f64
+const _: fn(&mut Adl, Candle) -> Option<f64> = <Adl as Indicator>::update;
 ```
 
 `ADL` is a **candle-input** indicator: it reads `high`, `low`, `close` and

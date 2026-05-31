@@ -119,6 +119,7 @@ console.log('row 50:', ss.batch(prices)[50]);
 use wickra::{Indicator, SuperSmoother};
 
 let mut ss = SuperSmoother::new(10).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     let smoothed = ss.update(px).unwrap();
     // Use as a noise-suppressed price signal for downstream logic

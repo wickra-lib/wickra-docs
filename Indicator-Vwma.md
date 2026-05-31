@@ -44,11 +44,9 @@ There is no Python `#[pyo3(signature = …)]` default for `VWMA`, so
 From `crates/wickra-core/src/indicators/vwma.rs`:
 
 ```rust
-impl Indicator for Vwma {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, Vwma, Candle};
+// Vwma: Input = Candle, Output = f64
+const _: fn(&mut Vwma, Candle) -> Option<f64> = <Vwma as Indicator>::update;
 ```
 
 `VWMA` is a **candle-input** indicator: it reads `close` and `volume` from

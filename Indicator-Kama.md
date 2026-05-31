@@ -58,11 +58,9 @@ The Python defaults come from
 From `crates/wickra-core/src/indicators/kama.rs`:
 
 ```rust
-impl Indicator for Kama {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, Kama};
+// Kama: Input = f64, Output = f64
+const _: fn(&mut Kama, f64) -> Option<f64> = <Kama as Indicator>::update;
 ```
 
 Python returns `float | None` (streaming) / `numpy.ndarray` (batch,

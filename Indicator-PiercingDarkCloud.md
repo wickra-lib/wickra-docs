@@ -111,6 +111,7 @@ console.log(p.batch([105, 99.5], [106, 103.5], [100, 99], [100.5, 103]));
 use wickra::{Candle, Indicator, PiercingDarkCloud};
 
 let mut p = PiercingDarkCloud::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if p.update(bar) == Some(1.0) { /* Piercing Line */ }
     if p.update(bar) == Some(-1.0) { /* Dark Cloud Cover */ }

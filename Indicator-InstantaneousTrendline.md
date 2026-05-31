@@ -113,6 +113,7 @@ console.log('row 50:', it.batch(prices)[50]);
 use wickra::{Indicator, InstantaneousTrendline};
 
 let mut it = InstantaneousTrendline::new(20).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = it.update(px) {
         // Price crossings of iTrend = trend-change signals

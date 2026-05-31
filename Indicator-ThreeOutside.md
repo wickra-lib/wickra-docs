@@ -98,6 +98,7 @@ console.log(to.batch([11, 9.5, 11.5], [11.2, 12, 12.5], [9.8, 9.5, 11.4], [10, 1
 use wickra::{Candle, Indicator, ThreeOutside};
 
 let mut to = ThreeOutside::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if to.update(bar) == Some(1.0) { /* Three Outside Up */ }
     if to.update(bar) == Some(-1.0) { /* Three Outside Down */ }

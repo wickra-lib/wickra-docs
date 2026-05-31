@@ -101,6 +101,7 @@ const di = new wickra.DemandIndex(20);
 use wickra::{Candle, DemandIndex, Indicator};
 
 let mut di = DemandIndex::new(20).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = di.update(bar) {
         // Compare DI direction vs price direction for divergence

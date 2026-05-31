@@ -77,7 +77,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }).collect();
     let mut k = Kvo::classic();
     if let Some(o) = k.batch(&candles)[80] {
-        println!("KVO={}  signal={}", o.kvo, o.signal);
+        println!("KVO={o:.2}");
     }
     Ok(())
 }
@@ -110,14 +110,15 @@ const k = new wickra.Kvo(34, 55, 13);
 use wickra::{Candle, Indicator, Kvo};
 
 let mut k = Kvo::classic();
-let mut prev: Option<wickra::KvoOutput> = None;
+let mut prev: Option<f64> = None;
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
-    if let Some(o) = k.update(bar) {
+    if let Some(v) = k.update(bar) {
         if let Some(p) = prev {
-            if p.kvo <= p.signal && o.kvo > o.signal { /* bullish cross */ }
-            if p.kvo >= p.signal && o.kvo < o.signal { /* bearish cross */ }
+            if p <= 0.0 && v > 0.0 { /* bullish zero-line cross */ }
+            if p >= 0.0 && v < 0.0 { /* bearish zero-line cross */ }
         }
-        prev = Some(o);
+        prev = Some(v);
     }
 }
 ```

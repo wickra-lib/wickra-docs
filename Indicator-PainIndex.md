@@ -93,6 +93,7 @@ console.log(p.batch([100, 110, 100, 95, 88, 90, 92, 95, 100, 105]));
 use wickra::{Indicator, PainIndex};
 
 let mut p = PainIndex::new(252).unwrap();
+let equity_stream: Vec<f64> = Vec::new(); // your equity-curve feed
 for equity in equity_stream {
     if let Some(v) = p.update(equity) {
         // ...

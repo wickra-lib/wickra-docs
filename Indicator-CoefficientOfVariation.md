@@ -94,6 +94,7 @@ console.log(cv.batch(prices)[30]);
 use wickra::{CoefficientOfVariation, Indicator};
 
 let mut cv = CoefficientOfVariation::new(252).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = cv.update(px) {
         // v is comparable across instruments with different price scales

@@ -133,6 +133,7 @@ console.log('row 25:', out[25]);
 use wickra::{Candle, Indicator, YoyoExit};
 
 let mut yo = YoyoExit::classic();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(trail) = yo.update(bar) {
         let position = if bar.close > trail { "long" } else { "flat" };

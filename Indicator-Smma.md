@@ -41,11 +41,9 @@ There is no Python `#[pyo3(signature = …)]` default for `SMMA`, so
 From `crates/wickra-core/src/indicators/smma.rs`:
 
 ```rust
-impl Indicator for Smma {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, Smma};
+// Smma: Input = f64, Output = f64
+const _: fn(&mut Smma, f64) -> Option<f64> = <Smma as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

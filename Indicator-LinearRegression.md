@@ -42,11 +42,9 @@ constructors require it explicitly.
 From `crates/wickra-core/src/indicators/linreg.rs`:
 
 ```rust
-impl Indicator for LinearRegression {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, LinearRegression};
+// LinearRegression: Input = f64, Output = f64
+const _: fn(&mut LinearRegression, f64) -> Option<f64> = <LinearRegression as Indicator>::update;
 ```
 
 `LinearRegression` is a **scalar** indicator: it consumes one `f64` price per

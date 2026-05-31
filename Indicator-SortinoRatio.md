@@ -99,6 +99,7 @@ console.log('row 50:', sr.batch(returns)[50]);
 use wickra::{Indicator, SortinoRatio};
 
 let mut sr = SortinoRatio::new(252, 0.0).unwrap();
+let return_stream: Vec<f64> = Vec::new(); // your stream of periodic returns
 for daily_return in return_stream {
     if let Some(v) = sr.update(daily_return) {
         // ...

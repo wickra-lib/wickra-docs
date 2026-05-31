@@ -53,6 +53,7 @@ sees; the EMA-then-RSI plumbing is internal to the `Chain` value.
 The chain emits its first non-`None` value at input **21**:
 
 ```rust
+use wickra::{Chain, Ema, Indicator, Rsi};
 let mut chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
 for i in 1..=22 {
     if let Some(v) = chain.update(f64::from(i)) {
@@ -78,10 +79,12 @@ is the *timing* of the first emission.)
 
 `Chain::warmup_period` is implemented conservatively:
 
-```rust
-fn warmup_period(&self) -> usize {
-    self.first.warmup_period() + self.second.warmup_period()
-}
+```rust
+use wickra::{Chain, Ema, Indicator, Rsi};
+
+// Chain::warmup_period is the sum of both stages' warmups:
+let chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
+assert_eq!(chain.warmup_period(), 14 + 8);
 ```
 
 For `Chain::new(Ema::new(14)?, Rsi::new(7)?)` this expands to
@@ -97,6 +100,9 @@ which corresponds to input 14 + 7 = **21**. The conservative formula
 for "can I read a value yet":
 
 ```rust
+use wickra::{Chain, Ema, Indicator, Rsi};
+let mut chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
+let price = 100.0;
 if chain.is_ready() {
     if let Some(v) = chain.update(price) {
         // ...
@@ -108,11 +114,12 @@ if chain.is_ready() {
 
 `Chain<A, B>` propagates `reset()` to both stages:
 
-```rust
-fn reset(&mut self) {
-    self.first.reset();
-    self.second.reset();
-}
+```rust
+use wickra::{Chain, Ema, Indicator, Rsi};
+
+// Chain::reset propagates to both stages:
+let mut chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
+chain.reset();
 ```
 
 So calling `chain.reset()` returns the whole pipeline to the state of a
@@ -127,6 +134,7 @@ nothing chain-specific to call:
 use wickra::{BatchExt, Chain, Ema, Rsi};
 
 let mut chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
+let prices: Vec<f64> = Vec::new(); // your price series
 let out: Vec<Option<f64>> = chain.batch(&prices);
 ```
 
@@ -166,6 +174,7 @@ use wickra::{BatchExt, Chain, EhlersStochastic, Indicator, RoofingFilter};
 
 // RoofingFilter(low-pass 10, high-pass 48) → EhlersStochastic(20).
 let mut chain = Chain::new(RoofingFilter::new(10, 48)?, EhlersStochastic::new(20)?);
+let prices: Vec<f64> = Vec::new(); // your price series
 let out: Vec<Option<f64>> = chain.batch(&prices);
 ```
 

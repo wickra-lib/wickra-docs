@@ -44,12 +44,9 @@ The Python binding defaults `period` to `14`.
 From `crates/wickra-core/src/indicators/vortex.rs`:
 
 ```rust
-pub struct VortexOutput { pub plus: f64, pub minus: f64 }
-
-impl Indicator for Vortex {
-    type Input = Candle;
-    type Output = VortexOutput;
-}
+use wickra::{Indicator, Vortex, Candle, VortexOutput};
+// Vortex: Input = Candle, Output = VortexOutput
+const _: fn(&mut Vortex, Candle) -> Option<VortexOutput> = <Vortex as Indicator>::update;
 ```
 
 `Vortex` is a **candle-input** indicator reading `high`, `low` and

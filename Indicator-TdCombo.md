@@ -120,6 +120,7 @@ console.log('max:',
 use wickra::{Candle, Indicator, TdCombo};
 
 let mut td = TdCombo::classic();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = td.update(bar) {
         if v == 13.0 { /* high-conviction buy combo */ }

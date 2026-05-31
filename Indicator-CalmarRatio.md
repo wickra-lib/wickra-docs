@@ -99,6 +99,7 @@ console.log('row 50:', cr.batch(returns)[50]);
 use wickra::{CalmarRatio, Indicator};
 
 let mut cr = CalmarRatio::new(252).unwrap();
+let return_stream: Vec<f64> = Vec::new(); // your stream of periodic returns
 for daily_return in return_stream {
     if let Some(v) = cr.update(daily_return) {
         // v reflects last-252-bars return/MDD ratio

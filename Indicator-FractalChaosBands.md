@@ -49,13 +49,9 @@ from `#[pyo3(signature = (k=2))]`; the Node constructor takes `k` explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for FractalChaosBands {
-    type Input  = Candle;
-    type Output = FractalChaosBandsOutput;
-    fn update(&mut self, candle: Candle) -> Option<FractalChaosBandsOutput>;
-}
-
-pub struct FractalChaosBandsOutput { pub upper: f64, pub lower: f64 }
+use wickra::{Indicator, FractalChaosBands, Candle, FractalChaosBandsOutput};
+// FractalChaosBands: Input = Candle, Output = FractalChaosBandsOutput
+const _: fn(&mut FractalChaosBands, Candle) -> Option<FractalChaosBandsOutput> = <FractalChaosBands as Indicator>::update;
 ```
 
 - **Python streaming.** `update(candle)` returns `(upper, lower)` or `None`.

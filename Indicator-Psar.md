@@ -58,18 +58,16 @@ Python defaults from
 `bindings/python/src/lib.rs`. `Psar::classic()` returns the same triple.
 
 Validation errors:
+
 - non-finite or non-positive AF parameter → `Error::NonPositiveMultiplier`
 - `af_start > af_max` → `Error::InvalidPeriod { message: "af_start must be <= af_max" }`
 
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Psar {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-    fn warmup_period(&self) -> usize { 2 }
-}
+use wickra::{Indicator, Psar, Candle};
+// Psar: Input = Candle, Output = f64
+const _: fn(&mut Psar, Candle) -> Option<f64> = <Psar as Indicator>::update;
 ```
 
 - **Python streaming.** `psar.update(candle)` returns `float | None`.

@@ -45,13 +45,9 @@ takes both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for AtrBands {
-    type Input  = Candle;
-    type Output = AtrBandsOutput;
-    fn update(&mut self, candle: Candle) -> Option<AtrBandsOutput>;
-}
-
-pub struct AtrBandsOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, AtrBands, Candle, AtrBandsOutput};
+// AtrBands: Input = Candle, Output = AtrBandsOutput
+const _: fn(&mut AtrBands, Candle) -> Option<AtrBandsOutput> = <AtrBands as Indicator>::update;
 ```
 
 - **Python streaming.** `update(candle)` returns `(upper, middle, lower)` or `None`.

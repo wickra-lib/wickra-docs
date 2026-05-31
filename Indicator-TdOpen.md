@@ -108,6 +108,7 @@ console.log(td.batch([100, 96], [102, 99], [98, 95]));
 use wickra::{Candle, Indicator, TdOpen};
 
 let mut td = TdOpen::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = td.update(bar) {
         if v > 0.0 { /* gap-down → fade up (buy) */ }

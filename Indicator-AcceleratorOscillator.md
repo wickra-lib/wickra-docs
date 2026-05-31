@@ -40,11 +40,9 @@ is the `(5, 34)` AO with a `5`-period signal average.
 From `crates/wickra-core/src/indicators/accelerator_oscillator.rs`:
 
 ```rust
-impl Indicator for AcceleratorOscillator {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, AcceleratorOscillator, Candle};
+// AcceleratorOscillator: Input = Candle, Output = f64
+const _: fn(&mut AcceleratorOscillator, Candle) -> Option<f64> = <AcceleratorOscillator as Indicator>::update;
 ```
 
 It is a **candle-input** indicator — the inner Awesome Oscillator reads the

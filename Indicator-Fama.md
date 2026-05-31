@@ -116,6 +116,7 @@ console.log('row 100:', fama.batch(prices)[100]);
 use wickra::{Fama, Indicator};
 
 let mut fama = Fama::classic();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = fama.update(px) {
         // FAMA as a slow trend reference line

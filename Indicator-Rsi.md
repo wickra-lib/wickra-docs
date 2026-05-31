@@ -49,9 +49,9 @@ are zero (a perfectly flat series) the implementation returns the standard
 From `impl Indicator for Rsi` in `crates/wickra-core/src/indicators/rsi.rs`:
 
 ```rust
-type Input  = f64;
-type Output = f64;
-fn update(&mut self, input: f64) -> Option<f64>;
+use wickra::{Indicator, Rsi};
+// Rsi: Input = f64, Output = f64
+const _: fn(&mut Rsi, f64) -> Option<f64> = <Rsi as Indicator>::update;
 ```
 
 The output is a scalar in `[0, 100]`. In Python `batch(prices)` returns a
@@ -66,6 +66,7 @@ so you need exactly one extra price before Wilder's seed average is well
 defined. The Rust test `warmup_period_is_period_plus_one` pins this:
 
 ```rust
+use wickra::{Indicator, Rsi};
 let rsi = Rsi::new(14).unwrap();
 assert_eq!(rsi.warmup_period(), 15);
 ```

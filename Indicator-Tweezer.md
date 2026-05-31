@@ -70,7 +70,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Tweezer Bottom: two bars with same low
     let b1 = Candle::new(100.5, 101.0, 99.5, 100.0, 1.0, 0)?;
     let b2 = Candle::new(100.2, 101.5, 99.5, 101.0, 1.0, 1)?;
-    let mut tw = Tweezer::new(0.001)?;
+    let mut tw = Tweezer::new();
     tw.update(b1);
     println!("{:?}", tw.update(b2));  // +1.0
     Ok(())
@@ -105,7 +105,8 @@ console.log(tw.batch([100.5, 100.2], [101, 101.5], [99.5, 99.5], [100, 101]));
 ```rust
 use wickra::{Candle, Indicator, Tweezer};
 
-let mut tw = Tweezer::new(0.001).unwrap();
+let mut tw = Tweezer::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if tw.update(bar) == Some(1.0) { /* Tweezer Bottom */ }
     if tw.update(bar) == Some(-1.0) { /* Tweezer Top */ }

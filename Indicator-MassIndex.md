@@ -47,11 +47,9 @@ returns `(ema_period, sum_period)`.
 From `crates/wickra-core/src/indicators/mass_index.rs`:
 
 ```rust
-impl Indicator for MassIndex {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, MassIndex, Candle};
+// MassIndex: Input = Candle, Output = f64
+const _: fn(&mut MassIndex, Candle) -> Option<f64> = <MassIndex as Indicator>::update;
 ```
 
 `MassIndex` is a **candle-input** indicator: it reads `high` and `low`. In

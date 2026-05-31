@@ -39,11 +39,9 @@ The Python binding defaults `period` to `10` via `#[pyo3(signature = (period=10)
 From `crates/wickra-core/src/indicators/mom.rs`:
 
 ```rust
-impl Indicator for Mom {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, Mom};
+// Mom: Input = f64, Output = f64
+const _: fn(&mut Mom, f64) -> Option<f64> = <Mom as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

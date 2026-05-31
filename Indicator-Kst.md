@@ -48,13 +48,9 @@ is `KST` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Kst {
-    type Input  = f64;
-    type Output = KstOutput;
-    fn update(&mut self, input: f64) -> Option<KstOutput>;
-}
-
-pub struct KstOutput { pub kst: f64, pub signal: f64 }
+use wickra::{Indicator, Kst, KstOutput};
+// Kst: Input = f64, Output = KstOutput
+const _: fn(&mut Kst, f64) -> Option<KstOutput> = <Kst as Indicator>::update;
 ```
 
 - **Python.** `update(value)` returns `(kst, signal)` or `None`;

@@ -100,6 +100,7 @@ console.log(tsc.batch([100, 101, 102], [102, 103, 104], [99.5, 100.5, 101.8], [1
 use wickra::{Candle, Indicator, ThreeSoldiersOrCrows};
 
 let mut tsc = ThreeSoldiersOrCrows::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if tsc.update(bar) == Some(1.0) { /* Three White Soldiers */ }
     if tsc.update(bar) == Some(-1.0) { /* Three Black Crows */ }

@@ -37,11 +37,9 @@ binding defaults it to `20`; the Rust and Node constructors require it.
 From `crates/wickra-core/src/indicators/z_score.rs`:
 
 ```rust
-impl Indicator for ZScore {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, ZScore};
+// ZScore: Input = f64, Output = f64
+const _: fn(&mut ZScore, f64) -> Option<f64> = <ZScore as Indicator>::update;
 ```
 
 `ZScore` is a **scalar** indicator: it consumes one `f64` price per step.

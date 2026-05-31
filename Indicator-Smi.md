@@ -51,11 +51,9 @@ bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Smi {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, Smi, Candle};
+// Smi: Input = Candle, Output = f64
+const _: fn(&mut Smi, Candle) -> Option<f64> = <Smi as Indicator>::update;
 ```
 
 Uses `high`, `low`, `close`.

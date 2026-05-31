@@ -38,11 +38,9 @@ Rust and Node constructors require it explicitly.
 From `crates/wickra-core/src/indicators/vertical_horizontal_filter.rs`:
 
 ```rust
-impl Indicator for VerticalHorizontalFilter {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, VerticalHorizontalFilter};
+// VerticalHorizontalFilter: Input = f64, Output = f64
+const _: fn(&mut VerticalHorizontalFilter, f64) -> Option<f64> = <VerticalHorizontalFilter as Indicator>::update;
 ```
 
 `VerticalHorizontalFilter` is a **scalar** indicator: it consumes one `f64`

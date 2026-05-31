@@ -50,13 +50,9 @@ both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for AccelerationBands {
-    type Input  = Candle;
-    type Output = AccelerationBandsOutput;
-    fn update(&mut self, candle: Candle) -> Option<AccelerationBandsOutput>;
-}
-
-pub struct AccelerationBandsOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, AccelerationBands, Candle, AccelerationBandsOutput};
+// AccelerationBands: Input = Candle, Output = AccelerationBandsOutput
+const _: fn(&mut AccelerationBands, Candle) -> Option<AccelerationBandsOutput> = <AccelerationBands as Indicator>::update;
 ```
 
 - **Python streaming.** `update(candle)` returns `(upper, middle, lower)` or `None`.

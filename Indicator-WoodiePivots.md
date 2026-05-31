@@ -106,6 +106,7 @@ console.log(w.batch([110], [90], [108]));
 use wickra::{Candle, Indicator, WoodiePivots};
 
 let mut w = WoodiePivots::new();
+let session_aggregator: Vec<wickra::Candle> = Vec::new(); // your stream of completed session bars
 for bar in session_aggregator {
     let levels = w.update(bar).unwrap();
 }

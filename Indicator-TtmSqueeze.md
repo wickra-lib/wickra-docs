@@ -52,13 +52,9 @@ constructor takes all three arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for TtmSqueeze {
-    type Input  = Candle;
-    type Output = TtmSqueezeOutput;
-    fn update(&mut self, candle: Candle) -> Option<TtmSqueezeOutput>;
-}
-
-pub struct TtmSqueezeOutput { pub squeeze: f64, pub momentum: f64 }
+use wickra::{Indicator, TtmSqueeze, Candle, TtmSqueezeOutput};
+// TtmSqueeze: Input = Candle, Output = TtmSqueezeOutput
+const _: fn(&mut TtmSqueeze, Candle) -> Option<TtmSqueezeOutput> = <TtmSqueeze as Indicator>::update;
 ```
 
 - **Python streaming.** `update(candle)` returns `(squeeze, momentum)` or `None`.

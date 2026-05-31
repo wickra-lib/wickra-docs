@@ -108,6 +108,7 @@ use wickra::{CenterOfGravity, Indicator};
 
 let mut cg = CenterOfGravity::new(10).unwrap();
 let mut prev: Option<f64> = None;
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = cg.update(px) {
         if let Some(p) = prev {

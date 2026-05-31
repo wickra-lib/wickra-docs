@@ -49,13 +49,9 @@ the Node constructor takes all three explicitly. The public class is
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for WaveTrend {
-    type Input  = Candle;
-    type Output = WaveTrendOutput;
-    fn update(&mut self, candle: Candle) -> Option<WaveTrendOutput>;
-}
-
-pub struct WaveTrendOutput { pub wt1: f64, pub wt2: f64 }
+use wickra::{Indicator, WaveTrend, Candle, WaveTrendOutput};
+// WaveTrend: Input = Candle, Output = WaveTrendOutput
+const _: fn(&mut WaveTrend, Candle) -> Option<WaveTrendOutput> = <WaveTrend as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `(wt1, wt2)` or `None`;

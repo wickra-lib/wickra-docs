@@ -41,11 +41,9 @@ returns the `(3, 10)` configuration.
 From `crates/wickra-core/src/indicators/chaikin_oscillator.rs`:
 
 ```rust
-impl Indicator for ChaikinOscillator {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, ChaikinOscillator, Candle};
+// ChaikinOscillator: Input = Candle, Output = f64
+const _: fn(&mut ChaikinOscillator, Candle) -> Option<f64> = <ChaikinOscillator as Indicator>::update;
 ```
 
 It is a **candle-input** indicator (the ADL inside it needs `high`, `low`,

@@ -42,13 +42,9 @@ Python default from `#[pyo3(signature = (period=20))]` in
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Donchian {
-    type Input  = Candle;
-    type Output = DonchianOutput;
-    fn update(&mut self, candle: Candle) -> Option<DonchianOutput>;
-}
-
-pub struct DonchianOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, Donchian, Candle, DonchianOutput};
+// Donchian: Input = Candle, Output = DonchianOutput
+const _: fn(&mut Donchian, Candle) -> Option<DonchianOutput> = <Donchian as Indicator>::update;
 ```
 
 - **Python streaming.** Returns `(upper, middle, lower)` tuple or `None`.

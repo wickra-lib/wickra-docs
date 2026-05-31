@@ -127,6 +127,7 @@ console.log('row 20:', p.batch(open, high, low, close, vol)[20]);
 use wickra::{Candle, Indicator, TdPressure};
 
 let mut p = TdPressure::new(5).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = p.update(bar) {
         if v > 50.0 { /* strong buying pressure */ }

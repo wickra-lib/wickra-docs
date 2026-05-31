@@ -93,6 +93,7 @@ console.log(v.batch(prices)[30]);
 use wickra::{Indicator, Variance};
 
 let mut v = Variance::new(252).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(val) = v.update(px) {
         // val is rolling variance in squared price units

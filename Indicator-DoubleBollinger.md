@@ -51,16 +51,9 @@ constructor takes all three arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for DoubleBollinger {
-    type Input  = f64;
-    type Output = DoubleBollingerOutput;
-    fn update(&mut self, value: f64) -> Option<DoubleBollingerOutput>;
-}
-
-pub struct DoubleBollingerOutput {
-    pub upper_outer: f64, pub upper_inner: f64, pub middle: f64,
-    pub lower_inner: f64, pub lower_outer: f64,
-}
+use wickra::{Indicator, DoubleBollinger, DoubleBollingerOutput};
+// DoubleBollinger: Input = f64, Output = DoubleBollingerOutput
+const _: fn(&mut DoubleBollinger, f64) -> Option<DoubleBollingerOutput> = <DoubleBollinger as Indicator>::update;
 ```
 
 - **Python streaming.** `update(value)` returns

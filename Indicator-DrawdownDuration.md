@@ -92,6 +92,7 @@ console.log(dd.batch([100, 95, 90, 110, 105, 108]));
 use wickra::{DrawdownDuration, Indicator};
 
 let mut dd = DrawdownDuration::new();
+let equity_stream: Vec<f64> = Vec::new(); // your equity-curve feed
 for equity in equity_stream {
     let bars = dd.update(equity).unwrap();
     if bars > 252 { /* one year under water — concerning */ }

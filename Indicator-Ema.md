@@ -50,11 +50,9 @@ default; the period must be passed explicitly. `with_alpha` is Rust-only.)
 From `crates/wickra-core/src/indicators/ema.rs`:
 
 ```rust
-impl Indicator for Ema {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, Ema};
+// Ema: Input = f64, Output = f64
+const _: fn(&mut Ema, f64) -> Option<f64> = <Ema as Indicator>::update;
 ```
 
 Python streams as `float | None`, batches as a 1-D `numpy.ndarray`

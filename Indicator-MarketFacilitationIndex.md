@@ -96,6 +96,7 @@ use wickra::{Candle, Indicator, MarketFacilitationIndex};
 let mut m = MarketFacilitationIndex::new();
 let mut prev_mfi: Option<f64> = None;
 let mut prev_vol: Option<f64> = None;
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = m.update(bar) {
         if let (Some(pm), Some(pv)) = (prev_mfi, prev_vol) {

@@ -102,6 +102,7 @@ console.log(a.batch(asset, bench));
 use wickra::{Alpha, Indicator};
 
 let mut a = Alpha::new(252, 0.04 / 252.0).unwrap();
+let return_stream: Vec<(f64, f64)> = Vec::new(); // (asset, benchmark) return pairs
 for (asset, bench) in return_stream {
     if let Some(v) = a.update((asset, bench)) {
         // v is per-period alpha; · 252 for annualised

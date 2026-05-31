@@ -46,12 +46,9 @@ Python default from `#[pyo3(signature = (period=14))]` in
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Atr {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-    fn warmup_period(&self) -> usize { self.period }
-}
+use wickra::{Indicator, Atr, Candle};
+// Atr: Input = Candle, Output = f64
+const _: fn(&mut Atr, Candle) -> Option<f64> = <Atr as Indicator>::update;
 ```
 
 - **Rust input.** A full `Candle` struct; only `high`, `low`, and `close`

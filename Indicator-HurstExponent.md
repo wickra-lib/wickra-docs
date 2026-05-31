@@ -103,6 +103,7 @@ console.log(h.batch(series)[150]);
 use wickra::{HurstExponent, Indicator};
 
 let mut h = HurstExponent::new(252, 5).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = h.update(px) {
         if v > 0.55 { /* trending regime */ }

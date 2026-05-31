@@ -109,6 +109,7 @@ console.log(e.batch([100, 99.4], [101, 102], [99, 99], [99.5, 101.5]));
 use wickra::{Candle, Engulfing, Indicator};
 
 let mut e = Engulfing::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     let v = e.update(bar);
     if v == Some(1.0) { /* bullish engulfing */ }

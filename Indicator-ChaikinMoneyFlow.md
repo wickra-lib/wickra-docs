@@ -40,11 +40,9 @@ Rust and Node constructors require it explicitly.
 From `crates/wickra-core/src/indicators/cmf.rs`:
 
 ```rust
-impl Indicator for ChaikinMoneyFlow {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, ChaikinMoneyFlow, Candle};
+// ChaikinMoneyFlow: Input = Candle, Output = f64
+const _: fn(&mut ChaikinMoneyFlow, Candle) -> Option<f64> = <ChaikinMoneyFlow as Indicator>::update;
 ```
 
 `ChaikinMoneyFlow` is a **candle-input** indicator: it reads `high`, `low`,

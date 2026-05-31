@@ -46,11 +46,9 @@ exposed as a read-only property.
 From `crates/wickra-core/src/indicators/dpo.rs`:
 
 ```rust
-impl Indicator for Dpo {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, Dpo};
+// Dpo: Input = f64, Output = f64
+const _: fn(&mut Dpo, f64) -> Option<f64> = <Dpo as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

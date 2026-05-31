@@ -49,11 +49,9 @@ constructor takes both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for GarmanKlassVolatility {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, GarmanKlassVolatility, Candle};
+// GarmanKlassVolatility: Input = Candle, Output = f64
+const _: fn(&mut GarmanKlassVolatility, Candle) -> Option<f64> = <GarmanKlassVolatility as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `float | None`;

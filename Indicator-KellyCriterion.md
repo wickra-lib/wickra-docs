@@ -103,6 +103,7 @@ console.log('row 80:', k.batch(returns)[80]);
 use wickra::{Indicator, KellyCriterion};
 
 let mut k = KellyCriterion::new(100).unwrap();
+let trade_stream: Vec<f64> = Vec::new(); // your per-trade P&L feed
 for trade_pnl in trade_stream {
     if let Some(v) = k.update(trade_pnl) {
         let half_kelly = v * 0.5;  // conservative sizing

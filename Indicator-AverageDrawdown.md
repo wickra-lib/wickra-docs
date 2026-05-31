@@ -90,6 +90,7 @@ console.log(adv.batch([100, 110, 100, 95, 88, 90, 92, 95, 100, 105]));
 use wickra::{AverageDrawdown, Indicator};
 
 let mut adv = AverageDrawdown::new(252).unwrap();
+let equity_stream: Vec<f64> = Vec::new(); // your equity-curve feed
 for equity in equity_stream {
     if let Some(v) = adv.update(equity) {
         // v is the typical drawdown depth over last year

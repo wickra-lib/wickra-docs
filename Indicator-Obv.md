@@ -38,12 +38,9 @@ that value (`crates/wickra-core/src/indicators/obv.rs:42-55`).
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Obv {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-    fn warmup_period(&self) -> usize { 1 }
-}
+use wickra::{Indicator, Obv, Candle};
+// Obv: Input = Candle, Output = f64
+const _: fn(&mut Obv, Candle) -> Option<f64> = <Obv as Indicator>::update;
 ```
 
 - **Python streaming.** Accepts a 6-tuple or dict candle; returns

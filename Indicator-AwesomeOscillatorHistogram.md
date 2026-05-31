@@ -46,11 +46,9 @@ constructor takes all three arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for AwesomeOscillatorHistogram {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, AwesomeOscillatorHistogram, Candle};
+// AwesomeOscillatorHistogram: Input = Candle, Output = f64
+const _: fn(&mut AwesomeOscillatorHistogram, Candle) -> Option<f64> = <AwesomeOscillatorHistogram as Indicator>::update;
 ```
 
 Only `high` and `low` are read (the AO uses the median price), so both

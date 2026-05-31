@@ -50,11 +50,9 @@ takes all three explicitly. The public class is `JMA` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Jma {
-    type Input  = f64;
-    type Output = f64;
-    fn update(&mut self, input: f64) -> Option<f64>;
-}
+use wickra::{Indicator, Jma};
+// Jma: Input = f64, Output = f64
+const _: fn(&mut Jma, f64) -> Option<f64> = <Jma as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

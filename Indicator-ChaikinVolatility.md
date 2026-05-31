@@ -43,11 +43,9 @@ change.
 From `crates/wickra-core/src/indicators/chaikin_volatility.rs`:
 
 ```rust
-impl Indicator for ChaikinVolatility {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, ChaikinVolatility, Candle};
+// ChaikinVolatility: Input = Candle, Output = f64
+const _: fn(&mut ChaikinVolatility, Candle) -> Option<f64> = <ChaikinVolatility as Indicator>::update;
 ```
 
 `ChaikinVolatility` is a **candle-input** indicator that reads `high` and
@@ -79,7 +77,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // A constant 2-wide range -> constant EMA -> zero rate of change.
     let candles: Vec<Candle> = (0..40)
         .map(|i| {
-            let base = 100.0 + f64::from(i);
+            let base = 100.0 + i as f64;
             Candle::new(base, base + 1.0, base - 1.0, base, 1.0, i).unwrap()
         })
         .collect();

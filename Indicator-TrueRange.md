@@ -38,11 +38,9 @@ value per bar.
 From `crates/wickra-core/src/indicators/true_range.rs`:
 
 ```rust
-impl Indicator for TrueRange {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, TrueRange, Candle};
+// TrueRange: Input = Candle, Output = f64
+const _: fn(&mut TrueRange, Candle) -> Option<f64> = <TrueRange as Indicator>::update;
 ```
 
 `TrueRange` is a **candle-input** indicator that reads `high`, `low` and

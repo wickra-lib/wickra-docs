@@ -103,6 +103,7 @@ console.log(ir.batch(asset, bench));
 use wickra::{Indicator, InformationRatio};
 
 let mut ir = InformationRatio::new(252).unwrap();  // 1-year IR
+let return_stream: Vec<(f64, f64)> = Vec::new(); // your stream of periodic returns
 for (asset, bench) in return_stream {
     if let Some(v) = ir.update((asset, bench)) {
         // v = annualised IR (with daily returns)

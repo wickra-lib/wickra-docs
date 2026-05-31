@@ -114,6 +114,7 @@ console.log(d.batch([100], [120], [80], [110]));
 use wickra::{Candle, DemarkPivots, Indicator};
 
 let mut d = DemarkPivots::new();
+let session_aggregator: Vec<wickra::Candle> = Vec::new(); // your stream of completed session bars
 for bar in session_aggregator {
     let levels = d.update(bar).unwrap();
     // Use levels.r1 / levels.s1 as the only S/R for the next session

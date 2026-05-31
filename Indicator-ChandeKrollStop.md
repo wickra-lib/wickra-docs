@@ -52,11 +52,9 @@ smoothing window `9`.
 From `crates/wickra-core/src/indicators/chande_kroll_stop.rs`:
 
 ```rust
-impl Indicator for ChandeKrollStop {
-    type Input = Candle;
-    type Output = ChandeKrollStopOutput;   // { stop_long: f64, stop_short: f64 }
-    // update(&mut self, input: Candle) -> Option<ChandeKrollStopOutput>
-}
+use wickra::{Indicator, ChandeKrollStop, Candle, ChandeKrollStopOutput};
+// ChandeKrollStop: Input = Candle, Output = ChandeKrollStopOutput
+const _: fn(&mut ChandeKrollStop, Candle) -> Option<ChandeKrollStopOutput> = <ChandeKrollStop as Indicator>::update;
 ```
 
 `ChandeKrollStop` is a **candle-input** indicator (it reads `high`, `low`,

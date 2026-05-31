@@ -53,9 +53,9 @@ Either period being zero returns `Error::PeriodZero`.
 From `impl Indicator for Stochastic`:
 
 ```rust
-type Input  = Candle;
-type Output = StochasticOutput;
-fn update(&mut self, candle: Candle) -> Option<StochasticOutput>;
+use wickra::{Indicator, Stochastic, Candle, StochasticOutput};
+// Stochastic: Input = Candle, Output = StochasticOutput
+const _: fn(&mut Stochastic, Candle) -> Option<StochasticOutput> = <Stochastic as Indicator>::update;
 ```
 
 `StochasticOutput`:

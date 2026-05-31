@@ -47,11 +47,9 @@ constructor takes both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for ParkinsonVolatility {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, ParkinsonVolatility, Candle};
+// ParkinsonVolatility: Input = Candle, Output = f64
+const _: fn(&mut ParkinsonVolatility, Candle) -> Option<f64> = <ParkinsonVolatility as Indicator>::update;
 ```
 
 Only `high` and `low` are read, so both bindings take just those two series.

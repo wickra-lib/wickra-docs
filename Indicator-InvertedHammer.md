@@ -99,6 +99,7 @@ console.log(ih.batch([100.5], [105], [100], [100.2]));
 use wickra::{Candle, Indicator, InvertedHammer};
 
 let mut ih = InvertedHammer::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if ih.update(bar) == Some(1.0) {
         /* inverted hammer — combine with downtrend filter */

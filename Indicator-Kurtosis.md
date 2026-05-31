@@ -102,6 +102,7 @@ console.log(k.batch(returns)[80]);
 use wickra::{Indicator, Kurtosis};
 
 let mut k = Kurtosis::new(252).unwrap();
+let return_stream: Vec<f64> = Vec::new(); // your stream of daily returns
 for daily_return in return_stream {
     if let Some(v) = k.update(daily_return) {
         if v > 3.0 { /* fat-tail regime — tail-risk premia rising */ }

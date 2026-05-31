@@ -108,6 +108,7 @@ console.log(m.batch([100], [110.05], [99.95], [110]));
 use wickra::{Candle, Indicator, Marubozu};
 
 let mut m = Marubozu::default();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if m.update(bar) == Some(1.0) { /* bullish continuation */ }
     if m.update(bar) == Some(-1.0) { /* bearish continuation */ }

@@ -98,6 +98,7 @@ const p = new wickra.PearsonCorrelation(50);
 use wickra::{Indicator, PearsonCorrelation};
 
 let mut p = PearsonCorrelation::new(252).unwrap();
+let price_stream: Vec<(f64, f64)> = Vec::new(); // your paired (a, b) feed
 for (asset_a, asset_b) in price_stream {
     if let Some(v) = p.update((asset_a, asset_b)) {
         // v = rolling correlation

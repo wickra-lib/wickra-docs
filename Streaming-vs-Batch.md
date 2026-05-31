@@ -45,6 +45,8 @@ The batch API is a blanket extension on top of every `Indicator`. The whole
 implementation is six lines:
 
 ```rust
+use wickra::Indicator;
+
 pub trait BatchExt: Indicator {
     fn batch(&mut self, inputs: &[Self::Input]) -> Vec<Option<Self::Output>>
     where Self::Input: Clone,

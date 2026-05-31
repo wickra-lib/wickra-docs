@@ -93,6 +93,7 @@ console.log(se.batch(series)[30]);
 use wickra::{Indicator, StandardError};
 
 let mut se = StandardError::new(20).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = se.update(px) {
         // v is the trend-detrended volatility

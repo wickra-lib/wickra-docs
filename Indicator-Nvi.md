@@ -100,6 +100,7 @@ const nvi = new wickra.Nvi();
 use wickra::{Candle, Indicator, Nvi};
 
 let mut nvi = Nvi::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = nvi.update(bar) {
         // v is the smart-money cumulative index

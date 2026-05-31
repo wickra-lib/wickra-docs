@@ -47,11 +47,9 @@ pass `period` explicitly.)
 From `crates/wickra-core/src/indicators/hma.rs`:
 
 ```rust
-impl Indicator for Hma {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, Hma};
+// Hma: Input = f64, Output = f64
+const _: fn(&mut Hma, f64) -> Option<f64> = <Hma as Indicator>::update;
 ```
 
 Python returns `float | None` (streaming) / `numpy.ndarray` (batch,
@@ -74,16 +72,20 @@ The number reflects how the three inner WMAs warm up *in parallel*: the
 slow `WMA(period)` emits at input `period`, then the smoothing
 `WMA(√period)` needs `√period − 1` more inputs on top.
 
-```rust
-fn update(&mut self, input: f64) -> Option<f64> {
-    // Both raw WMAs are fed unconditionally so neither delays the other.
-    let h = self.half_wma.update(input);
-    let f = self.full_wma.update(input);
-    match (h, f) {
-        (Some(h), Some(f)) => self.smooth_wma.update(2.0 * h - f),
-        _ => None,
-    }
-}
+```rust
+use wickra::{Indicator, Wma};
+
+// HMA feeds two raw WMAs and smooths their 2·half − full diff:
+let mut half_wma = Wma::new(7)?;
+let mut full_wma = Wma::new(14)?;
+let mut smooth_wma = Wma::new(4)?;
+let input = 100.0;
+let h = half_wma.update(input);
+let f = full_wma.update(input);
+let _hma = match (h, f) {
+    (Some(h), Some(f)) => smooth_wma.update(2.0 * h - f),
+    _ => None,
+};
 ```
 
 `half_wma` and `full_wma` receive every input, so `full_wma` emits at

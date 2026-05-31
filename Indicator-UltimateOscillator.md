@@ -49,11 +49,9 @@ three explicitly. The `periods` property returns `(short, mid, long)`.
 From `crates/wickra-core/src/indicators/ultimate_oscillator.rs`:
 
 ```rust
-impl Indicator for UltimateOscillator {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, UltimateOscillator, Candle};
+// UltimateOscillator: Input = Candle, Output = f64
+const _: fn(&mut UltimateOscillator, Candle) -> Option<f64> = <UltimateOscillator as Indicator>::update;
 ```
 
 `UltimateOscillator` is a **candle-input** indicator: it reads `high`,

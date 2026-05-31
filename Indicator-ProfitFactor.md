@@ -95,6 +95,7 @@ console.log(pf.batch(returns)[50]);
 use wickra::{Indicator, ProfitFactor};
 
 let mut pf = ProfitFactor::new(100).unwrap();
+let trade_stream: Vec<f64> = Vec::new(); // your per-trade P&L feed
 for trade_pnl in trade_stream {
     if let Some(v) = pf.update(trade_pnl) {
         // PF > 1 = strategy ahead in window

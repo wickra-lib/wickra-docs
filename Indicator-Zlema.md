@@ -43,11 +43,9 @@ is exposed as a read-only property.
 From `crates/wickra-core/src/indicators/zlema.rs`:
 
 ```rust
-impl Indicator for Zlema {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, Zlema};
+// Zlema: Input = f64, Output = f64
+const _: fn(&mut Zlema, f64) -> Option<f64> = <Zlema as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

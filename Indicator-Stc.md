@@ -51,11 +51,9 @@ in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Stc {
-    type Input  = f64;
-    type Output = f64;  // clamped to [0, 100]
-    fn update(&mut self, input: f64) -> Option<f64>;
-}
+use wickra::{Indicator, Stc};
+// Stc: Input = f64, Output = f64
+const _: fn(&mut Stc, f64) -> Option<f64> = <Stc as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out in `[0, 100]`. Python maps

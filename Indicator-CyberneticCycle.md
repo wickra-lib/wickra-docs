@@ -111,6 +111,7 @@ console.log('row 30:', cc.batch(prices)[30]);
 use wickra::{CyberneticCycle, Indicator};
 
 let mut cc = CyberneticCycle::new(10).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = cc.update(px) {
         // Zero crossings = cycle-momentum reversals

@@ -42,11 +42,9 @@ smooths the noisy per-bar `EMV` into a tradeable line.
 From `crates/wickra-core/src/indicators/ease_of_movement.rs`:
 
 ```rust
-impl Indicator for EaseOfMovement {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+use wickra::{Indicator, EaseOfMovement, Candle};
+// EaseOfMovement: Input = Candle, Output = f64
+const _: fn(&mut EaseOfMovement, Candle) -> Option<f64> = <EaseOfMovement as Indicator>::update;
 ```
 
 `EaseOfMovement` is a **candle-input** indicator that reads `high`, `low` and

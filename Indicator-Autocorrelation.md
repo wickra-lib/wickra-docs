@@ -97,6 +97,7 @@ console.log(ac.batch(series)[80]);
 use wickra::{Autocorrelation, Indicator};
 
 let mut ac = Autocorrelation::new(50, 1).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = ac.update(px) {
         if v > 0.5 { /* persistence regime — trend-following may work */ }

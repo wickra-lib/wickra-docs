@@ -141,6 +141,7 @@ use wickra::{Candle, Indicator, VoltyStop};
 
 let mut vs = VoltyStop::classic();
 let mut prev_stop: Option<f64> = None;
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(stop) = vs.update(bar) {
         if let Some(prev) = prev_stop {

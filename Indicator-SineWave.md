@@ -39,19 +39,19 @@ indicator; `Default` is also implemented.
 
 ## Inputs / Outputs
 
-`Indicator<Input = f64, Output = f64>` — returns the primary
-`sin(phase)` value. The `lead` value is accessed via the
-`SineWave::lead()` method:
+`Indicator<Input = f64, Output = f64>` — returns the
+`sin(phase)` value:
 
 ```rust
+use wickra::{Indicator, SineWave};
+
 let mut sw = SineWave::new();
-let sine = sw.update(px);
-let lead = sw.lead();
+let px = 100.0;
+let sine = sw.update(px); // Option<f64>
 ```
 
 Python: `SineWave().batch(prices)` returns a 1-D `np.ndarray` of the
-sine line; the lead line is not exposed in bindings. Node: same as
-Python — only the primary sine line is returned.
+sine line. Node and WASM return the same single sine line.
 
 ## Warmup
 
@@ -120,6 +120,7 @@ use wickra::{Indicator, SineWave};
 
 let mut sw = SineWave::new();
 let mut prev_diff: Option<f64> = None;
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(s) = sw.update(px) {
         let l = sw.lead();

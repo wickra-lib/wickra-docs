@@ -118,6 +118,7 @@ console.log('row 20:',
 use wickra::{Candle, Indicator, TdRei};
 
 let mut r = TdRei::classic();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = r.update(bar) {
         if v > 60.0 { /* overbought */ }

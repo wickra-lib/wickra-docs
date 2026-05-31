@@ -46,11 +46,9 @@ explicitly. The public class is `RVI` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Rvi {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, Rvi, Candle};
+// Rvi: Input = Candle, Output = f64
+const _: fn(&mut Rvi, Candle) -> Option<f64> = <Rvi as Indicator>::update;
 ```
 
 Uses all four OHLC fields.

@@ -51,11 +51,9 @@ bindings; Python default comes from `#[pyo3(signature = (period=10))]`.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for RviVolatility {
-    type Input  = f64;
-    type Output = f64;  // [0, 100]
-    fn update(&mut self, input: f64) -> Option<f64>;
-}
+use wickra::{Indicator, RviVolatility};
+// RviVolatility: Input = f64, Output = f64
+const _: fn(&mut RviVolatility, f64) -> Option<f64> = <RviVolatility as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out in `[0, 100]`. Python maps this

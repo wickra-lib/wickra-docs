@@ -40,11 +40,9 @@ explicitly. The public class is `CFO` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Cfo {
-    type Input  = f64;
-    type Output = f64;
-    fn update(&mut self, input: f64) -> Option<f64>;
-}
+use wickra::{Indicator, Cfo};
+// Cfo: Input = f64, Output = f64
+const _: fn(&mut Cfo, f64) -> Option<f64> = <Cfo as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out (a percentage). Python maps

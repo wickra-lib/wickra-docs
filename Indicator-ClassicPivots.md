@@ -116,6 +116,7 @@ console.log('pp:', flat[0], 'r1:', flat[1], 's1:', flat[4]);
 use wickra::{Candle, ClassicPivots, Indicator};
 
 let mut cp = ClassicPivots::new();
+let session_aggregator: Vec<wickra::Candle> = Vec::new(); // your stream of completed session bars
 for session_bar in session_aggregator {
     let levels = cp.update(session_bar).unwrap();
     // Use `levels.pp`, `levels.r1`, etc. as reference for the next session

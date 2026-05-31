@@ -51,11 +51,9 @@ plus a `direction` flag (`+1.0` / `-1.0`) that names which regime you are in.
 From `crates/wickra-core/src/indicators/super_trend.rs`:
 
 ```rust
-impl Indicator for SuperTrend {
-    type Input = Candle;
-    type Output = SuperTrendOutput;   // { value: f64, direction: f64 }
-    // update(&mut self, input: Candle) -> Option<SuperTrendOutput>
-}
+use wickra::{Indicator, SuperTrend, Candle, SuperTrendOutput};
+// SuperTrend: Input = Candle, Output = SuperTrendOutput
+const _: fn(&mut SuperTrend, Candle) -> Option<SuperTrendOutput> = <SuperTrend as Indicator>::update;
 ```
 
 `SuperTrend` is a **candle-input** indicator (it reads `high`, `low`, `close`).

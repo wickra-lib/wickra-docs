@@ -47,9 +47,9 @@ zero and `Error::InvalidPeriod` if `fast >= slow`.
 From `impl Indicator for AwesomeOscillator`:
 
 ```rust
-type Input  = Candle;
-type Output = f64;
-fn update(&mut self, candle: Candle) -> Option<f64>;
+use wickra::{Indicator, AwesomeOscillator, Candle};
+// AwesomeOscillator: Input = Candle, Output = f64
+const _: fn(&mut AwesomeOscillator, Candle) -> Option<f64> = <AwesomeOscillator as Indicator>::update;
 ```
 
 The `close` and `volume` fields on the input candle are ignored — only

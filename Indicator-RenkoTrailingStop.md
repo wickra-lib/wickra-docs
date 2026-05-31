@@ -126,6 +126,7 @@ use wickra::{Indicator, RenkoTrailingStop};
 
 let mut r = RenkoTrailingStop::new(0.25).unwrap();
 let mut prev_stop = None;
+let close_stream: Vec<f64> = Vec::new(); // your live close-price feed
 for close in close_stream {
     let stop = r.update(close).unwrap();
     if prev_stop.is_some_and(|p| (close > p) != (close > stop)) {

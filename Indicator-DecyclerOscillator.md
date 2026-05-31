@@ -106,6 +106,7 @@ use wickra::{DecyclerOscillator, Indicator};
 
 let mut dco = DecyclerOscillator::new(10, 30).unwrap();
 let mut prev: Option<f64> = None;
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = dco.update(px) {
         if let Some(p) = prev {

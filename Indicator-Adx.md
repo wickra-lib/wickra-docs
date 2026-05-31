@@ -74,9 +74,9 @@ When `+DI + −DI == 0`, `DX` is `0`; when `TR == 0`, both DI lines are
 From `impl Indicator for Adx`:
 
 ```rust
-type Input  = Candle;
-type Output = AdxOutput;
-fn update(&mut self, candle: Candle) -> Option<AdxOutput>;
+use wickra::{Indicator, Adx, Candle, AdxOutput};
+// Adx: Input = Candle, Output = AdxOutput
+const _: fn(&mut Adx, Candle) -> Option<AdxOutput> = <Adx as Indicator>::update;
 ```
 
 `AdxOutput`:
@@ -85,7 +85,7 @@ fn update(&mut self, candle: Candle) -> Option<AdxOutput>;
 |-------|-------------|
 | `plus_di` | Plus Directional Indicator (`+DI`) — strength of upward movement. |
 | `minus_di` | Minus Directional Indicator (`−DI`) — strength of downward movement. |
-| `adx` | Average Directional Index — smoothed `|DX|`, a directionless trend-strength measure. |
+| `adx` | Average Directional Index — smoothed `\|DX\|`, a directionless trend-strength measure. |
 
 Python's `ADX.batch(high, low, close)` returns a `(n, 3)` `float64` array
 with columns `[plus_di, minus_di, adx]`; warmup rows are entirely `NaN`.

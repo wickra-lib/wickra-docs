@@ -141,6 +141,7 @@ use wickra::{Indicator, Mama};
 
 let mut m = Mama::classic();
 let mut prev: Option<wickra::MamaOutput> = None;
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = m.update(px) {
         if let Some(p) = prev {

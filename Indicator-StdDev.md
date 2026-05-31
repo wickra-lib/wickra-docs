@@ -44,11 +44,9 @@ The Python binding defaults `period` to `20`.
 From `crates/wickra-core/src/indicators/std_dev.rs`:
 
 ```rust
-impl Indicator for StdDev {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+use wickra::{Indicator, StdDev};
+// StdDev: Input = f64, Output = f64
+const _: fn(&mut StdDev, f64) -> Option<f64> = <StdDev as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to
