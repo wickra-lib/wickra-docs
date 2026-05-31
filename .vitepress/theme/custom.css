@@ -111,6 +111,10 @@
 }
 .wk-footer-badges img {
   height: 18px;
+  /* width:auto lets the browser derive each badge's box from its width/height
+     attributes, so the row's space is reserved before the SVGs load (no
+     reflow) while the height stays a constant 18px. */
+  width: auto;
   display: block;
 }
 .wk-footer-meta {
