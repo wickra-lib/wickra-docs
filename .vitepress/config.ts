@@ -72,8 +72,14 @@ export default defineConfig({
     siteTitle: 'Wickra',
     logo: { src: '/wickra-mark.svg', alt: 'Wickra' },
 
+    // Shared top-level nav, kept 1:1 with the marketing site (wickra.org).
+    // On-site targets are relative (SPA navigation); targets that live on the
+    // marketing site are absolute. wickra.org mirrors this list with the
+    // resolution flipped.
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Demo', link: 'https://wickra.org/demo' },
+      { text: 'Benchmarks', link: 'https://wickra.org/benchmarks' },
       { text: 'Overview', link: '/overview' },
       {
         text: 'Quickstart',
@@ -86,6 +92,15 @@ export default defineConfig({
       },
       { text: 'Indicators', link: '/Indicators-Overview' },
       {
+        text: 'API',
+        items: [
+          { text: 'Rust', link: 'https://wickra.org/api/rust' },
+          { text: 'Python', link: 'https://wickra.org/api/python' },
+          { text: 'Node', link: 'https://wickra.org/api/node' },
+          { text: 'WASM', link: 'https://wickra.org/api/wasm' },
+        ],
+      },
+      {
         text: 'Links',
         items: [
           { text: 'Changelog', link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md' },
@@ -97,14 +112,10 @@ export default defineConfig({
       {
         text: `v${version}`,
         items: [
-          {
-            text: 'Release notes',
-            link: 'https://github.com/wickra-lib/wickra/releases',
-          },
-          {
-            text: 'Changelog',
-            link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md',
-          },
+          { text: 'Release notes', link: 'https://github.com/wickra-lib/wickra/releases' },
+          { text: 'Changelog', link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md' },
+          { text: 'Docs', link: 'https://docs.wickra.org/' },
+          { text: 'docs.rs', link: 'https://docs.rs/wickra' },
         ],
       },
     ],
