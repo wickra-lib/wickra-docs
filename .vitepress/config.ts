@@ -1,8 +1,25 @@
 import { defineConfig } from 'vitepress'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
 // Sidebar is generated from the migrated wiki's _Sidebar.md by
 // `npm run migrate` — see scripts/migrate-wiki.mjs. Regenerate it whenever the
 // indicator catalogue changes; do not hand-edit sidebar.ts.
 import { sidebar } from './sidebar'
+
+// Versioning (findings P8.5): latest-only — Git is the version history, the nav
+// just surfaces the current published version. The string is read at build time
+// from the single source that the release automation already maintains (the
+// `wickra` row of the Published-versions table in overview.md, synced on every
+// v* tag by sync-about.yml), so the nav label can never drift from the table.
+const overview = readFileSync(
+  resolve(dirname(fileURLToPath(import.meta.url)), '../overview.md'),
+  'utf-8',
+)
+const versionMatch = overview.match(
+  /^\|\s*crates\.io\s*\|\s*`wickra`\s*\|\s*([0-9]+\.[0-9]+\.[0-9]+)/m,
+)
+const version = versionMatch ? versionMatch[1] : 'latest'
 
 export default defineConfig({
   title: 'Wickra',
@@ -61,6 +78,19 @@ export default defineConfig({
           { text: 'crates.io', link: 'https://crates.io/crates/wickra' },
           { text: 'PyPI', link: 'https://pypi.org/project/wickra/' },
           { text: 'npm', link: 'https://www.npmjs.com/package/wickra' },
+        ],
+      },
+      {
+        text: `v${version}`,
+        items: [
+          {
+            text: 'Release notes',
+            link: 'https://github.com/wickra-lib/wickra/releases',
+          },
+          {
+            text: 'Changelog',
+            link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md',
+          },
         ],
       },
     ],
