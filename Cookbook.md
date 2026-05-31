@@ -90,10 +90,12 @@ ema_fast = ta.EMA(20)
 ema_slow = ta.EMA(50)
 adx = ta.ADX(14)
 
-for high, low, close in candle_feed:
-    f = ema_fast.update(close)
-    s = ema_slow.update(close)
-    a = adx.update(high, low, close)   # (plus_di, minus_di, adx) or None
+# Candle indicators take one candle as a 6-tuple (open, high, low, close,
+# volume, timestamp) or a dict with those keys — not three positional args.
+for o, h, l, c, v, ts in candle_feed:
+    f = ema_fast.update(c)
+    s = ema_slow.update(c)
+    a = adx.update((o, h, l, c, v, ts))   # (plus_di, minus_di, adx) or None
     if f is None or s is None or a is None:
         continue
     _, _, adx_v = a
@@ -145,17 +147,17 @@ import wickra as ta
 
 st = ta.SuperTrend(10, 3.0)
 position = 0  # 0 flat, +1 long
-for high, low, close in candle_feed:
-    out = st.update(high, low, close)
+for o, h, l, c, v, ts in candle_feed:
+    out = st.update((o, h, l, c, v, ts))   # candle 6-tuple → (value, direction)
     if out is None:
         continue
     value, direction = out
     if direction > 0 and position == 0:
         position = 1
-        print(f"BUY at {close:.2f}, stop={value:.2f}")
+        print(f"BUY at {c:.2f}, stop={value:.2f}")
     elif direction < 0 and position == 1:
         position = 0
-        print(f"EXIT at {close:.2f} (SuperTrend flipped)")
+        print(f"EXIT at {c:.2f} (SuperTrend flipped)")
 ```
 
 ## 7. Chained indicators
@@ -174,6 +176,104 @@ let out: Vec<Option<f64>> = chain.batch(&prices);
 
 See [Indicator Chaining](Indicator-Chaining) for the chained-warmup rule
 and three-stage examples.
+
+## 8. Ichimoku Tenkan/Kijun cross with cloud filter
+
+[Ichimoku](Indicator-Ichimoku) returns its five lines as a tuple
+`(tenkan, kijun, senkou_a, senkou_b, chikou)` — any element may be `None`
+until that line is defined. The canonical entry is a Tenkan-above-Kijun
+("TK") cross *confirmed* by price trading above the cloud (`max(span_a,
+span_b)`).
+
+```python
+import wickra as ta
+
+ichi = ta.Ichimoku(9, 26, 52, 26)
+prev_tk = None
+for o, h, l, c, v, ts in candle_feed:
+    out = ichi.update((o, h, l, c, v, ts))   # 6-tuple candle in
+    if out is None:
+        continue
+    tenkan, kijun, span_a, span_b, _chikou = out
+    if None in (tenkan, kijun, span_a, span_b):
+        continue
+    tk = tenkan - kijun
+    above_cloud = c > max(span_a, span_b)
+    if prev_tk is not None and prev_tk <= 0.0 < tk and above_cloud:
+        print(f"BULLISH TK cross above the cloud at {c:.2f}")
+    elif prev_tk is not None and prev_tk >= 0.0 > tk and c < min(span_a, span_b):
+        print(f"BEARISH TK cross below the cloud at {c:.2f}")
+    prev_tk = tk
+```
+
+## 9. TD Sequential exhaustion
+
+[TdSequential](Indicator-TdSequential) returns `(setup, countdown,
+direction)` — both counts are signed (`+` buy, `−` sell) and capped at ±9
+(setup) and ±13 (countdown). A completed buy setup (`+9`) or buy countdown
+(`+13`) flags downside exhaustion and a mean-reversion long.
+
+```python
+import wickra as ta
+
+td = ta.TdSequential(4, 9, 2, 13)
+for o, h, l, c, v, ts in candle_feed:
+    out = td.update((o, h, l, c, v, ts))
+    if out is None:
+        continue
+    setup, countdown, _direction = out
+    if setup == 9:
+        print(f"Buy setup complete (+9) at {c:.2f} — downside exhaustion")
+    elif setup == -9:
+        print(f"Sell setup complete (−9) at {c:.2f} — upside exhaustion")
+    if countdown == 13:
+        print(f"Buy countdown 13 at {c:.2f} — reversal-long signal")
+    elif countdown == -13:
+        print(f"Sell countdown −13 at {c:.2f} — reversal-short signal")
+```
+
+## 10. Max-drawdown circuit breaker
+
+Feed your mark-to-market account equity into a rolling
+[MaxDrawdown](Indicator-MaxDrawdown) and halt new entries when the rolling
+drawdown breaches a risk limit. The output is a *non-negative fraction*
+(`0.20` = a 20 % decline from the window peak).
+
+```python
+import wickra as ta
+
+mdd = ta.MaxDrawdown(252)   # ~one trading year of rolling lookback
+halted = False
+for equity in equity_curve:
+    dd = mdd.update(equity)
+    if dd is None:
+        continue
+    if not halted and dd > 0.20:
+        halted = True
+        print(f"RISK HALT: rolling drawdown {dd:.1%} exceeded 20%")
+    elif halted and dd < 0.10:
+        halted = False
+        print(f"Risk normalised ({dd:.1%}) — entries re-enabled")
+```
+
+## 11. Beta-hedged market exposure
+
+[Beta](Indicator-Beta) takes `(asset_return, benchmark_return)` pairs and
+reports the rolling slope of the asset on the benchmark — exactly the hedge
+ratio you need to neutralise market exposure.
+
+```python
+import wickra as ta
+
+beta = ta.Beta(60)
+NOTIONAL = 100_000  # long position in the asset, in account currency
+for asset_ret, bench_ret in return_pairs:   # periodic returns, not prices
+    b = beta.update(asset_ret, bench_ret)
+    if b is None:
+        continue
+    hedge = b * NOTIONAL
+    print(f"beta={b:.2f} → short {hedge:,.0f} of the index to hedge the long")
+```
 
 ## See also
 
