@@ -123,6 +123,7 @@ console.log('row 25 buy stop:', flat[25 * 2]);
 use wickra::{Candle, Indicator, TdRiskLevel};
 
 let mut tr = TdRiskLevel::new(4, 9).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(o) = tr.update(bar) {
         // If you're long on a buy setup, exit when close drops below buy_risk

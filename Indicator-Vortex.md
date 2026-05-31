@@ -43,7 +43,7 @@ The Python binding defaults `period` to `14`.
 
 From `crates/wickra-core/src/indicators/vortex.rs`:
 
-```rust
+```rust ignore
 pub struct VortexOutput { pub plus: f64, pub minus: f64 }
 
 impl Indicator for Vortex {

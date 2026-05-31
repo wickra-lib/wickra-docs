@@ -50,7 +50,7 @@ arguments explicitly.
 
 From `crates/wickra-core/src/indicators/t3.rs`:
 
-```rust
+```rust ignore
 impl Indicator for T3 {
     type Input = f64;
     type Output = f64;

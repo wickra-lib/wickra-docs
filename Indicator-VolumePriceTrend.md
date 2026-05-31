@@ -37,7 +37,7 @@ in Node.
 
 From `crates/wickra-core/src/indicators/vpt.rs`:
 
-```rust
+```rust ignore
 impl Indicator for VolumePriceTrend {
     type Input = Candle;
     type Output = f64;

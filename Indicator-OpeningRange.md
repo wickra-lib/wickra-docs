@@ -117,6 +117,8 @@ console.log(or_.batch(base.map(b => b + 1), base.map(b => b - 1), base));
 use wickra::{Candle, Indicator, OpeningRange};
 
 let mut or_ = OpeningRange::classic();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
+fn is_new_session(_bar: Candle) -> bool { false } // your session-boundary predicate
 for bar in candle_stream {
     if is_new_session(bar) { or_.reset(); }
     if let Some(o) = or_.update(bar) {

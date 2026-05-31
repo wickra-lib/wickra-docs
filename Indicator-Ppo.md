@@ -45,7 +45,7 @@ returns `(fast, slow)`.
 
 From `crates/wickra-core/src/indicators/ppo.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Ppo {
     type Input = f64;
     type Output = f64;

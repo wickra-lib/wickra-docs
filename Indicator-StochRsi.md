@@ -44,7 +44,7 @@ take both explicitly. The `periods` property returns
 
 From `crates/wickra-core/src/indicators/stoch_rsi.rs`:
 
-```rust
+```rust ignore
 impl Indicator for StochRsi {
     type Input = f64;
     type Output = f64;

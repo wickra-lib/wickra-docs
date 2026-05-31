@@ -62,6 +62,7 @@ use wickra_core::Tick;
 
 let mut agg = TickAggregator::new(Timeframe::one_minute_ms());
 
+let trade_feed: Vec<Tick> = Vec::new(); // your live trade-tick feed
 for tick in trade_feed {
     // push returns every candle that closed because of this tick —
     // empty while the bar grows, one candle when a bar boundary is crossed.
@@ -88,6 +89,7 @@ the next non-empty bar, leaving a time hole in the output. Enable
 downstream indicators see an unbroken, evenly spaced series:
 
 ```rust
+use wickra_data::aggregator::{TickAggregator, Timeframe};
 let mut agg = TickAggregator::new(Timeframe::one_minute_ms()).with_gap_fill(true);
 ```
 
@@ -101,11 +103,16 @@ stream.
 use wickra_data::aggregator::Timeframe;
 use wickra_data::resample::{resample_all, Resampler};
 
+// `one_min_candles` is your fallible 1-minute source (e.g. a CSV reader),
+// yielding `Result<Candle>` items.
+let one_min_candles: Vec<wickra_data::Result<wickra::Candle>> = Vec::new();
+
 // One-shot over an iterator:
-let five_min = resample_all(Timeframe::millis(5 * 60_000), one_min_candles)?;
+let five_min = resample_all(Timeframe::millis(5 * 60_000)?, one_min_candles)?;
 
 // Or incrementally:
-let mut r = Resampler::new(Timeframe::millis(60 * 60_000)); // 1-hour bars
+let mut r = Resampler::new(Timeframe::millis(60 * 60_000)?); // 1-hour bars
+let one_min_candles: Vec<wickra_data::Result<wickra::Candle>> = Vec::new();
 for candle in one_min_candles {
     if let Some(closed) = r.push(candle?)? {
         // a coarser bar just closed
@@ -128,7 +135,7 @@ Binance Spot WebSocket and yields closed klines as candles.
 wickra-data = { version = "0.2", features = ["live-binance"] }
 ```
 
-```rust
+```rust ignore
 use wickra::{Indicator, Rsi};
 use wickra_data::live::binance::{BinanceKlineStream, Interval};
 
@@ -156,7 +163,7 @@ Since `wickra-data@0.2.5`, the connector accepts a `BinanceConfig` so you can
 point it at a different endpoint (Binance Testnet is the common case) or
 tune the read-timeout / reconnect timings to suit your environment:
 
-```rust
+```rust ignore
 use std::time::Duration;
 use wickra_data::live::binance::{
     BinanceConfig, BinanceKlineStream, Interval,

@@ -96,6 +96,7 @@ console.log(d.batch(series)[30]);
 use wickra::{DetrendedStdDev, Indicator};
 
 let mut d = DetrendedStdDev::new(20).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = d.update(px) {
         // v is pure noise around the trend

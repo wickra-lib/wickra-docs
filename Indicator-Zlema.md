@@ -42,7 +42,7 @@ is exposed as a read-only property.
 
 From `crates/wickra-core/src/indicators/zlema.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Zlema {
     type Input = f64;
     type Output = f64;

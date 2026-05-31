@@ -43,7 +43,7 @@ pass `period` explicitly.)
 
 From `crates/wickra-core/src/indicators/dema.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Dema {
     type Input = f64;
     type Output = f64;

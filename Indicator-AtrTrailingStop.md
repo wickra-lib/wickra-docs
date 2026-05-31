@@ -45,7 +45,7 @@ itself, not the window's extreme, and reports one line rather than two.
 
 From `crates/wickra-core/src/indicators/atr_trailing_stop.rs`:
 
-```rust
+```rust ignore
 impl Indicator for AtrTrailingStop {
     type Input = Candle;
     type Output = f64;

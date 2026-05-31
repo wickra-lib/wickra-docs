@@ -105,6 +105,7 @@ use wickra::{Candle, Hammer, Indicator, Sma};
 
 let mut h = Hammer::new();
 let mut sma = Sma::new(50).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     let trend = sma.update(bar.close);
     if h.update(bar) == Some(1.0) {

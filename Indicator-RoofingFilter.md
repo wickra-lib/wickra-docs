@@ -120,6 +120,7 @@ console.log('row 100:', rf.batch(prices)[100]);
 use wickra::{Indicator, RoofingFilter};
 
 let mut rf = RoofingFilter::new(10, 48).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     let cycle = rf.update(px).unwrap();
     // `cycle` is the band-limited price residual; feed downstream

@@ -48,7 +48,7 @@ three explicitly. The `periods` property returns `(short, mid, long)`.
 
 From `crates/wickra-core/src/indicators/ultimate_oscillator.rs`:
 
-```rust
+```rust ignore
 impl Indicator for UltimateOscillator {
     type Input = Candle;
     type Output = f64;

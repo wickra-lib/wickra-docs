@@ -104,6 +104,7 @@ console.log(d.batch([100], [102], [98], [100.05]));
 use wickra::{Candle, Doji, Indicator};
 
 let mut d = Doji::default();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if d.update(bar) == Some(1.0) {
         // Doji on this bar — combine with trend filter

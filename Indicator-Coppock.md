@@ -43,7 +43,7 @@ property returns `(roc_long, roc_short, wma_period)`.
 
 From `crates/wickra-core/src/indicators/coppock.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Coppock {
     type Input = f64;
     type Output = f64;

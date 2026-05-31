@@ -40,7 +40,7 @@ returns the `(3, 10)` configuration.
 
 From `crates/wickra-core/src/indicators/chaikin_oscillator.rs`:
 
-```rust
+```rust ignore
 impl Indicator for ChaikinOscillator {
     type Input = Candle;
     type Output = f64;

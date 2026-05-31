@@ -126,6 +126,7 @@ console.log('row 5 ha_close:', flat[5 * 4 + 3]);
 use wickra::{Candle, HeikinAshi, Indicator};
 
 let mut ha = HeikinAshi::new();
+let candle_stream: Vec<Candle> = Vec::new(); // your live OHLCV feed
 for bar in candle_stream {
     let o = ha.update(bar).unwrap();
     let bullish = o.close > o.open;

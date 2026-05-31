@@ -49,7 +49,7 @@ pass it explicitly.
 
 From `impl Indicator for Trix`:
 
-```rust
+```rust ignore
 type Input  = f64;
 type Output = f64;
 fn update(&mut self, input: f64) -> Option<f64>;

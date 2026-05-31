@@ -102,13 +102,13 @@ with the latest market history via
 
 ## How is Wickra different from TA-Lib / pandas-ta / talipp?
 
-* TA-Lib and pandas-ta are batch-only — every new tick triggers a full
+- TA-Lib and pandas-ta are batch-only — every new tick triggers a full
   recomputation. Wickra updates in O(1). The numerical results are the
   same; the speed gap shows up in live trading and large backtests.
-* talipp is streaming-first like Wickra but Python-only and slower per
+- talipp is streaming-first like Wickra but Python-only and slower per
   update.
-* `finta` is batch-only and pure-Python.
-* `ta-lib-python` and TA-Lib both require C build tooling on Windows;
+- `finta` is batch-only and pure-Python.
+- `ta-lib-python` and TA-Lib both require C build tooling on Windows;
   Wickra ships pre-built native wheels.
 
 See the [TA-Lib Migration](TA-Lib-Migration) guide for a direct

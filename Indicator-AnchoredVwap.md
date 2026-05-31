@@ -69,7 +69,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut av = AnchoredVwap::new();
     av.set_anchor();
     for i in 0..10 {
-        let b = 100.0 + f64::from(i);
+        let b = 100.0 + i as f64;
         let c = Candle::new(b, b + 0.5, b - 0.5, b, 100.0, i)?;
         if let Some(v) = av.update(c) {
             println!("bar {i} AVWAP = {v:.3}");
@@ -106,6 +106,8 @@ use wickra::{AnchoredVwap, Candle, Indicator};
 
 let mut av = AnchoredVwap::new();
 av.set_anchor();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
+fn is_new_significant_event(_bar: Candle) -> bool { false } // your re-anchor predicate
 for bar in candle_stream {
     if let Some(v) = av.update(bar) {
         if bar.close > v { /* trading above the anchored fair price */ }

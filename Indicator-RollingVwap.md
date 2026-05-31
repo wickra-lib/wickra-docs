@@ -113,6 +113,7 @@ console.log(rv.batch(
 use wickra::{Candle, Indicator, RollingVwap};
 
 let mut rv = RollingVwap::new(20).unwrap();
+let candle_stream: Vec<Candle> = Vec::new(); // your live OHLCV feed
 for bar in candle_stream {
     if let Some(v) = rv.update(bar) {
         // v is rolling-window VWAP

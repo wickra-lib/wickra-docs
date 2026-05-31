@@ -41,7 +41,7 @@ The Python binding defaults the pair to `(20, 2.0)`.
 
 From `crates/wickra-core/src/indicators/percent_b.rs`:
 
-```rust
+```rust ignore
 impl Indicator for PercentB {
     type Input = f64;
     type Output = f64;

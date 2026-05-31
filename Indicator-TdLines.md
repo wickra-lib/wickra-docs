@@ -125,6 +125,7 @@ console.log('row 25 support   :', flat[25 * 2 + 1]);
 use wickra::{Candle, Indicator, TdLines};
 
 let mut tl = TdLines::classic();
+let candle_stream: Vec<Candle> = Vec::new(); // your live OHLCV feed
 for bar in candle_stream {
     if let Some(o) = tl.update(bar) {
         if !o.resistance.is_nan() && bar.close > o.resistance {

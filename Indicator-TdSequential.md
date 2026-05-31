@@ -97,8 +97,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut td = TdSequential::classic();
     for c in &candles {
         if let Some(o) = td.update(*c) {
-            if o.countdown == 13 { println!("buy countdown complete"); }
-            if o.countdown == -13 { println!("sell countdown complete"); }
+            if o.countdown == 13.0 { println!("buy countdown complete"); }
+            if o.countdown == -13.0 { println!("sell countdown complete"); }
         }
     }
     Ok(())
@@ -134,10 +134,11 @@ console.log('row 30: setup =', flat[30 * 2], 'countdown =', flat[30 * 2 + 1]);
 use wickra::{Candle, Indicator, TdSequential};
 
 let mut td = TdSequential::classic();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(o) = td.update(bar) {
-        if o.countdown == 13 { /* high-conviction buy */ }
-        if o.countdown == -13 { /* high-conviction sell */ }
+        if o.countdown == 13.0 { /* high-conviction buy */ }
+        if o.countdown == -13.0 { /* high-conviction sell */ }
     }
 }
 ```

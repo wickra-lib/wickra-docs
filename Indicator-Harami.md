@@ -104,6 +104,7 @@ console.log(h.batch([102, 99.5], [103, 100.5], [98, 99], [99, 100]));
 use wickra::{Candle, Harami, Indicator};
 
 let mut h = Harami::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if h.update(bar) == Some(1.0) { /* bullish Harami */ }
 }

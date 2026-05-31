@@ -77,7 +77,7 @@ use wickra::{Candle, Indicator, SpinningTop};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Small green body, long wicks both sides
     let c = Candle::new(100.0, 103.0, 97.0, 100.5, 1.0, 0)?;
-    let mut st = SpinningTop::new(0.3)?;
+    let mut st = SpinningTop::with_threshold(0.3)?;
     println!("{:?}", st.update(c));  // +1.0 (bullish ST: small body, long shadows, close > open)
     Ok(())
 }
@@ -111,7 +111,8 @@ console.log(st.batch([100], [103], [97], [100.5]));
 ```rust
 use wickra::{Candle, Indicator, SpinningTop};
 
-let mut st = SpinningTop::new(0.3).unwrap();
+let mut st = SpinningTop::with_threshold(0.3).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     let v = st.update(bar);
     if v.is_some_and(|x| x != 0.0) {

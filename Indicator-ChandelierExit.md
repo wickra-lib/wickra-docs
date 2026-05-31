@@ -42,7 +42,7 @@ configuration is a `22`-bar window with a `3.0` multiplier.
 
 From `crates/wickra-core/src/indicators/chandelier_exit.rs`:
 
-```rust
+```rust ignore
 impl Indicator for ChandelierExit {
     type Input = Candle;
     type Output = ChandelierExitOutput;   // { long_stop: f64, short_stop: f64 }

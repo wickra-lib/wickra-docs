@@ -95,6 +95,7 @@ const t = new wickra.Tsv(18);
 use wickra::{Candle, Indicator, Tsv};
 
 let mut t = Tsv::new(18).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = t.update(bar) {
         if v > 0.0 { /* net accumulation over period */ }

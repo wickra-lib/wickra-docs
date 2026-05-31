@@ -105,6 +105,7 @@ use wickra::{AdaptiveCycle, Indicator, Rsi};
 let mut ac = AdaptiveCycle::new();
 let mut rsi_cache: Option<(usize, Rsi)> = None;
 
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(period) = ac.update(px) {
         let p = period as usize;

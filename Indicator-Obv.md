@@ -37,7 +37,7 @@ that value (`crates/wickra-core/src/indicators/obv.rs:42-55`).
 
 ## Inputs / Outputs
 
-```rust
+```rust ignore
 impl Indicator for Obv {
     type Input  = Candle;
     type Output = f64;

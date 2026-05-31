@@ -41,7 +41,7 @@ constructors require it explicitly.
 
 From `crates/wickra-core/src/indicators/linreg.rs`:
 
-```rust
+```rust ignore
 impl Indicator for LinearRegression {
     type Input = f64;
     type Output = f64;

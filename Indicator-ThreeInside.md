@@ -102,6 +102,7 @@ console.log(ti.batch([12, 10.5, 11], [12.5, 11.5, 13], [9.5, 10.4, 10.9], [10, 1
 use wickra::{Candle, Indicator, ThreeInside};
 
 let mut ti = ThreeInside::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if ti.update(bar) == Some(1.0) { /* Three Inside Up */ }
     if ti.update(bar) == Some(-1.0) { /* Three Inside Down */ }

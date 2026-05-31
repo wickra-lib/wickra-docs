@@ -46,7 +46,7 @@ zero and `Error::InvalidPeriod` if `fast >= slow`.
 
 From `impl Indicator for AwesomeOscillator`:
 
-```rust
+```rust ignore
 type Input  = Candle;
 type Output = f64;
 fn update(&mut self, candle: Candle) -> Option<f64>;

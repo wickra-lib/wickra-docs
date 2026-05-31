@@ -39,7 +39,7 @@ Python, `new ta.ADL()` in Node.
 
 From `crates/wickra-core/src/indicators/adl.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Adl {
     type Input = Candle;
     type Output = f64;

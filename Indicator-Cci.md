@@ -50,7 +50,7 @@ returns `Error::NonPositiveMultiplier` when `factor <= 0` or non-finite.
 
 From `impl Indicator for Cci`:
 
-```rust
+```rust ignore
 type Input  = Candle;
 type Output = f64;
 fn update(&mut self, candle: Candle) -> Option<f64>;

@@ -97,6 +97,7 @@ const s = new wickra.SpearmanCorrelation(50);
 use wickra::{Indicator, SpearmanCorrelation};
 
 let mut s = SpearmanCorrelation::new(252).unwrap();
+let price_stream: Vec<(f64, f64)> = Vec::new(); // your paired (a, b) feed
 for (asset_a, asset_b) in price_stream {
     if let Some(v) = s.update((asset_a, asset_b)) {
         // v is rolling rank correlation — robust to nonlinearity

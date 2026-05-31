@@ -45,7 +45,7 @@ Python default from `#[pyo3(signature = (period=14))]` in
 
 ## Inputs / Outputs
 
-```rust
+```rust ignore
 impl Indicator for Atr {
     type Input  = Candle;
     type Output = f64;

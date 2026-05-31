@@ -149,6 +149,7 @@ console.log('row 100      :', out[100]);
 use wickra::{Indicator, LaguerreRsi};
 
 let mut lrsi = LaguerreRsi::classic();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     let v = lrsi.update(px).unwrap(); // never None after seed
     if v < 20.0 { /* oversold */ }

@@ -51,7 +51,7 @@ why the overall warmup is `slow + signal − 1` rather than
 
 From `impl Indicator for MacdIndicator`:
 
-```rust
+```rust ignore
 type Input  = f64;
 type Output = MacdOutput;
 fn update(&mut self, input: f64) -> Option<MacdOutput>;

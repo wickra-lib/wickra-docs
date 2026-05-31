@@ -120,6 +120,7 @@ console.log(td.batch([105, 104], [99, 95], [100, 99.5]));
 use wickra::{Candle, Indicator, TdDifferential};
 
 let mut td = TdDifferential::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = td.update(bar) {
         if v > 0.0 { /* buy reversal pattern */ }

@@ -39,7 +39,7 @@ Rust and Node constructors require it explicitly.
 
 From `crates/wickra-core/src/indicators/cmf.rs`:
 
-```rust
+```rust ignore
 impl Indicator for ChaikinMoneyFlow {
     type Input = Candle;
     type Output = f64;

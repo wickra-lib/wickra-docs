@@ -37,7 +37,7 @@ the Rust and Node constructors require it explicitly.
 
 From `crates/wickra-core/src/indicators/force_index.rs`:
 
-```rust
+```rust ignore
 impl Indicator for ForceIndex {
     type Input = Candle;
     type Output = f64;

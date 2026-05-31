@@ -52,7 +52,7 @@ returns `100`; otherwise the standard formula.
 
 From `impl Indicator for Mfi`:
 
-```rust
+```rust ignore
 type Input  = Candle;
 type Output = f64;
 fn update(&mut self, candle: Candle) -> Option<f64>;

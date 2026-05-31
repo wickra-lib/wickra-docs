@@ -43,7 +43,7 @@ There is no Python `#[pyo3(signature = …)]` default for `VWMA`, so
 
 From `crates/wickra-core/src/indicators/vwma.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Vwma {
     type Input = Candle;
     type Output = f64;

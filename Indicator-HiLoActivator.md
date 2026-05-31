@@ -136,6 +136,7 @@ console.log('row 10:', out[10]);
 use wickra::{Candle, HiLoActivator, Indicator};
 
 let mut hl = HiLoActivator::new(3).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(stop) = hl.update(bar) {
         if bar.close < stop { /* long stopped out — flip-to-short next bar */ }

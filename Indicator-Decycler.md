@@ -121,6 +121,7 @@ console.log('row 50:', dc.batch(prices)[50]);
 use wickra::{Decycler, Indicator};
 
 let mut dc = Decycler::new(20).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     let trend = dc.update(px).unwrap();
     // Use `trend` as the de-cycled price reference for slow-moving systems

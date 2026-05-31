@@ -128,6 +128,7 @@ use wickra::{Candle, Indicator, WilliamsFractals};
 let mut wf = WilliamsFractals::new();
 let mut last_up: Option<f64> = None;
 let mut last_down: Option<f64> = None;
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(o) = wf.update(bar) {
         if let Some(u) = o.up { last_up = Some(u); }

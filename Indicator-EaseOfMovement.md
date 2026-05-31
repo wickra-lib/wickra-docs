@@ -41,7 +41,7 @@ smooths the noisy per-bar `EMV` into a tradeable line.
 
 From `crates/wickra-core/src/indicators/ease_of_movement.rs`:
 
-```rust
+```rust ignore
 impl Indicator for EaseOfMovement {
     type Input = Candle;
     type Output = f64;

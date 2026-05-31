@@ -114,6 +114,7 @@ console.log('row 100:', es.batch(prices)[100]);
 use wickra::{EhlersStochastic, Indicator};
 
 let mut es = EhlersStochastic::new(20).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = es.update(px) {
         if v > 0.5 { /* overbought */ }

@@ -38,7 +38,7 @@ The Python binding defaults `period` to `10` via `#[pyo3(signature = (period=10)
 
 From `crates/wickra-core/src/indicators/mom.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Mom {
     type Input = f64;
     type Output = f64;

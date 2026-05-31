@@ -52,7 +52,7 @@ Either period being zero returns `Error::PeriodZero`.
 
 From `impl Indicator for Stochastic`:
 
-```rust
+```rust ignore
 type Input  = Candle;
 type Output = StochasticOutput;
 fn update(&mut self, candle: Candle) -> Option<StochasticOutput>;

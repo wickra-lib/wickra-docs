@@ -44,7 +44,7 @@ pass `period` explicitly.)
 
 From `crates/wickra-core/src/indicators/tema.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Tema {
     type Input = f64;
     type Output = f64;

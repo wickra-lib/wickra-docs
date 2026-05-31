@@ -34,7 +34,7 @@ and a useful close substitute when the close is noisy relative to the range.
 
 From `crates/wickra-core/src/indicators/median_price.rs`:
 
-```rust
+```rust ignore
 impl Indicator for MedianPrice {
     type Input = Candle;
     type Output = f64;

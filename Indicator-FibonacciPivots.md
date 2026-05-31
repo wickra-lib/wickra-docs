@@ -102,6 +102,7 @@ console.log(fp.batch([110], [90], [105]));
 use wickra::{Candle, FibonacciPivots, Indicator};
 
 let mut fp = FibonacciPivots::new();
+let session_aggregator: Vec<wickra::Candle> = Vec::new(); // your stream of completed session bars
 for session_bar in session_aggregator {
     let levels = fp.update(session_bar).unwrap();
 }

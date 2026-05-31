@@ -99,6 +99,7 @@ console.log('row 50:', o.batch(returns)[50]);
 use wickra::{Indicator, OmegaRatio};
 
 let mut o = OmegaRatio::new(252, 0.0).unwrap();
+let return_stream: Vec<f64> = Vec::new(); // your stream of periodic returns
 for daily_return in return_stream {
     if let Some(v) = o.update(daily_return) {
         // Omega > 1 = profitable above threshold

@@ -43,7 +43,7 @@ explicitly. The `periods` property returns `(long, short)`.
 
 From `crates/wickra-core/src/indicators/tsi.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Tsi {
     type Input = f64;
     type Output = f64;

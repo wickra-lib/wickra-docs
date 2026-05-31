@@ -39,7 +39,7 @@ constructors require it explicitly.
 
 From `crates/wickra-core/src/indicators/linreg_slope.rs`:
 
-```rust
+```rust ignore
 impl Indicator for LinRegSlope {
     type Input = f64;
     type Output = f64;

@@ -107,6 +107,7 @@ console.log(c.batch([110], [90], [105]));
 use wickra::{Camarilla, Candle, Indicator};
 
 let mut c = Camarilla::new();
+let session_aggregator: Vec<wickra::Candle> = Vec::new(); // your stream of completed session bars
 for bar in session_aggregator {
     let l = c.update(bar).unwrap();
     // Stott's standard rules:

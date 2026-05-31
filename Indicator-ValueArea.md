@@ -116,6 +116,7 @@ const va = new wickra.ValueArea(20, 50, 0.70);
 use wickra::{Candle, Indicator, ValueArea};
 
 let mut va = ValueArea::new(78, 100, 0.70).unwrap();  // ~1 day on 5-min bars
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(o) = va.update(bar) {
         // POC = "magnet" price; VAH/VAL = boundaries of fair-value zone

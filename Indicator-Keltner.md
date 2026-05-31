@@ -43,7 +43,7 @@ configuration.
 
 ## Inputs / Outputs
 
-```rust
+```rust ignore
 impl Indicator for Keltner {
     type Input  = Candle;
     type Output = KeltnerOutput;

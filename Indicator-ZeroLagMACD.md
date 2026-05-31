@@ -55,7 +55,7 @@ returns the `(12, 26, 9)` factory (`zero_lag_macd.rs:78-80`).
 
 From `impl Indicator for ZeroLagMacd`:
 
-```rust
+```rust ignore
 type Input  = f64;
 type Output = ZeroLagMacdOutput;
 fn update(&mut self, input: f64) -> Option<ZeroLagMacdOutput>;
@@ -162,6 +162,7 @@ console.log('row 60:', flat[60 * 3], flat[60 * 3 + 1], flat[60 * 3 + 2]);
 use wickra::{Indicator, ZeroLagMacd};
 
 let mut z = ZeroLagMacd::classic();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = z.update(px) {
         if v.histogram > 0.0 && /* prev hist <= 0 */ true {

@@ -48,7 +48,7 @@ property returns `(smoothing1, smoothing2)`.
 
 From `crates/wickra-core/src/indicators/pmo.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Pmo {
     type Input = f64;
     type Output = f64;

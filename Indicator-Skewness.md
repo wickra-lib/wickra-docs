@@ -94,6 +94,7 @@ console.log(s.batch(series)[80]);
 use wickra::{Indicator, Skewness};
 
 let mut s = Skewness::new(252).unwrap();
+let return_stream: Vec<f64> = Vec::new(); // your stream of periodic returns
 for daily_return in return_stream {
     if let Some(v) = s.update(daily_return) {
         if v < -1.0 { /* heavy left tail — drawdown risk elevated */ }

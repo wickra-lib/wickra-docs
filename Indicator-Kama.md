@@ -57,7 +57,7 @@ The Python defaults come from
 
 From `crates/wickra-core/src/indicators/kama.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Kama {
     type Input = f64;
     type Output = f64;

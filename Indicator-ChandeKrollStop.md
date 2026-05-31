@@ -51,7 +51,7 @@ smoothing window `9`.
 
 From `crates/wickra-core/src/indicators/chande_kroll_stop.rs`:
 
-```rust
+```rust ignore
 impl Indicator for ChandeKrollStop {
     type Input = Candle;
     type Output = ChandeKrollStopOutput;   // { stop_long: f64, stop_short: f64 }

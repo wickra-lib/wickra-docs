@@ -58,12 +58,13 @@ Python defaults from
 `bindings/python/src/lib.rs`. `Psar::classic()` returns the same triple.
 
 Validation errors:
+
 - non-finite or non-positive AF parameter → `Error::NonPositiveMultiplier`
 - `af_start > af_max` → `Error::InvalidPeriod { message: "af_start must be <= af_max" }`
 
 ## Inputs / Outputs
 
-```rust
+```rust ignore
 impl Indicator for Psar {
     type Input  = Candle;
     type Output = f64;

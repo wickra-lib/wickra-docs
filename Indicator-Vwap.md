@@ -54,7 +54,7 @@ boundaries (e.g. the start of the trading day) to restart accumulation.
 
 ### Inputs / Outputs
 
-```rust
+```rust ignore
 impl Indicator for Vwap {
     type Input  = Candle;
     type Output = f64;
@@ -184,7 +184,7 @@ cumulative form; `RollingVWAP` is the finite-window variant.
 
 ### Inputs / Outputs
 
-```rust
+```rust ignore
 impl Indicator for RollingVwap {
     type Input  = Candle;
     type Output = f64;

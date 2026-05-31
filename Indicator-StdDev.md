@@ -43,7 +43,7 @@ The Python binding defaults `period` to `20`.
 
 From `crates/wickra-core/src/indicators/std_dev.rs`:
 
-```rust
+```rust ignore
 impl Indicator for StdDev {
     type Input = f64;
     type Output = f64;

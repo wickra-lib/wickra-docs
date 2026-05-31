@@ -110,6 +110,7 @@ console.log(p.batch([100], [110], [98], [108]));
 use wickra::{Candle, Indicator, TdRangeProjection};
 
 let mut p = TdRangeProjection::new();
+let session_aggregator: Vec<wickra::Candle> = Vec::new(); // your stream of completed session bars
 for bar in session_aggregator {
     let proj = p.update(bar).unwrap();
     // Use proj.high / proj.low as next session's expected range

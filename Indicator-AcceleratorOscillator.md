@@ -39,7 +39,7 @@ is the `(5, 34)` AO with a `5`-period signal average.
 
 From `crates/wickra-core/src/indicators/accelerator_oscillator.rs`:
 
-```rust
+```rust ignore
 impl Indicator for AcceleratorOscillator {
     type Input = Candle;
     type Output = f64;

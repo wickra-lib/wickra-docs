@@ -49,7 +49,7 @@ default; the period must be passed explicitly. `with_alpha` is Rust-only.)
 
 From `crates/wickra-core/src/indicators/ema.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Ema {
     type Input = f64;
     type Output = f64;

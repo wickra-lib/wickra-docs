@@ -108,6 +108,7 @@ console.log(s.batch([12, 9.9, 10], [12.2, 10.1, 12], [9.5, 9.7, 9.9], [10, 9.95,
 use wickra::{Candle, Indicator, MorningEveningStar};
 
 let mut s = MorningEveningStar::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if s.update(bar) == Some(1.0) { /* Morning Star */ }
     if s.update(bar) == Some(-1.0) { /* Evening Star */ }

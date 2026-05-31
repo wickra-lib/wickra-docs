@@ -42,7 +42,7 @@ The Python binding defaults `period` to `14` via `#[pyo3(signature = (period=14)
 
 From `crates/wickra-core/src/indicators/cmo.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Cmo {
     type Input = f64;
     type Output = f64;

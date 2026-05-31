@@ -20,4 +20,42 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      # VitePress fails the build on dead internal links by default, so this
+      # job doubles as the internal-link checker.
       - run: npm run build
+
+  markdownlint:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Uses the repo's .markdownlint.jsonc (structural rules on, intentional
+      # wiki-export style noise off).
+      - uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: "*.md"
+
+  rust-snippets:
+    name: Rust doc snippets compile
+    runs-on: ubuntu-latest
+    steps:
+      # The docs live here; the wickra crate source is checked out alongside so
+      # every runnable ```rust block is compiled against the real API. A doc
+      # snippet that drifts from the library now fails CI here.
+      - uses: actions/checkout@v4
+        with:
+          path: docs
+      - uses: actions/checkout@v4
+        with:
+          repository: wickra-lib/wickra
+          path: wickra
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: wickra
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Compile every runnable rust snippet
+        working-directory: docs
+        run: WICKRA_CRATE_PATH="$GITHUB_WORKSPACE/wickra/crates/wickra" node scripts/check-rust-snippets.mjs

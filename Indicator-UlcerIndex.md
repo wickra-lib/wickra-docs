@@ -43,7 +43,7 @@ The Python binding defaults `period` to `14`.
 
 From `crates/wickra-core/src/indicators/ulcer_index.rs`:
 
-```rust
+```rust ignore
 impl Indicator for UlcerIndex {
     type Input = f64;
     type Output = f64;

@@ -96,6 +96,7 @@ const vo = new wickra.VolumeOscillator(14, 28);
 use wickra::{Candle, Indicator, VolumeOscillator};
 
 let mut vo = VolumeOscillator::new(14, 28).unwrap();
+let candle_stream: Vec<Candle> = Vec::new(); // your live OHLCV feed
 for bar in candle_stream {
     if let Some(v) = vo.update(bar) {
         if v > 20.0 { /* participation rising — confirms moves */ }

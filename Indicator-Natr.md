@@ -40,7 +40,7 @@ The Python binding defaults `period` to `14`.
 
 From `crates/wickra-core/src/indicators/natr.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Natr {
     type Input = Candle;
     type Output = f64;

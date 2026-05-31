@@ -1,0 +1,24 @@
+name: Link check
+
+# External link rot is non-deterministic (third-party sites go down, rate-limit,
+# or move), so this runs on a weekly schedule and on demand rather than blocking
+# every PR. Internal/relative links are already verified by the VitePress build
+# in ci.yml; lychee here only checks http(s) URLs.
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    name: External links (lychee)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --config lychee.toml --no-progress "*.md" ".vitepress/**/*.ts"
+          fail: true

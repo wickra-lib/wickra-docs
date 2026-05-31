@@ -45,7 +45,7 @@ exposed as a read-only property.
 
 From `crates/wickra-core/src/indicators/dpo.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Dpo {
     type Input = f64;
     type Output = f64;

@@ -43,7 +43,7 @@ There is no Python `#[pyo3(signature = …)]` default for `TRIMA`, so
 
 From `crates/wickra-core/src/indicators/trima.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Trima {
     type Input = f64;
     type Output = f64;

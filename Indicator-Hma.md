@@ -46,7 +46,7 @@ pass `period` explicitly.)
 
 From `crates/wickra-core/src/indicators/hma.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Hma {
     type Input = f64;
     type Output = f64;
@@ -74,7 +74,7 @@ The number reflects how the three inner WMAs warm up *in parallel*: the
 slow `WMA(period)` emits at input `period`, then the smoothing
 `WMA(√period)` needs `√period − 1` more inputs on top.
 
-```rust
+```rust ignore
 fn update(&mut self, input: f64) -> Option<f64> {
     // Both raw WMAs are fed unconditionally so neither delays the other.
     let h = self.half_wma.update(input);

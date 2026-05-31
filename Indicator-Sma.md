@@ -43,7 +43,7 @@ drift to begin with.
 
 From `crates/wickra-core/src/indicators/sma.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Sma {
     type Input = f64;
     type Output = f64;

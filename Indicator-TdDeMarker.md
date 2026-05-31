@@ -110,6 +110,7 @@ console.log('row 20:', td.batch(base.map(b => b + 1), base.map(b => b - 1))[20])
 use wickra::{Candle, Indicator, TdDeMarker};
 
 let mut td = TdDeMarker::new(14).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = td.update(bar) {
         if v > 0.7 { /* overbought */ }

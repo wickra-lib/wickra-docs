@@ -37,7 +37,7 @@ Rust and Node constructors require it explicitly.
 
 From `crates/wickra-core/src/indicators/vertical_horizontal_filter.rs`:
 
-```rust
+```rust ignore
 impl Indicator for VerticalHorizontalFilter {
     type Input = f64;
     type Output = f64;

@@ -136,6 +136,7 @@ use wickra::{Candle, DonchianStop, Indicator};
 
 let mut ds = DonchianStop::classic();
 let mut position: i32 = 1; // tracked externally
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(o) = ds.update(bar) {
         let stop = if position > 0 { o.stop_long } else { o.stop_short };

@@ -107,6 +107,7 @@ console.log(tr.batch(asset, bench));
 use wickra::{Indicator, TreynorRatio};
 
 let mut tr = TreynorRatio::new(252, 0.04 / 252.0).unwrap();
+let return_stream: Vec<(f64, f64)> = Vec::new(); // your stream of periodic returns
 for (asset, bench) in return_stream {
     if let Some(v) = tr.update((asset, bench)) {
         // v = annualised Treynor (if returns are daily)

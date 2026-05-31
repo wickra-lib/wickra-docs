@@ -41,7 +41,7 @@ Python default from `#[pyo3(signature = (period=20))]` in
 
 ## Inputs / Outputs
 
-```rust
+```rust ignore
 impl Indicator for Donchian {
     type Input  = Candle;
     type Output = DonchianOutput;

@@ -44,7 +44,7 @@ sits at the window low, `%R = −100`.
 
 From `impl Indicator for WilliamsR`:
 
-```rust
+```rust ignore
 type Input  = Candle;
 type Output = f64;
 fn update(&mut self, candle: Candle) -> Option<f64>;

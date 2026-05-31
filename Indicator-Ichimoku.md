@@ -148,6 +148,7 @@ console.log('row 80 kijun :', flat[80 * 5 + 1]);
 use wickra::{Candle, Ichimoku, Indicator};
 
 let mut ich = Ichimoku::classic();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(o) = ich.update(bar) {
         // Cloud-state classification

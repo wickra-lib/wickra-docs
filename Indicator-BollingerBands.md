@@ -52,7 +52,7 @@ and return `Error::PeriodZero` / `Error::NonPositiveMultiplier` in Rust.
 
 Rust signature:
 
-```rust
+```rust ignore
 impl Indicator for BollingerBands {
     type Input  = f64;
     type Output = BollingerOutput;

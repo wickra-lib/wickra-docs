@@ -137,6 +137,7 @@ use wickra::{Candle, Indicator, ZigZag};
 
 let mut zz = ZigZag::new(0.05).unwrap();
 let mut last: Option<(f64, f64)> = None;
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(o) = zz.update(bar) {
         last = Some((o.swing, o.direction));

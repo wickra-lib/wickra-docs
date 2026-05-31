@@ -107,6 +107,7 @@ console.log('row 50:', sr.batch(returns)[50]);
 use wickra::{Indicator, SharpeRatio};
 
 let mut sr = SharpeRatio::new(252, 0.04 / 252.0).unwrap();  // daily, 4% annual RF
+let return_stream: Vec<f64> = Vec::new(); // your stream of periodic returns
 for daily_return in return_stream {
     if let Some(v) = sr.update(daily_return) {
         // v is daily Sharpe; multiply by sqrt(252) for annualised

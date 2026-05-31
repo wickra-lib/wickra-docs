@@ -35,7 +35,7 @@ when the closing print carries more signal than the extremes.
 
 From `crates/wickra-core/src/indicators/weighted_close.rs`:
 
-```rust
+```rust ignore
 impl Indicator for WeightedClose {
     type Input = Candle;
     type Output = f64;

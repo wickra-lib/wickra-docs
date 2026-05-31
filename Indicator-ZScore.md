@@ -36,7 +36,7 @@ binding defaults it to `20`; the Rust and Node constructors require it.
 
 From `crates/wickra-core/src/indicators/z_score.rs`:
 
-```rust
+```rust ignore
 impl Indicator for ZScore {
     type Input = f64;
     type Output = f64;

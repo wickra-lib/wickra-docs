@@ -120,6 +120,7 @@ console.log(s.batch(prices).slice(0, 5));
 use wickra::{Indicator, StepTrailingStop};
 
 let mut s = StepTrailingStop::new(0.5).unwrap();
+let close_stream: Vec<f64> = Vec::new(); // your live close-price feed
 for close in close_stream {
     let stop = s.update(close).unwrap();
     // Snapped to the 0.5 grid; ratchets in 0.5 steps as price advances.

@@ -117,6 +117,7 @@ console.log('row 10:', out[10]);
 use wickra::{Indicator, PercentageTrailingStop};
 
 let mut p = PercentageTrailingStop::classic();
+let close_stream: Vec<f64> = Vec::new(); // your live close-price feed
 for close in close_stream {
     let stop = p.update(close).unwrap();
     // The indicator's internal `long` bit is private; infer from stop position.

@@ -103,6 +103,7 @@ console.log(var_.batch(returns)[150]);
 use wickra::{Indicator, ValueAtRisk};
 
 let mut var = ValueAtRisk::new(252, 0.99).unwrap();  // 1-year 99% VaR
+let return_stream: Vec<f64> = Vec::new(); // your stream of periodic returns
 for daily_return in return_stream {
     if let Some(v) = var.update(daily_return) {
         // v = magnitude of 1-day 99% VaR

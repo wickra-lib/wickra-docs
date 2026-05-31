@@ -36,7 +36,7 @@ want the bar's range reflected in the value.
 
 From `crates/wickra-core/src/indicators/typical_price.rs`:
 
-```rust
+```rust ignore
 impl Indicator for TypicalPrice {
     type Input = Candle;
     type Output = f64;

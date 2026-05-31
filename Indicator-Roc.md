@@ -39,7 +39,7 @@ do **not** assign a default for `period`; you must pass it explicitly.
 
 From `impl Indicator for Roc`:
 
-```rust
+```rust ignore
 type Input  = f64;
 type Output = f64;
 fn update(&mut self, input: f64) -> Option<f64>;

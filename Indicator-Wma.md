@@ -50,7 +50,7 @@ default; pass the period explicitly.)
 
 From `crates/wickra-core/src/indicators/wma.rs`:
 
-```rust
+```rust ignore
 impl Indicator for Wma {
     type Input = f64;
     type Output = f64;

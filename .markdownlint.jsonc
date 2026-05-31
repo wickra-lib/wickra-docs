@@ -1,0 +1,12 @@
+{
+  // Structural rules stay on; the intentional-style rules the hand-wrapped,
+  // wiki-migrated prose trips are turned off so the lint stays a useful gate
+  // rather than 3000 lines of noise.
+  "default": true,
+  "MD013": false, // line length — prose is hand-wrapped at ~76 columns
+  "MD040": false, // allow ``` output blocks with no language
+  "MD033": false, // inline HTML (badges, <br>) is used deliberately
+  "MD024": false, // pages documenting two indicators repeat section headings
+  "MD031": false, // fenced blocks embedded inside list items
+  "MD060": false  // table pipe-padding style inherited from the wiki export
+}

@@ -43,7 +43,7 @@ property returns `(period, trading_periods)`.
 
 From `crates/wickra-core/src/indicators/historical_volatility.rs`:
 
-```rust
+```rust ignore
 impl Indicator for HistoricalVolatility {
     type Input = f64;
     type Output = f64;

@@ -150,7 +150,7 @@ around price.
 | `HistoricalVolatility` | Annualised sample stddev of log returns. | `f64` | `f64` | `[0, ∞)` (annualised percent) | `(period=20, trading_periods=252)` (Python) | `period + 1` | [Indicator-HistoricalVolatility](Indicator-HistoricalVolatility) |
 | `BollingerBandwidth` | `(upper − lower) / middle` of the Bollinger Bands. | `f64` | `f64` | `[0, ∞)` | `(period=20, multiplier=2.0)` (Python) | `period` | [Indicator-BollingerBandwidth](Indicator-BollingerBandwidth) |
 | `PercentB` | `(price − lower) / (upper − lower)`; price position in the bands. | `f64` | `f64` | unbounded (`0`–`1` inside) | `(period=20, multiplier=2.0)` (Python) | `period` | [Indicator-PercentB](Indicator-PercentB) |
-| `TrueRange` | `max(H−L, |H−prevC|, |L−prevC|)`; raw single-bar volatility. | `Candle` | `f64` | `[0, ∞)` (price scale) | (no parameters) | `1` | [Indicator-TrueRange](Indicator-TrueRange) |
+| `TrueRange` | `max(H−L, \|H−prevC\|, \|L−prevC\|)`; raw single-bar volatility. | `Candle` | `f64` | `[0, ∞)` (price scale) | (no parameters) | `1` | [Indicator-TrueRange](Indicator-TrueRange) |
 | `ChaikinVolatility` | Rate of change of an EMA-smoothed high-low spread. | `Candle` | `f64` | unbounded around zero (percent) | `(ema_period=10, roc_period=10)` (Python) | `ema_period + roc_period` | [Indicator-ChaikinVolatility](Indicator-ChaikinVolatility) |
 | `DetrendedStdDev` | Standard deviation of OLS residuals — noise around the trend. | `f64` | `f64` | `[0, ∞)` (price scale) | `period` | `period` | [Indicator-DetrendedStdDev](Indicator-DetrendedStdDev) |
 | `RVIVolatility` | RSI-shaped volatility *direction* gauge built on rolling stddev. | `f64` | `f64` | `[0, 100]` | `period = 10` (Python) | `2·period − 1` | [Indicator-RviVolatility](Indicator-RviVolatility) |

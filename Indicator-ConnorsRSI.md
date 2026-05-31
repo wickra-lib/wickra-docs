@@ -147,8 +147,9 @@ console.log('row 120:', out[120]);
 use wickra::{ConnorsRsi, Indicator};
 
 let mut crsi = ConnorsRsi::classic();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for bar in price_stream {
-    if let Some(v) = crsi.update(bar.close) {
+    if let Some(v) = crsi.update(bar) {
         if v < 5.0 { /* extreme oversold — Connors fade-the-dip setup */ }
         if v > 95.0 { /* extreme overbought */ }
     }

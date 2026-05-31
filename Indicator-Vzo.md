@@ -97,6 +97,7 @@ const v = new wickra.Vzo(14);
 use wickra::{Candle, Indicator, Vzo};
 
 let mut v = Vzo::new(14).unwrap();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(o) = v.update(bar) {
         if o > 60.0 { /* strong bull volume regime */ }

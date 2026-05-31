@@ -104,6 +104,7 @@ console.log('row 20:',
 use wickra::{AdOscillator, Candle, Indicator};
 
 let mut ad = AdOscillator::new();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = ad.update(bar) {
         // v is cumulative; watch for divergences vs price

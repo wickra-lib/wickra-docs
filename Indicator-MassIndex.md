@@ -46,7 +46,7 @@ returns `(ema_period, sum_period)`.
 
 From `crates/wickra-core/src/indicators/mass_index.rs`:
 
-```rust
+```rust ignore
 impl Indicator for MassIndex {
     type Input = Candle;
     type Output = f64;

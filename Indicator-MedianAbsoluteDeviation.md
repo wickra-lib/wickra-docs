@@ -98,6 +98,7 @@ console.log(mad.batch(series)[30]);
 use wickra::{Indicator, MedianAbsoluteDeviation};
 
 let mut mad = MedianAbsoluteDeviation::new(50).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = mad.update(px) {
         let robust_sigma = v * 1.4826;

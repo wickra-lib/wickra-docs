@@ -100,6 +100,7 @@ console.log(c.batch(returns)[150]);
 use wickra::{ConditionalValueAtRisk, Indicator};
 
 let mut cvar = ConditionalValueAtRisk::new(252, 0.99).unwrap();
+let return_stream: Vec<f64> = Vec::new(); // your stream of periodic returns
 for daily_return in return_stream {
     if let Some(v) = cvar.update(daily_return) {
         // v = expected daily loss in worst 1% of cases

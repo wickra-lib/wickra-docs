@@ -50,7 +50,7 @@ plus a `direction` flag (`+1.0` / `-1.0`) that names which regime you are in.
 
 From `crates/wickra-core/src/indicators/super_trend.rs`:
 
-```rust
+```rust ignore
 impl Indicator for SuperTrend {
     type Input = Candle;
     type Output = SuperTrendOutput;   // { value: f64, direction: f64 }

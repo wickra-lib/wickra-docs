@@ -51,7 +51,7 @@ the oldest).
 
 From `impl Indicator for Aroon`:
 
-```rust
+```rust ignore
 type Input  = Candle;
 type Output = AroonOutput;
 fn update(&mut self, candle: Candle) -> Option<AroonOutput>;

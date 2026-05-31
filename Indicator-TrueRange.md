@@ -37,7 +37,7 @@ value per bar.
 
 From `crates/wickra-core/src/indicators/true_range.rs`:
 
-```rust
+```rust ignore
 impl Indicator for TrueRange {
     type Input = Candle;
     type Output = f64;

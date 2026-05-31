@@ -127,6 +127,7 @@ console.log('last:', out[out.length - 1]);
 use wickra::{Candle, Indicator, TdSetup};
 
 let mut td = TdSetup::classic();
+let candle_stream: Vec<wickra::Candle> = Vec::new(); // your live OHLCV candle feed
 for bar in candle_stream {
     if let Some(v) = td.update(bar) {
         if v == 9.0 { /* completed buy setup */ }

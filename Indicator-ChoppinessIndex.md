@@ -36,7 +36,7 @@ denominator is zero for `period == 1`). The Python binding defaults it to `14`.
 
 From `crates/wickra-core/src/indicators/choppiness_index.rs`:
 
-```rust
+```rust ignore
 impl Indicator for ChoppinessIndex {
     type Input = Candle;
     type Output = f64;

@@ -43,7 +43,7 @@ The Python binding defaults the pair to `(20, 2.0)`.
 
 From `crates/wickra-core/src/indicators/bollinger_bandwidth.rs`:
 
-```rust
+```rust ignore
 impl Indicator for BollingerBandwidth {
     type Input = f64;
     type Output = f64;

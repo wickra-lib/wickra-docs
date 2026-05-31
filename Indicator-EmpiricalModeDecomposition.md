@@ -127,6 +127,7 @@ console.log('row 100:', emd.batch(prices)[100]);
 use wickra::{EmpiricalModeDecomposition, Indicator};
 
 let mut emd = EmpiricalModeDecomposition::new(20, 0.5).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(v) = emd.update(px) {
         let regime = if v.abs() < 0.5 { "cycle" } else if v > 0.0 { "uptrend" } else { "downtrend" };

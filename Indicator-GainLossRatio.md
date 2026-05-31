@@ -96,6 +96,7 @@ console.log(g.batch(returns)[50]);
 use wickra::{GainLossRatio, Indicator};
 
 let mut g = GainLossRatio::new(100).unwrap();
+let trade_stream: Vec<f64> = Vec::new(); // your per-trade P&L feed
 for trade_pnl in trade_stream {
     if let Some(v) = g.update(trade_pnl) {
         // Typical win/loss size ratio

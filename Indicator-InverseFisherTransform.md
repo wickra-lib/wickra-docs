@@ -114,6 +114,7 @@ use wickra::{Indicator, InverseFisherTransform, Rsi};
 
 let mut rsi = Rsi::new(14).unwrap();
 let mut ift = InverseFisherTransform::new(0.1).unwrap();
+let price_stream: Vec<f64> = Vec::new(); // your live price feed
 for px in price_stream {
     if let Some(r) = rsi.update(px) {
         // Centre RSI at 0, then squash
