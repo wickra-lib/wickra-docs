@@ -146,6 +146,45 @@ last in a chain (its `Output` is a struct, but the chain only requires
 `Chain::new(Sma::new(20)?, MacdIndicator::classic())` is a valid type:
 MACD-of-smoothed-prices.
 
+## Worked example: Ehlers DSP chains
+
+John Ehlers' digital-signal-processing indicators are designed to be
+*composed*: a band-pass / smoothing filter cleans the price series, and an
+oscillator reads the filtered output. Every one of Wickra's Ehlers scalar
+filters — [RoofingFilter](Indicator-RoofingFilter),
+[SuperSmoother](Indicator-SuperSmoother), [Decycler](Indicator-Decycler) — is
+`Indicator<Input = f64, Output = f64>`, so they slot straight into the first
+stage of a chain feeding [EhlersStochastic](Indicator-EhlersStochastic) (also
+`f64 → f64`).
+
+Ehlers' canonical pairing is the **Roofing Filter into the Ehlers
+Stochastic** — the roofing filter strips both the low-frequency trend and the
+high-frequency noise so the stochastic sees only the tradeable cycle band:
+
+```rust
+use wickra::{BatchExt, Chain, EhlersStochastic, Indicator, RoofingFilter};
+
+// RoofingFilter(low-pass 10, high-pass 48) → EhlersStochastic(20).
+let mut chain = Chain::new(RoofingFilter::new(10, 48)?, EhlersStochastic::new(20)?);
+let out: Vec<Option<f64>> = chain.batch(&prices);
+```
+
+A `SuperSmoother` (a two-pole low-pass filter) makes an equally valid
+pre-filter when you only want to remove noise without de-trending:
+
+```rust
+use wickra::{Chain, EhlersStochastic, SuperSmoother};
+
+// Smooth first, then read the cycle position of the smoothed series.
+let smoothed_stoch = Chain::new(SuperSmoother::new(10)?, EhlersStochastic::new(20)?);
+```
+
+As with every chain, `warmup_period()` is the conservative sum of the two
+stages' warmups (`RoofingFilter::warmup_period() + EhlersStochastic::warmup_period()`),
+and `is_ready()` is the source of truth for the first readable value — the
+filtered series usually becomes available a little earlier than the
+conservative sum (see the EMA→RSI analysis above).
+
 ## Python and Node
 
 `Chain` is currently a Rust-only construct; the Python and Node bindings
