@@ -40,7 +40,7 @@ const updated = computed(() => {
         :href="b.href"
         target="_blank"
         rel="noreferrer"
-      ><img :src="b.src" :alt="b.alt" loading="lazy" /></a>
+      ><img :src="b.src" :alt="b.alt" loading="eager" decoding="async" /></a>
     </div>
     <p class="wk-footer-meta">
       Released under the PolyForm Noncommercial License 1.0.0 — not a trading system, use at your own risk.

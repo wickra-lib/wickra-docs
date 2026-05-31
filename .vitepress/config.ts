@@ -46,6 +46,12 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16.png' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }],
+    // Warm the TLS connections to the external badge hosts used in the footer
+    // badge row so the status badges paint with the page instead of popping in.
+    ['link', { rel: 'preconnect', href: 'https://img.shields.io' }],
+    ['link', { rel: 'preconnect', href: 'https://github.com' }],
+    ['link', { rel: 'preconnect', href: 'https://codecov.io' }],
+    ['link', { rel: 'preconnect', href: 'https://api.securityscorecards.dev' }],
     ['meta', { name: 'theme-color', content: '#0ea5e9' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'Wickra Documentation' }],
