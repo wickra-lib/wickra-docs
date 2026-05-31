@@ -55,10 +55,10 @@ returns the `(12, 26, 9)` factory (`zero_lag_macd.rs:78-80`).
 
 From `impl Indicator for ZeroLagMacd`:
 
-```rust ignore
-type Input  = f64;
-type Output = ZeroLagMacdOutput;
-fn update(&mut self, input: f64) -> Option<ZeroLagMacdOutput>;
+```rust
+use wickra::{Indicator, ZeroLagMacd, ZeroLagMacdOutput};
+// ZeroLagMacd: Input = f64, Output = ZeroLagMacdOutput
+const _: fn(&mut ZeroLagMacd, f64) -> Option<ZeroLagMacdOutput> = <ZeroLagMacd as Indicator>::update;
 ```
 
 `ZeroLagMacdOutput` carries three fields:

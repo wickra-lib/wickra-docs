@@ -52,10 +52,10 @@ returns `100`; otherwise the standard formula.
 
 From `impl Indicator for Mfi`:
 
-```rust ignore
-type Input  = Candle;
-type Output = f64;
-fn update(&mut self, candle: Candle) -> Option<f64>;
+```rust
+use wickra::{Indicator, Mfi, Candle};
+// Mfi: Input = Candle, Output = f64
+const _: fn(&mut Mfi, Candle) -> Option<f64> = <Mfi as Indicator>::update;
 ```
 
 Volume is consumed via `candle.volume` — it is not optional. Calling

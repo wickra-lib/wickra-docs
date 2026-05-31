@@ -35,12 +35,10 @@ reading. A zero-range bar carries no information and yields `0`.
 
 From `crates/wickra-core/src/indicators/balance_of_power.rs`:
 
-```rust ignore
-impl Indicator for BalanceOfPower {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, BalanceOfPower, Candle};
+// BalanceOfPower: Input = Candle, Output = f64
+const _: fn(&mut BalanceOfPower, Candle) -> Option<f64> = <BalanceOfPower as Indicator>::update;
 ```
 
 `BalanceOfPower` is a **candle-input** indicator that reads all four of

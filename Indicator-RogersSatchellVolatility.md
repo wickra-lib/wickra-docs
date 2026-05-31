@@ -45,11 +45,9 @@ constructor takes both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for RogersSatchellVolatility {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, RogersSatchellVolatility, Candle};
+// RogersSatchellVolatility: Input = Candle, Output = f64
+const _: fn(&mut RogersSatchellVolatility, Candle) -> Option<f64> = <RogersSatchellVolatility as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `float | None`;

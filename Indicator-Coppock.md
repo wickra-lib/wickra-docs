@@ -43,12 +43,10 @@ property returns `(roc_long, roc_short, wma_period)`.
 
 From `crates/wickra-core/src/indicators/coppock.rs`:
 
-```rust ignore
-impl Indicator for Coppock {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Coppock};
+// Coppock: Input = f64, Output = f64
+const _: fn(&mut Coppock, f64) -> Option<f64> = <Coppock as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

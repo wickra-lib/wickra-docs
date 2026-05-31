@@ -38,12 +38,10 @@ constructors require it explicitly.
 
 From `crates/wickra-core/src/indicators/linreg_angle.rs`:
 
-```rust ignore
-impl Indicator for LinRegAngle {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, LinRegAngle};
+// LinRegAngle: Input = f64, Output = f64
+const _: fn(&mut LinRegAngle, f64) -> Option<f64> = <LinRegAngle as Indicator>::update;
 ```
 
 `LinRegAngle` is a **scalar** indicator: it consumes one `f64` price per step.

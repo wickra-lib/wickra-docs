@@ -43,11 +43,9 @@ explicitly. The public class is `ADXR` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Adxr {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, Adxr, Candle};
+// Adxr: Input = Candle, Output = f64
+const _: fn(&mut Adxr, Candle) -> Option<f64> = <Adxr as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `float | None`;

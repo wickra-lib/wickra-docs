@@ -52,11 +52,9 @@ constructor takes both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for YangZhangVolatility {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, YangZhangVolatility, Candle};
+// YangZhangVolatility: Input = Candle, Output = f64
+const _: fn(&mut YangZhangVolatility, Candle) -> Option<f64> = <YangZhangVolatility as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `float | None`;

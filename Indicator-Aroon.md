@@ -51,10 +51,10 @@ the oldest).
 
 From `impl Indicator for Aroon`:
 
-```rust ignore
-type Input  = Candle;
-type Output = AroonOutput;
-fn update(&mut self, candle: Candle) -> Option<AroonOutput>;
+```rust
+use wickra::{Indicator, Aroon, Candle, AroonOutput};
+// Aroon: Input = Candle, Output = AroonOutput
+const _: fn(&mut Aroon, Candle) -> Option<AroonOutput> = <Aroon as Indicator>::update;
 ```
 
 `AroonOutput`:

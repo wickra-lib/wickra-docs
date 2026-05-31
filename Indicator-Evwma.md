@@ -41,11 +41,9 @@ explicitly. The public class is `EVWMA` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Evwma {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, Evwma, Candle};
+// Evwma: Input = Candle, Output = f64
+const _: fn(&mut Evwma, Candle) -> Option<f64> = <Evwma as Indicator>::update;
 ```
 
 Only `close` and `volume` are read.

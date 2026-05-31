@@ -45,12 +45,10 @@ returns `(fast, slow)`.
 
 From `crates/wickra-core/src/indicators/ppo.rs`:
 
-```rust ignore
-impl Indicator for Ppo {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Ppo};
+// Ppo: Input = f64, Output = f64
+const _: fn(&mut Ppo, f64) -> Option<f64> = <Ppo as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

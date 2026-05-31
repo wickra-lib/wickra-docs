@@ -35,12 +35,10 @@ when the closing print carries more signal than the extremes.
 
 From `crates/wickra-core/src/indicators/weighted_close.rs`:
 
-```rust ignore
-impl Indicator for WeightedClose {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, WeightedClose, Candle};
+// WeightedClose: Input = Candle, Output = f64
+const _: fn(&mut WeightedClose, Candle) -> Option<f64> = <WeightedClose as Indicator>::update;
 ```
 
 `WeightedClose` is a **candle-input** indicator that reads `high`, `low` and

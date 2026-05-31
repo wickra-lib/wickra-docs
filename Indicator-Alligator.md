@@ -47,13 +47,9 @@ all three explicitly. The public class is `Alligator` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Alligator {
-    type Input  = Candle;
-    type Output = AlligatorOutput;
-    fn update(&mut self, candle: Candle) -> Option<AlligatorOutput>;
-}
-
-pub struct AlligatorOutput { pub jaw: f64, pub teeth: f64, pub lips: f64 }
+use wickra::{Indicator, Alligator, Candle, AlligatorOutput};
+// Alligator: Input = Candle, Output = AlligatorOutput
+const _: fn(&mut Alligator, Candle) -> Option<AlligatorOutput> = <Alligator as Indicator>::update;
 ```
 
 Uses `high` and `low` (the median price).

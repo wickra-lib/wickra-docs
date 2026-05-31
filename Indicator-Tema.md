@@ -44,12 +44,10 @@ pass `period` explicitly.)
 
 From `crates/wickra-core/src/indicators/tema.rs`:
 
-```rust ignore
-impl Indicator for Tema {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Tema};
+// Tema: Input = f64, Output = f64
+const _: fn(&mut Tema, f64) -> Option<f64> = <Tema as Indicator>::update;
 ```
 
 Python `update` returns `float | None`, `batch` returns a 1-D

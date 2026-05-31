@@ -39,12 +39,10 @@ constructors require it explicitly.
 
 From `crates/wickra-core/src/indicators/linreg_slope.rs`:
 
-```rust ignore
-impl Indicator for LinRegSlope {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, LinRegSlope};
+// LinRegSlope: Input = f64, Output = f64
+const _: fn(&mut LinRegSlope, f64) -> Option<f64> = <LinRegSlope as Indicator>::update;
 ```
 
 `LinRegSlope` is a **scalar** indicator: it consumes one `f64` price per step.

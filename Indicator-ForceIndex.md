@@ -37,12 +37,10 @@ the Rust and Node constructors require it explicitly.
 
 From `crates/wickra-core/src/indicators/force_index.rs`:
 
-```rust ignore
-impl Indicator for ForceIndex {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, ForceIndex, Candle};
+// ForceIndex: Input = Candle, Output = f64
+const _: fn(&mut ForceIndex, Candle) -> Option<f64> = <ForceIndex as Indicator>::update;
 ```
 
 `ForceIndex` is a **candle-input** indicator that reads `close` and `volume`.

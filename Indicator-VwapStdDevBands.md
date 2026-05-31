@@ -51,13 +51,9 @@ multiplier explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for VwapStdDevBands {
-    type Input  = Candle;
-    type Output = VwapStdDevBandsOutput;
-    fn update(&mut self, candle: Candle) -> Option<VwapStdDevBandsOutput>;
-}
-
-pub struct VwapStdDevBandsOutput { pub upper: f64, pub middle: f64, pub lower: f64, pub stddev: f64 }
+use wickra::{Indicator, VwapStdDevBands, Candle, VwapStdDevBandsOutput};
+// VwapStdDevBands: Input = Candle, Output = VwapStdDevBandsOutput
+const _: fn(&mut VwapStdDevBands, Candle) -> Option<VwapStdDevBandsOutput> = <VwapStdDevBands as Indicator>::update;
 ```
 
 - **Python streaming.** `update(candle)` returns

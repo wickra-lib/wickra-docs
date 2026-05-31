@@ -135,21 +135,24 @@ Binance Spot WebSocket and yields closed klines as candles.
 wickra-data = { version = "0.2", features = ["live-binance"] }
 ```
 
-```rust ignore
-use wickra::{Indicator, Rsi};
-use wickra_data::live::binance::{BinanceKlineStream, Interval};
-
-let mut stream =
-    BinanceKlineStream::connect(&["BTCUSDT".into()], Interval::OneMinute).await?;
-let mut rsi = Rsi::new(14)?;
-
-while let Some(event) = stream.next_event().await? {
-    if event.is_closed {
-        if let Some(v) = rsi.update(event.candle.close) {
-            println!("RSI = {v:.2}");
-        }
-    }
-}
+```rust
+use wickra::{Indicator, Rsi};
+use wickra_data::live::binance::{BinanceKlineStream, Interval};
+
+async fn run() -> Result<(), Box<dyn std::error::Error>> {
+    let mut stream =
+        BinanceKlineStream::connect(&["BTCUSDT".into()], Interval::OneMinute).await?;
+    let mut rsi = Rsi::new(14)?;
+
+    while let Some(event) = stream.next_event().await? {
+        if event.is_closed {
+            if let Some(v) = rsi.update(event.candle.close) {
+                println!("RSI = {v:.2}");
+            }
+        }
+    }
+    Ok(())
+}
 ```
 
 The stream is resilient: it reconnects with exponential backoff after a
@@ -163,24 +166,25 @@ Since `wickra-data@0.2.5`, the connector accepts a `BinanceConfig` so you can
 point it at a different endpoint (Binance Testnet is the common case) or
 tune the read-timeout / reconnect timings to suit your environment:
 
-```rust ignore
-use std::time::Duration;
-use wickra_data::live::binance::{
-    BinanceConfig, BinanceKlineStream, Interval,
-};
-
-let cfg = BinanceConfig {
-    base_url: "wss://testnet.binance.vision".to_string(),
-    read_timeout: Duration::from_secs(60),
-    ..BinanceConfig::default()
-};
-
-let mut stream = BinanceKlineStream::connect_with_config(
-    &["BTCUSDT".into()],
-    Interval::OneMinute,
-    cfg,
-)
-.await?;
+```rust
+use std::time::Duration;
+use wickra_data::live::binance::{BinanceConfig, BinanceKlineStream, Interval};
+
+async fn run() -> Result<(), Box<dyn std::error::Error>> {
+    let cfg = BinanceConfig {
+        base_url: "wss://testnet.binance.vision".to_string(),
+        read_timeout: Duration::from_secs(60),
+        ..BinanceConfig::default()
+    };
+
+    let _stream = BinanceKlineStream::connect_with_config(
+        &["BTCUSDT".into()],
+        Interval::OneMinute,
+        cfg,
+    )
+    .await?;
+    Ok(())
+}
 ```
 
 `BinanceConfig` exposes the base URL (no path — the combined-stream path is

@@ -64,13 +64,10 @@ Validation errors:
 
 ## Inputs / Outputs
 
-```rust ignore
-impl Indicator for Psar {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-    fn warmup_period(&self) -> usize { 2 }
-}
+```rust
+use wickra::{Indicator, Psar, Candle};
+// Psar: Input = Candle, Output = f64
+const _: fn(&mut Psar, Candle) -> Option<f64> = <Psar as Indicator>::update;
 ```
 
 - **Python streaming.** `psar.update(candle)` returns `float | None`.

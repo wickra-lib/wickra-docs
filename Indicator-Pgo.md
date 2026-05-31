@@ -41,11 +41,9 @@ explicitly. The public class is `PGO` in both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Pgo {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, Pgo, Candle};
+// Pgo: Input = Candle, Output = f64
+const _: fn(&mut Pgo, Candle) -> Option<f64> = <Pgo as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `float | None`;
@@ -87,7 +85,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut pgo = Pgo::new(5)?;
     let mut last = None;
     for i in 0..20 {
-        let c = 10.0 + f64::from(i);                // rising close
+        let c = 10.0 + i as f64;                // rising close
         last = pgo.update(Candle::new(c, c + 0.5, c - 0.5, c, 1.0, i)?);
     }
     println!("{last:?}"); // Some(positive) — close above its SMA

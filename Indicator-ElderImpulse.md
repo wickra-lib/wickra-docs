@@ -51,11 +51,9 @@ explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for ElderImpulse {
-    type Input  = f64;
-    type Output = f64;  // exactly -1.0, 0.0, or +1.0
-    fn update(&mut self, input: f64) -> Option<f64>;
-}
+use wickra::{Indicator, ElderImpulse};
+// ElderImpulse: Input = f64, Output = f64
+const _: fn(&mut ElderImpulse, f64) -> Option<f64> = <ElderImpulse as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out that is always one of

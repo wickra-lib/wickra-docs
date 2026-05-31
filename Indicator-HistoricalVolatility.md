@@ -43,12 +43,10 @@ property returns `(period, trading_periods)`.
 
 From `crates/wickra-core/src/indicators/historical_volatility.rs`:
 
-```rust ignore
-impl Indicator for HistoricalVolatility {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, HistoricalVolatility};
+// HistoricalVolatility: Input = f64, Output = f64
+const _: fn(&mut HistoricalVolatility, f64) -> Option<f64> = <HistoricalVolatility as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

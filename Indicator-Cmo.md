@@ -42,12 +42,10 @@ The Python binding defaults `period` to `14` via `#[pyo3(signature = (period=14)
 
 From `crates/wickra-core/src/indicators/cmo.rs`:
 
-```rust ignore
-impl Indicator for Cmo {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Cmo};
+// Cmo: Input = f64, Output = f64
+const _: fn(&mut Cmo, f64) -> Option<f64> = <Cmo as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

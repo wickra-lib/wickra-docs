@@ -34,12 +34,10 @@ and a useful close substitute when the close is noisy relative to the range.
 
 From `crates/wickra-core/src/indicators/median_price.rs`:
 
-```rust ignore
-impl Indicator for MedianPrice {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, MedianPrice, Candle};
+// MedianPrice: Input = Candle, Output = f64
+const _: fn(&mut MedianPrice, Candle) -> Option<f64> = <MedianPrice as Indicator>::update;
 ```
 
 `MedianPrice` is a **candle-input** indicator that reads `high` and `low`. In

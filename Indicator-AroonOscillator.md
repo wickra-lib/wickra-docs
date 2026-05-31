@@ -39,12 +39,10 @@ The Python binding defaults `period` to `14`.
 
 From `crates/wickra-core/src/indicators/aroon_oscillator.rs`:
 
-```rust ignore
-impl Indicator for AroonOscillator {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, AroonOscillator, Candle};
+// AroonOscillator: Input = Candle, Output = f64
+const _: fn(&mut AroonOscillator, Candle) -> Option<f64> = <AroonOscillator as Indicator>::update;
 ```
 
 `AroonOscillator` is a **candle-input** indicator: it reads `high` and

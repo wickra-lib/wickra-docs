@@ -50,12 +50,10 @@ default; pass the period explicitly.)
 
 From `crates/wickra-core/src/indicators/wma.rs`:
 
-```rust ignore
-impl Indicator for Wma {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Wma};
+// Wma: Input = f64, Output = f64
+const _: fn(&mut Wma, f64) -> Option<f64> = <Wma as Indicator>::update;
 ```
 
 Python returns `float | None` from `update` and a `numpy.ndarray`

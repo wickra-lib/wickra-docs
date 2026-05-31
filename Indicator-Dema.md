@@ -43,12 +43,10 @@ pass `period` explicitly.)
 
 From `crates/wickra-core/src/indicators/dema.rs`:
 
-```rust ignore
-impl Indicator for Dema {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Dema};
+// Dema: Input = f64, Output = f64
+const _: fn(&mut Dema, f64) -> Option<f64> = <Dema as Indicator>::update;
 ```
 
 Python `update` returns `float | None`, `batch` returns a 1-D

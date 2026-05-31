@@ -50,10 +50,10 @@ returns `Error::NonPositiveMultiplier` when `factor <= 0` or non-finite.
 
 From `impl Indicator for Cci`:
 
-```rust ignore
-type Input  = Candle;
-type Output = f64;
-fn update(&mut self, candle: Candle) -> Option<f64>;
+```rust
+use wickra::{Indicator, Cci, Candle};
+// Cci: Input = Candle, Output = f64
+const _: fn(&mut Cci, Candle) -> Option<f64> = <Cci as Indicator>::update;
 ```
 
 Python's `CCI.batch(high, low, close)` returns a 1-D `float64` `np.ndarray`

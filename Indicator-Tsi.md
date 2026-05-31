@@ -43,12 +43,10 @@ explicitly. The `periods` property returns `(long, short)`.
 
 From `crates/wickra-core/src/indicators/tsi.rs`:
 
-```rust ignore
-impl Indicator for Tsi {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Tsi};
+// Tsi: Input = f64, Output = f64
+const _: fn(&mut Tsi, f64) -> Option<f64> = <Tsi as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

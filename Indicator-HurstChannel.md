@@ -46,13 +46,9 @@ takes both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for HurstChannel {
-    type Input  = Candle;
-    type Output = HurstChannelOutput;
-    fn update(&mut self, candle: Candle) -> Option<HurstChannelOutput>;
-}
-
-pub struct HurstChannelOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, HurstChannel, Candle, HurstChannelOutput};
+// HurstChannel: Input = Candle, Output = HurstChannelOutput
+const _: fn(&mut HurstChannel, Candle) -> Option<HurstChannelOutput> = <HurstChannel as Indicator>::update;
 ```
 
 - **Python streaming.** `update(candle)` returns `(upper, middle, lower)` or `None`.

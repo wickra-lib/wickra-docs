@@ -52,13 +52,9 @@ both bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Rwi {
-    type Input  = Candle;
-    type Output = RwiOutput;
-    fn update(&mut self, candle: Candle) -> Option<RwiOutput>;
-}
-
-pub struct RwiOutput { pub high: f64, pub low: f64 }
+use wickra::{Indicator, Rwi, Candle, RwiOutput};
+// Rwi: Input = Candle, Output = RwiOutput
+const _: fn(&mut Rwi, Candle) -> Option<RwiOutput> = <Rwi as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `(high, low)` or `None`;

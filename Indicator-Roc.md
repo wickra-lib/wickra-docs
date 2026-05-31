@@ -39,10 +39,10 @@ do **not** assign a default for `period`; you must pass it explicitly.
 
 From `impl Indicator for Roc`:
 
-```rust ignore
-type Input  = f64;
-type Output = f64;
-fn update(&mut self, input: f64) -> Option<f64>;
+```rust
+use wickra::{Indicator, Roc};
+// Roc: Input = f64, Output = f64
+const _: fn(&mut Roc, f64) -> Option<f64> = <Roc as Indicator>::update;
 ```
 
 Python's `ROC.batch(prices)` returns a 1-D `float64` `np.ndarray`. Node's

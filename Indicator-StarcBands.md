@@ -46,13 +46,9 @@ Node constructor takes all three arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for StarcBands {
-    type Input  = Candle;
-    type Output = StarcBandsOutput;
-    fn update(&mut self, candle: Candle) -> Option<StarcBandsOutput>;
-}
-
-pub struct StarcBandsOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, StarcBands, Candle, StarcBandsOutput};
+// StarcBands: Input = Candle, Output = StarcBandsOutput
+const _: fn(&mut StarcBands, Candle) -> Option<StarcBandsOutput> = <StarcBands as Indicator>::update;
 ```
 
 - **Python streaming.** `update(candle)` returns `(upper, middle, lower)` or `None`.

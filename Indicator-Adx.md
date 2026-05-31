@@ -73,10 +73,10 @@ When `+DI + −DI == 0`, `DX` is `0`; when `TR == 0`, both DI lines are
 
 From `impl Indicator for Adx`:
 
-```rust ignore
-type Input  = Candle;
-type Output = AdxOutput;
-fn update(&mut self, candle: Candle) -> Option<AdxOutput>;
+```rust
+use wickra::{Indicator, Adx, Candle, AdxOutput};
+// Adx: Input = Candle, Output = AdxOutput
+const _: fn(&mut Adx, Candle) -> Option<AdxOutput> = <Adx as Indicator>::update;
 ```
 
 `AdxOutput`:

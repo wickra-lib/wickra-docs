@@ -53,13 +53,9 @@ takes both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for StandardErrorBands {
-    type Input  = f64;
-    type Output = StandardErrorBandsOutput;
-    fn update(&mut self, value: f64) -> Option<StandardErrorBandsOutput>;
-}
-
-pub struct StandardErrorBandsOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, StandardErrorBands, StandardErrorBandsOutput};
+// StandardErrorBands: Input = f64, Output = StandardErrorBandsOutput
+const _: fn(&mut StandardErrorBands, f64) -> Option<StandardErrorBandsOutput> = <StandardErrorBands as Indicator>::update;
 ```
 
 - **Python streaming.** `update(value)` returns `(upper, middle, lower)` or `None`.

@@ -52,13 +52,10 @@ and return `Error::PeriodZero` / `Error::NonPositiveMultiplier` in Rust.
 
 Rust signature:
 
-```rust ignore
-impl Indicator for BollingerBands {
-    type Input  = f64;
-    type Output = BollingerOutput;
-    fn update(&mut self, input: f64) -> Option<BollingerOutput>;
-    fn warmup_period(&self) -> usize { self.period }
-}
+```rust
+use wickra::{Indicator, BollingerBands, BollingerOutput};
+// BollingerBands: Input = f64, Output = BollingerOutput
+const _: fn(&mut BollingerBands, f64) -> Option<BollingerOutput> = <BollingerBands as Indicator>::update;
 ```
 
 `BollingerOutput` fields: `upper`, `middle`, `lower`, `stddev`.

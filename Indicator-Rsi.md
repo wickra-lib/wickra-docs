@@ -48,10 +48,10 @@ are zero (a perfectly flat series) the implementation returns the standard
 
 From `impl Indicator for Rsi` in `crates/wickra-core/src/indicators/rsi.rs`:
 
-```rust ignore
-type Input  = f64;
-type Output = f64;
-fn update(&mut self, input: f64) -> Option<f64>;
+```rust
+use wickra::{Indicator, Rsi};
+// Rsi: Input = f64, Output = f64
+const _: fn(&mut Rsi, f64) -> Option<f64> = <Rsi as Indicator>::update;
 ```
 
 The output is a scalar in `[0, 100]`. In Python `batch(prices)` returns a

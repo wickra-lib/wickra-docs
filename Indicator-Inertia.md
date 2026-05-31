@@ -43,11 +43,9 @@ bindings.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Inertia {
-    type Input  = Candle;
-    type Output = f64;
-    fn update(&mut self, candle: Candle) -> Option<f64>;
-}
+use wickra::{Indicator, Inertia, Candle};
+// Inertia: Input = Candle, Output = f64
+const _: fn(&mut Inertia, Candle) -> Option<f64> = <Inertia as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `float | None`;

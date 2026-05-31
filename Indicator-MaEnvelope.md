@@ -45,13 +45,9 @@ both arguments explicitly.
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for MaEnvelope {
-    type Input  = f64;
-    type Output = MaEnvelopeOutput;
-    fn update(&mut self, value: f64) -> Option<MaEnvelopeOutput>;
-}
-
-pub struct MaEnvelopeOutput { pub upper: f64, pub middle: f64, pub lower: f64 }
+use wickra::{Indicator, MaEnvelope, MaEnvelopeOutput};
+// MaEnvelope: Input = f64, Output = MaEnvelopeOutput
+const _: fn(&mut MaEnvelope, f64) -> Option<MaEnvelopeOutput> = <MaEnvelope as Indicator>::update;
 ```
 
 - **Python streaming.** `update(value)` returns `(upper, middle, lower)` or `None`.

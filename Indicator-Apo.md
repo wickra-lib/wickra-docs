@@ -42,11 +42,9 @@ Node constructor takes both arguments explicitly. The public class is
 ## Inputs / Outputs
 
 ```rust
-impl Indicator for Apo {
-    type Input  = f64;
-    type Output = f64;
-    fn update(&mut self, input: f64) -> Option<f64>;
-}
+use wickra::{Indicator, Apo};
+// Apo: Input = f64, Output = f64
+const _: fn(&mut Apo, f64) -> Option<f64> = <Apo as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. The Python binding maps this

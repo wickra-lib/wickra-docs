@@ -44,6 +44,7 @@ use wickra::{Indicator, MacdIndicator};
 
 let mut macd = MacdIndicator::classic(); // (12, 26, 9)
 let mut last_hist: Option<f64> = None;
+let prices: Vec<f64> = Vec::new(); // your price series
 for &price in &prices {
     if let Some(v) = macd.update(price) {
         if let Some(prev) = last_hist {
@@ -121,10 +122,11 @@ use wickra::{Indicator, Rsi};
 let mut rsi_1m = Rsi::new(14)?;
 let mut rsi_1h = Rsi::new(14)?;
 
+let one_min_candles: Vec<wickra::Candle> = Vec::new(); // your 1-minute candle feed
 for candle in one_min_candles {
     let fast = rsi_1m.update(candle.close);
 
-    if candle.is_hour_close {
+    if candle.timestamp % 3_600_000 == 0 {
         let slow = rsi_1h.update(candle.close);
         if let (Some(f), Some(s)) = (fast, slow) {
             if f > 70.0 && s > 50.0 {
@@ -171,6 +173,7 @@ use wickra::{BatchExt, Chain, Ema, Rsi};
 
 // RSI(7) of EMA(14)-smoothed closes.
 let mut chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
+let prices: Vec<f64> = Vec::new(); // your price series
 let out: Vec<Option<f64>> = chain.batch(&prices);
 ```
 

@@ -51,10 +51,10 @@ why the overall warmup is `slow + signal − 1` rather than
 
 From `impl Indicator for MacdIndicator`:
 
-```rust ignore
-type Input  = f64;
-type Output = MacdOutput;
-fn update(&mut self, input: f64) -> Option<MacdOutput>;
+```rust
+use wickra::{Indicator, MacdIndicator, MacdOutput};
+// MacdIndicator: Input = f64, Output = MacdOutput
+const _: fn(&mut MacdIndicator, f64) -> Option<MacdOutput> = <MacdIndicator as Indicator>::update;
 ```
 
 `MacdOutput` carries three fields:

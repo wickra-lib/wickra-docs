@@ -36,12 +36,10 @@ want the bar's range reflected in the value.
 
 From `crates/wickra-core/src/indicators/typical_price.rs`:
 
-```rust ignore
-impl Indicator for TypicalPrice {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, TypicalPrice, Candle};
+// TypicalPrice: Input = Candle, Output = f64
+const _: fn(&mut TypicalPrice, Candle) -> Option<f64> = <TypicalPrice as Indicator>::update;
 ```
 
 `TypicalPrice` is a **candle-input** indicator that reads `high`, `low` and

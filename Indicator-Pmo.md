@@ -48,12 +48,10 @@ property returns `(smoothing1, smoothing2)`.
 
 From `crates/wickra-core/src/indicators/pmo.rs`:
 
-```rust ignore
-impl Indicator for Pmo {
-    type Input = f64;
-    type Output = f64;
-    // update(&mut self, input: f64) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Pmo};
+// Pmo: Input = f64, Output = f64
+const _: fn(&mut Pmo, f64) -> Option<f64> = <Pmo as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to

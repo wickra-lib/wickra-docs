@@ -44,10 +44,10 @@ sits at the window low, `%R = −100`.
 
 From `impl Indicator for WilliamsR`:
 
-```rust ignore
-type Input  = Candle;
-type Output = f64;
-fn update(&mut self, candle: Candle) -> Option<f64>;
+```rust
+use wickra::{Indicator, WilliamsR, Candle};
+// WilliamsR: Input = Candle, Output = f64
+const _: fn(&mut WilliamsR, Candle) -> Option<f64> = <WilliamsR as Indicator>::update;
 ```
 
 Python's `WilliamsR.batch(high, low, close)` returns a 1-D `float64`

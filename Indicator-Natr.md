@@ -40,12 +40,10 @@ The Python binding defaults `period` to `14`.
 
 From `crates/wickra-core/src/indicators/natr.rs`:
 
-```rust ignore
-impl Indicator for Natr {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, Natr, Candle};
+// Natr: Input = Candle, Output = f64
+const _: fn(&mut Natr, Candle) -> Option<f64> = <Natr as Indicator>::update;
 ```
 
 `NATR` is a **candle-input** indicator: it reads `high`, `low` and

@@ -42,12 +42,10 @@ change.
 
 From `crates/wickra-core/src/indicators/chaikin_volatility.rs`:
 
-```rust ignore
-impl Indicator for ChaikinVolatility {
-    type Input = Candle;
-    type Output = f64;
-    // update(&mut self, input: Candle) -> Option<f64>
-}
+```rust
+use wickra::{Indicator, ChaikinVolatility, Candle};
+// ChaikinVolatility: Input = Candle, Output = f64
+const _: fn(&mut ChaikinVolatility, Candle) -> Option<f64> = <ChaikinVolatility as Indicator>::update;
 ```
 
 `ChaikinVolatility` is a **candle-input** indicator that reads `high` and
