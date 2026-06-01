@@ -2,4 +2,5 @@
 # (Content Signals / AI-crawler policy), which prepends a `User-agent: *` group
 # before this file is served. To avoid a duplicate `User-agent: *` group, this
 # origin file carries only the sitemap pointer.
+
 Sitemap: https://docs.wickra.org/sitemap.xml

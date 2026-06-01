@@ -294,6 +294,27 @@ All three require manual `reset()` at session boundaries.
 | `InitialBalance`  | `InitialBalance::classic()` (`12`)       | `period`     | 12     | 12th (then locks)         |
 | `OpeningRange`    | `OpeningRange::classic()` (`6`)          | `period`     | 6      | 6th (then locks; live `breakout_distance`) |
 
+## Family 17 — Microstructure
+
+Non-OHLCV indicators over the order book and trade tape. Most are stateless or
+fixed-window; `Footprint` accumulates until `reset()`.
+
+| Indicator                | Constructor                       | Formula        | warmup | Inputs at first emission |
+|--------------------------|-----------------------------------|----------------|--------|--------------------------|
+| `OrderBookImbalanceTop1` | `OrderBookImbalanceTop1::new()`   | constant `1`   | 1      | 1st snapshot             |
+| `OrderBookImbalanceTopN` | `OrderBookImbalanceTopN::new(5)`  | constant `1`   | 1      | 1st snapshot             |
+| `OrderBookImbalanceFull` | `OrderBookImbalanceFull::new()`   | constant `1`   | 1      | 1st snapshot             |
+| `Microprice`             | `Microprice::new()`               | constant `1`   | 1      | 1st snapshot             |
+| `QuotedSpread`           | `QuotedSpread::new()`             | constant `1`   | 1      | 1st snapshot             |
+| `DepthSlope`             | `DepthSlope::new()`               | constant `1`   | 1      | 1st snapshot             |
+| `SignedVolume`           | `SignedVolume::new()`             | constant `1`   | 1      | 1st trade                |
+| `CumulativeVolumeDelta`  | `CumulativeVolumeDelta::new()`    | constant `1`   | 1      | 1st trade (reset per session) |
+| `TradeImbalance`         | `TradeImbalance::new(20)`         | `window`       | 20     | 20th trade               |
+| `EffectiveSpread`        | `EffectiveSpread::new()`          | constant `1`   | 1      | 1st trade-quote          |
+| `RealizedSpread`         | `RealizedSpread::new(10)`         | `horizon + 1`  | 11     | 11th trade-quote         |
+| `KylesLambda`            | `KylesLambda::new(50)`            | `window + 1`   | 51     | 51st trade-quote         |
+| `Footprint`              | `Footprint::new(0.5)`             | constant `1`   | 1      | 1st trade (reset per bar) |
+
 ## Additional Volume indicators
 
 | Indicator                  | Constructor                          | Formula                  | warmup | Inputs at first emission |

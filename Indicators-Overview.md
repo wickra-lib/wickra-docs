@@ -1,6 +1,6 @@
 # Indicators Overview
 
-Wickra ships **232 indicators** organised into **sixteen families**. Each
+Wickra ships **232 indicators** organised into **seventeen families**. Each
 family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
@@ -18,7 +18,7 @@ quotes `warmup_period()` as the indicator reports it — the **exact**
 first-emission index: the first non-`None` output lands on input
 `warmup_period()` (0-indexed `warmup_period() - 1`).
 
-The sixteen families:
+The seventeen families:
 
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
@@ -38,6 +38,7 @@ The sixteen families:
 | 14 | [Candlestick Patterns](#candlestick-patterns) | 15 | Classical 1- / 2- / 3-bar candle patterns. |
 | 15 | [Market Profile](#market-profile) | 3 | Session value-area / opening-range / IB levels. |
 | 16 | [Risk / Performance](#risk--performance) | 17 | Risk-adjusted return, drawdown, and tail-risk metrics. |
+| 17 | [Microstructure](#microstructure) | 13 | Order-book, trade-flow, price-impact and footprint analytics. |
 
 ## Moving Averages
 
@@ -387,6 +388,31 @@ take `(asset, benchmark)` pairs.
 | `TreynorRatio` | `(mean_asset − rf) / Beta`. | `(f64, f64)` | `f64` | unbounded | `(period, rf)` | `period` | [Indicator-TreynorRatio](Indicator-TreynorRatio) |
 | `InformationRatio` | `mean(active) / tracking_error`. | `(f64, f64)` | `f64` | unbounded | `period` | `period` | [Indicator-InformationRatio](Indicator-InformationRatio) |
 | `Alpha` | Jensen's alpha — `mean(asset) − (rf + Beta·(mean_bench − rf))`. | `(f64, f64)` | `f64` | unbounded | `(period, rf)` | `period` | [Indicator-Alpha](Indicator-Alpha) |
+
+## Microstructure
+
+Non-OHLCV analytics over the order book and the trade tape. Order-book
+indicators take an `OrderBook` depth snapshot; trade-flow indicators take a
+`Trade` (size + aggressor side); price-impact measures take a `TradeQuote` (a
+trade paired with the mid at execution); `Footprint` returns a variable-length
+per-bucket profile. The Python and Node bindings accept these as plain arrays
+(see each deep dive); WASM exposes per-event `update`.
+
+| Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
+|-----------|-----------|-------|--------|-------|----------|--------|-----------|
+| `OrderBookImbalanceTop1` | Signed depth pressure at the touch. | `OrderBook` | `f64` | `[−1, 1]` | (no parameters) | `1` | [Indicator-OrderBookImbalanceTop1](Indicator-OrderBookImbalanceTop1) |
+| `OrderBookImbalanceTopN` | Signed depth pressure over the top `levels`. | `OrderBook` | `f64` | `[−1, 1]` | `levels` | `1` | [Indicator-OrderBookImbalanceTopN](Indicator-OrderBookImbalanceTopN) |
+| `OrderBookImbalanceFull` | Signed depth pressure over the whole book. | `OrderBook` | `f64` | `[−1, 1]` | (no parameters) | `1` | [Indicator-OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull) |
+| `Microprice` | Size-weighted fair value tilting the mid. | `OrderBook` | `f64` | within spread | (no parameters) | `1` | [Indicator-Microprice](Indicator-Microprice) |
+| `QuotedSpread` | Top-of-book spread in bps of the mid. | `OrderBook` | `f64` | `≥ 0` | (no parameters) | `1` | [Indicator-QuotedSpread](Indicator-QuotedSpread) |
+| `DepthSlope` | Mean per-side OLS slope of cumulative size vs distance. | `OrderBook` | `f64` | `≥ 0` | (no parameters) | `1` | [Indicator-DepthSlope](Indicator-DepthSlope) |
+| `SignedVolume` | Trade size signed by aggressor (`±size`). | `Trade` | `f64` | unbounded | (no parameters) | `1` | [Indicator-SignedVolume](Indicator-SignedVolume) |
+| `CumulativeVolumeDelta` | Running sum of signed volume. | `Trade` | `f64` | unbounded | (no parameters) | `1` | [Indicator-CumulativeVolumeDelta](Indicator-CumulativeVolumeDelta) |
+| `TradeImbalance` | Rolling `(buy − sell)/(buy + sell)` over `window` trades. | `Trade` | `f64` | `[−1, 1]` | `window` | `window` | [Indicator-TradeImbalance](Indicator-TradeImbalance) |
+| `EffectiveSpread` | `2·D·(price − mid)/mid·1e4` bps round-trip cost. | `TradeQuote` | `f64` | unbounded | (no parameters) | `1` | [Indicator-EffectiveSpread](Indicator-EffectiveSpread) |
+| `RealizedSpread` | Effective spread net of impact over `horizon`. | `TradeQuote` | `f64` | unbounded | `horizon` | `horizon + 1` | [Indicator-RealizedSpread](Indicator-RealizedSpread) |
+| `KylesLambda` | Rolling OLS price impact per unit signed volume. | `TradeQuote` | `f64` | unbounded | `window` | `window + 1` | [Indicator-KylesLambda](Indicator-KylesLambda) |
+| `Footprint` | Buy/sell volume profile per price bucket. | `Trade` | `FootprintOutput` | per-bucket `≥ 0` | `tick_size` | `1` | [Indicator-Footprint](Indicator-Footprint) |
 
 ## Pick the right indicator for…
 
