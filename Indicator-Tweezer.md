@@ -40,6 +40,14 @@ See `crates/wickra-core/src/indicators/tweezer.rs`.
 `Tweezer::new` returns `Error::InvalidPeriod` for out-of-range
 `tolerance`.
 
+## Signed ±1 encoding
+
+This pattern already emits the uniform candlestick sign convention
+shared across the family — `+1.0` bullish, `−1.0` bearish, `0.0`
+no pattern — so it drops straight into a machine-learning feature
+matrix where the bullish and bearish variants of the pattern
+occupy a single dimension.
+
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:

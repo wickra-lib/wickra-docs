@@ -37,6 +37,15 @@ Output is `-1.0` when the shape matches, `0.0` otherwise. See
 
 None — `HangingMan::new()` takes no arguments.
 
+## Signed ±1 encoding
+
+A Hanging Man is bearish by definition, so under the uniform
+candlestick sign convention (`+1.0` bullish, `−1.0` bearish, `0.0`
+none) it emits `−1.0` when the shape matches and `0.0` otherwise —
+never `+1.0`. The same geometry read at the bottom of a downtrend
+is the bullish [Hammer](Indicator-Hammer), which carries the
+opposite sign.
+
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python / Node: same
