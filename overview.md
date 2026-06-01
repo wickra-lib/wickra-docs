@@ -76,7 +76,7 @@ Release notes and tagged builds:
 Start with [Indicators-Overview](Indicators-Overview) for the full
 sixteen-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-214 deep-dive pages.
+219 deep-dive pages.
 
 ### Moving Averages (19)
 

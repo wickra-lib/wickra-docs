@@ -250,6 +250,11 @@ Per-bar price transforms and rolling least-squares regressions.
 | `HurstExponent` | Rescaled-range (R/S) Hurst exponent estimate. | `f64` | `f64` | typically `(0, 1)` | `(period, chunks)` | `period` | [Indicator-HurstExponent](Indicator-HurstExponent) |
 | `PearsonCorrelation` | Rolling Pearson correlation of two synchronised series. | `(f64, f64)` | `f64` | `[-1, +1]` | `period` | `period` | [Indicator-PearsonCorrelation](Indicator-PearsonCorrelation) |
 | `Beta`          | Rolling OLS sensitivity of asset to benchmark. | `(f64, f64)` | `f64` | unbounded | `period` | `period` | [Indicator-Beta](Indicator-Beta) |
+| `PairwiseBeta`  | Rolling OLS slope of one asset's log-returns on another's. | `(f64, f64)` | `f64` | unbounded | `period` | `period + 1` | [Indicator-PairwiseBeta](Indicator-PairwiseBeta) |
+| `PairSpreadZScore` | Z-score of the log-spread `ln(a) − β·ln(b)` of a pair. | `(f64, f64)` | `f64` | unbounded | `(beta_period, z_period)` | `beta_period + z_period − 1` | [Indicator-PairSpreadZScore](Indicator-PairSpreadZScore) |
+| `LeadLagCrossCorrelation` | Offset that maximises `\|corr(a[t], b[t+k])\|` — which asset leads. | `(f64, f64)` | `{lag, correlation}` | `lag ∈ [−max_lag, max_lag]` | `(window, max_lag)` | `window + 2·max_lag` | [Indicator-LeadLagCrossCorrelation](Indicator-LeadLagCrossCorrelation) |
+| `Cointegration` | Engle–Granger hedge ratio + ADF stationarity test on the spread. | `(f64, f64)` | `{hedge_ratio, spread, adf_stat}` | `adf_stat` unbounded | `(period, adf_lags)` | `period` | [Indicator-Cointegration](Indicator-Cointegration) |
+| `RelativeStrengthAB` | Ratio line `a / b` with its moving average and RSI. | `(f64, f64)` | `{ratio, ratio_ma, ratio_rsi}` | `ratio_rsi ∈ [0, 100]` | `(ma_period, rsi_period)` | `max(ma_period, rsi_period + 1)` | [Indicator-RelativeStrengthAB](Indicator-RelativeStrengthAB) |
 | `SpearmanCorrelation` | Rolling rank correlation; monotone-relationship robust. | `(f64, f64)` | `f64` | `[-1, +1]` | `period` | `period` | [Indicator-SpearmanCorrelation](Indicator-SpearmanCorrelation) |
 
 ## Ehlers / Cycle (DSP)

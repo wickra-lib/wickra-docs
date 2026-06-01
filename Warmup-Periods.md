@@ -324,6 +324,11 @@ All three require manual `reset()` at session boundaries.
 | `HurstExponent`            | `HurstExponent::new(100, 4)`                 | `period`                                             | 100    | 100th                    |
 | `PearsonCorrelation`       | `PearsonCorrelation::new(50)`                | `period`                                             | 50     | 50th                     |
 | `Beta`                     | `Beta::new(50)`                              | `period`                                             | 50     | 50th                     |
+| `PairwiseBeta`             | `PairwiseBeta::new(50)`                      | `period + 1`                                         | 51     | 51st                     |
+| `PairSpreadZScore`         | `PairSpreadZScore::new(30, 20)`              | `beta_period + z_period − 1`                         | 49     | 49th                     |
+| `LeadLagCrossCorrelation`  | `LeadLagCrossCorrelation::new(20, 10)`       | `window + 2·max_lag`                                 | 40     | 40th                     |
+| `Cointegration`            | `Cointegration::new(30, 1)`                  | `period`                                             | 30     | 30th                     |
+| `RelativeStrengthAB`       | `RelativeStrengthAB::new(20, 14)`            | `max(ma_period, rsi_period + 1)`                     | 20     | 20th                     |
 | `SpearmanCorrelation`      | `SpearmanCorrelation::new(50)`               | `period`                                             | 50     | 50th                     |
 | `DetrendedStdDev`          | `DetrendedStdDev::new(20)`                   | `period`                                             | 20     | 20th                     |
 

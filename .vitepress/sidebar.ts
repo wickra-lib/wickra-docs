@@ -624,12 +624,20 @@ export const sidebar = [
         "link": "/Indicator-CoefficientOfVariation"
       },
       {
+        "text": "Cointegration",
+        "link": "/Indicator-Cointegration"
+      },
+      {
         "text": "HurstExponent",
         "link": "/Indicator-HurstExponent"
       },
       {
         "text": "Kurtosis",
         "link": "/Indicator-Kurtosis"
+      },
+      {
+        "text": "LeadLagCrossCorrelation",
+        "link": "/Indicator-LeadLagCrossCorrelation"
       },
       {
         "text": "LinearRegression",
@@ -652,8 +660,20 @@ export const sidebar = [
         "link": "/Indicator-MedianPrice"
       },
       {
+        "text": "PairSpreadZScore",
+        "link": "/Indicator-PairSpreadZScore"
+      },
+      {
+        "text": "PairwiseBeta",
+        "link": "/Indicator-PairwiseBeta"
+      },
+      {
         "text": "PearsonCorrelation",
         "link": "/Indicator-PearsonCorrelation"
+      },
+      {
+        "text": "RelativeStrengthAB",
+        "link": "/Indicator-RelativeStrengthAB"
       },
       {
         "text": "RSquared",
