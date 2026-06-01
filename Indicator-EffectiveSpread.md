@@ -84,21 +84,45 @@ console.log(es.update(100.05, 1, true, 100.0)); // 10 bps
 
 ## Interpretation
 
-The effective spread is what the aggressor *actually* paid, against the mid at
-the moment of the trade. Compared to the [QuotedSpread](Indicator-QuotedSpread),
-it reveals price improvement (fills inside the quote) and slippage (fills that
-walked the book). Averaged over many trades it is the standard transaction-cost
-metric for execution-quality analysis.
+The effective spread is what the aggressor *actually* paid, measured against
+the mid prevailing at the instant of the trade.
 
-## Pitfalls
+- **Positive.** The normal case — the aggressor crossed the spread and paid
+  for immediacy. The larger the number, the worse the fill.
+- **Near zero or negative.** Price improvement: the fill landed inside the
+  quote, or even on the passive side of the mid. Common with
+  midpoint-matching venues and hidden liquidity.
+- **Versus the quoted spread.** If the average effective spread is below the
+  quoted spread, your flow is getting price improvement; if it is above, you
+  are walking the book. This ratio is the core of transaction-cost analysis.
 
-- It is a per-trade quantity, not a rolling average — aggregate it yourself
-  (e.g. volume-weight a window of readings) for a cost estimate.
-- The sign convention treats the aggressor's cost as positive; a mislabelled
-  aggressor flag flips the sign.
+Averaged — ideally volume-weighted — over many trades it is the standard
+execution-quality metric venues and brokers report.
+
+## Common pitfalls
+
+- **Per-trade, not a rate.** A single reading is one fill's cost. Aggregate it
+  yourself — volume-weight a window — for a venue- or strategy-level estimate.
+- **Mid quality drives it.** The result is only as good as the `mid` you pass;
+  a stale or one-sided mid distorts every reading. Use the mid that prevailed
+  *at* execution, not the next tick.
+- **Sign depends on the aggressor flag.** The convention charges the aggressor
+  (positive = cost); a mislabelled side flips the sign, turning costs into
+  apparent improvement.
+
+## References
+
+- Charles M. C. Lee and Mark J. Ready, *Inferring Trade Direction from Intraday
+  Data*, *Journal of Finance*, 1991 — trade signing.
+- Roger D. Huang and Hans R. Stoll, *Dealer versus Auction Markets*, *Journal
+  of Financial Economics*, 1996 — the effective/realized spread decomposition.
+- Hendrik Bessembinder, *Issues in Assessing Trade Execution Costs*, *Journal
+  of Financial Markets*, 2003.
 
 ## See also
 
-- [QuotedSpread](Indicator-QuotedSpread) — the spread at the touch.
-- [RealizedSpread](Indicator-RealizedSpread) — effective spread net of price impact.
+- [QuotedSpread](Indicator-QuotedSpread) — the standing spread at the touch.
+- [RealizedSpread](Indicator-RealizedSpread) — effective spread net of price
+  impact (the maker's take).
 - [KylesLambda](Indicator-KylesLambda) — price impact per unit of signed flow.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

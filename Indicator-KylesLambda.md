@@ -95,20 +95,45 @@ const kl = new KylesLambda(50);
 
 ## Interpretation
 
-Kyle's λ is the slope of the price-impact line: how far the mid moves per unit
-of net order flow. It is inversely related to depth — a resilient, deep book
-has a small λ, a fragile one a large λ. Track it intraday to see liquidity
-evaporate before events and recover after them.
+Kyle's λ is the slope of the price-impact line — how far the mid moves per unit
+of net order flow. It is the canonical inverse of market depth.
 
-## Pitfalls
+- **Large λ.** A thin, fragile book: a small signed order shifts the mid a lot.
+  Trading into it is expensive and impact-dominated.
+- **Small λ.** A deep, resilient book: it absorbs size with little mid
+  movement. The cheap regime for execution.
+- **Rising intraday.** Liquidity is evaporating — λ climbs ahead of scheduled
+  events and in stress, then recovers afterwards. Watching its trajectory is a
+  practical liquidity-risk gauge.
 
-- λ has units of price per unit volume; it is **not** scale-free — compare it
-  only across comparable instruments / size conventions.
-- A window that is too short is noisy; too long blurs regime changes. Tune to
-  your trade rate.
+λ is the empirical analogue of the depth parameter in Kyle's insider-trading
+model; Amihud's illiquidity ratio is the daily, low-frequency cousin.
+
+## Common pitfalls
+
+- **Not scale-free.** λ has units of price per unit volume, so its magnitude
+  depends on tick size and contract size. Compare it only across comparable
+  instruments and size conventions — never as a bare cross-asset number.
+- **Window tuning.** Too short and the regression is noisy; too long and it
+  blurs regime changes. Match the window to your trade rate, not a fixed clock.
+- **Signed-flow quality.** λ regresses Δmid on *signed* volume; a mislabelled
+  aggressor flag corrupts the regressor and can even flip λ negative. Sign
+  trades reliably (tick/quote rule) before feeding them in.
+
+## References
+
+- Albert S. Kyle, *Continuous Auctions and Insider Trading*, *Econometrica*,
+  1985 — the original λ as the price-impact / depth parameter.
+- Yakov Amihud, *Illiquidity and Stock Returns*, *Journal of Financial
+  Markets*, 2002 — the daily illiquidity ratio, a low-frequency λ.
+- Joel Hasbrouck, *Empirical Market Microstructure*, 2007 — estimating price
+  impact from trade-and-quote data.
 
 ## See also
 
-- [RealizedSpread](Indicator-RealizedSpread) — effective spread minus impact.
-- [DepthSlope](Indicator-DepthSlope) — depth from the resting book instead of flow.
+- [RealizedSpread](Indicator-RealizedSpread) — effective spread minus the
+  impact λ measures.
+- [DepthSlope](Indicator-DepthSlope) — depth read from the resting book instead
+  of from executed flow.
 - [Microprice](Indicator-Microprice) — fair value tilted by book imbalance.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

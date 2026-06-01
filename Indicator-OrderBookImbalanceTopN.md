@@ -79,16 +79,46 @@ console.log(new OrderBookImbalanceTopN(2).update([100, 99], [2, 1], [101, 102], 
 
 ## Interpretation
 
-Summing several levels is more robust to single-level spoofing than
-[Top-1](Indicator-OrderBookImbalanceTop1) while staying more responsive than
-the [Full](Indicator-OrderBookImbalanceFull) book. Choose `levels` to match the
-depth that actually trades on your venue.
+Top-N imbalance is the middle ground of the family — pressure aggregated over
+the `levels` of near-book depth that actually get hit.
 
-## Pitfalls
+- **Positive (→ +1).** Bid-side depth dominates the near book; upward pressure
+  that is harder to fake than a single best level.
+- **Negative (→ −1).** Ask-side depth dominates; downward pressure.
+- **Versus Top-1 and Full.** Summing several levels is more robust to
+  single-level spoofing than [Top-1](Indicator-OrderBookImbalanceTop1) while
+  staying more responsive than the whole
+  [Full](Indicator-OrderBookImbalanceFull) book. The `levels` knob trades
+  responsiveness for robustness.
 
-- Larger `levels` dilutes the signal with deep, rarely-hit liquidity.
+Choose `levels` to match the depth that actually trades on your venue — the
+liquidity a real order would consume.
+
+## Common pitfalls
+
+- **Dilution at large `levels`.** Summing deep, rarely-hit liquidity drowns the
+  near-touch signal; the reading drifts toward the slow
+  [Full](Indicator-OrderBookImbalanceFull) measure.
+- **Clamping is silent.** When fewer than `levels` are posted it sums
+  `min(levels, depth)` with no padding, so a thin snapshot quietly behaves like
+  a shallower `levels` — comparable only across snapshots of similar depth.
+- **Still posted, not committed.** Like all book measures it reads resting
+  quotes; confirm a strong tilt with executed flow
+  ([TradeImbalance](Indicator-TradeImbalance)).
+
+## References
+
+- Rama Cont, Arseniy Kukanov, Sasha Stoikov, *The Price Impact of Order Book
+  Events*, *Journal of Financial Econometrics*, 2014.
+- Álvaro Cartea, Sebastian Jaimungal, José Penalva, *Algorithmic and
+  High-Frequency Trading*, 2015 — depth-weighted imbalance signals.
 
 ## See also
 
-- [OrderBookImbalanceTop1](Indicator-OrderBookImbalanceTop1), [OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull)
-- [DepthSlope](Indicator-DepthSlope) — the shape, not just the imbalance, of depth.
+- [OrderBookImbalanceTop1](Indicator-OrderBookImbalanceTop1) — the most
+  responsive, single-level version.
+- [OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull) — the whole-book,
+  slowest version.
+- [DepthSlope](Indicator-DepthSlope) — the shape, not just the imbalance, of
+  depth.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

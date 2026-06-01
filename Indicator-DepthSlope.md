@@ -88,22 +88,41 @@ console.log(ds.update([99, 98], [1, 2], [101, 102], [1, 2])); // 2
 
 ## Interpretation
 
-DepthSlope summarises the shape of the resting book in a single number: how
-quickly cumulative liquidity builds as you move away from the touch. A large
-slope is a deep, cushioned book that absorbs size with little walking; a small
-slope is a shallow book that gaps under pressure. Unlike
-[KylesLambda](Indicator-KylesLambda), which infers impact from *executed* flow,
-DepthSlope reads it straight off the *resting* quotes.
+DepthSlope summarises the shape of the resting book in a single number — how
+quickly cumulative liquidity builds as you move away from the touch.
 
-## Pitfalls
+- **Large slope.** A deep, cushioned book: size accumulates fast just behind
+  the touch, so a marketable order walks only a little before it is filled.
+- **Small slope.** A shallow, gappy book: liquidity is sparse away from the
+  touch, so the same order walks far and moves the price. The fragile regime.
+- **Resting vs. executed.** Unlike [KylesLambda](Indicator-KylesLambda), which
+  infers impact from *executed* flow, DepthSlope reads prospective impact
+  straight off the *posted* quotes — a forward-looking, pre-trade view.
 
-- It is sensitive to how many levels your feed publishes; compare only across
-  snapshots of comparable depth.
-- It measures the *posted* book, which can be spoofed or pulled; pair it with a
-  flow-based measure for confirmation.
+## Common pitfalls
+
+- **Feed-depth dependence.** The slope depends on how many levels your venue
+  publishes; a 5-level feed and a 50-level feed are not comparable. Only
+  compare snapshots of equal published depth.
+- **Posted, not committed.** It measures the *resting* book, which can be
+  spoofed or pulled in an instant. Confirm with a flow-based measure such as
+  [TradeImbalance](Indicator-TradeImbalance) before trusting it.
+- **Two levels minimum.** With fewer than two levels on a side no slope can be
+  fit and the side contributes `0`; a thin snapshot can read deceptively flat.
+
+## References
+
+- Randi Næs and Johannes A. Skjeltorp, *Order Book Characteristics and the
+  Volume–Volatility Relation*, *Journal of Financial Markets*, 2006.
+- Kenneth A. Kavajecz, *A Specialist's Quoted Depth and the Limit Order Book*,
+  *Journal of Finance*, 1999 — depth as a liquidity dimension.
+- Jean-Philippe Bouchaud, Julius Bonart, Jonathan Donier, Martin Gould,
+  *Trades, Quotes and Prices*, 2018 — the shape of the limit-order book.
 
 ## See also
 
-- [OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull) — net depth pressure.
+- [OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull) — net depth
+  pressure, the *imbalance* of the book rather than its slope.
 - [Microprice](Indicator-Microprice) — fair value from top-of-book sizes.
-- [KylesLambda](Indicator-KylesLambda) — impact from executed flow.
+- [KylesLambda](Indicator-KylesLambda) — realised impact from executed flow.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

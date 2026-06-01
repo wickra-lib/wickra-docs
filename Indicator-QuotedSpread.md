@@ -75,17 +75,43 @@ console.log(new QuotedSpread().update([100], [1], [101], [1])); // ≈ 99.5025
 
 ## Interpretation
 
-The quoted spread is the headline liquidity cost: how many basis points a
-round-trip at the touch would cost if you crossed both sides. It widens in
-stress and tightens in calm, deep markets. Compare it to the
-[EffectiveSpread](Indicator-EffectiveSpread) to measure realised execution
-quality versus the standing quote.
+The quoted spread is the headline liquidity cost — how many basis points a
+round-trip at the touch would cost if you crossed both sides right now.
 
-## Pitfalls
+- **Wide.** Thin or nervous market; market makers demand more to quote.
+  Spreads blow out around news, at the open and close, and in low-liquidity
+  hours.
+- **Tight.** Deep, competitive, calm market; the cost of immediacy is low.
+  Major FX pairs and large-cap equities sit here in normal regimes.
+- **Versus the effective spread.** The quoted spread is what the book
+  *advertises*; the [EffectiveSpread](Indicator-EffectiveSpread) is what trades
+  *actually* pay. A persistent gap means meaningful price improvement (or
+  slippage) inside the quote.
 
-- It ignores size — a tight but tiny quote can still be expensive to trade
-  through. Combine with [DepthSlope](Indicator-DepthSlope) / imbalance.
+## Common pitfalls
+
+- **It ignores size.** A tight quote for one lot can still be expensive to
+  trade *through* — the second level may be far away. Combine with
+  [DepthSlope](Indicator-DepthSlope) or
+  [OrderBookImbalanceTopN](Indicator-OrderBookImbalanceTopN) to see depth.
+- **Basis points hide the absolute cost.** A 5 bps spread on a $5 stock is a
+  different ticket than on a $5 000 future; weigh it against what you trade.
+- **Crossed or locked books.** A momentarily crossed feed (bid ≥ ask) yields a
+  non-positive spread; this indicator clamps an empty book to `0`, but you
+  should still sanitise upstream quotes.
+
+## References
+
+- Richard Roll, *A Simple Implicit Measure of the Effective Bid-Ask Spread in
+  an Efficient Market*, *Journal of Finance*, 1984.
+- Maureen O'Hara, *Market Microstructure Theory*, 1995 — the economics of the
+  spread as a liquidity premium.
 
 ## See also
 
-- [EffectiveSpread](Indicator-EffectiveSpread), [Microprice](Indicator-Microprice)
+- [EffectiveSpread](Indicator-EffectiveSpread) — what trades actually paid
+  versus the quote.
+- [RealizedSpread](Indicator-RealizedSpread) — the spread the maker keeps after
+  price impact.
+- [Microprice](Indicator-Microprice) — fair value inside the spread.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

@@ -76,16 +76,42 @@ console.log(new OrderBookImbalanceFull().update([100], [1], [101, 102], [2, 1]))
 
 ## Interpretation
 
-The whole-book imbalance captures resting pressure beyond the touch — useful for
-slower, position-level bias. It is the noisiest to spoof but also the slowest to
-react, since deep liquidity rarely trades.
+Whole-book imbalance captures resting pressure across *every* posted level — the
+slowest, broadest member of the family.
 
-## Pitfalls
+- **Positive (→ +1).** Total bid depth exceeds total ask depth; a standing
+  upward bias that persists across the book, not just the touch.
+- **Negative (→ −1).** Total ask depth dominates; downward bias.
+- **Slow but hard to fake.** Spoofing the entire book is far costlier than
+  flickering one level, so a sustained full-book tilt is more credible — but it
+  reacts slowly, since deep liquidity rarely trades. Best for position-level
+  bias, not for timing the next tick.
 
-- Feeds that truncate depth make "full" venue-dependent; compare only across
+## Common pitfalls
+
+- **"Full" is venue-defined.** Feeds truncate depth differently, so "the whole
+  book" means different things across venues and snapshots. Compare only across
   identical depth settings.
+- **Deep liquidity is inert.** Size far from the touch may never trade; it can
+  dominate the ratio while having little bearing on the next move. For
+  execution timing prefer [Top-1](Indicator-OrderBookImbalanceTop1) or
+  [TopN](Indicator-OrderBookImbalanceTopN).
+- **Iceberg and hidden orders.** The posted book omits hidden size, so the true
+  imbalance can differ from what this measures.
+
+## References
+
+- Rama Cont, Arseniy Kukanov, Sasha Stoikov, *The Price Impact of Order Book
+  Events*, *Journal of Financial Econometrics*, 2014.
+- Jean-Philippe Bouchaud, Julius Bonart, Jonathan Donier, Martin Gould, *Trades,
+  Quotes and Prices*, 2018 — limit-order-book dynamics and depth.
 
 ## See also
 
-- [OrderBookImbalanceTop1](Indicator-OrderBookImbalanceTop1), [OrderBookImbalanceTopN](Indicator-OrderBookImbalanceTopN)
-- [DepthSlope](Indicator-DepthSlope)
+- [OrderBookImbalanceTop1](Indicator-OrderBookImbalanceTop1) — the fastest,
+  touch-only version.
+- [OrderBookImbalanceTopN](Indicator-OrderBookImbalanceTopN) — the tunable
+  middle ground.
+- [DepthSlope](Indicator-DepthSlope) — the *shape* of the resting book, not just
+  its net imbalance.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.
