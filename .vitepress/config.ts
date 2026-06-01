@@ -33,6 +33,15 @@ export default defineConfig({
   base: '/',
   cleanUrls: true,
 
+  // Sitemap is emitted into the build output by VitePress' built-in generator
+  // (no extra dependency); CF Pages serves dist/sitemap.xml at the domain root.
+  // <lastmod> per page comes from `lastUpdated` (Git). robots.txt points here.
+  sitemap: { hostname: 'https://docs.wickra.org' },
+
+  // README.md is repo documentation, not a site page — keep it out of the build
+  // so it never becomes a /README route or a stray sitemap entry.
+  srcExclude: ['README.md'],
+
   // Internal links are now tightened (findings P8.2): the build fails on any
   // dead relative link, so `npm run build` in ci.yml is the internal-link gate
   // on every PR. External http(s) URLs are checked separately on a schedule by
