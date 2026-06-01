@@ -1,0 +1,6 @@
+# The PNG OG banner is retired. scripts/gen-og-banner.mjs renders
+# scripts/og-banner.svg straight to public/og-banner.webp (WebP only — the PNG
+# is an in-memory resvg buffer, never written to disk). Redirect any lingering
+# request for the old og-banner.png (cached social-share previews, external
+# links) to the current WebP asset instead of serving a stale PNG.
+/og-banner.png  /og-banner.webp  301

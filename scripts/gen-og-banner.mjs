@@ -5,10 +5,11 @@
  * regenerated on every deploy and can never drift from the count — no committed
  * image, no manual step. The generated file is git-ignored.
  *
- * resvg renders the SVG to a PNG buffer (deterministic font handling); sharp then
- * encodes it as WebP, which is markedly smaller than PNG at the same quality.
+ * resvg renders the SVG to an in-memory PNG buffer (deterministic font handling);
+ * sharp then encodes it as WebP, which is markedly smaller than PNG at the same
+ * quality. No PNG file is ever written — the only artifact is og-banner.webp.
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 import { Resvg } from '@resvg/resvg-js'
@@ -40,4 +41,10 @@ const webp = await sharp(png).webp({ quality: 90 }).toBuffer()
 
 mkdirSync(resolve(root, 'public'), { recursive: true })
 writeFileSync(resolve(root, 'public/og-banner.webp'), webp)
+
+// Defense in depth: drop any stale public/og-banner.png left over from before
+// the SVG -> WebP migration so it can never be picked up by a build or deploy.
+// The pipeline emits WebP only; a PNG on disk is always a leftover.
+rmSync(resolve(root, 'public/og-banner.png'), { force: true })
+
 console.log(`gen-og-banner: wrote public/og-banner.webp (${count} indicators)`)
