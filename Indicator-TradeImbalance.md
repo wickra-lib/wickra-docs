@@ -82,15 +82,40 @@ console.log(ti.update(100, 1, false)); // 0.5
 
 ## Interpretation
 
-TradeImbalance is the normalised, bounded version of order flow: a rolling read
-of who is winning the aggression battle over the last `window` trades. Sustained
-readings near `±1` mark one-sided tape; oscillation around `0` is two-way trade.
+TradeImbalance is the normalised, bounded read of order flow — who is winning
+the aggression battle over the last `window` trades.
 
-## Pitfalls
+- **Near +1.** One-sided buying; almost every trade in the window lifted the
+  offer. Sustained readings here mark a buyer-dominated tape.
+- **Near −1.** One-sided selling.
+- **Around 0.** Two-way trade — buyers and sellers roughly matched.
 
-- Short windows are jumpy; long windows lag. Tune to your trade rate.
-- Like all flow measures it needs a trustworthy aggressor flag.
+Because it is bounded in `[−1, +1]` it is directly comparable across instruments
+and regimes, unlike the unbounded [CumulativeVolumeDelta](Indicator-CumulativeVolumeDelta).
+It pairs naturally with a price filter: strong imbalance *with* price progress
+is trend; strong imbalance *without* it is absorption.
+
+## Common pitfalls
+
+- **Window tuning.** Short windows are jumpy and whipsaw; long windows lag the
+  turn. Match `window` to your trade rate, not a fixed number of seconds.
+- **Aggressor flag required.** Like every flow measure, a trustworthy buy/sell
+  label is a precondition — infer it (tick / quote rule) if your feed lacks it.
+- **`window = 1` degenerates.** It collapses to the sign of each individual
+  trade, losing all of the smoothing the measure exists to provide.
+
+## References
+
+- Tarun Chordia, Richard Roll, Avanidhar Subrahmanyam, *Order Imbalance,
+  Liquidity, and Market Returns*, *Journal of Financial Economics*, 2002.
+- David Easley, Marcos López de Prado, Maureen O'Hara, *Flow Toxicity and
+  Liquidity in a High-Frequency World*, *Review of Financial Studies*, 2012 —
+  order-imbalance toxicity (VPIN).
 
 ## See also
 
-- [SignedVolume](Indicator-SignedVolume), [CumulativeVolumeDelta](Indicator-CumulativeVolumeDelta), [Footprint](Indicator-Footprint)
+- [SignedVolume](Indicator-SignedVolume) — the per-trade flow this normalises.
+- [CumulativeVolumeDelta](Indicator-CumulativeVolumeDelta) — the unbounded,
+  cumulative view of the same flow.
+- [Footprint](Indicator-Footprint) — flow imbalance resolved by price level.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

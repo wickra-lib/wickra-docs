@@ -100,21 +100,49 @@ console.log(fp.update(100.7, 3, false)); // [{price:100,bidVol:0,askVol:2}, {pri
 
 ## Interpretation
 
-A footprint exposes the intrabar auction: which prices traded the most volume
-(the point of control), and whether buyers or sellers were the aggressors at
-each level. Imbalances between a bucket's bid and ask volume flag absorption and
-exhaustion that the bar's open/high/low/close cannot show. Reset per bar to get
-the classic bid/ask footprint chart.
+A footprint exposes the intrabar auction — the buy/sell volume printed at every
+price inside a bar, the detail a single OHLCV candle collapses away.
 
-## Pitfalls
+- **Point of control.** The bucket with the most total volume is where the bar
+  spent its conviction; it often acts as intrabar support/resistance.
+- **Bid/ask imbalance per level.** When a bucket's ask (buy) volume dwarfs its
+  bid (sell) volume, buyers were the aggressors *there*. A stack of
+  buy-dominant buckets that fails to push price higher is absorption; the same
+  on the lows is exhaustion — turns the open/high/low/close cannot reveal.
+- **Shape.** A balanced, bell-shaped profile is a fair two-way auction; a thin,
+  one-sided profile is a trend bar that ran with little opposition.
 
-- Choose `tick_size` to match the instrument's real tick; too fine fragments
-  volume across buckets, too coarse blurs the profile.
-- Remember to `reset()` per bar — otherwise the profile is cumulative over the
-  whole session.
+Reset per bar to get the classic bid/ask footprint chart; let it run for a
+session-long volume-by-price profile.
+
+## Common pitfalls
+
+- **Tick-size choice.** Match `tick_size` to the instrument's real tick. Too
+  fine fragments volume across empty buckets; too coarse blurs the profile into
+  a few fat bars and hides the point of control.
+- **Forgetting to `reset()`.** Without a per-bar reset the footprint accumulates
+  over the whole stream — useful as a session profile, misleading if you wanted
+  one bar.
+- **Aggressor flag required.** The bid/ask split is only meaningful if trades
+  carry a reliable aggressor side; infer it (tick / quote rule) if your feed
+  does not provide one.
+
+## References
+
+- J. Peter Steidlmayer and Steven B. Hawkins, *Steidlmayer on Markets: Trading
+  with Market Profile*, 2003 — the price-by-volume auction lineage footprint
+  charts extend.
+- Footprint (bid/ask volume) charts are an order-flow charting convention
+  popularised by trading platforms (e.g. MarketDelta, Bookmap) rather than a
+  single academic result; the implementation here follows the standard
+  bid-on-sell / ask-on-buy bucketing.
 
 ## See also
 
-- [SignedVolume](Indicator-SignedVolume) — per-trade signed size.
-- [CumulativeVolumeDelta](Indicator-CumulativeVolumeDelta) — running net flow.
-- [TradeImbalance](Indicator-TradeImbalance) — rolling buy/sell imbalance.
+- [SignedVolume](Indicator-SignedVolume) — the per-trade signed size each bucket
+  accumulates.
+- [CumulativeVolumeDelta](Indicator-CumulativeVolumeDelta) — the same flow as a
+  single running line.
+- [TradeImbalance](Indicator-TradeImbalance) — rolling buy/sell imbalance,
+  without the price dimension.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

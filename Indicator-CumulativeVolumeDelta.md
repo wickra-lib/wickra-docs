@@ -76,15 +76,40 @@ console.log(cvd.update(100, 2, false)); // 3
 
 ## Interpretation
 
-CVD is the cumulative footprint of aggression. When price makes a new high but
-CVD does not, buyers are being absorbed — a classic exhaustion warning, and vice
-versa. Reset per session so the line reflects the current day's flow.
+CVD is the cumulative footprint of aggression — the running tug-of-war between
+buyers lifting offers and sellers hitting bids.
 
-## Pitfalls
+- **Rising.** Net aggressive buying; demand is in control of the tape.
+- **Falling.** Net aggressive selling.
+- **Divergence — the key signal.** When price makes a new high but CVD does
+  *not*, buyers are being absorbed by passive sellers without moving price — a
+  classic exhaustion / absorption warning. The mirror holds for a new price low
+  on flat CVD. Confirmation comes when price then reverses on the lighter side.
 
-- The absolute level is meaningless across sessions; only the *shape* and
-  divergences matter. Always reset at session start.
+Reset per session so the line reflects the current day's flow rather than an
+unbounded all-time total.
+
+## Common pitfalls
+
+- **The absolute level is meaningless.** Only the *shape* and *divergences*
+  carry information; the cumulative value drifts arbitrarily. Always
+  `reset()` at the session (or bar) boundary so two days are comparable.
+- **Aggressor flag required.** CVD is only as good as the buy/sell labelling;
+  if your feed lacks an aggressor side, infer it (tick / quote rule) first.
+- **Venue-local.** Flow on one exchange is not the whole market; a divergence
+  on a single venue may simply be flow migrating elsewhere.
+
+## References
+
+- Charles M. C. Lee and Mark J. Ready, *Inferring Trade Direction from Intraday
+  Data*, *Journal of Finance*, 1991 — signing trades into buy/sell volume.
+- David Easley, Marcos López de Prado, Maureen O'Hara, *Flow Toxicity and
+  Liquidity in a High-Frequency World*, *Review of Financial Studies*, 2012 —
+  cumulative signed-volume order flow.
 
 ## See also
 
-- [SignedVolume](Indicator-SignedVolume), [TradeImbalance](Indicator-TradeImbalance), [Footprint](Indicator-Footprint)
+- [SignedVolume](Indicator-SignedVolume) — the per-trade increment CVD sums.
+- [TradeImbalance](Indicator-TradeImbalance) — the bounded, windowed cousin.
+- [Footprint](Indicator-Footprint) — the same flow resolved by price level.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

@@ -91,21 +91,47 @@ console.log(rs.update(99.90, 1, false, 100.20)); // -20 bps
 
 ## Interpretation
 
-Realized spread approximates the revenue a market maker earns per trade after
-the market has had time (the horizon) to reveal information. High readings mean
-the maker captured the spread; low or negative readings mean the trade carried
-information and the maker was adversely selected. The gap between effective and
-realized spread is twice the price impact.
+Realized spread approximates the revenue a liquidity provider keeps per trade
+once the market has had a horizon to reveal information.
 
-## Pitfalls
+- **High and positive.** The maker captured most of the spread — the trade was
+  uninformed (liquidity-driven) and the mid barely moved against the quote.
+- **Low or negative.** Adverse selection: the trade carried information, the
+  mid moved in the aggressor's favour, and the maker was picked off. Persistent
+  negative readings flag toxic flow.
+- **Effective = realized + 2 × impact.** The gap between the
+  [EffectiveSpread](Indicator-EffectiveSpread) and the realized spread *is*
+  twice the price impact — the decomposition Huang & Stoll formalised.
 
-- The output is time-shifted: a value emitted now describes the trade `horizon`
-  updates in the past.
-- The horizon is counted in *trades*, not wall-clock time; pick it to match the
-  information half-life of your venue.
+It is the headline metric for grading market-making profitability and for
+sizing the adverse-selection cost a venue's flow carries.
+
+## Common pitfalls
+
+- **The output is time-shifted.** A value emitted now describes the trade
+  `horizon` updates in the *past*; line it up against the originating trade,
+  not the current one, when attributing PnL.
+- **Horizon is in trades, not clock time.** `horizon` counts trade-quotes, so
+  its wall-clock length stretches and shrinks with activity. Pick it to match
+  the information half-life of your venue, not a fixed number of seconds.
+- **Needs a clean future mid.** The resolving mid must be the genuine post-trade
+  mid; a stale or crossed quote `horizon` steps later poisons the reading.
+
+## References
+
+- Roger D. Huang and Hans R. Stoll, *Dealer versus Auction Markets*, *Journal
+  of Financial Economics*, 1996 — the realized-spread / price-impact split.
+- Hendrik Bessembinder and Herbert M. Kaufman, *A Comparison of Trade Execution
+  Costs for NYSE and NASDAQ-Listed Stocks*, *JFQA*, 1997.
+- David Easley, Marcos López de Prado, Maureen O'Hara, *Flow Toxicity and
+  Liquidity in a High-Frequency World*, *Review of Financial Studies*, 2012 —
+  adverse selection and toxic flow.
 
 ## See also
 
-- [EffectiveSpread](Indicator-EffectiveSpread) — the gross per-trade cost.
-- [KylesLambda](Indicator-KylesLambda) — the price-impact slope.
+- [EffectiveSpread](Indicator-EffectiveSpread) — the gross per-trade cost this
+  nets price impact out of.
+- [KylesLambda](Indicator-KylesLambda) — the price-impact slope that fills the
+  effective-minus-realized gap.
 - [Microprice](Indicator-Microprice) — a fair value that anticipates the move.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

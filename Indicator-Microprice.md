@@ -75,16 +75,46 @@ console.log(new Microprice().update([100], [1], [101], [3])); // 100.25
 
 ## Interpretation
 
-The microprice is the market's size-weighted fair value: when the ask is thin
-relative to the bid it sits above the mid, anticipating an up-tick. It is the
-standard reference price for high-frequency valuation and PnL marking, and a
-better short-horizon predictor of the next trade price than the mid.
+The microprice is the market's size-weighted fair value — the mid pulled toward
+the side more likely to be consumed next.
 
-## Pitfalls
+- **Above the mid.** The ask is thin relative to the bid; the book leans to
+  lift, so fair value sits above the midpoint and an up-tick is more likely
+  than a down-tick.
+- **Below the mid.** The bid is thin relative to the ask; downward pressure,
+  fair value below the mid.
+- **At the mid.** Top sizes are balanced — no directional tilt.
 
-- It only uses the top level; a deep but lopsided book is not reflected — pair
-  with [imbalance](Indicator-OrderBookImbalanceFull) or [DepthSlope](Indicator-DepthSlope).
+It is the standard reference price for high-frequency PnL marking and a better
+short-horizon predictor of the next trade price than the plain mid, because it
+already encodes top-of-book imbalance.
+
+## Common pitfalls
+
+- **Top-level only.** The estimator uses just the best bid/ask; a deep but
+  lopsided book beyond the touch is invisible. Pair it with
+  [OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull) or
+  [DepthSlope](Indicator-DepthSlope) when depth matters.
+- **Spoofable inputs.** Quoted top size can be posted and pulled in
+  milliseconds; a microprice driven by flickering quotes is noisy. Confirm
+  with executed flow ([TradeImbalance](Indicator-TradeImbalance)).
+- **Not a tradable price.** It is a fair-value estimate *between* the quotes,
+  not a level you can transact at — you still cross the spread to execute.
+
+## References
+
+- Sasha Stoikov, *The Micro-Price: A High-Frequency Estimator of Future
+  Prices*, *Quantitative Finance*, 2018 — the size-weighted fair-value
+  estimator this implements.
+- Álvaro Cartea, Sebastian Jaimungal, José Penalva, *Algorithmic and
+  High-Frequency Trading*, 2015 — the microprice in optimal-execution context.
 
 ## See also
 
-- [QuotedSpread](Indicator-QuotedSpread), [OrderBookImbalanceTop1](Indicator-OrderBookImbalanceTop1)
+- [QuotedSpread](Indicator-QuotedSpread) — the cost of crossing the touch this
+  fair value sits inside.
+- [OrderBookImbalanceTop1](Indicator-OrderBookImbalanceTop1) — the raw
+  top-of-book imbalance the microprice turns into a price.
+- [DepthSlope](Indicator-DepthSlope) — fair-value context from the shape of the
+  resting book.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.

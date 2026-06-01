@@ -75,16 +75,44 @@ console.log(new OrderBookImbalanceTop1().update([100], [3], [101], [1])); // 0.5
 
 ## Interpretation
 
-A positive reading means more size rests on the bid than the ask at the touch —
-short-horizon upward pressure; negative is the reverse. It is one of the
-strongest high-frequency predictors of the next mid move.
+Top-1 imbalance is the rawest read of pressure at the touch — which side of the
+best quote is heavier.
 
-## Pitfalls
+- **Positive (→ +1).** More size rests on the bid than the ask; short-horizon
+  upward pressure. Near `+1` the ask is nearly empty and an up-tick is likely.
+- **Negative (→ −1).** The ask is heavier; downward pressure.
+- **Near zero.** Balanced touch — no directional tilt.
 
-- Top-of-book size is easily spoofed; confirm with depth ([TopN](Indicator-OrderBookImbalanceTopN) /
-  [Full](Indicator-OrderBookImbalanceFull)) or flow.
+Of the order-book imbalance family this is the most responsive and, empirically,
+one of the strongest high-frequency predictors of the *next* mid move — but also
+the easiest to manipulate.
+
+## Common pitfalls
+
+- **Spoofable.** A single best-level size can be posted and pulled in
+  milliseconds. Confirm with depth
+  ([TopN](Indicator-OrderBookImbalanceTopN) /
+  [Full](Indicator-OrderBookImbalanceFull)) or executed flow
+  ([TradeImbalance](Indicator-TradeImbalance)).
+- **Very short horizon.** Its predictive edge decays in seconds; it is a
+  high-frequency signal, not a position-level bias.
+- **Ignores price, only size.** It says nothing about *where* the quotes sit,
+  only their relative size — pair with [QuotedSpread](Indicator-QuotedSpread)
+  for the cost dimension.
+
+## References
+
+- Rama Cont, Arseniy Kukanov, Sasha Stoikov, *The Price Impact of Order Book
+  Events*, *Journal of Financial Econometrics*, 2014 — order-flow imbalance and
+  short-horizon price moves.
+- Martin D. Gould and Julius Bonart, *Queue Imbalance as a One-Tick-Ahead Price
+  Predictor in a Limit Order Book*, *Market Microstructure and Liquidity*, 2016.
 
 ## See also
 
-- [OrderBookImbalanceTopN](Indicator-OrderBookImbalanceTopN), [OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull)
-- [Microprice](Indicator-Microprice) — turns the same imbalance into a fair value.
+- [OrderBookImbalanceTopN](Indicator-OrderBookImbalanceTopN) — the same idea
+  aggregated over the near book, more robust to spoofing.
+- [OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull) — whole-book
+  pressure for slower bias.
+- [Microprice](Indicator-Microprice) — turns this imbalance into a fair value.
+- [Indicators-Overview](Indicators-Overview) — the full taxonomy.
