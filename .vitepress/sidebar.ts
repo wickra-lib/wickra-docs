@@ -1038,5 +1038,63 @@ export const sidebar = [
         "link": "/Indicator-ValueAtRisk"
       }
     ]
+  },
+  {
+    "text": "Microstructure",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "CumulativeVolumeDelta",
+        "link": "/Indicator-CumulativeVolumeDelta"
+      },
+      {
+        "text": "DepthSlope",
+        "link": "/Indicator-DepthSlope"
+      },
+      {
+        "text": "EffectiveSpread",
+        "link": "/Indicator-EffectiveSpread"
+      },
+      {
+        "text": "Footprint",
+        "link": "/Indicator-Footprint"
+      },
+      {
+        "text": "KylesLambda",
+        "link": "/Indicator-KylesLambda"
+      },
+      {
+        "text": "Microprice",
+        "link": "/Indicator-Microprice"
+      },
+      {
+        "text": "OrderBookImbalanceFull",
+        "link": "/Indicator-OrderBookImbalanceFull"
+      },
+      {
+        "text": "OrderBookImbalanceTop1",
+        "link": "/Indicator-OrderBookImbalanceTop1"
+      },
+      {
+        "text": "OrderBookImbalanceTopN",
+        "link": "/Indicator-OrderBookImbalanceTopN"
+      },
+      {
+        "text": "QuotedSpread",
+        "link": "/Indicator-QuotedSpread"
+      },
+      {
+        "text": "RealizedSpread",
+        "link": "/Indicator-RealizedSpread"
+      },
+      {
+        "text": "SignedVolume",
+        "link": "/Indicator-SignedVolume"
+      },
+      {
+        "text": "TradeImbalance",
+        "link": "/Indicator-TradeImbalance"
+      }
+    ]
   }
 ]

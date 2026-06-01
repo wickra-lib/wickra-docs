@@ -7,7 +7,7 @@ Node.js, WebAssembly, and Rust itself. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
 
-The project ships 232 indicators across sixteen families — moving averages,
+The project ships 232 indicators across seventeen families — moving averages,
 momentum oscillators, trend & directional, price oscillators, volatility &
 bands, bands & channels, trailing stops, volume, price statistics, Ehlers /
 cycle (DSP), pivots & S/R, DeMark, Ichimoku & charts, candlestick patterns,
@@ -74,9 +74,9 @@ Release notes and tagged builds:
 ## Indicator reference
 
 Start with [Indicators-Overview](Indicators-Overview) for the full
-sixteen-family taxonomy with per-indicator formula / parameter / warmup
+seventeen-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-219 deep-dive pages.
+232 deep-dive pages.
 
 ### Moving Averages (19)
 
@@ -269,6 +269,21 @@ tables. The links below are a quick alphabetical-by-family index into the
 [RecoveryFactor](Indicator-RecoveryFactor) ·
 [SharpeRatio](Indicator-SharpeRatio) · [SortinoRatio](Indicator-SortinoRatio) ·
 [TreynorRatio](Indicator-TreynorRatio) · [ValueAtRisk](Indicator-ValueAtRisk)
+
+### Microstructure (13)
+
+[CumulativeVolumeDelta](Indicator-CumulativeVolumeDelta) ·
+[DepthSlope](Indicator-DepthSlope) ·
+[EffectiveSpread](Indicator-EffectiveSpread) ·
+[Footprint](Indicator-Footprint) · [KylesLambda](Indicator-KylesLambda) ·
+[Microprice](Indicator-Microprice) ·
+[OrderBookImbalanceFull](Indicator-OrderBookImbalanceFull) ·
+[OrderBookImbalanceTop1](Indicator-OrderBookImbalanceTop1) ·
+[OrderBookImbalanceTopN](Indicator-OrderBookImbalanceTopN) ·
+[QuotedSpread](Indicator-QuotedSpread) ·
+[RealizedSpread](Indicator-RealizedSpread) ·
+[SignedVolume](Indicator-SignedVolume) ·
+[TradeImbalance](Indicator-TradeImbalance)
 
 ## See also
 
