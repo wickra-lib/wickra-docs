@@ -7,7 +7,7 @@ Node.js, WebAssembly, and Rust itself. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
 
-The project ships 232 indicators across seventeen families — moving averages,
+The project ships 237 indicators across seventeen families — moving averages,
 momentum oscillators, trend & directional, price oscillators, volatility &
 bands, bands & channels, trailing stops, volume, price statistics, Ehlers /
 cycle (DSP), pivots & S/R, DeMark, Ichimoku & charts, candlestick patterns,
