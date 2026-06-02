@@ -35,7 +35,7 @@ The seventeen families:
 | 11 | [Pivots & S/R](#pivots--sr) | 7 | Session-anchored pivot levels and swing detectors. |
 | 12 | [DeMark](#demark) | 12 | Tom DeMark's exhaustion / setup / countdown family. |
 | 13 | [Ichimoku & Charts](#ichimoku--charts) | 2 | Japanese cloud chart and smoothed candles. |
-| 14 | [Candlestick Patterns](#candlestick-patterns) | 15 | Classical 1- / 2- / 3-bar candle patterns. |
+| 14 | [Candlestick Patterns](#candlestick-patterns) | 60 | Classical 1- / 2- / 3-bar candle patterns. |
 | 15 | [Market Profile](#market-profile) | 3 | Session value-area / opening-range / IB levels. |
 | 16 | [Risk / Performance](#risk--performance) | 17 | Risk-adjusted return, drawdown, and tail-risk metrics. |
 | 17 | [Microstructure](#microstructure) | 13 | Order-book, trade-flow, price-impact and footprint analytics. |
@@ -351,6 +351,51 @@ actionable signals.
 | `ThreeSoldiersOrCrows` | 3-bar continuation: three rising / falling long bars. | 3 | `f64` (`{-1, 0, +1}`) | (no parameters) | `3` | [Indicator-ThreeSoldiersOrCrows](Indicator-ThreeSoldiersOrCrows) |
 | `ThreeInside` | Confirmed Harami: Harami + close past Bar 1 body. | 3 | `f64` (`{-1, 0, +1}`) | (no parameters) | `3` | [Indicator-ThreeInside](Indicator-ThreeInside) |
 | `ThreeOutside` | Confirmed Engulfing: Engulfing + close past Bar 2 close. | 3 | `f64` (`{-1, 0, +1}`) | (no parameters) | `3` | [Indicator-ThreeOutside](Indicator-ThreeOutside) |
+| `TwoCrows` | 3-bar bearish reversal after an advance. | 3 | `f64` (`0` or `-1`) | (no parameters) | `3` | [Indicator-TwoCrows](Indicator-TwoCrows) |
+| `UpsideGapTwoCrows` | Two crows holding an upside gap (bearish). | 3 | `f64` (`0` or `-1`) | (no parameters) | `3` | [Indicator-UpsideGapTwoCrows](Indicator-UpsideGapTwoCrows) |
+| `IdenticalThreeCrows` | Three blacks opening at the prior close, lower closes. | 3 | `f64` (`0` or `-1`) | tolerance = 0.001 | `3` | [Indicator-IdenticalThreeCrows](Indicator-IdenticalThreeCrows) |
+| `ThreeLineStrike` | Three-bar run struck by an opposite 4th bar. | 4 | `f64` (`{-1, 0, +1}`) | (no parameters) | `4` | [Indicator-ThreeLineStrike](Indicator-ThreeLineStrike) |
+| `ThreeStarsInSouth` | Three shrinking blacks, rising lows (rare bottom). | 3 | `f64` (`0` or `+1`) | tolerance = 0.001 | `3` | [Indicator-ThreeStarsInSouth](Indicator-ThreeStarsInSouth) |
+| `AbandonedBaby` | Doji isolated by gaps both sides (island reversal). | 3 | `f64` (`{-1, 0, +1}`) | tolerance = 0.001 | `3` | [Indicator-AbandonedBaby](Indicator-AbandonedBaby) |
+| `AdvanceBlock` | Three rising whites, shrinking bodies / rising wicks. | 3 | `f64` (`0` or `-1`) | (no parameters) | `3` | [Indicator-AdvanceBlock](Indicator-AdvanceBlock) |
+| `BeltHold` | Long body opening at one extreme (opening marubozu). | 1 | `f64` (`{-1, 0, +1}`) | shadow_tolerance = 0.05 | `1` | [Indicator-BeltHold](Indicator-BeltHold) |
+| `Breakaway` | 5-bar reversal fading a gapped over-extended run. | 5 | `f64` (`{-1, 0, +1}`) | (no parameters) | `5` | [Indicator-Breakaway](Indicator-Breakaway) |
+| `Counterattack` | 2-bar reversal closing back at the prior close. | 2 | `f64` (`{-1, 0, +1}`) | equal_tolerance = 0.05 | `2` | [Indicator-Counterattack](Indicator-Counterattack) |
+| `DojiStar` | Long body then a gapped doji (reversal warning). | 2 | `f64` (`{-1, 0, +1}`) | (no parameters) | `2` | [Indicator-DojiStar](Indicator-DojiStar) |
+| `DragonflyDoji` | Doji at the top, long lower shadow (bullish). | 1 | `f64` (`0` or `+1`) | (no parameters) | `1` | [Indicator-DragonflyDoji](Indicator-DragonflyDoji) |
+| `GravestoneDoji` | Doji at the bottom, long upper shadow (bearish). | 1 | `f64` (`0` or `-1`) | (no parameters) | `1` | [Indicator-GravestoneDoji](Indicator-GravestoneDoji) |
+| `LongLeggedDoji` | Doji with long shadows both sides (indecision). | 1 | `f64` (`0` or `+1`) | (no parameters) | `1` | [Indicator-LongLeggedDoji](Indicator-LongLeggedDoji) |
+| `RickshawMan` | Centred long-legged doji (balanced indecision). | 1 | `f64` (`0` or `+1`) | (no parameters) | `1` | [Indicator-RickshawMan](Indicator-RickshawMan) |
+| `EveningDojiStar` | 3-bar bearish top: white, gapped doji, deep black. | 3 | `f64` (`0` or `-1`) | penetration = 0.3 | `3` | [Indicator-EveningDojiStar](Indicator-EveningDojiStar) |
+| `MorningDojiStar` | 3-bar bullish bottom: black, gapped doji, deep white. | 3 | `f64` (`0` or `+1`) | penetration = 0.3 | `3` | [Indicator-MorningDojiStar](Indicator-MorningDojiStar) |
+| `GapSideBySideWhite` | Two side-by-side whites holding a gap (continuation). | 3 | `f64` (`{-1, 0, +1}`) | (no parameters) | `3` | [Indicator-GapSideBySideWhite](Indicator-GapSideBySideWhite) |
+| `HighWave` | Small body, very long shadows both sides (indecision). | 1 | `f64` (`0` or `+1`) | (no parameters) | `1` | [Indicator-HighWave](Indicator-HighWave) |
+| `Hikkake` | Inside-bar false-breakout trap. | 3 | `f64` (`{-1, 0, +1}`) | (no parameters) | `3` | [Indicator-Hikkake](Indicator-Hikkake) |
+| `HikkakeModified` | Close-confirmed Hikkake trap. | 3 | `f64` (`{-1, 0, +1}`) | (no parameters) | `3` | [Indicator-HikkakeModified](Indicator-HikkakeModified) |
+| `HomingPigeon` | Same-colour harami in a decline (bullish). | 2 | `f64` (`0` or `+1`) | (no parameters) | `2` | [Indicator-HomingPigeon](Indicator-HomingPigeon) |
+| `OnNeck` | Weak bounce to the prior low (bearish continuation). | 2 | `f64` (`0` or `-1`) | (no parameters) | `2` | [Indicator-OnNeck](Indicator-OnNeck) |
+| `InNeck` | Bounce just into the body (bearish continuation). | 2 | `f64` (`0` or `-1`) | (no parameters) | `2` | [Indicator-InNeck](Indicator-InNeck) |
+| `Thrusting` | Bounce toward mid-body, not past (bearish continuation). | 2 | `f64` (`0` or `-1`) | (no parameters) | `2` | [Indicator-Thrusting](Indicator-Thrusting) |
+| `SeparatingLines` | Opposite candle reopening at the prior open (continuation). | 2 | `f64` (`{-1, 0, +1}`) | (no parameters) | `2` | [Indicator-SeparatingLines](Indicator-SeparatingLines) |
+| `Kicking` | Two gapped opposite marubozu (violent reversal). | 2 | `f64` (`{-1, 0, +1}`) | (no parameters) | `2` | [Indicator-Kicking](Indicator-Kicking) |
+| `KickingByLength` | Kicking signed by the longer marubozu. | 2 | `f64` (`{-1, 0, +1}`) | (no parameters) | `2` | [Indicator-KickingByLength](Indicator-KickingByLength) |
+| `LadderBottom` | 5-bar bullish reversal after a stepped decline. | 5 | `f64` (`0` or `+1`) | (no parameters) | `5` | [Indicator-LadderBottom](Indicator-LadderBottom) |
+| `MatHold` | 5-bar bullish continuation; shallow gapped rest. | 5 | `f64` (`0` or `+1`) | penetration = 0.5 | `5` | [Indicator-MatHold](Indicator-MatHold) |
+| `MatchingLow` | Two black closes at the same low (support floor). | 2 | `f64` (`0` or `+1`) | (no parameters) | `2` | [Indicator-MatchingLow](Indicator-MatchingLow) |
+| `LongLine` | Range longer than the recent average, body-dominant. | 5 | `f64` (`{-1, 0, +1}`) | period = 5 | `5` | [Indicator-LongLine](Indicator-LongLine) |
+| `ShortLine` | Range shorter than the recent average, body-dominant. | 5 | `f64` (`{-1, 0, +1}`) | period = 5 | `5` | [Indicator-ShortLine](Indicator-ShortLine) |
+| `RisingThreeMethods` | 5-bar bullish continuation; in-range rest. | 5 | `f64` (`0` or `+1`) | (no parameters) | `5` | [Indicator-RisingThreeMethods](Indicator-RisingThreeMethods) |
+| `FallingThreeMethods` | 5-bar bearish continuation; in-range rest. | 5 | `f64` (`0` or `-1`) | (no parameters) | `5` | [Indicator-FallingThreeMethods](Indicator-FallingThreeMethods) |
+| `UpsideGapThreeMethods` | Two whites gap up, black partly fills (continuation). | 3 | `f64` (`0` or `+1`) | (no parameters) | `3` | [Indicator-UpsideGapThreeMethods](Indicator-UpsideGapThreeMethods) |
+| `DownsideGapThreeMethods` | Two blacks gap down, white partly fills (continuation). | 3 | `f64` (`0` or `-1`) | (no parameters) | `3` | [Indicator-DownsideGapThreeMethods](Indicator-DownsideGapThreeMethods) |
+| `StalledPattern` | Two long whites then a small one on the shoulder (bearish). | 3 | `f64` (`0` or `-1`) | (no parameters) | `3` | [Indicator-StalledPattern](Indicator-StalledPattern) |
+| `StickSandwich` | Two black closes sandwiching a white (support). | 3 | `f64` (`0` or `+1`) | (no parameters) | `3` | [Indicator-StickSandwich](Indicator-StickSandwich) |
+| `Takuri` | Strict dragonfly doji, very long lower shadow. | 1 | `f64` (`0` or `+1`) | (no parameters) | `1` | [Indicator-Takuri](Indicator-Takuri) |
+| `ClosingMarubozu` | Long body, no shadow on the close end. | 1 | `f64` (`{-1, 0, +1}`) | (no parameters) | `1` | [Indicator-ClosingMarubozu](Indicator-ClosingMarubozu) |
+| `OpeningMarubozu` | Long body, no shadow on the open end. | 1 | `f64` (`{-1, 0, +1}`) | (no parameters) | `1` | [Indicator-OpeningMarubozu](Indicator-OpeningMarubozu) |
+| `TasukiGap` | Counter candle into a gap that holds (continuation). | 3 | `f64` (`{-1, 0, +1}`) | (no parameters) | `3` | [Indicator-TasukiGap](Indicator-TasukiGap) |
+| `UniqueThreeRiver` | Black, new-low black inside, small white (bottom). | 3 | `f64` (`0` or `+1`) | (no parameters) | `3` | [Indicator-UniqueThreeRiver](Indicator-UniqueThreeRiver) |
+| `ConcealingBabySwallow` | Rare 4-bar capitulation; black run then engulf. | 4 | `f64` (`0` or `+1`) | (no parameters) | `4` | [Indicator-ConcealingBabySwallow](Indicator-ConcealingBabySwallow) |
 
 ## Market Profile
 
