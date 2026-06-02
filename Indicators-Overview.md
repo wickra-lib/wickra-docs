@@ -1,6 +1,6 @@
 # Indicators Overview
 
-Wickra ships **295 indicators** organised into **eighteen families**. Each
+Wickra ships **295 indicators** organised into **nineteen families**. Each
 family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
@@ -23,7 +23,7 @@ The eighteen families:
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
 | 1 | [Moving Averages](#moving-averages) | 19 | Where is the smoothed trend line? |
-| 2 | [Momentum Oscillators](#momentum-oscillators) | 20 | How fast is price changing; is it overbought? |
+| 2 | [Momentum Oscillators](#momentum-oscillators) | 21 | How fast is price changing; is it overbought? |
 | 3 | [Trend & Directional](#trend--directional) | 13 | Is there a trend, and which way? |
 | 4 | [Price Oscillators](#price-oscillators) | 11 | Difference-of-averages momentum around zero. |
 | 5 | [Volatility & Bands](#volatility--bands) | 18 | How wide is the range; where are the envelopes? |
@@ -36,10 +36,11 @@ The eighteen families:
 | 12 | [DeMark](#demark) | 12 | Tom DeMark's exhaustion / setup / countdown family. |
 | 13 | [Ichimoku & Charts](#ichimoku--charts) | 2 | Japanese cloud chart and smoothed candles. |
 | 14 | [Candlestick Patterns](#candlestick-patterns) | 60 | Classical 1- / 2- / 3-bar candle patterns. |
-| 15 | [Market Profile](#market-profile) | 3 | Session value-area / opening-range / IB levels. |
+| 15 | [Market Profile](#market-profile) | 5 | Session value-area / opening-range / IB levels. |
 | 16 | [Risk / Performance](#risk--performance) | 17 | Risk-adjusted return, drawdown, and tail-risk metrics. |
 | 17 | [Microstructure](#microstructure) | 13 | Order-book, trade-flow, price-impact and footprint analytics. |
 | 18 | [Derivatives](#derivatives) | 12 | Funding, open-interest, positioning, flow and basis on a perp/futures feed. |
+| 19 | [Alt-Chart Bars](#alt-chart-bars) | 3 | Price-driven Renko / Kagi / Point & Figure bar builders. |
 
 ## Moving Averages
 
@@ -76,6 +77,7 @@ Measure the *rate* of price change. Several are bounded by construction
 | Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
 |-----------|-----------|-------|--------|-------|----------|--------|-----------|
 | `Rsi`        | Wilder's RSI; smoothed `gain / (gain + loss) × 100`. | `f64` | `f64` | `[0, 100]` | `period = 14` (Python) | `period + 1` | [Indicator-Rsi](Indicator-Rsi) |
+| `AnchoredRsi` | Cumulative RSI from a user-set anchor bar (RSI of the whole leg). | `f64` | `f64` | `[0, 100]` | (set anchor via `set_anchor()`) | `2` | [Indicator-AnchoredRsi](Indicator-AnchoredRsi) |
 | `Stochastic` | `%K = (close − low_n)/(high_n − low_n) × 100`, smoothed into `%D`. | `Candle` | `(k, d)` | each in `[0, 100]` | `(k_period=14, d_period=3)` (Python) | `k_period + d_period − 1` | [Indicator-Stochastic](Indicator-Stochastic) |
 | `Cci`        | `(typical − SMA(typical)) / (0.015 · mean_dev)`. | `Candle` | `f64` | unbounded (typically `±100`–`±200`) | `period = 20` (Python) | `period` | [Indicator-Cci](Indicator-Cci) |
 | `Roc`        | `(price − price_n) / price_n × 100`; raw percentage change. | `f64` | `f64` | unbounded around zero | `period` | `period + 1` | [Indicator-Roc](Indicator-Roc) |
@@ -406,6 +408,8 @@ All require manual `reset()` at session boundaries.
 | Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
 |-----------|-----------|-------|--------|-------|----------|--------|-----------|
 | `ValueArea` | Rolling Market Profile: POC + VAH + VAL via volume bins. | `Candle` | `(poc, vah, val)` | unbounded (price scale) | `(period, bin_count, value_area_pct)` | `period` | [Indicator-ValueArea](Indicator-ValueArea) |
+| `VolumeProfile` | Full per-bin volume histogram over a rolling window. | `Candle` | `(price_low, price_high, bins)` | `bins ≥ 0` | `(period=20, bin_count=50)` | `period` | [Indicator-VolumeProfile](Indicator-VolumeProfile) |
+| `TpoProfile` | Time-Price-Opportunity (letter) count per price bucket. | `Candle` | `(price_low, price_high, counts)` | `counts ≥ 0` | `(period=30, bin_count=50)` | `period` | [Indicator-TpoProfile](Indicator-TpoProfile) |
 | `InitialBalance` | First-N-bar session range, locked after warmup. | `Candle` | `(high, low)` | unbounded (price scale) | `period = 12` | `period` | [Indicator-InitialBalance](Indicator-InitialBalance) |
 | `OpeningRange` | Locked first-N range + live breakout-distance from midpoint. | `Candle` | `(high, low, breakout_distance)` | unbounded (price scale) | `period = 6` | `period` | [Indicator-OpeningRange](Indicator-OpeningRange) |
 
@@ -521,6 +525,18 @@ ground truth for sample values. Python defaults (the `period = 14` etc.) come
 from the `#[pyo3(signature = …)]` attributes in
 [`bindings/python/src/lib.rs`](https://github.com/wickra-lib/wickra/blob/main/bindings/python/src/lib.rs);
 indicators without a Python default require an explicit argument.
+
+## Alt-Chart Bars
+
+Price-driven chart constructors built on the `BarBuilder` trait (not `Indicator`):
+each consumes a candle stream and emits a variable number of completed bars per
+candle. They are close-driven and not `Chain`-able.
+
+| Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
+|-----------|-----------|-------|--------|-------|----------|--------|-----------|
+| `RenkoBars` | Fixed box-size bricks with the two-box reversal rule. | `Candle` | `Vec<RenkoBrick>` | n/a | `box_size` | seeds on 1st candle | [Indicator-RenkoBars](Indicator-RenkoBars) |
+| `KagiBars` | Reversal-amount line segments. | `Candle` | `Vec<KagiBar>` | n/a | `reversal` | seeds on 1st candle | [Indicator-KagiBars](Indicator-KagiBars) |
+| `PointAndFigureBars` | Box-size X/O columns with an N-box reversal. | `Candle` | `Vec<PnfColumn>` | n/a | `(box_size, reversal=3)` | seeds on 1st candle | [Indicator-PointAndFigureBars](Indicator-PointAndFigureBars) |
 
 ## See also
 

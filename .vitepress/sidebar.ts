@@ -154,6 +154,10 @@ export const sidebar = [
     "collapsed": true,
     "items": [
       {
+        "text": "AnchoredRsi",
+        "link": "/Indicator-AnchoredRsi"
+      },
+      {
         "text": "AwesomeOscillator",
         "link": "/Indicator-AwesomeOscillator"
       },
@@ -722,8 +726,16 @@ export const sidebar = [
         "link": "/Indicator-OpeningRange"
       },
       {
+        "text": "TpoProfile",
+        "link": "/Indicator-TpoProfile"
+      },
+      {
         "text": "ValueArea",
         "link": "/Indicator-ValueArea"
+      },
+      {
+        "text": "VolumeProfile",
+        "link": "/Indicator-VolumeProfile"
       }
     ]
   },
@@ -1328,6 +1340,24 @@ export const sidebar = [
       {
         "text": "TermStructureBasis",
         "link": "/Indicator-TermStructureBasis"
+      }
+    ]
+  },
+  {
+    "text": "Alt-Chart Bars",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "KagiBars",
+        "link": "/Indicator-KagiBars"
+      },
+      {
+        "text": "PointAndFigureBars",
+        "link": "/Indicator-PointAndFigureBars"
+      },
+      {
+        "text": "RenkoBars",
+        "link": "/Indicator-RenkoBars"
       }
     ]
   }
