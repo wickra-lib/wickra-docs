@@ -38,6 +38,7 @@ index" in 0-indexed terms is `warmup_period − 1`.
 | `Hma`           | `Hma::new(14)`                               | `period + round(sqrt(period)).max(1) - 1` | 17                      | 17th                     |
 | `Kama`          | `Kama::new(10, 2, 30)`                       | `er_period + 1`                  | 11                               | 11th                     |
 | `Rsi`           | `Rsi::new(14)`                               | `period + 1`                     | 15                               | 15th                     |
+| `AnchoredRsi`   | `AnchoredRsi::new()`                          | constant `2`                     | 2                                | 2nd                      |
 | `Cci`           | `Cci::new(20)`                               | `period`                         | 20                               | 20th                     |
 | `Roc`           | `Roc::new(12)`                               | `period + 1`                     | 13                               | 13th                     |
 | `WilliamsR`     | `WilliamsR::new(14)`                         | `period`                         | 14                               | 14th                     |
@@ -331,11 +332,15 @@ Some risk metrics take a single `f64` (returns / equity), others take an
 
 ## Family 16 — Market Profile
 
-All three require manual `reset()` at session boundaries.
+`InitialBalance` and `OpeningRange` lock after warmup and need a manual `reset()`
+at session boundaries; `ValueArea`, `VolumeProfile` and `TpoProfile` are rolling
+and evict automatically.
 
 | Indicator         | Constructor                              | Formula      | warmup | Inputs at first emission |
 |-------------------|------------------------------------------|--------------|--------|--------------------------|
 | `ValueArea`       | `ValueArea::new(20, 50, 0.70)`           | `period`     | 20     | 20th                     |
+| `VolumeProfile`   | `VolumeProfile::new(20, 50)`             | `period`     | 20     | 20th                     |
+| `TpoProfile`      | `TpoProfile::new(30, 50)`                | `period`     | 30     | 30th                     |
 | `InitialBalance`  | `InitialBalance::classic()` (`12`)       | `period`     | 12     | 12th (then locks)         |
 | `OpeningRange`    | `OpeningRange::classic()` (`6`)          | `period`     | 6      | 6th (then locks; live `breakout_distance`) |
 
