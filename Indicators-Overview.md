@@ -1,6 +1,6 @@
 # Indicators Overview
 
-Wickra ships **289 indicators** organised into **seventeen families**. Each
+Wickra ships **289 indicators** organised into **eighteen families**. Each
 family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
@@ -18,7 +18,7 @@ quotes `warmup_period()` as the indicator reports it — the **exact**
 first-emission index: the first non-`None` output lands on input
 `warmup_period()` (0-indexed `warmup_period() - 1`).
 
-The seventeen families:
+The eighteen families:
 
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
@@ -39,6 +39,7 @@ The seventeen families:
 | 15 | [Market Profile](#market-profile) | 3 | Session value-area / opening-range / IB levels. |
 | 16 | [Risk / Performance](#risk--performance) | 17 | Risk-adjusted return, drawdown, and tail-risk metrics. |
 | 17 | [Microstructure](#microstructure) | 13 | Order-book, trade-flow, price-impact and footprint analytics. |
+| 18 | [Derivatives](#derivatives) | 12 | Funding, open-interest, positioning, flow and basis on a perp/futures feed. |
 
 ## Moving Averages
 
@@ -458,6 +459,30 @@ per-bucket profile. The Python and Node bindings accept these as plain arrays
 | `RealizedSpread` | Effective spread net of impact over `horizon`. | `TradeQuote` | `f64` | unbounded | `horizon` | `horizon + 1` | [Indicator-RealizedSpread](Indicator-RealizedSpread) |
 | `KylesLambda` | Rolling OLS price impact per unit signed volume. | `TradeQuote` | `f64` | unbounded | `window` | `window + 1` | [Indicator-KylesLambda](Indicator-KylesLambda) |
 | `Footprint` | Buy/sell volume profile per price bucket. | `Trade` | `FootprintOutput` | per-bucket `≥ 0` | `tick_size` | `1` | [Indicator-Footprint](Indicator-Footprint) |
+
+## Derivatives
+
+Perpetual- and dated-futures analytics over a `DerivativesTick` — a single feed
+bundling funding rate, mark / index / futures price, open interest,
+positioning, taker flow and liquidations. Each indicator reads only the fields
+it needs; the Python and Node bindings expose just those fields per `update`
+(see each deep dive), and `batch` takes equal-length arrays. WASM exposes
+per-tick `update`.
+
+| Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
+|-----------|-----------|-------|--------|-------|----------|--------|-----------|
+| `FundingRate` | The current perpetual funding rate. | `DerivativesTick` | `f64` | unbounded (may be negative) | (no parameters) | `1` | [Indicator-FundingRate](Indicator-FundingRate) |
+| `FundingRateMean` | Rolling mean funding rate over `window`. | `DerivativesTick` | `f64` | unbounded | `window` | `window` | [Indicator-FundingRateMean](Indicator-FundingRateMean) |
+| `FundingRateZScore` | Funding rate in stddevs from its rolling mean. | `DerivativesTick` | `f64` | unbounded around zero | `window` | `window` | [Indicator-FundingRateZScore](Indicator-FundingRateZScore) |
+| `FundingBasis` | Perp premium to spot `(mark − index)/index`. | `DerivativesTick` | `f64` | unbounded around zero | (no parameters) | `1` | [Indicator-FundingBasis](Indicator-FundingBasis) |
+| `OpenInterestDelta` | Tick-over-tick change in open interest. | `DerivativesTick` | `f64` | unbounded around zero | (no parameters) | `2` | [Indicator-OpenInterestDelta](Indicator-OpenInterestDelta) |
+| `OIPriceDivergence` | Relative OI change minus relative price change over `window`. | `DerivativesTick` | `f64` | unbounded around zero | `window` | `window + 1` | [Indicator-OIPriceDivergence](Indicator-OIPriceDivergence) |
+| `OIWeighted` | Cumulative OI-weighted mark price. | `DerivativesTick` | `f64` | unbounded (price scale) | (no parameters) | `1` | [Indicator-OIWeighted](Indicator-OIWeighted) |
+| `LongShortRatio` | Aggregate long size over short size. | `DerivativesTick` | `f64` | `≥ 0` (`0` if no shorts) | (no parameters) | `1` | [Indicator-LongShortRatio](Indicator-LongShortRatio) |
+| `TakerBuySellRatio` | Taker buy volume over taker sell volume. | `DerivativesTick` | `f64` | `≥ 0` (`0` if no sells) | (no parameters) | `1` | [Indicator-TakerBuySellRatio](Indicator-TakerBuySellRatio) |
+| `LiquidationFeatures` | Long/short liquidation → net / total / imbalance. | `DerivativesTick` | `LiquidationFeaturesOutput` | `imbalance ∈ [−1, 1]` | (no parameters) | `1` | [Indicator-LiquidationFeatures](Indicator-LiquidationFeatures) |
+| `TermStructureBasis` | Dated-future premium to spot `(futures − index)/index`. | `DerivativesTick` | `f64` | unbounded around zero | (no parameters) | `1` | [Indicator-TermStructureBasis](Indicator-TermStructureBasis) |
+| `CalendarSpread` | Dated-future premium to the perpetual `(futures − mark)/mark`. | `DerivativesTick` | `f64` | unbounded around zero | (no parameters) | `1` | [Indicator-CalendarSpread](Indicator-CalendarSpread) |
 
 ## Pick the right indicator for…
 

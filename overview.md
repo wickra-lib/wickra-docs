@@ -7,11 +7,12 @@ Node.js, WebAssembly, and Rust itself. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
 
-The project ships 289 indicators across seventeen families — moving averages,
+The project ships 289 indicators across eighteen families — moving averages,
 momentum oscillators, trend & directional, price oscillators, volatility &
 bands, bands & channels, trailing stops, volume, price statistics, Ehlers /
 cycle (DSP), pivots & S/R, DeMark, Ichimoku & charts, candlestick patterns,
-market profile, and risk / performance — plus a small set of supporting types
+market profile, risk / performance, microstructure, and derivatives — plus a
+small set of supporting types
 (`Candle`, `Tick`, `Chain`). The Rust core forbids `unsafe`, so every binding
 inherits a memory-safe implementation. Install is one command on every
 supported platform: `pip install wickra`, `cargo add wickra`, `npm install
@@ -74,9 +75,9 @@ Release notes and tagged builds:
 ## Indicator reference
 
 Start with [Indicators-Overview](Indicators-Overview) for the full
-seventeen-family taxonomy with per-indicator formula / parameter / warmup
+eighteen-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-232 deep-dive pages.
+244 deep-dive pages.
 
 ### Moving Averages (19)
 
@@ -321,6 +322,21 @@ tables. The links below are a quick alphabetical-by-family index into the
 [RealizedSpread](Indicator-RealizedSpread) ·
 [SignedVolume](Indicator-SignedVolume) ·
 [TradeImbalance](Indicator-TradeImbalance)
+
+### Derivatives (12)
+
+[CalendarSpread](Indicator-CalendarSpread) ·
+[FundingBasis](Indicator-FundingBasis) ·
+[FundingRate](Indicator-FundingRate) ·
+[FundingRateMean](Indicator-FundingRateMean) ·
+[FundingRateZScore](Indicator-FundingRateZScore) ·
+[LiquidationFeatures](Indicator-LiquidationFeatures) ·
+[LongShortRatio](Indicator-LongShortRatio) ·
+[OIPriceDivergence](Indicator-OIPriceDivergence) ·
+[OIWeighted](Indicator-OIWeighted) ·
+[OpenInterestDelta](Indicator-OpenInterestDelta) ·
+[TakerBuySellRatio](Indicator-TakerBuySellRatio) ·
+[TermStructureBasis](Indicator-TermStructureBasis)
 
 ## See also
 
