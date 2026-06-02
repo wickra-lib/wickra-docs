@@ -22,7 +22,7 @@ hero:
       link: /overview
 
 features:
-  - title: 254 indicators, 17 families
+  - title: 259 indicators, 17 families
     details: Moving averages, momentum, trend, volatility, bands, volume, statistics, Ehlers/DSP, pivots, DeMark, Ichimoku, candlesticks, market profile, and risk/performance.
   - title: Same code, live and backtest
     details: Every indicator is an O(1) state machine. The update call in your live loop is the exact same code path that drives the historical backtest — no drift.
