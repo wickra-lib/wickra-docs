@@ -237,18 +237,55 @@ tables. The links below are a quick alphabetical-by-family index into the
 
 [HeikinAshi](Indicator-HeikinAshi) · [Ichimoku](Indicator-Ichimoku)
 
-### Candlestick Patterns (15)
+### Candlestick Patterns (60)
 
-[Doji](Indicator-Doji) · [Engulfing](Indicator-Engulfing) ·
-[Hammer](Indicator-Hammer) · [HangingMan](Indicator-HangingMan) ·
-[Harami](Indicator-Harami) · [InvertedHammer](Indicator-InvertedHammer) ·
-[Marubozu](Indicator-Marubozu) ·
+[AbandonedBaby](Indicator-AbandonedBaby) ·
+[AdvanceBlock](Indicator-AdvanceBlock) · [BeltHold](Indicator-BeltHold) ·
+[Breakaway](Indicator-Breakaway) ·
+[ClosingMarubozu](Indicator-ClosingMarubozu) ·
+[ConcealingBabySwallow](Indicator-ConcealingBabySwallow) ·
+[Counterattack](Indicator-Counterattack) · [Doji](Indicator-Doji) ·
+[DojiStar](Indicator-DojiStar) ·
+[DownsideGapThreeMethods](Indicator-DownsideGapThreeMethods) ·
+[DragonflyDoji](Indicator-DragonflyDoji) ·
+[Engulfing](Indicator-Engulfing) ·
+[EveningDojiStar](Indicator-EveningDojiStar) ·
+[FallingThreeMethods](Indicator-FallingThreeMethods) ·
+[GapSideBySideWhite](Indicator-GapSideBySideWhite) ·
+[GravestoneDoji](Indicator-GravestoneDoji) · [Hammer](Indicator-Hammer) ·
+[HangingMan](Indicator-HangingMan) · [Harami](Indicator-Harami) ·
+[HighWave](Indicator-HighWave) · [Hikkake](Indicator-Hikkake) ·
+[HikkakeModified](Indicator-HikkakeModified) ·
+[HomingPigeon](Indicator-HomingPigeon) ·
+[IdenticalThreeCrows](Indicator-IdenticalThreeCrows) ·
+[InNeck](Indicator-InNeck) · [InvertedHammer](Indicator-InvertedHammer) ·
+[Kicking](Indicator-Kicking) ·
+[KickingByLength](Indicator-KickingByLength) ·
+[LadderBottom](Indicator-LadderBottom) ·
+[LongLeggedDoji](Indicator-LongLeggedDoji) ·
+[LongLine](Indicator-LongLine) · [Marubozu](Indicator-Marubozu) ·
+[MatchingLow](Indicator-MatchingLow) · [MatHold](Indicator-MatHold) ·
+[MorningDojiStar](Indicator-MorningDojiStar) ·
 [MorningEveningStar](Indicator-MorningEveningStar) ·
+[OnNeck](Indicator-OnNeck) · [OpeningMarubozu](Indicator-OpeningMarubozu) ·
 [PiercingDarkCloud](Indicator-PiercingDarkCloud) ·
-[ShootingStar](Indicator-ShootingStar) · [SpinningTop](Indicator-SpinningTop) ·
-[ThreeInside](Indicator-ThreeInside) · [ThreeOutside](Indicator-ThreeOutside) ·
+[RickshawMan](Indicator-RickshawMan) ·
+[RisingThreeMethods](Indicator-RisingThreeMethods) ·
+[SeparatingLines](Indicator-SeparatingLines) ·
+[ShootingStar](Indicator-ShootingStar) · [ShortLine](Indicator-ShortLine) ·
+[SpinningTop](Indicator-SpinningTop) ·
+[StalledPattern](Indicator-StalledPattern) ·
+[StickSandwich](Indicator-StickSandwich) · [Takuri](Indicator-Takuri) ·
+[TasukiGap](Indicator-TasukiGap) · [ThreeInside](Indicator-ThreeInside) ·
+[ThreeLineStrike](Indicator-ThreeLineStrike) ·
+[ThreeOutside](Indicator-ThreeOutside) ·
 [ThreeSoldiersOrCrows](Indicator-ThreeSoldiersOrCrows) ·
-[Tweezer](Indicator-Tweezer)
+[ThreeStarsInSouth](Indicator-ThreeStarsInSouth) ·
+[Thrusting](Indicator-Thrusting) · [Tweezer](Indicator-Tweezer) ·
+[TwoCrows](Indicator-TwoCrows) ·
+[UniqueThreeRiver](Indicator-UniqueThreeRiver) ·
+[UpsideGapThreeMethods](Indicator-UpsideGapThreeMethods) ·
+[UpsideGapTwoCrows](Indicator-UpsideGapTwoCrows)
 
 ### Market Profile (3)
 

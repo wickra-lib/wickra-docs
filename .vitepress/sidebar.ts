@@ -834,12 +834,68 @@ export const sidebar = [
     "collapsed": true,
     "items": [
       {
+        "text": "AbandonedBaby",
+        "link": "/Indicator-AbandonedBaby"
+      },
+      {
+        "text": "AdvanceBlock",
+        "link": "/Indicator-AdvanceBlock"
+      },
+      {
+        "text": "BeltHold",
+        "link": "/Indicator-BeltHold"
+      },
+      {
+        "text": "Breakaway",
+        "link": "/Indicator-Breakaway"
+      },
+      {
+        "text": "ClosingMarubozu",
+        "link": "/Indicator-ClosingMarubozu"
+      },
+      {
+        "text": "ConcealingBabySwallow",
+        "link": "/Indicator-ConcealingBabySwallow"
+      },
+      {
+        "text": "Counterattack",
+        "link": "/Indicator-Counterattack"
+      },
+      {
         "text": "Doji",
         "link": "/Indicator-Doji"
       },
       {
+        "text": "DojiStar",
+        "link": "/Indicator-DojiStar"
+      },
+      {
+        "text": "DownsideGapThreeMethods",
+        "link": "/Indicator-DownsideGapThreeMethods"
+      },
+      {
+        "text": "DragonflyDoji",
+        "link": "/Indicator-DragonflyDoji"
+      },
+      {
         "text": "Engulfing",
         "link": "/Indicator-Engulfing"
+      },
+      {
+        "text": "EveningDojiStar",
+        "link": "/Indicator-EveningDojiStar"
+      },
+      {
+        "text": "FallingThreeMethods",
+        "link": "/Indicator-FallingThreeMethods"
+      },
+      {
+        "text": "GapSideBySideWhite",
+        "link": "/Indicator-GapSideBySideWhite"
+      },
+      {
+        "text": "GravestoneDoji",
+        "link": "/Indicator-GravestoneDoji"
       },
       {
         "text": "Hammer",
@@ -854,32 +910,132 @@ export const sidebar = [
         "link": "/Indicator-Harami"
       },
       {
+        "text": "HighWave",
+        "link": "/Indicator-HighWave"
+      },
+      {
+        "text": "Hikkake",
+        "link": "/Indicator-Hikkake"
+      },
+      {
+        "text": "HikkakeModified",
+        "link": "/Indicator-HikkakeModified"
+      },
+      {
+        "text": "HomingPigeon",
+        "link": "/Indicator-HomingPigeon"
+      },
+      {
+        "text": "IdenticalThreeCrows",
+        "link": "/Indicator-IdenticalThreeCrows"
+      },
+      {
+        "text": "InNeck",
+        "link": "/Indicator-InNeck"
+      },
+      {
         "text": "InvertedHammer",
         "link": "/Indicator-InvertedHammer"
+      },
+      {
+        "text": "Kicking",
+        "link": "/Indicator-Kicking"
+      },
+      {
+        "text": "KickingByLength",
+        "link": "/Indicator-KickingByLength"
+      },
+      {
+        "text": "LadderBottom",
+        "link": "/Indicator-LadderBottom"
+      },
+      {
+        "text": "LongLeggedDoji",
+        "link": "/Indicator-LongLeggedDoji"
+      },
+      {
+        "text": "LongLine",
+        "link": "/Indicator-LongLine"
       },
       {
         "text": "Marubozu",
         "link": "/Indicator-Marubozu"
       },
       {
+        "text": "MatchingLow",
+        "link": "/Indicator-MatchingLow"
+      },
+      {
+        "text": "MatHold",
+        "link": "/Indicator-MatHold"
+      },
+      {
+        "text": "MorningDojiStar",
+        "link": "/Indicator-MorningDojiStar"
+      },
+      {
         "text": "MorningEveningStar",
         "link": "/Indicator-MorningEveningStar"
+      },
+      {
+        "text": "OnNeck",
+        "link": "/Indicator-OnNeck"
+      },
+      {
+        "text": "OpeningMarubozu",
+        "link": "/Indicator-OpeningMarubozu"
       },
       {
         "text": "PiercingDarkCloud",
         "link": "/Indicator-PiercingDarkCloud"
       },
       {
+        "text": "RickshawMan",
+        "link": "/Indicator-RickshawMan"
+      },
+      {
+        "text": "RisingThreeMethods",
+        "link": "/Indicator-RisingThreeMethods"
+      },
+      {
+        "text": "SeparatingLines",
+        "link": "/Indicator-SeparatingLines"
+      },
+      {
         "text": "ShootingStar",
         "link": "/Indicator-ShootingStar"
+      },
+      {
+        "text": "ShortLine",
+        "link": "/Indicator-ShortLine"
       },
       {
         "text": "SpinningTop",
         "link": "/Indicator-SpinningTop"
       },
       {
+        "text": "StalledPattern",
+        "link": "/Indicator-StalledPattern"
+      },
+      {
+        "text": "StickSandwich",
+        "link": "/Indicator-StickSandwich"
+      },
+      {
+        "text": "Takuri",
+        "link": "/Indicator-Takuri"
+      },
+      {
+        "text": "TasukiGap",
+        "link": "/Indicator-TasukiGap"
+      },
+      {
         "text": "ThreeInside",
         "link": "/Indicator-ThreeInside"
+      },
+      {
+        "text": "ThreeLineStrike",
+        "link": "/Indicator-ThreeLineStrike"
       },
       {
         "text": "ThreeOutside",
@@ -890,8 +1046,32 @@ export const sidebar = [
         "link": "/Indicator-ThreeSoldiersOrCrows"
       },
       {
+        "text": "ThreeStarsInSouth",
+        "link": "/Indicator-ThreeStarsInSouth"
+      },
+      {
+        "text": "Thrusting",
+        "link": "/Indicator-Thrusting"
+      },
+      {
         "text": "Tweezer",
         "link": "/Indicator-Tweezer"
+      },
+      {
+        "text": "TwoCrows",
+        "link": "/Indicator-TwoCrows"
+      },
+      {
+        "text": "UniqueThreeRiver",
+        "link": "/Indicator-UniqueThreeRiver"
+      },
+      {
+        "text": "UpsideGapThreeMethods",
+        "link": "/Indicator-UpsideGapThreeMethods"
+      },
+      {
+        "text": "UpsideGapTwoCrows",
+        "link": "/Indicator-UpsideGapTwoCrows"
       }
     ]
   },
