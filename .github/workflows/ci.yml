@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -29,9 +31,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       # Uses the repo's .markdownlint.jsonc (structural rules on, intentional
       # wiki-export style noise off).
-      - uses: DavidAnson/markdownlint-cli2-action@v19
+      - uses: DavidAnson/markdownlint-cli2-action@05f32210e84442804257b2a6f20b273450ec8265 # v19
         with:
           globs: "*.md"
 
@@ -44,13 +48,15 @@ jobs:
       # snippet that drifts from the library now fails CI here.
       - uses: actions/checkout@v6
         with:
+          persist-credentials: false
           path: docs
       - uses: actions/checkout@v6
         with:
+          persist-credentials: false
           repository: wickra-lib/wickra
           path: wickra
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable branch, 2026-03-27
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
         with:
           workspaces: wickra
       - uses: actions/setup-node@v4

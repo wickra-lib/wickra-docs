@@ -1,0 +1,12 @@
+# zizmor configuration — https://docs.zizmor.sh/configuration/
+#
+# artipacked (refresh-badges.yml):
+#   The refresh job checks out with persisted credentials on purpose: it commits
+#   and pushes refreshed status-badge snapshots back to the repo (git commit +
+#   git push), which needs the token in the runner's git config. It uploads no
+#   artifacts, so the persisted token is never packaged or leaked; accept it.
+#   Every other checkout in this repo sets persist-credentials: false.
+rules:
+  artipacked:
+    ignore:
+      - refresh-badges.yml
