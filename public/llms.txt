@@ -1,0 +1,34 @@
+# Wickra
+
+> Documentation for Wickra — streaming-first technical indicators with one Rust core and Python, Node, and WASM bindings. Every indicator updates in O(1) constant time per tick, and the same code runs for backtesting and live ticks. Install-free — no C toolchain required.
+
+Wickra implements each indicator once in Rust as a state machine, then re-exports that single implementation to Python (PyO3), Node (napi-rs), the browser (wasm-bindgen), and Rust itself. Batch and streaming evaluation are guaranteed to produce identical output, pinned by reference-value tests. Released under the PolyForm Noncommercial License 1.0.0.
+
+## Start here
+- [Overview](https://docs.wickra.org/overview): What Wickra is, how the core and bindings fit together, and the currently published versions.
+- [Indicators overview](https://docs.wickra.org/Indicators-Overview): The full catalogue of indicator families, each linking to a per-indicator deep dive.
+
+## Quickstarts
+- [Rust](https://docs.wickra.org/Quickstart-Rust): Add the crate and stream your first indicator.
+- [Python](https://docs.wickra.org/Quickstart-Python): `pip install wickra` and a streaming RSI example.
+- [Node](https://docs.wickra.org/Quickstart-Node): `npm install wickra` and a streaming RSI example.
+- [WASM](https://docs.wickra.org/Quickstart-WASM): Run indicators in the browser via WebAssembly.
+
+## Reference
+- [Warmup periods](https://docs.wickra.org/Warmup-Periods): How many bars each indicator needs before it emits a value.
+- [Streaming vs batch](https://docs.wickra.org/Streaming-vs-Batch): What the batch/streaming equivalence guarantee actually means.
+- [Indicator chaining](https://docs.wickra.org/Indicator-Chaining): Feeding one indicator's output into another.
+- [Data layer](https://docs.wickra.org/Data-Layer): Candles, sources, and the optional Binance WebSocket adapter.
+
+## Guides
+- [Cookbook](https://docs.wickra.org/Cookbook): Task-oriented recipes for common workflows.
+- [TA-Lib migration](https://docs.wickra.org/TA-Lib-Migration): Moving from TA-Lib to Wickra.
+- [FAQ](https://docs.wickra.org/FAQ): Common questions and answers.
+
+## Source and packages
+- [GitHub](https://github.com/wickra-lib/wickra): Source, issues, and releases.
+- [crates.io](https://crates.io/crates/wickra): Rust crate.
+- [PyPI](https://pypi.org/project/wickra/): Python package.
+- [npm](https://www.npmjs.com/package/wickra): Node package.
+- [Marketing site](https://wickra.org/): Live demo and benchmarks.
+</content>
