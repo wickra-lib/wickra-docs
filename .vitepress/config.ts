@@ -21,10 +21,45 @@ const versionMatch = overview.match(
 )
 const version = versionMatch ? versionMatch[1] : 'latest'
 
+// JSON-LD structured data (Organization + SoftwareApplication) so search
+// engines and LLM crawlers can resolve the project's entity, ownership, and
+// where it is published. Emitted once in the document <head> below.
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://docs.wickra.org/#organization',
+      name: 'Wickra',
+      url: 'https://wickra.org/',
+      logo: 'https://docs.wickra.org/wickra-mark.svg',
+      sameAs: [
+        'https://github.com/wickra-lib/wickra',
+        'https://crates.io/crates/wickra',
+        'https://pypi.org/project/wickra/',
+        'https://www.npmjs.com/package/wickra',
+      ],
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': 'https://wickra.org/#software',
+      name: 'Wickra',
+      url: 'https://wickra.org/',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'Windows, macOS, Linux, WebAssembly',
+      programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly'],
+      description:
+        'Streaming-first technical indicators with a Rust core and Python, Node, and WASM bindings. Same code for backtesting and live ticks.',
+      license: 'https://polyformproject.org/licenses/noncommercial/1.0.0/',
+      publisher: { '@id': 'https://docs.wickra.org/#organization' },
+    },
+  ],
+}
+
 export default defineConfig({
   title: 'Wickra',
   description:
-    'Streaming-first technical indicators. Rust core with Python, Node, and WASM bindings. 214 indicators, install-free.',
+    'Streaming-first technical indicators with a Rust core and Python, Node, and WASM bindings — 214 indicators, install-free. Same code for backtest and live tick.',
   lang: 'en-US',
 
   // Served at the domain root (e.g. docs.wickra.org), so the base is '/'.
@@ -55,12 +90,6 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16.png' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }],
-    // Warm the TLS connections to the external badge hosts used in the footer
-    // badge row so the status badges paint with the page instead of popping in.
-    ['link', { rel: 'preconnect', href: 'https://img.shields.io' }],
-    ['link', { rel: 'preconnect', href: 'https://github.com' }],
-    ['link', { rel: 'preconnect', href: 'https://codecov.io' }],
-    ['link', { rel: 'preconnect', href: 'https://api.securityscorecards.dev' }],
     ['meta', { name: 'theme-color', content: '#0ea5e9' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'Wickra Documentation' }],
@@ -75,7 +104,21 @@ export default defineConfig({
     ['meta', { property: 'og:image', content: 'https://docs.wickra.org/og-banner.webp' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:image', content: 'https://docs.wickra.org/og-banner.webp' }],
+    ['script', { type: 'application/ld+json' }, JSON.stringify(structuredData)],
   ],
+
+  // VitePress emits neither a canonical link nor a per-page og:url on its own;
+  // derive both from each page's path so every URL self-references its clean,
+  // apex-domain canonical (consistent with `cleanUrls: true`).
+  transformPageData(pageData) {
+    const path = pageData.relativePath.replace(/(?:index)?\.md$/, '')
+    const canonical = `https://docs.wickra.org/${path}`
+    pageData.frontmatter.head ??= []
+    pageData.frontmatter.head.push(
+      ['link', { rel: 'canonical', href: canonical }],
+      ['meta', { property: 'og:url', content: canonical }],
+    )
+  },
 
   themeConfig: {
     siteTitle: 'Wickra',

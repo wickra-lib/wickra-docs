@@ -1,5 +1,7 @@
 ---
 layout: home
+title: Wickra Documentation — streaming-first technical indicators
+titleTemplate: false
 
 hero:
   name: Wickra
