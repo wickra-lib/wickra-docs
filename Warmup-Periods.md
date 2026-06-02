@@ -360,6 +360,27 @@ fixed-window; `Footprint` accumulates until `reset()`.
 | `KylesLambda`            | `KylesLambda::new(50)`            | `window + 1`   | 51     | 51st trade-quote         |
 | `Footprint`              | `Footprint::new(0.5)`             | constant `1`   | 1      | 1st trade (reset per bar) |
 
+## Family 18 — Derivatives
+
+Perpetual- and dated-futures analytics over a `DerivativesTick`. Most are
+stateless or fixed-window; `OpenInterestDelta` needs a previous tick and
+`OIPriceDivergence` a full `window`-tick lookback.
+
+| Indicator             | Constructor                     | Formula        | warmup | Inputs at first emission |
+|-----------------------|---------------------------------|----------------|--------|--------------------------|
+| `FundingRate`         | `FundingRate::new()`            | constant `1`   | 1      | 1st tick                 |
+| `FundingRateMean`     | `FundingRateMean::new(20)`      | `window`       | 20     | 20th tick                |
+| `FundingRateZScore`   | `FundingRateZScore::new(20)`    | `window`       | 20     | 20th tick                |
+| `FundingBasis`        | `FundingBasis::new()`           | constant `1`   | 1      | 1st tick                 |
+| `OpenInterestDelta`   | `OpenInterestDelta::new()`      | constant `2`   | 2      | 2nd tick                 |
+| `OIPriceDivergence`   | `OIPriceDivergence::new(20)`    | `window + 1`   | 21     | 21st tick                |
+| `OIWeighted`          | `OIWeighted::new()`             | constant `1`   | 1      | 1st tick                 |
+| `LongShortRatio`      | `LongShortRatio::new()`         | constant `1`   | 1      | 1st tick                 |
+| `TakerBuySellRatio`   | `TakerBuySellRatio::new()`      | constant `1`   | 1      | 1st tick                 |
+| `LiquidationFeatures` | `LiquidationFeatures::new()`    | constant `1`   | 1      | 1st tick                 |
+| `TermStructureBasis`  | `TermStructureBasis::new()`     | constant `1`   | 1      | 1st tick                 |
+| `CalendarSpread`      | `CalendarSpread::new()`         | constant `1`   | 1      | 1st tick                 |
+
 ## Additional Volume indicators
 
 | Indicator                  | Constructor                          | Formula                  | warmup | Inputs at first emission |

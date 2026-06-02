@@ -1276,5 +1276,59 @@ export const sidebar = [
         "link": "/Indicator-TradeImbalance"
       }
     ]
+  },
+  {
+    "text": "Derivatives",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "CalendarSpread",
+        "link": "/Indicator-CalendarSpread"
+      },
+      {
+        "text": "FundingBasis",
+        "link": "/Indicator-FundingBasis"
+      },
+      {
+        "text": "FundingRate",
+        "link": "/Indicator-FundingRate"
+      },
+      {
+        "text": "FundingRateMean",
+        "link": "/Indicator-FundingRateMean"
+      },
+      {
+        "text": "FundingRateZScore",
+        "link": "/Indicator-FundingRateZScore"
+      },
+      {
+        "text": "LiquidationFeatures",
+        "link": "/Indicator-LiquidationFeatures"
+      },
+      {
+        "text": "LongShortRatio",
+        "link": "/Indicator-LongShortRatio"
+      },
+      {
+        "text": "OIPriceDivergence",
+        "link": "/Indicator-OIPriceDivergence"
+      },
+      {
+        "text": "OIWeighted",
+        "link": "/Indicator-OIWeighted"
+      },
+      {
+        "text": "OpenInterestDelta",
+        "link": "/Indicator-OpenInterestDelta"
+      },
+      {
+        "text": "TakerBuySellRatio",
+        "link": "/Indicator-TakerBuySellRatio"
+      },
+      {
+        "text": "TermStructureBasis",
+        "link": "/Indicator-TermStructureBasis"
+      }
+    ]
   }
 ]
