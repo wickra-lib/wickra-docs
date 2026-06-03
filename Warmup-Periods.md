@@ -478,7 +478,6 @@ Parameter-free Fibonacci harmonic detectors. Warmup is the minimum bars to confi
 | `Cypher` | `Cypher::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
 | `ThreeDrives` | `ThreeDrives::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
 
-
 ## Additional Volume indicators
 
 | Indicator                  | Constructor                          | Formula                  | warmup | Inputs at first emission |

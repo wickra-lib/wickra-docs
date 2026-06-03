@@ -639,7 +639,6 @@ Fibonacci-ratio harmonic patterns read from the last four or five confirmed swin
 | `Cypher` | Five-point harmonic whose D retraces XC by 0.786. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Cypher](Indicator-Cypher) |
 | `ThreeDrives` | Three symmetric drives with extension legs. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-ThreeDrives](Indicator-ThreeDrives) |
 
-
 ## See also
 
 - [Warmup Periods](Warmup-Periods) — verified table of every indicator's
