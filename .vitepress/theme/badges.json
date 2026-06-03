@@ -63,6 +63,13 @@
     "height": 20
   },
   {
+    "alt": "OpenSSF Best Practices",
+    "href": "https://www.bestpractices.dev/projects/13094",
+    "file": "/badges/best-practices.svg",
+    "width": 184,
+    "height": 20
+  },
+  {
     "alt": "Build provenance",
     "href": "https://github.com/wickra-lib/wickra/attestations",
     "file": "/badges/provenance.svg",
