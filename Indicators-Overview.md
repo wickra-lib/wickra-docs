@@ -1,6 +1,6 @@
 # Indicators Overview
 
-Wickra ships **377 indicators** organised into **twenty-three families**. Each
+Wickra ships **377 indicators** organised into **twenty-four families**. Each
 family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
@@ -18,7 +18,7 @@ quotes `warmup_period()` as the indicator reports it — the **exact**
 first-emission index: the first non-`None` output lands on input
 `warmup_period()` (0-indexed `warmup_period() - 1`).
 
-The twenty-three families:
+The twenty-four families:
 
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
@@ -45,6 +45,7 @@ The twenty-three families:
 | 21 | [Seasonality & Session](#seasonality--session) | 12 | When in the day / week / month does this happen? |
 | 22 | [Chart Patterns](#chart-patterns) | 8 | Swing-based classical chart patterns — double/triple tops, head & shoulders, triangles, wedges, flags, rectangles, cup & handle. |
 | 23 | [Harmonic Patterns](#harmonic-patterns) | 8 | Fibonacci-ratio XABCD patterns — Gartley, Bat, Butterfly, Crab, Shark, Cypher, AB=CD, Three Drives. |
+| 24 | [Fibonacci](#fibonacci) | 10 | Swing-based Fibonacci tooling — retracement, extension, projection, auto-fib, golden pocket, confluence, fan, arcs, channel, time zones. |
 
 ## Moving Averages
 
@@ -638,6 +639,23 @@ Fibonacci-ratio harmonic patterns read from the last four or five confirmed swin
 | `Shark` | Five-point harmonic with an expansion leg and 0.886-1.13 D. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Shark](Indicator-Shark) |
 | `Cypher` | Five-point harmonic whose D retraces XC by 0.786. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Cypher](Indicator-Cypher) |
 | `ThreeDrives` | Three symmetric drives with extension legs. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-ThreeDrives](Indicator-ThreeDrives) |
+
+## Fibonacci
+
+Swing-based Fibonacci tooling built on the same non-repainting 5% pivot tracker as the chart and harmonic patterns. Each is parameter-free and emits a struct of price levels (or, for time zones, timing flags) for the most recent confirmed swing; the geometric tools (fan, arcs, channel) normalise their geometry to the swing leg's bar-width so the output is chart-scale-free. All return `None` until enough pivots have confirmed.
+
+| Indicator | One-liner | Input | Output | Defaults | Warmup | Deep dive |
+|-----------|-----------|-------|--------|----------|--------|-----------|
+| `FibRetracement` | Seven retracement levels (0-100%) of the last swing leg. | `Candle` | 7×`f64` | none | 2 | [Indicator-FibRetracement](Indicator-FibRetracement) |
+| `FibExtension` | Five extension ratios (127.2-261.8%) projected beyond the leg. | `Candle` | 5×`f64` | none | 2 | [Indicator-FibExtension](Indicator-FibExtension) |
+| `FibProjection` | A-B-C measured-move target zone projected from C. | `Candle` | 4×`f64` | none | 3 | [Indicator-FibProjection](Indicator-FibProjection) |
+| `AutoFib` | Retracement anchored on the dominant recent leg. | `Candle` | 7×`f64` | none | 2 | [Indicator-AutoFib](Indicator-AutoFib) |
+| `GoldenPocket` | The 0.618-0.65 optimal-trade-entry band. | `Candle` | 3×`f64` | none | 2 | [Indicator-GoldenPocket](Indicator-GoldenPocket) |
+| `FibConfluence` | Densest cluster of retracement levels across recent legs. | `Candle` | 2×`f64` | none | 3 | [Indicator-FibConfluence](Indicator-FibConfluence) |
+| `FibFan` | Trendlines fanning through the leg's retracement levels. | `Candle` | 3×`f64` | none | 2 | [Indicator-FibFan](Indicator-FibFan) |
+| `FibArcs` | Semicircular retracement levels decaying over time. | `Candle` | 3×`f64` | none | 2 | [Indicator-FibArcs](Indicator-FibArcs) |
+| `FibChannel` | Sloped base trendline plus parallel Fibonacci offsets. | `Candle` | 4×`f64` | none | 3 | [Indicator-FibChannel](Indicator-FibChannel) |
+| `FibTimeZones` | Markers at Fibonacci bar-distances from the latest pivot. | `Candle` | 2×`f64` | none | 2 | [Indicator-FibTimeZones](Indicator-FibTimeZones) |
 
 ## See also
 

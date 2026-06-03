@@ -478,6 +478,23 @@ Parameter-free Fibonacci harmonic detectors. Warmup is the minimum bars to confi
 | `Cypher` | `Cypher::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
 | `ThreeDrives` | `ThreeDrives::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
 
+## Family 24 — Fibonacci
+
+Parameter-free swing-based Fibonacci tools. `warmup_period()` is the minimum number of confirmed pivots the tool needs (two for a single leg, three for the three-point and channel tools); the actual readiness is data-dependent, and `update` returns `None` until enough pivots confirm.
+
+| Indicator | Constructor | Formula | warmup | Inputs at first emission |
+|-----------|-------------|---------|--------|--------------------------|
+| `FibRetracement` | `FibRetracement::new()` | 2 swing pivots | 2 | after the 2nd confirmed pivot |
+| `FibExtension` | `FibExtension::new()` | 2 swing pivots | 2 | after the 2nd confirmed pivot |
+| `FibProjection` | `FibProjection::new()` | 3 swing pivots | 3 | after the 3rd confirmed pivot |
+| `AutoFib` | `AutoFib::new()` | dominant of last 6 pivots | 2 | after the 2nd confirmed pivot |
+| `GoldenPocket` | `GoldenPocket::new()` | 2 swing pivots | 2 | after the 2nd confirmed pivot |
+| `FibConfluence` | `FibConfluence::new()` | 2 legs (3 pivots) | 3 | after the 3rd confirmed pivot |
+| `FibFan` | `FibFan::new()` | 2 swing pivots + bar index | 2 | after the 2nd confirmed pivot |
+| `FibArcs` | `FibArcs::new()` | 2 swing pivots + bar index | 2 | after the 2nd confirmed pivot |
+| `FibChannel` | `FibChannel::new()` | 3 swing pivots + bar index | 3 | after the 3rd confirmed pivot |
+| `FibTimeZones` | `FibTimeZones::new()` | 1 anchor pivot + bar index | 2 | after the 1st confirmed pivot |
+
 ## Additional Volume indicators
 
 | Indicator                  | Constructor                          | Formula                  | warmup | Inputs at first emission |

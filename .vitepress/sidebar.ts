@@ -1228,6 +1228,52 @@ export const sidebar = [
     ]
   },
   {
+    "text": "Fibonacci",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "AutoFib",
+        "link": "/Indicator-AutoFib"
+      },
+      {
+        "text": "FibArcs",
+        "link": "/Indicator-FibArcs"
+      },
+      {
+        "text": "FibChannel",
+        "link": "/Indicator-FibChannel"
+      },
+      {
+        "text": "FibConfluence",
+        "link": "/Indicator-FibConfluence"
+      },
+      {
+        "text": "FibExtension",
+        "link": "/Indicator-FibExtension"
+      },
+      {
+        "text": "FibFan",
+        "link": "/Indicator-FibFan"
+      },
+      {
+        "text": "FibProjection",
+        "link": "/Indicator-FibProjection"
+      },
+      {
+        "text": "FibRetracement",
+        "link": "/Indicator-FibRetracement"
+      },
+      {
+        "text": "FibTimeZones",
+        "link": "/Indicator-FibTimeZones"
+      },
+      {
+        "text": "GoldenPocket",
+        "link": "/Indicator-GoldenPocket"
+      }
+    ]
+  },
+  {
     "text": "Ehlers / Cycle (DSP)",
     "collapsed": true,
     "items": [
