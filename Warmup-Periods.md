@@ -448,6 +448,36 @@ level / volume indicators emit from the first bar.
 | `DayOfWeekProfile` | `DayOfWeekProfile::new(0)` | needs a return | 2 | 2nd bar |
 | `IntradayVolatilityProfile` | `IntradayVolatilityProfile::new(24, 0)` | needs a return | 2 | 2nd bar |
 
+## Family 22 — Chart Patterns
+
+Parameter-free swing-pattern detectors on a 5% non-repainting pivot tracker. Warmup is the minimum bars to confirm the pivots the pattern needs; before that they return `0.0`.
+
+| Indicator | Constructor | Formula | warmup | Inputs at first emission |
+|-----------|-------------|---------|--------|--------------------------|
+| `DoubleTopBottom` | `DoubleTopBottom::new()` | 3 swing pivots | 5 | after the 3th confirmed pivot |
+| `TripleTopBottom` | `TripleTopBottom::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `HeadAndShoulders` | `HeadAndShoulders::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `Triangle` | `Triangle::new()` | 4 swing pivots | 5 | after the 4th confirmed pivot |
+| `Wedge` | `Wedge::new()` | 4 swing pivots | 5 | after the 4th confirmed pivot |
+| `FlagPennant` | `FlagPennant::new()` | 3 swing pivots | 4 | after the 3th confirmed pivot |
+| `RectangleRange` | `RectangleRange::new()` | 4 swing pivots | 5 | after the 4th confirmed pivot |
+| `CupAndHandle` | `CupAndHandle::new()` | 4 swing pivots | 5 | after the 4th confirmed pivot |
+
+## Family 23 — Harmonic Patterns
+
+Parameter-free Fibonacci harmonic detectors. Warmup is the minimum bars to confirm the four or five XABCD pivots; before that they return `0.0`.
+
+| Indicator | Constructor | Formula | warmup | Inputs at first emission |
+|-----------|-------------|---------|--------|--------------------------|
+| `Abcd` | `Abcd::new()` | 4 swing pivots | 5 | after the 4th confirmed pivot |
+| `Gartley` | `Gartley::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `Butterfly` | `Butterfly::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `Bat` | `Bat::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `Crab` | `Crab::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `Shark` | `Shark::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `Cypher` | `Cypher::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `ThreeDrives` | `ThreeDrives::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+
 ## Additional Volume indicators
 
 | Indicator                  | Constructor                          | Formula                  | warmup | Inputs at first emission |
