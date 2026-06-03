@@ -28,12 +28,12 @@ open an issue on GitHub to discuss a separate license.
 
 | Registry  | Package        | Version |
 |-----------|----------------|---------|
-| crates.io | `wickra`       | 0.4.6   |
-| crates.io | `wickra-core`  | 0.4.6   |
-| crates.io | `wickra-data`  | 0.4.6   |
-| PyPI      | `wickra`       | 0.4.6   |
-| npm       | `wickra`       | 0.4.6   |
-| npm       | `wickra-wasm`  | 0.4.6   |
+| crates.io | `wickra`       | 0.4.7   |
+| crates.io | `wickra-core`  | 0.4.7   |
+| crates.io | `wickra-data`  | 0.4.7   |
+| PyPI      | `wickra`       | 0.4.7   |
+| npm       | `wickra`       | 0.4.7   |
+| npm       | `wickra-wasm`  | 0.4.7   |
 
 Release notes and tagged builds:
 <https://github.com/wickra-lib/wickra/releases>.
