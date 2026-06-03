@@ -1502,5 +1502,59 @@ export const sidebar = [
         "link": "/Indicator-UpDownVolumeRatio"
       }
     ]
+  },
+  {
+    "text": "Seasonality & Session",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "AverageDailyRange",
+        "link": "/Indicator-AverageDailyRange"
+      },
+      {
+        "text": "DayOfWeekProfile",
+        "link": "/Indicator-DayOfWeekProfile"
+      },
+      {
+        "text": "IntradayVolatilityProfile",
+        "link": "/Indicator-IntradayVolatilityProfile"
+      },
+      {
+        "text": "OvernightGap",
+        "link": "/Indicator-OvernightGap"
+      },
+      {
+        "text": "OvernightIntradayReturn",
+        "link": "/Indicator-OvernightIntradayReturn"
+      },
+      {
+        "text": "SeasonalZScore",
+        "link": "/Indicator-SeasonalZScore"
+      },
+      {
+        "text": "SessionHighLow",
+        "link": "/Indicator-SessionHighLow"
+      },
+      {
+        "text": "SessionRange",
+        "link": "/Indicator-SessionRange"
+      },
+      {
+        "text": "SessionVwap",
+        "link": "/Indicator-SessionVwap"
+      },
+      {
+        "text": "TimeOfDayReturnProfile",
+        "link": "/Indicator-TimeOfDayReturnProfile"
+      },
+      {
+        "text": "TurnOfMonth",
+        "link": "/Indicator-TurnOfMonth"
+      },
+      {
+        "text": "VolumeByTimeProfile",
+        "link": "/Indicator-VolumeByTimeProfile"
+      }
+    ]
   }
 ]

@@ -1,6 +1,6 @@
 # Indicators Overview
 
-Wickra ships **351 indicators** organised into **twenty families**. Each
+Wickra ships **351 indicators** organised into **twenty-one families**. Each
 family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
@@ -18,7 +18,7 @@ quotes `warmup_period()` as the indicator reports it — the **exact**
 first-emission index: the first non-`None` output lands on input
 `warmup_period()` (0-indexed `warmup_period() - 1`).
 
-The twenty families:
+The twenty-one families:
 
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
@@ -42,6 +42,7 @@ The twenty families:
 | 18 | [Derivatives](#derivatives) | 12 | Funding, open-interest, positioning, flow and basis on a perp/futures feed. |
 | 19 | [Alt-Chart Bars](#alt-chart-bars) | 3 | Price-driven Renko / Kagi / Point & Figure bar builders. |
 | 20 | [Market Breadth](#market-breadth) | 15 | Universe-wide advance/decline participation. |
+| 21 | [Seasonality & Session](#seasonality--session) | 12 | When in the day / week / month does this happen? |
 
 ## Moving Averages
 
@@ -582,6 +583,29 @@ cross-section into a single participation reading.
 | `TickIndex` | Instantaneous net advancing-minus-declining issues. | `CrossSection` | `f64` | `-N..=N` | none | 1 | [Indicator-TickIndex](Indicator-TickIndex) |
 | `Trin` | Advance-decline ratio over the up-down volume ratio (Arms Index). | `CrossSection` | `f64` | `0..` | none | 1 | [Indicator-Trin](Indicator-Trin) |
 | `UpDownVolumeRatio` | Advancing volume divided by declining volume. | `CrossSection` | `f64` | `0..` | none | 1 | [Indicator-UpDownVolumeRatio](Indicator-UpDownVolumeRatio) |
+
+## Seasonality & Session
+
+Timestamp-driven indicators that key off the wall-clock fields of
+`Candle::timestamp` (shifted by a `utc_offset_minutes` constructor argument so
+the buckets line up with the relevant exchange session). Session, day and month
+rollovers are detected automatically — callers never invoke `reset()` at a
+boundary.
+
+| Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
+|-----------|-----------|-------|--------|-------|----------|--------|-----------|
+| `SessionVwap` | Session-anchored volume-weighted average price. | `Candle` | `f64` | price units | `utc_offset=0` | 1 | [Indicator-SessionVwap](Indicator-SessionVwap) |
+| `SessionHighLow` | Running high / low of the current session. | `Candle` | `{high, low}` | price units | `utc_offset=0` | 1 | [Indicator-SessionHighLow](Indicator-SessionHighLow) |
+| `SessionRange` | Per-session (Asia / EU / US) high-low range. | `Candle` | `{asia, eu, us}` | `>= 0` | `utc_offset=0` | 1 | [Indicator-SessionRange](Indicator-SessionRange) |
+| `AverageDailyRange` | Mean high-low range of the last N completed sessions. | `Candle` | `f64` | `>= 0` | `period=14, utc_offset=0` | `period` | [Indicator-AverageDailyRange](Indicator-AverageDailyRange) |
+| `OvernightGap` | Close-to-open return across the session boundary. | `Candle` | `f64` | unbounded | `utc_offset=0` | 2 | [Indicator-OvernightGap](Indicator-OvernightGap) |
+| `OvernightIntradayReturn` | Splits the session return into overnight + intraday legs. | `Candle` | `{overnight, intraday}` | unbounded | `utc_offset=0` | 2 | [Indicator-OvernightIntradayReturn](Indicator-OvernightIntradayReturn) |
+| `TurnOfMonth` | Mean daily return inside the turn-of-month window. | `Candle` | `f64` | unbounded | `n_first=3, n_last=1, utc_offset=0` | 2 | [Indicator-TurnOfMonth](Indicator-TurnOfMonth) |
+| `SeasonalZScore` | Z-score of the current return vs the same hour-of-day history. | `Candle` | `f64` | unbounded | `utc_offset=0` | 2 | [Indicator-SeasonalZScore](Indicator-SeasonalZScore) |
+| `TimeOfDayReturnProfile` | Mean bar return bucketed by intraday time. | `Candle` | `bins[]` | unbounded | `buckets=24, utc_offset=0` | 2 | [Indicator-TimeOfDayReturnProfile](Indicator-TimeOfDayReturnProfile) |
+| `DayOfWeekProfile` | Mean bar return bucketed by weekday. | `Candle` | `bins[7]` | unbounded | `utc_offset=0` | 2 | [Indicator-DayOfWeekProfile](Indicator-DayOfWeekProfile) |
+| `IntradayVolatilityProfile` | Return standard deviation bucketed by intraday time. | `Candle` | `bins[]` | `>= 0` | `buckets=24, utc_offset=0` | 2 | [Indicator-IntradayVolatilityProfile](Indicator-IntradayVolatilityProfile) |
+| `VolumeByTimeProfile` | Mean traded volume bucketed by intraday time. | `Candle` | `bins[]` | `>= 0` | `buckets=24, utc_offset=0` | 1 | [Indicator-VolumeByTimeProfile](Indicator-VolumeByTimeProfile) |
 
 ## See also
 

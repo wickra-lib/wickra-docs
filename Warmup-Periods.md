@@ -426,6 +426,28 @@ instead.)
 | `Trin` | `Trin::new()` | constant `1` | 1 | 1st tick |
 | `UpDownVolumeRatio` | `UpDownVolumeRatio::new()` | constant `1` | 1 | 1st tick |
 
+## Family 21 — Seasonality & Session
+
+Timestamp-driven indicators keyed on the wall-clock fields of `Candle::timestamp`
+(shifted by `utc_offset_minutes`). Day / session / month rollovers are detected
+automatically. The return-based profiles need one prior bar (warmup 2); the
+level / volume indicators emit from the first bar.
+
+| Indicator | Constructor | Formula | warmup | Inputs at first emission |
+|-----------|-------------|---------|--------|--------------------------|
+| `SessionVwap` | `SessionVwap::new(0)` | constant `1` | 1 | 1st bar |
+| `SessionHighLow` | `SessionHighLow::new(0)` | constant `1` | 1 | 1st bar |
+| `SessionRange` | `SessionRange::new(0)` | constant `1` | 1 | 1st bar |
+| `VolumeByTimeProfile` | `VolumeByTimeProfile::new(24, 0)` | constant `1` | 1 | 1st bar |
+| `AverageDailyRange` | `AverageDailyRange::new(14, 0)` | `period` days | 14 | after the 1st completed session |
+| `OvernightGap` | `OvernightGap::new(0)` | needs a prior close | 2 | 1st bar of the 2nd session |
+| `OvernightIntradayReturn` | `OvernightIntradayReturn::new(0)` | needs a prior close | 2 | 1st bar of the 2nd session |
+| `TurnOfMonth` | `TurnOfMonth::new(3, 1, 0)` | needs a prior daily close | 2 | 1st in-window session return |
+| `SeasonalZScore` | `SeasonalZScore::new(0)` | bucket needs 2 priors | 2 | 3rd same-hour return |
+| `TimeOfDayReturnProfile` | `TimeOfDayReturnProfile::new(24, 0)` | needs a return | 2 | 2nd bar |
+| `DayOfWeekProfile` | `DayOfWeekProfile::new(0)` | needs a return | 2 | 2nd bar |
+| `IntradayVolatilityProfile` | `IntradayVolatilityProfile::new(24, 0)` | needs a return | 2 | 2nd bar |
+
 ## Additional Volume indicators
 
 | Indicator                  | Constructor                          | Formula                  | warmup | Inputs at first emission |
