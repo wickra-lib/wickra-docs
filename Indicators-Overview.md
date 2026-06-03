@@ -41,7 +41,7 @@ The twenty families:
 | 17 | [Microstructure](#microstructure) | 13 | Order-book, trade-flow, price-impact and footprint analytics. |
 | 18 | [Derivatives](#derivatives) | 12 | Funding, open-interest, positioning, flow and basis on a perp/futures feed. |
 | 19 | [Alt-Chart Bars](#alt-chart-bars) | 3 | Price-driven Renko / Kagi / Point & Figure bar builders. |
-| 20 | [Market Breadth](#market-breadth) | 1 | Universe-wide advance/decline participation. |
+| 20 | [Market Breadth](#market-breadth) | 15 | Universe-wide advance/decline participation. |
 
 ## Moving Averages
 
@@ -567,7 +567,21 @@ cross-section into a single participation reading.
 
 | Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
 |-----------|-----------|-------|--------|-------|----------|--------|-----------|
+| `AbsoluteBreadthIndex` | Absolute value of net advancing-minus-declining issues. | `CrossSection` | `f64` | `0..=N` | none | 1 | [Indicator-AbsoluteBreadthIndex](Indicator-AbsoluteBreadthIndex) |
 | `AdvanceDecline` | Cumulative net advancing-minus-declining issues. | `CrossSection` | `f64` | unbounded | none | 1 | [Indicator-AdvanceDecline](Indicator-AdvanceDecline) |
+| `AdvanceDeclineRatio` | Advancing issues divided by declining issues. | `CrossSection` | `f64` | `0..` | none | 1 | [Indicator-AdvanceDeclineRatio](Indicator-AdvanceDeclineRatio) |
+| `AdVolumeLine` | Cumulative net advancing-minus-declining volume. | `CrossSection` | `f64` | unbounded | none | 1 | [Indicator-AdVolumeLine](Indicator-AdVolumeLine) |
+| `BreadthThrust` | Moving average of the advancing-issues share (Zweig). | `CrossSection` | `f64` | `0..=1` | `period=10` | 10 | [Indicator-BreadthThrust](Indicator-BreadthThrust) |
+| `BullishPercentIndex` | Percentage of the universe on a point-and-figure buy signal. | `CrossSection` | `f64` | `0..=100` | none | 1 | [Indicator-BullishPercentIndex](Indicator-BullishPercentIndex) |
+| `CumulativeVolumeIndex` | Running total of volume-normalised net advancing volume. | `CrossSection` | `f64` | unbounded | none | 1 | [Indicator-CumulativeVolumeIndex](Indicator-CumulativeVolumeIndex) |
+| `HighLowIndex` | Moving average of the record-high percentage. | `CrossSection` | `f64` | `0..=100` | `period=10` | 10 | [Indicator-HighLowIndex](Indicator-HighLowIndex) |
+| `McClellanOscillator` | Spread between a 19/39-period EMA of ratio-adjusted net advances. | `CrossSection` | `f64` | unbounded | none | 1 | [Indicator-McClellanOscillator](Indicator-McClellanOscillator) |
+| `McClellanSummationIndex` | Running cumulative total of the McClellan Oscillator. | `CrossSection` | `f64` | unbounded | none | 1 | [Indicator-McClellanSummationIndex](Indicator-McClellanSummationIndex) |
+| `NewHighsNewLows` | Net count of new period highs minus new period lows. | `CrossSection` | `f64` | `-N..=N` | none | 1 | [Indicator-NewHighsNewLows](Indicator-NewHighsNewLows) |
+| `PercentAboveMa` | Percentage of the universe trading above its reference moving average. | `CrossSection` | `f64` | `0..=100` | none | 1 | [Indicator-PercentAboveMa](Indicator-PercentAboveMa) |
+| `TickIndex` | Instantaneous net advancing-minus-declining issues. | `CrossSection` | `f64` | `-N..=N` | none | 1 | [Indicator-TickIndex](Indicator-TickIndex) |
+| `Trin` | Advance-decline ratio over the up-down volume ratio (Arms Index). | `CrossSection` | `f64` | `0..` | none | 1 | [Indicator-Trin](Indicator-Trin) |
+| `UpDownVolumeRatio` | Advancing volume divided by declining volume. | `CrossSection` | `f64` | `0..` | none | 1 | [Indicator-UpDownVolumeRatio](Indicator-UpDownVolumeRatio) |
 
 ## See also
 

@@ -1442,8 +1442,64 @@ export const sidebar = [
     "collapsed": true,
     "items": [
       {
+        "text": "AbsoluteBreadthIndex",
+        "link": "/Indicator-AbsoluteBreadthIndex"
+      },
+      {
         "text": "AdvanceDecline",
         "link": "/Indicator-AdvanceDecline"
+      },
+      {
+        "text": "AdvanceDeclineRatio",
+        "link": "/Indicator-AdvanceDeclineRatio"
+      },
+      {
+        "text": "AdVolumeLine",
+        "link": "/Indicator-AdVolumeLine"
+      },
+      {
+        "text": "BreadthThrust",
+        "link": "/Indicator-BreadthThrust"
+      },
+      {
+        "text": "BullishPercentIndex",
+        "link": "/Indicator-BullishPercentIndex"
+      },
+      {
+        "text": "CumulativeVolumeIndex",
+        "link": "/Indicator-CumulativeVolumeIndex"
+      },
+      {
+        "text": "HighLowIndex",
+        "link": "/Indicator-HighLowIndex"
+      },
+      {
+        "text": "McClellanOscillator",
+        "link": "/Indicator-McClellanOscillator"
+      },
+      {
+        "text": "McClellanSummationIndex",
+        "link": "/Indicator-McClellanSummationIndex"
+      },
+      {
+        "text": "NewHighsNewLows",
+        "link": "/Indicator-NewHighsNewLows"
+      },
+      {
+        "text": "PercentAboveMa",
+        "link": "/Indicator-PercentAboveMa"
+      },
+      {
+        "text": "TickIndex",
+        "link": "/Indicator-TickIndex"
+      },
+      {
+        "text": "Trin",
+        "link": "/Indicator-Trin"
+      },
+      {
+        "text": "UpDownVolumeRatio",
+        "link": "/Indicator-UpDownVolumeRatio"
       }
     ]
   }
