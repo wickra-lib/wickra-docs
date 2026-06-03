@@ -18,11 +18,9 @@ inherits a memory-safe implementation. Install is one command on every
 supported platform: `pip install wickra`, `cargo add wickra`, `npm install
 wickra` — no system compilers, no C dependencies, no headers.
 
-Wickra is licensed under the **PolyForm Noncommercial 1.0.0** license.
-Personal projects, research, hobby trading bots, education, non-profits, and
-government use are all permitted; commercial sale of the software or of
-services built around it is not. If you want to use Wickra commercially,
-open an issue on GitHub to discuss a separate license.
+Wickra is dual-licensed under the **MIT** and **Apache-2.0** licenses; you may
+use it under either at your option. It is OSI-approved, permissive open source —
+free for any use, commercial or not.
 
 ## Published versions
 

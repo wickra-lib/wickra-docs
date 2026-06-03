@@ -50,7 +50,7 @@ const structuredData = {
       programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly'],
       description:
         'Streaming-first technical indicators with a Rust core and Python, Node, and WASM bindings. Same code for backtesting and live ticks.',
-      license: 'https://polyformproject.org/licenses/noncommercial/1.0.0/',
+      license: 'https://github.com/wickra-lib/wickra#license',
       publisher: { '@id': 'https://docs.wickra.org/#organization' },
     },
   ],
