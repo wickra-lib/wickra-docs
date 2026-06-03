@@ -410,7 +410,21 @@ instead.)
 
 | Indicator         | Constructor              | Formula      | warmup | Inputs at first emission |
 |-------------------|--------------------------|--------------|--------|--------------------------|
+| `AbsoluteBreadthIndex` | `AbsoluteBreadthIndex::new()` | constant `1` | 1 | 1st tick |
 | `AdvanceDecline`  | `AdvanceDecline::new()`  | constant `1` | 1      | 1st tick                 |
+| `AdvanceDeclineRatio` | `AdvanceDeclineRatio::new()` | constant `1` | 1 | 1st tick |
+| `AdVolumeLine` | `AdVolumeLine::new()` | constant `1` | 1 | 1st tick |
+| `BreadthThrust` | `BreadthThrust::new(10)` | `period` | 10 | 10th tick |
+| `BullishPercentIndex` | `BullishPercentIndex::new()` | constant `1` | 1 | 1st tick |
+| `CumulativeVolumeIndex` | `CumulativeVolumeIndex::new()` | constant `1` | 1 | 1st tick |
+| `HighLowIndex` | `HighLowIndex::new(10)` | `period` | 10 | 10th tick |
+| `McClellanOscillator` | `McClellanOscillator::new()` | constant `1` | 1 | 1st tick |
+| `McClellanSummationIndex` | `McClellanSummationIndex::new()` | constant `1` | 1 | 1st tick |
+| `NewHighsNewLows` | `NewHighsNewLows::new()` | constant `1` | 1 | 1st tick |
+| `PercentAboveMa` | `PercentAboveMa::new()` | constant `1` | 1 | 1st tick |
+| `TickIndex` | `TickIndex::new()` | constant `1` | 1 | 1st tick |
+| `Trin` | `Trin::new()` | constant `1` | 1 | 1st tick |
+| `UpDownVolumeRatio` | `UpDownVolumeRatio::new()` | constant `1` | 1 | 1st tick |
 
 ## Additional Volume indicators
 

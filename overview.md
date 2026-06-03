@@ -75,7 +75,7 @@ Release notes and tagged builds:
 Start with [Indicators-Overview](Indicators-Overview) for the full
 twenty-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-315 deep-dive pages.
+330 deep-dive pages.
 
 ### Moving Averages (19)
 
@@ -332,9 +332,23 @@ tables. The links below are a quick alphabetical-by-family index into the
 [TakerBuySellRatio](Indicator-TakerBuySellRatio) ·
 [TermStructureBasis](Indicator-TermStructureBasis)
 
-### Market Breadth (1)
+### Market Breadth (15)
 
-[AdvanceDecline](Indicator-AdvanceDecline)
+[AbsoluteBreadthIndex](Indicator-AbsoluteBreadthIndex) ·
+[AdvanceDecline](Indicator-AdvanceDecline) ·
+[AdvanceDeclineRatio](Indicator-AdvanceDeclineRatio) ·
+[AdVolumeLine](Indicator-AdVolumeLine) ·
+[BreadthThrust](Indicator-BreadthThrust) ·
+[BullishPercentIndex](Indicator-BullishPercentIndex) ·
+[CumulativeVolumeIndex](Indicator-CumulativeVolumeIndex) ·
+[HighLowIndex](Indicator-HighLowIndex) ·
+[McClellanOscillator](Indicator-McClellanOscillator) ·
+[McClellanSummationIndex](Indicator-McClellanSummationIndex) ·
+[NewHighsNewLows](Indicator-NewHighsNewLows) ·
+[PercentAboveMa](Indicator-PercentAboveMa) ·
+[TickIndex](Indicator-TickIndex) ·
+[Trin](Indicator-Trin) ·
+[UpDownVolumeRatio](Indicator-UpDownVolumeRatio)
 
 ## See also
 
