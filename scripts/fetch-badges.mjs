@@ -33,6 +33,7 @@ const badges = [
   { alt: 'npm', slug: 'npm', src: 'https://img.shields.io/npm/v/wickra.svg?logo=npm&color=red', href: 'https://www.npmjs.com/package/wickra' },
   { alt: 'License: MIT OR Apache-2.0', slug: 'license', src: 'https://img.shields.io/badge/license-MIT_OR_Apache--2.0-blue', href: 'https://github.com/wickra-lib/wickra#license' },
   { alt: 'OpenSSF Scorecard', slug: 'scorecard', src: 'https://api.securityscorecards.dev/projects/github.com/wickra-lib/wickra/badge', href: 'https://scorecard.dev/viewer/?uri=github.com/wickra-lib/wickra' },
+  { alt: 'OpenSSF Best Practices', slug: 'best-practices', src: 'https://www.bestpractices.dev/projects/13094/badge', href: 'https://www.bestpractices.dev/projects/13094' },
   { alt: 'Build provenance', slug: 'provenance', src: 'https://img.shields.io/badge/provenance-attested-brightgreen?logo=github', href: 'https://github.com/wickra-lib/wickra/attestations' },
 ]
 
