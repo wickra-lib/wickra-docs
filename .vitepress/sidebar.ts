@@ -1152,6 +1152,82 @@ export const sidebar = [
     ]
   },
   {
+    "text": "Chart Patterns",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "CupAndHandle",
+        "link": "/Indicator-CupAndHandle"
+      },
+      {
+        "text": "DoubleTopBottom",
+        "link": "/Indicator-DoubleTopBottom"
+      },
+      {
+        "text": "FlagPennant",
+        "link": "/Indicator-FlagPennant"
+      },
+      {
+        "text": "HeadAndShoulders",
+        "link": "/Indicator-HeadAndShoulders"
+      },
+      {
+        "text": "RectangleRange",
+        "link": "/Indicator-RectangleRange"
+      },
+      {
+        "text": "Triangle",
+        "link": "/Indicator-Triangle"
+      },
+      {
+        "text": "TripleTopBottom",
+        "link": "/Indicator-TripleTopBottom"
+      },
+      {
+        "text": "Wedge",
+        "link": "/Indicator-Wedge"
+      }
+    ]
+  },
+  {
+    "text": "Harmonic Patterns",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Abcd",
+        "link": "/Indicator-Abcd"
+      },
+      {
+        "text": "Bat",
+        "link": "/Indicator-Bat"
+      },
+      {
+        "text": "Butterfly",
+        "link": "/Indicator-Butterfly"
+      },
+      {
+        "text": "Crab",
+        "link": "/Indicator-Crab"
+      },
+      {
+        "text": "Cypher",
+        "link": "/Indicator-Cypher"
+      },
+      {
+        "text": "Gartley",
+        "link": "/Indicator-Gartley"
+      },
+      {
+        "text": "Shark",
+        "link": "/Indicator-Shark"
+      },
+      {
+        "text": "ThreeDrives",
+        "link": "/Indicator-ThreeDrives"
+      }
+    ]
+  },
+  {
     "text": "Ehlers / Cycle (DSP)",
     "collapsed": true,
     "items": [

@@ -1,6 +1,6 @@
 # Indicators Overview
 
-Wickra ships **367 indicators** organised into **twenty-one families**. Each
+Wickra ships **367 indicators** organised into **twenty-three families**. Each
 family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
@@ -18,7 +18,7 @@ quotes `warmup_period()` as the indicator reports it — the **exact**
 first-emission index: the first non-`None` output lands on input
 `warmup_period()` (0-indexed `warmup_period() - 1`).
 
-The twenty-one families:
+The twenty-three families:
 
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
@@ -43,6 +43,8 @@ The twenty-one families:
 | 19 | [Alt-Chart Bars](#alt-chart-bars) | 3 | Price-driven Renko / Kagi / Point & Figure bar builders. |
 | 20 | [Market Breadth](#market-breadth) | 15 | Universe-wide advance/decline participation. |
 | 21 | [Seasonality & Session](#seasonality--session) | 12 | When in the day / week / month does this happen? |
+| 22 | [Chart Patterns](#chart-patterns) | 8 | Swing-based classical chart patterns — double/triple tops, head & shoulders, triangles, wedges, flags, rectangles, cup & handle. |
+| 23 | [Harmonic Patterns](#harmonic-patterns) | 8 | Fibonacci-ratio XABCD patterns — Gartley, Bat, Butterfly, Crab, Shark, Cypher, AB=CD, Three Drives. |
 
 ## Moving Averages
 
@@ -606,6 +608,37 @@ boundary.
 | `DayOfWeekProfile` | Mean bar return bucketed by weekday. | `Candle` | `bins[7]` | unbounded | `utc_offset=0` | 2 | [Indicator-DayOfWeekProfile](Indicator-DayOfWeekProfile) |
 | `IntradayVolatilityProfile` | Return standard deviation bucketed by intraday time. | `Candle` | `bins[]` | `>= 0` | `buckets=24, utc_offset=0` | 2 | [Indicator-IntradayVolatilityProfile](Indicator-IntradayVolatilityProfile) |
 | `VolumeByTimeProfile` | Mean traded volume bucketed by intraday time. | `Candle` | `bins[]` | `>= 0` | `buckets=24, utc_offset=0` | 1 | [Indicator-VolumeByTimeProfile](Indicator-VolumeByTimeProfile) |
+
+## Chart Patterns
+
+Swing-based classical chart patterns built on a non-repainting percent-threshold pivot tracker (5% swings). Each emits the uniform pattern sign — `+1` bullish, `-1` bearish, `0` otherwise — and is parameter-free.
+
+| Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
+|-----------|-----------|-------|--------|-------|----------|--------|-----------|
+| `DoubleTopBottom` | Twin-peak / twin-trough reversal on the second matching extreme. | `Candle` | `f64` | `{-1, 0, +1}` | none | 5 | [Indicator-DoubleTopBottom](Indicator-DoubleTopBottom) |
+| `TripleTopBottom` | Three matching peaks / troughs — a stronger reversal. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-TripleTopBottom](Indicator-TripleTopBottom) |
+| `HeadAndShoulders` | Central head, two matching shoulders, flat neckline (and inverse). | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-HeadAndShoulders](Indicator-HeadAndShoulders) |
+| `Triangle` | Converging trendlines: ascending +1, descending -1, symmetrical leans with the last swing. | `Candle` | `f64` | `{-1, 0, +1}` | none | 5 | [Indicator-Triangle](Indicator-Triangle) |
+| `Wedge` | Same-direction converging trendlines: rising wedge -1, falling wedge +1. | `Candle` | `f64` | `{-1, 0, +1}` | none | 5 | [Indicator-Wedge](Indicator-Wedge) |
+| `FlagPennant` | Shallow consolidation against a pole — continuation in the pole direction. | `Candle` | `f64` | `{-1, 0, +1}` | none | 4 | [Indicator-FlagPennant](Indicator-FlagPennant) |
+| `RectangleRange` | Flat support / resistance — mean-reversion off the touched boundary. | `Candle` | `f64` | `{-1, 0, +1}` | none | 5 | [Indicator-RectangleRange](Indicator-RectangleRange) |
+| `CupAndHandle` | Rounded base with a shallow handle near the rim (and inverse). | `Candle` | `f64` | `{-1, 0, +1}` | none | 5 | [Indicator-CupAndHandle](Indicator-CupAndHandle) |
+
+## Harmonic Patterns
+
+Fibonacci-ratio harmonic patterns read from the last four or five confirmed swing pivots (X-A-B-C-D). Each emits `+1` when the terminal point D is a swing low (bullish), `-1` when D is a swing high, `0` otherwise; parameter-free, with the Fibonacci windows baked in as documented constants.
+
+| Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
+|-----------|-----------|-------|--------|-------|----------|--------|-----------|
+| `Abcd` | Four-point AB=CD: BC retraces AB, CD mirrors AB. | `Candle` | `f64` | `{-1, 0, +1}` | none | 5 | [Indicator-Abcd](Indicator-Abcd) |
+| `Gartley` | Five-point harmonic with a 0.786 D completion. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Gartley](Indicator-Gartley) |
+| `Butterfly` | Five-point harmonic with an extended (1.27-1.618 XA) D. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Butterfly](Indicator-Butterfly) |
+| `Bat` | Five-point harmonic with a shallow B and 0.886 D. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Bat](Indicator-Bat) |
+| `Crab` | Five-point harmonic with the deepest (1.618 XA) D. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Crab](Indicator-Crab) |
+| `Shark` | Five-point harmonic with an expansion leg and 0.886-1.13 D. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Shark](Indicator-Shark) |
+| `Cypher` | Five-point harmonic whose D retraces XC by 0.786. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-Cypher](Indicator-Cypher) |
+| `ThreeDrives` | Three symmetric drives with extension legs. | `Candle` | `f64` | `{-1, 0, +1}` | none | 6 | [Indicator-ThreeDrives](Indicator-ThreeDrives) |
+
 
 ## See also
 
