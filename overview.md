@@ -75,9 +75,9 @@ Release notes and tagged builds:
 ## Indicator reference
 
 Start with [Indicators-Overview](Indicators-Overview) for the full
-eighteen-family taxonomy with per-indicator formula / parameter / warmup
+nineteen-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-250 deep-dive pages.
+314 deep-dive pages.
 
 ### Moving Averages (19)
 
@@ -92,29 +92,32 @@ tables. The links below are a quick alphabetical-by-family index into the
 [Vwma](Indicator-Vwma) · [Wma](Indicator-Wma) ·
 [Zlema](Indicator-Zlema)
 
-### Momentum Oscillators (20)
+### Momentum Oscillators (24)
 
-[AwesomeOscillator](Indicator-AwesomeOscillator) · [Cci](Indicator-Cci) ·
-[Cmo](Indicator-Cmo) · [ConnorsRsi](Indicator-ConnorsRsi) ·
-[Inertia](Indicator-Inertia) · [Kst](Indicator-Kst) ·
-[LaguerreRsi](Indicator-LaguerreRsi) · [Mfi](Indicator-Mfi) ·
-[Mom](Indicator-Mom) · [Pgo](Indicator-Pgo) ·
-[Pmo](Indicator-Pmo) · [Roc](Indicator-Roc) ·
+[AnchoredRsi](Indicator-AnchoredRsi) · [AwesomeOscillator](Indicator-AwesomeOscillator) ·
+[Cci](Indicator-Cci) · [Cmo](Indicator-Cmo) ·
+[ConnorsRsi](Indicator-ConnorsRsi) · [Inertia](Indicator-Inertia) ·
+[Kst](Indicator-Kst) · [LaguerreRsi](Indicator-LaguerreRsi) ·
+[Mfi](Indicator-Mfi) · [Mom](Indicator-Mom) ·
+[Pgo](Indicator-Pgo) · [Pmo](Indicator-Pmo) ·
+[Roc](Indicator-Roc) · [Rocp](Indicator-Rocp) ·
+[Rocr](Indicator-Rocr) · [Rocr100](Indicator-Rocr100) ·
 [Rsi](Indicator-Rsi) · [Rvi](Indicator-Rvi) ·
 [Smi](Indicator-Smi) · [Stochastic](Indicator-Stochastic) ·
 [StochRsi](Indicator-StochRsi) · [Tsi](Indicator-Tsi) ·
-[UltimateOscillator](Indicator-UltimateOscillator) ·
-[WilliamsR](Indicator-WilliamsR)
+[UltimateOscillator](Indicator-UltimateOscillator) · [WilliamsR](Indicator-WilliamsR)
 
-### Trend & Directional (13)
+### Trend & Directional (20)
 
 [Adx](Indicator-Adx) · [Adxr](Indicator-Adxr) ·
 [Aroon](Indicator-Aroon) · [AroonOscillator](Indicator-AroonOscillator) ·
-[ChoppinessIndex](Indicator-ChoppinessIndex) ·
+[ChoppinessIndex](Indicator-ChoppinessIndex) · [Dx](Indicator-Dx) ·
+[MacdExt](Indicator-MacdExt) · [MacdFix](Indicator-MacdFix) ·
 [MacdIndicator](Indicator-MacdIndicator) · [MassIndex](Indicator-MassIndex) ·
+[MinusDi](Indicator-MinusDi) · [MinusDm](Indicator-MinusDm) ·
+[PlusDi](Indicator-PlusDi) · [PlusDm](Indicator-PlusDm) ·
 [Rwi](Indicator-Rwi) · [Tii](Indicator-Tii) ·
-[Trix](Indicator-Trix) ·
-[VerticalHorizontalFilter](Indicator-VerticalHorizontalFilter) ·
+[Trix](Indicator-Trix) · [VerticalHorizontalFilter](Indicator-VerticalHorizontalFilter) ·
 [Vortex](Indicator-Vortex) · [WaveTrend](Indicator-WaveTrend)
 
 ### Price Oscillators (11)
@@ -155,17 +158,13 @@ tables. The links below are a quick alphabetical-by-family index into the
 [StarcBands](Indicator-StarcBands) · [TtmSqueeze](Indicator-TtmSqueeze) ·
 [VwapStdDevBands](Indicator-VwapStdDevBands)
 
-### Trailing Stops (12)
+### Trailing Stops (13)
 
-[AtrTrailingStop](Indicator-AtrTrailingStop) ·
-[ChandeKrollStop](Indicator-ChandeKrollStop) ·
-[ChandelierExit](Indicator-ChandelierExit) ·
-[DonchianStop](Indicator-DonchianStop) ·
-[HiLoActivator](Indicator-HiLoActivator) ·
-[PercentageTrailingStop](Indicator-PercentageTrailingStop) ·
-[Psar](Indicator-Psar) ·
-[RenkoTrailingStop](Indicator-RenkoTrailingStop) ·
-[StepTrailingStop](Indicator-StepTrailingStop) ·
+[AtrTrailingStop](Indicator-AtrTrailingStop) · [ChandeKrollStop](Indicator-ChandeKrollStop) ·
+[ChandelierExit](Indicator-ChandelierExit) · [DonchianStop](Indicator-DonchianStop) ·
+[HiLoActivator](Indicator-HiLoActivator) · [PercentageTrailingStop](Indicator-PercentageTrailingStop) ·
+[Psar](Indicator-Psar) · [RenkoTrailingStop](Indicator-RenkoTrailingStop) ·
+[SarExt](Indicator-SarExt) · [StepTrailingStop](Indicator-StepTrailingStop) ·
 [SuperTrend](Indicator-SuperTrend) · [VoltyStop](Indicator-VoltyStop) ·
 [YoyoExit](Indicator-YoyoExit)
 
@@ -185,36 +184,33 @@ tables. The links below are a quick alphabetical-by-family index into the
 [VolumePriceTrend](Indicator-VolumePriceTrend) ·
 [Vwap](Indicator-Vwap) · [Vzo](Indicator-Vzo)
 
-### Price Statistics (19)
+### Price Statistics (24)
 
-[Autocorrelation](Indicator-Autocorrelation) · [Beta](Indicator-Beta) ·
-[CoefficientOfVariation](Indicator-CoefficientOfVariation) ·
+[Autocorrelation](Indicator-Autocorrelation) · [AvgPrice](Indicator-AvgPrice) ·
+[Beta](Indicator-Beta) · [CoefficientOfVariation](Indicator-CoefficientOfVariation) ·
 [HurstExponent](Indicator-HurstExponent) · [Kurtosis](Indicator-Kurtosis) ·
-[LinearRegression](Indicator-LinearRegression) ·
-[LinRegAngle](Indicator-LinRegAngle) · [LinRegSlope](Indicator-LinRegSlope) ·
-[MedianAbsoluteDeviation](Indicator-MedianAbsoluteDeviation) ·
-[MedianPrice](Indicator-MedianPrice) ·
-[PearsonCorrelation](Indicator-PearsonCorrelation) ·
-[RSquared](Indicator-RSquared) · [Skewness](Indicator-Skewness) ·
-[SpearmanCorrelation](Indicator-SpearmanCorrelation) ·
-[StandardError](Indicator-StandardError) ·
+[LinearRegression](Indicator-LinearRegression) · [LinRegAngle](Indicator-LinRegAngle) ·
+[LinRegIntercept](Indicator-LinRegIntercept) · [LinRegSlope](Indicator-LinRegSlope) ·
+[MedianAbsoluteDeviation](Indicator-MedianAbsoluteDeviation) · [MedianPrice](Indicator-MedianPrice) ·
+[MidPoint](Indicator-MidPoint) · [MidPrice](Indicator-MidPrice) ·
+[PearsonCorrelation](Indicator-PearsonCorrelation) · [RSquared](Indicator-RSquared) ·
+[Skewness](Indicator-Skewness) · [SpearmanCorrelation](Indicator-SpearmanCorrelation) ·
+[StandardError](Indicator-StandardError) · [Tsf](Indicator-Tsf) ·
 [TypicalPrice](Indicator-TypicalPrice) · [Variance](Indicator-Variance) ·
 [WeightedClose](Indicator-WeightedClose) · [ZScore](Indicator-ZScore)
 
-### Ehlers / Cycle (DSP) (16)
+### Ehlers / Cycle (DSP) (19)
 
-[AdaptiveCycle](Indicator-AdaptiveCycle) ·
-[CenterOfGravity](Indicator-CenterOfGravity) ·
+[AdaptiveCycle](Indicator-AdaptiveCycle) · [CenterOfGravity](Indicator-CenterOfGravity) ·
 [CyberneticCycle](Indicator-CyberneticCycle) · [Decycler](Indicator-Decycler) ·
-[DecyclerOscillator](Indicator-DecyclerOscillator) ·
-[EhlersStochastic](Indicator-EhlersStochastic) ·
-[EmpiricalModeDecomposition](Indicator-EmpiricalModeDecomposition) ·
-[Fama](Indicator-Fama) · [FisherTransform](Indicator-FisherTransform) ·
-[HilbertDominantCycle](Indicator-HilbertDominantCycle) ·
-[InstantaneousTrendline](Indicator-InstantaneousTrendline) ·
-[InverseFisherTransform](Indicator-InverseFisherTransform) ·
-[Mama](Indicator-Mama) · [RoofingFilter](Indicator-RoofingFilter) ·
-[SineWave](Indicator-SineWave) · [SuperSmoother](Indicator-SuperSmoother)
+[DecyclerOscillator](Indicator-DecyclerOscillator) · [EhlersStochastic](Indicator-EhlersStochastic) ·
+[EmpiricalModeDecomposition](Indicator-EmpiricalModeDecomposition) · [Fama](Indicator-Fama) ·
+[FisherTransform](Indicator-FisherTransform) · [HilbertDominantCycle](Indicator-HilbertDominantCycle) ·
+[HtDcPhase](Indicator-HtDcPhase) · [HtPhasor](Indicator-HtPhasor) ·
+[HtTrendMode](Indicator-HtTrendMode) · [InstantaneousTrendline](Indicator-InstantaneousTrendline) ·
+[InverseFisherTransform](Indicator-InverseFisherTransform) · [Mama](Indicator-Mama) ·
+[RoofingFilter](Indicator-RoofingFilter) · [SineWave](Indicator-SineWave) ·
+[SuperSmoother](Indicator-SuperSmoother)
 
 ### Pivots & S/R (7)
 
