@@ -127,7 +127,7 @@ crossover packages and trend-versus-range filters.
 | `MinusDm` | Wilder-smoothed minus directional movement (`−DM`). | `Candle` | `f64` | `>= 0` | `period` required | `period` | [Indicator-MinusDm](Indicator-MinusDm) |
 | `PlusDi` | Plus Directional Indicator; `100·smoothed(+DM)/smoothed(TR)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-PlusDi](Indicator-PlusDi) |
 | `MinusDi` | Minus Directional Indicator; `100·smoothed(−DM)/smoothed(TR)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-MinusDi](Indicator-MinusDi) |
-| `Dx` | Directional Movement Index; `100·|+DI − −DI|/(+DI + −DI)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-Dx](Indicator-Dx) |
+| `Dx` | Directional Movement Index; `100·abs(+DI − −DI)/(+DI + −DI)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-Dx](Indicator-Dx) |
 
 ## Price Oscillators
 

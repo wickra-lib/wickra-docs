@@ -44,7 +44,7 @@ current direction. See `crates/wickra-core/src/indicators/sar_ext.rs`.
 
 | Name | Type | Default | Valid range | Description | Source |
 |------|------|---------|-------------|-------------|--------|
-| `start_value` | `f64` | `0.0` | finite | `0` auto-seeds long; `> 0` starts long at that SAR; `< 0` starts short at `|value|`. | `sar_ext.rs:110` |
+| `start_value` | `f64` | `0.0` | finite | `0` auto-seeds long; `> 0` starts long at that SAR; `< 0` starts short at its absolute value. | `sar_ext.rs:110` |
 | `offset_on_reverse` | `f64` | `0.0` | finite, `>= 0` | Fractional offset added to the new SAR on each reversal. | `sar_ext.rs:110` |
 | `accel_init_long` / `accel_long` / `accel_max_long` | `f64` | `0.02 / 0.02 / 0.20` | `> 0`, finite, `init <= max` | Long-phase acceleration `(init, step, max)`. | `sar_ext.rs:23` |
 | `accel_init_short` / `accel_short` / `accel_max_short` | `f64` | `0.02 / 0.02 / 0.20` | `> 0`, finite, `init <= max` | Short-phase acceleration `(init, step, max)`. | `sar_ext.rs:23` |
