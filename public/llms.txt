@@ -2,7 +2,7 @@
 
 > Documentation for Wickra — streaming-first technical indicators with one Rust core and Python, Node, and WASM bindings. Every indicator updates in O(1) constant time per tick, and the same code runs for backtesting and live ticks. Install-free — no C toolchain required.
 
-Wickra implements each indicator once in Rust as a state machine, then re-exports that single implementation to Python (PyO3), Node (napi-rs), the browser (wasm-bindgen), and Rust itself. Batch and streaming evaluation are guaranteed to produce identical output, pinned by reference-value tests. Released under the PolyForm Noncommercial License 1.0.0.
+Wickra implements each indicator once in Rust as a state machine, then re-exports that single implementation to Python (PyO3), Node (napi-rs), the browser (wasm-bindgen), and Rust itself. Batch and streaming evaluation are guaranteed to produce identical output, pinned by reference-value tests. Dual-licensed under MIT or Apache-2.0.
 
 ## Start here
 - [Overview](https://docs.wickra.org/overview): What Wickra is, how the core and bindings fit together, and the currently published versions.

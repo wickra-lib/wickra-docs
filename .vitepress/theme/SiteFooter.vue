@@ -36,7 +36,7 @@ const updated = computed(() => {
       ><img :src="b.file" :alt="b.alt" :width="b.width" :height="b.height" loading="eager" decoding="async" /></a>
     </div>
     <p class="wk-footer-meta">
-      Released under the PolyForm Noncommercial License 1.0.0 — not a trading system, use at your own risk.
+      Released under the MIT OR Apache-2.0 license — not a trading system, use at your own risk.
     </p>
     <p class="wk-footer-meta wk-footer-meta-sub">
       <span>Copyright © 2026 kingchenc</span>
