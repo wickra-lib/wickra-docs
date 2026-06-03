@@ -1436,5 +1436,15 @@ export const sidebar = [
         "link": "/Indicator-RenkoBars"
       }
     ]
+  },
+  {
+    "text": "Market Breadth",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "AdvanceDecline",
+        "link": "/Indicator-AdvanceDecline"
+      }
+    ]
   }
 ]
