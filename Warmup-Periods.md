@@ -41,6 +41,14 @@ index" in 0-indexed terms is `warmup_period − 1`.
 | `AnchoredRsi`   | `AnchoredRsi::new()`                          | constant `2`                     | 2                                | 2nd                      |
 | `Cci`           | `Cci::new(20)`                               | `period`                         | 20                               | 20th                     |
 | `Roc`           | `Roc::new(12)`                               | `period + 1`                     | 13                               | 13th                     |
+| `Rocp`          | `Rocp::new(12)`                              | `period + 1`                     | 13                               | 13th                     |
+| `Rocr`          | `Rocr::new(12)`                              | `period + 1`                     | 13                               | 13th                     |
+| `Rocr100`       | `Rocr100::new(12)`                           | `period + 1`                     | 13                               | 13th                     |
+| `PlusDm`        | `PlusDm::new(14)`                            | `period` (1st candle seeds prev) | 14                               | 15th                     |
+| `MinusDm`       | `MinusDm::new(14)`                           | `period` (1st candle seeds prev) | 14                               | 15th                     |
+| `PlusDi`        | `PlusDi::new(14)`                            | `period` (1st candle seeds prev) | 14                               | 15th                     |
+| `MinusDi`       | `MinusDi::new(14)`                           | `period` (1st candle seeds prev) | 14                               | 15th                     |
+| `Dx`            | `Dx::new(14)`                                | `period` (1st candle seeds prev) | 14                               | 15th                     |
 | `WilliamsR`     | `WilliamsR::new(14)`                         | `period`                         | 14                               | 14th                     |
 | `Mfi`           | `Mfi::new(14)`                               | `period`                         | 14                               | 14th                     |
 | `Trix`          | `Trix::new(15)`                              | `3 * period - 1`                 | 44                               | 44th                     |
@@ -137,6 +145,8 @@ ready" to "ready" together — there are no rows that have a `signal` but no
 | Indicator         | Constructor                          | Formula                                  | `warmup_period()` for shown args | Inputs at first emission | Outputs                                                |
 |-------------------|--------------------------------------|------------------------------------------|----------------------------------|--------------------------|--------------------------------------------------------|
 | `MacdIndicator`   | `MacdIndicator::new(12, 26, 9)`      | `slow + signal - 1`                      | 34                               | 34th                     | `macd`, `signal`, `histogram`                          |
+| `MacdFix`         | `MacdFix::new(9)`                    | `slow + signal - 1` (fast/slow = 12/26)  | 34                               | 34th                     | `macd`, `signal`, `histogram`                          |
+| `MacdExt`         | `MacdExt::new(12, Ema, 26, Ema, 9, Ema)` | `slow.warmup + signal.warmup`        | 35                               | 35th                     | `macd`, `signal`, `histogram`                          |
 | `BollingerBands`  | `BollingerBands::new(20, 2.0)`       | `period`                                 | 20                               | 20th                     | `upper`, `middle`, `lower`, `stddev`                   |
 | `Stochastic`      | `Stochastic::new(14, 3)`             | `k_period + d_period - 1`                | 16                               | 16th                     | `k`, `d`                                               |
 | `Adx`             | `Adx::new(14)`                       | `2 * period`                             | 28                               | 28th                     | `plus_di`, `minus_di`, `adx`                           |
@@ -174,6 +184,7 @@ ready" to "ready" together — there are no rows that have a `signal` but no
 | `PercentageTrailingStop` | `PercentageTrailingStop::classic()` (`5.0`)  | constant `1`                     | 1                    | 1st                      |
 | `StepTrailingStop`       | `StepTrailingStop::classic()` (`1.0`)        | constant `1`                     | 1                    | 1st                      |
 | `RenkoTrailingStop`      | `RenkoTrailingStop::classic()` (`1.0`)       | constant `1`                     | 1                    | 1st                      |
+| `SarExt`                 | `SarExt::classic()`                          | constant `2`                     | 2                    | 2nd                      |
 
 ## Family 10 — Ehlers / Cycle (DSP)
 
@@ -199,6 +210,9 @@ extractor — `warmup_period()` reports a conservative ~50.
 | `EmpiricalModeDecomposition` | `EmpiricalModeDecomposition::new(20, 0.5)`      | `period`                               | 20     | 20th                     |
 | `EhlersStochastic`         | `EhlersStochastic::new(20)`                       | `period` + RoofingFilter warmup        | ~70    | ~70th                    |
 | `InstantaneousTrendline`   | `InstantaneousTrendline::new(20)`                 | `period`                               | 20     | 20th                     |
+| `HtPhasor`                 | `HtPhasor::new()`                                 | Hilbert-chain warmup                   | 19     | 19th                     |
+| `HtDcPhase`                | `HtDcPhase::new()`                                | Hilbert-chain warmup                   | 50     | 50th                     |
+| `HtTrendMode`              | `HtTrendMode::new()`                              | Hilbert-chain warmup                   | 50     | 50th                     |
 
 ## Family 11 — Pivots & S/R
 
@@ -423,6 +437,11 @@ stateless or fixed-window; `OpenInterestDelta` needs a previous tick and
 | `RelativeStrengthAB`       | `RelativeStrengthAB::new(20, 14)`            | `max(ma_period, rsi_period + 1)`                     | 20     | 20th                     |
 | `SpearmanCorrelation`      | `SpearmanCorrelation::new(50)`               | `period`                                             | 50     | 50th                     |
 | `DetrendedStdDev`          | `DetrendedStdDev::new(20)`                   | `period`                                             | 20     | 20th                     |
+| `AvgPrice`                 | `AvgPrice::new()`                            | constant `1`                                         | 1      | 1st                      |
+| `MidPrice`                 | `MidPrice::new(14)`                          | `period`                                             | 14     | 14th                     |
+| `MidPoint`                 | `MidPoint::new(14)`                          | `period`                                             | 14     | 14th                     |
+| `LinRegIntercept`          | `LinRegIntercept::new(14)`                   | `period`                                             | 14     | 14th                     |
+| `Tsf`                      | `Tsf::new(14)`                               | `period`                                             | 14     | 14th                     |
 
 ## Additional Price Oscillators
 

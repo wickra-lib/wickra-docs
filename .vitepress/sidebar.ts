@@ -206,6 +206,18 @@ export const sidebar = [
         "link": "/Indicator-Roc"
       },
       {
+        "text": "Rocp",
+        "link": "/Indicator-Rocp"
+      },
+      {
+        "text": "Rocr",
+        "link": "/Indicator-Rocr"
+      },
+      {
+        "text": "Rocr100",
+        "link": "/Indicator-Rocr100"
+      },
+      {
         "text": "Rsi",
         "link": "/Indicator-Rsi"
       },
@@ -264,12 +276,40 @@ export const sidebar = [
         "link": "/Indicator-ChoppinessIndex"
       },
       {
+        "text": "Dx",
+        "link": "/Indicator-Dx"
+      },
+      {
+        "text": "MacdExt",
+        "link": "/Indicator-MacdExt"
+      },
+      {
+        "text": "MacdFix",
+        "link": "/Indicator-MacdFix"
+      },
+      {
         "text": "MacdIndicator",
         "link": "/Indicator-MacdIndicator"
       },
       {
         "text": "MassIndex",
         "link": "/Indicator-MassIndex"
+      },
+      {
+        "text": "MinusDi",
+        "link": "/Indicator-MinusDi"
+      },
+      {
+        "text": "MinusDm",
+        "link": "/Indicator-MinusDm"
+      },
+      {
+        "text": "PlusDi",
+        "link": "/Indicator-PlusDi"
+      },
+      {
+        "text": "PlusDm",
+        "link": "/Indicator-PlusDm"
       },
       {
         "text": "Rwi",
@@ -512,6 +552,10 @@ export const sidebar = [
         "link": "/Indicator-RenkoTrailingStop"
       },
       {
+        "text": "SarExt",
+        "link": "/Indicator-SarExt"
+      },
+      {
         "text": "StepTrailingStop",
         "link": "/Indicator-StepTrailingStop"
       },
@@ -620,6 +664,10 @@ export const sidebar = [
         "link": "/Indicator-Autocorrelation"
       },
       {
+        "text": "AvgPrice",
+        "link": "/Indicator-AvgPrice"
+      },
+      {
         "text": "Beta",
         "link": "/Indicator-Beta"
       },
@@ -652,6 +700,10 @@ export const sidebar = [
         "link": "/Indicator-LinRegAngle"
       },
       {
+        "text": "LinRegIntercept",
+        "link": "/Indicator-LinRegIntercept"
+      },
+      {
         "text": "LinRegSlope",
         "link": "/Indicator-LinRegSlope"
       },
@@ -662,6 +714,14 @@ export const sidebar = [
       {
         "text": "MedianPrice",
         "link": "/Indicator-MedianPrice"
+      },
+      {
+        "text": "MidPoint",
+        "link": "/Indicator-MidPoint"
+      },
+      {
+        "text": "MidPrice",
+        "link": "/Indicator-MidPrice"
       },
       {
         "text": "PairSpreadZScore",
@@ -694,6 +754,10 @@ export const sidebar = [
       {
         "text": "StandardError",
         "link": "/Indicator-StandardError"
+      },
+      {
+        "text": "Tsf",
+        "link": "/Indicator-Tsf"
       },
       {
         "text": "TypicalPrice",
@@ -1130,6 +1194,18 @@ export const sidebar = [
       {
         "text": "HilbertDominantCycle",
         "link": "/Indicator-HilbertDominantCycle"
+      },
+      {
+        "text": "HtDcPhase",
+        "link": "/Indicator-HtDcPhase"
+      },
+      {
+        "text": "HtPhasor",
+        "link": "/Indicator-HtPhasor"
+      },
+      {
+        "text": "HtTrendMode",
+        "link": "/Indicator-HtTrendMode"
       },
       {
         "text": "InstantaneousTrendline",

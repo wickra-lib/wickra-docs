@@ -23,15 +23,15 @@ The eighteen families:
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
 | 1 | [Moving Averages](#moving-averages) | 19 | Where is the smoothed trend line? |
-| 2 | [Momentum Oscillators](#momentum-oscillators) | 21 | How fast is price changing; is it overbought? |
-| 3 | [Trend & Directional](#trend--directional) | 13 | Is there a trend, and which way? |
+| 2 | [Momentum Oscillators](#momentum-oscillators) | 24 | How fast is price changing; is it overbought? |
+| 3 | [Trend & Directional](#trend--directional) | 20 | Is there a trend, and which way? |
 | 4 | [Price Oscillators](#price-oscillators) | 11 | Difference-of-averages momentum around zero. |
 | 5 | [Volatility & Bands](#volatility--bands) | 18 | How wide is the range; where are the envelopes? |
 | 6 | [Bands & Channels](#bands--channels) | 11 | Price-envelope overlays beyond the volatility staples. |
-| 7 | [Trailing Stops](#trailing-stops) | 12 | Where is the stop-loss for this trend? |
+| 7 | [Trailing Stops](#trailing-stops) | 13 | Where is the stop-loss for this trend? |
 | 8 | [Volume](#volume) | 19 | Is volume confirming the move? |
-| 9 | [Price Statistics](#price-statistics) | 19 | Per-bar price transforms and rolling regressions / statistics. |
-| 10 | [Ehlers / Cycle (DSP)](#ehlers--cycle-dsp) | 16 | Cycle-extracting DSP filters and phase-aware tools. |
+| 9 | [Price Statistics](#price-statistics) | 24 | Per-bar price transforms and rolling regressions / statistics. |
+| 10 | [Ehlers / Cycle (DSP)](#ehlers--cycle-dsp) | 19 | Cycle-extracting DSP filters and phase-aware tools. |
 | 11 | [Pivots & S/R](#pivots--sr) | 7 | Session-anchored pivot levels and swing detectors. |
 | 12 | [DeMark](#demark) | 12 | Tom DeMark's exhaustion / setup / countdown family. |
 | 13 | [Ichimoku & Charts](#ichimoku--charts) | 2 | Japanese cloud chart and smoothed candles. |
@@ -97,6 +97,9 @@ Measure the *rate* of price change. Several are bounded by construction
 | `LaguerreRsi` | Ehlers' 4-stage Laguerre filter with RSI up/down accumulator. | `f64` | `f64` | `[0, 100]` (clamped) | `gamma = 0.5` | `1` | [Indicator-LaguerreRsi](Indicator-LaguerreRsi) |
 | `ConnorsRsi` | Average of `RSI(close)`, `RSI(streak)`, percentile-rank of returns. | `f64` | `f64` | `[0, 100]` | `(3, 2, 100)` | `max(period_rsi+1, period_streak+2, period_rank+1)` | [Indicator-ConnorsRsi](Indicator-ConnorsRsi) |
 | `Inertia`    | `LinearRegression(RVI(rvi_period), linreg_period)`. | `Candle` | `f64` | unbounded | `(rvi=14, linreg=20)` | `rvi_period + linreg_period − 1` | [Indicator-Inertia](Indicator-Inertia) |
+| `Rocp` | Rate of Change Percentage; `(close − close[period]) / close[period]`. | `f64` | `f64` | unbounded around zero | `period` required | `period` | [Indicator-Rocp](Indicator-Rocp) |
+| `Rocr` | Rate of Change Ratio; `close / close[period]`. | `f64` | `f64` | `> 0` around `1` | `period` required | `period` | [Indicator-Rocr](Indicator-Rocr) |
+| `Rocr100` | Rate of Change Ratio ×100; `close / close[period] · 100`. | `f64` | `f64` | `> 0` around `100` | `period` required | `period` | [Indicator-Rocr100](Indicator-Rocr100) |
 
 ## Trend & Directional
 
@@ -118,6 +121,13 @@ crossover packages and trend-versus-range filters.
 | `MassIndex` | Dorsey's range-expansion sum of the EMA-of-range ratio. | `Candle` | `f64` | `> 0` | `(ema_period=9, sum_period=25)` (Python) | `2·ema_period + sum_period − 2` | [Indicator-MassIndex](Indicator-MassIndex) |
 | `ChoppinessIndex` | Summed true range over the high-low span, log-scaled. | `Candle` | `f64` | `[0, 100]` | `period = 14` (Python) | `period` | [Indicator-ChoppinessIndex](Indicator-ChoppinessIndex) |
 | `VerticalHorizontalFilter` | Net price move divided by total move over `period`. | `f64` | `f64` | `[0, 1]` | `period = 28` (Python) | `period + 1` | [Indicator-VerticalHorizontalFilter](Indicator-VerticalHorizontalFilter) |
+| `MacdFix` | MACD with fast/slow fixed at 12/26; only the signal period is tunable. | `f64` | `(macd, signal, histogram)` | unbounded | `signal` required | same as `MacdIndicator(12, 26, signal)` | [Indicator-MacdFix](Indicator-MacdFix) |
+| `MacdExt` | MACD with a selectable MA type (SMA/EMA/WMA/DEMA/TEMA/TRIMA) per line. | `f64` | `(macd, signal, histogram)` | unbounded | `(fast, fast_type, slow, slow_type, signal, signal_type)` | `slow + signal` | [Indicator-MacdExt](Indicator-MacdExt) |
+| `PlusDm` | Wilder-smoothed plus directional movement (`+DM`). | `Candle` | `f64` | `>= 0` | `period` required | `period` | [Indicator-PlusDm](Indicator-PlusDm) |
+| `MinusDm` | Wilder-smoothed minus directional movement (`−DM`). | `Candle` | `f64` | `>= 0` | `period` required | `period` | [Indicator-MinusDm](Indicator-MinusDm) |
+| `PlusDi` | Plus Directional Indicator; `100·smoothed(+DM)/smoothed(TR)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-PlusDi](Indicator-PlusDi) |
+| `MinusDi` | Minus Directional Indicator; `100·smoothed(−DM)/smoothed(TR)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-MinusDi](Indicator-MinusDi) |
+| `Dx` | Directional Movement Index; `100·abs(+DI − −DI)/(+DI + −DI)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-Dx](Indicator-Dx) |
 
 ## Price Oscillators
 
@@ -203,6 +213,7 @@ when price closes through them.
 | `PercentageTrailingStop` | Fixed-percentage flip-on-close-through trail. | `f64` | `f64` | unbounded (price scale) | `percent = 5.0` | `1` | [Indicator-PercentageTrailingStop](Indicator-PercentageTrailingStop) |
 | `StepTrailingStop` | Grid-snapped trail; ratchets in discrete `step_size` increments. | `f64` | `f64` | unbounded (price scale, snapped) | `step_size = 1.0` | `1` | [Indicator-StepTrailingStop](Indicator-StepTrailingStop) |
 | `RenkoTrailingStop` | Renko-brick-anchored trail; anchor moves only after full-brick advance. | `f64` | `f64` | unbounded (price scale) | `block_size = 1.0` | `1` | [Indicator-RenkoTrailingStop](Indicator-RenkoTrailingStop) |
+| `SarExt` | Extended Parabolic SAR: start value, reversal offset, separate long/short acceleration, signed output. | `Candle` | `f64` (signed) | price scale; sign = direction | Wilder defaults `(0.02, 0.02, 0.20)` both ways | `2` | [Indicator-SarExt](Indicator-SarExt) |
 
 ## Volume
 
@@ -260,6 +271,11 @@ Per-bar price transforms and rolling least-squares regressions.
 | `Cointegration` | Engle–Granger hedge ratio + ADF stationarity test on the spread. | `(f64, f64)` | `{hedge_ratio, spread, adf_stat}` | `adf_stat` unbounded | `(period, adf_lags)` | `period` | [Indicator-Cointegration](Indicator-Cointegration) |
 | `RelativeStrengthAB` | Ratio line `a / b` with its moving average and RSI. | `(f64, f64)` | `{ratio, ratio_ma, ratio_rsi}` | `ratio_rsi ∈ [0, 100]` | `(ma_period, rsi_period)` | `max(ma_period, rsi_period + 1)` | [Indicator-RelativeStrengthAB](Indicator-RelativeStrengthAB) |
 | `SpearmanCorrelation` | Rolling rank correlation; monotone-relationship robust. | `(f64, f64)` | `f64` | `[-1, +1]` | `period` | `period` | [Indicator-SpearmanCorrelation](Indicator-SpearmanCorrelation) |
+| `AvgPrice` | Average Price; `(open + high + low + close) / 4`. | `Candle` | `f64` | price scale | none | `1` | [Indicator-AvgPrice](Indicator-AvgPrice) |
+| `MidPrice` | `(highest high + lowest low) / 2` over `period` candles. | `Candle` | `f64` | price scale | `period` required | `period` | [Indicator-MidPrice](Indicator-MidPrice) |
+| `MidPoint` | `(highest + lowest) / 2` of a scalar series over `period`. | `f64` | `f64` | price scale | `period` required | `period` | [Indicator-MidPoint](Indicator-MidPoint) |
+| `LinRegIntercept` | Intercept `a` of the rolling OLS fit `y = a + b·x` (value at `x = 0`). | `f64` | `f64` | price scale | `period >= 2` | `period` | [Indicator-LinRegIntercept](Indicator-LinRegIntercept) |
+| `Tsf` | Time Series Forecast; OLS line projected one bar ahead (`a + b·period`). | `f64` | `f64` | price scale | `period >= 2` | `period` | [Indicator-Tsf](Indicator-Tsf) |
 
 ## Ehlers / Cycle (DSP)
 
@@ -284,6 +300,9 @@ adaptive smoothers. All take `f64` price input.
 | `EmpiricalModeDecomposition` | Bandpass + envelope EMD; regime classifier. | `f64` | `f64` | unbounded around zero | `(period, fraction)` | `period` | [Indicator-EmpiricalModeDecomposition](Indicator-EmpiricalModeDecomposition) |
 | `EhlersStochastic` | Stochastic on Roofing-Filter output (`[-1, +1]` scale). | `f64` | `f64` | `[-1, +1]` | `period` | `period + ~50` | [Indicator-EhlersStochastic](Indicator-EhlersStochastic) |
 | `InstantaneousTrendline` | Near-zero-lag tuned recurrence — fast trend line. | `f64` | `f64` | unbounded (price scale) | `period` | `period` | [Indicator-InstantaneousTrendline](Indicator-InstantaneousTrendline) |
+| `HtPhasor` | Hilbert-transform in-phase / quadrature components of the analytic signal. | `f64` | `(inphase, quadrature)` | unbounded | none | `19` | [Indicator-HtPhasor](Indicator-HtPhasor) |
+| `HtDcPhase` | Hilbert-transform dominant-cycle phase, in degrees. | `f64` | `f64` | bounded phase band (deg) | none | `50` | [Indicator-HtDcPhase](Indicator-HtDcPhase) |
+| `HtTrendMode` | Ehlers' trend (`1`) vs cycle (`0`) classification. | `f64` | `f64` | `{0, 1}` | none | `50` | [Indicator-HtTrendMode](Indicator-HtTrendMode) |
 
 ## Pivots & S/R
 
