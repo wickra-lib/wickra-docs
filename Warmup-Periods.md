@@ -400,6 +400,18 @@ stateless or fixed-window; `OpenInterestDelta` needs a previous tick and
 | `TermStructureBasis`  | `TermStructureBasis::new()`     | constant `1`   | 1      | 1st tick                 |
 | `CalendarSpread`      | `CalendarSpread::new()`         | constant `1`   | 1      | 1st tick                 |
 
+## Family 20 — Market Breadth
+
+Universe-wide breadth analytics over a `CrossSection` (the per-symbol state of
+the whole universe in one tick). The cumulative line is defined from the first
+cross-section, so it is ready immediately. (Family 19, Alt-Chart Bars, has no
+`warmup_period` and is covered in the [Indicators Overview](Indicators-Overview)
+instead.)
+
+| Indicator         | Constructor              | Formula      | warmup | Inputs at first emission |
+|-------------------|--------------------------|--------------|--------|--------------------------|
+| `AdvanceDecline`  | `AdvanceDecline::new()`  | constant `1` | 1      | 1st tick                 |
+
 ## Additional Volume indicators
 
 | Indicator                  | Constructor                          | Formula                  | warmup | Inputs at first emission |

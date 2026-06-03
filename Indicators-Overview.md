@@ -1,6 +1,6 @@
 # Indicators Overview
 
-Wickra ships **315 indicators** organised into **nineteen families**. Each
+Wickra ships **315 indicators** organised into **twenty families**. Each
 family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
@@ -18,7 +18,7 @@ quotes `warmup_period()` as the indicator reports it — the **exact**
 first-emission index: the first non-`None` output lands on input
 `warmup_period()` (0-indexed `warmup_period() - 1`).
 
-The eighteen families:
+The twenty families:
 
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
@@ -41,6 +41,7 @@ The eighteen families:
 | 17 | [Microstructure](#microstructure) | 13 | Order-book, trade-flow, price-impact and footprint analytics. |
 | 18 | [Derivatives](#derivatives) | 12 | Funding, open-interest, positioning, flow and basis on a perp/futures feed. |
 | 19 | [Alt-Chart Bars](#alt-chart-bars) | 3 | Price-driven Renko / Kagi / Point & Figure bar builders. |
+| 20 | [Market Breadth](#market-breadth) | 1 | Universe-wide advance/decline participation. |
 
 ## Moving Averages
 
@@ -556,6 +557,17 @@ candle. They are close-driven and not `Chain`-able.
 | `RenkoBars` | Fixed box-size bricks with the two-box reversal rule. | `Candle` | `Vec<RenkoBrick>` | n/a | `box_size` | seeds on 1st candle | [Indicator-RenkoBars](Indicator-RenkoBars) |
 | `KagiBars` | Reversal-amount line segments. | `Candle` | `Vec<KagiBar>` | n/a | `reversal` | seeds on 1st candle | [Indicator-KagiBars](Indicator-KagiBars) |
 | `PointAndFigureBars` | Box-size X/O columns with an N-box reversal. | `Candle` | `Vec<PnfColumn>` | n/a | `(box_size, reversal=3)` | seeds on 1st candle | [Indicator-PointAndFigureBars](Indicator-PointAndFigureBars) |
+
+## Market Breadth
+
+Universe-wide breadth indicators built on the `CrossSection` input — one tick
+carrying the per-symbol state of the whole universe (each member has a signed
+`change`, a `volume`, and `new_high` / `new_low` flags). They aggregate the
+cross-section into a single participation reading.
+
+| Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
+|-----------|-----------|-------|--------|-------|----------|--------|-----------|
+| `AdvanceDecline` | Cumulative net advancing-minus-declining issues. | `CrossSection` | `f64` | unbounded | none | 1 | [Indicator-AdvanceDecline](Indicator-AdvanceDecline) |
 
 ## See also
 
