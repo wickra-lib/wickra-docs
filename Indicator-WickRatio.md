@@ -117,8 +117,8 @@ Output:
 `WickRatio` captures intrabar rejection: a strongly positive reading is a long
 upper shadow (sellers rejected higher prices — shooting-star geometry), a
 strongly negative reading a long lower shadow (buyers rejected lower prices —
-hammer geometry). Combine with [BodySizePct](Indicator-BodySizePct) (a small body
-+ a one-sided wick is the canonical pin-bar) to build reversal filters.
+hammer geometry). Combine with [BodySizePct](Indicator-BodySizePct) (a small
+body plus a one-sided wick is the canonical pin-bar) to build reversal filters.
 
 ## Common pitfalls
 
