@@ -75,7 +75,7 @@ Release notes and tagged builds:
 Start with [Indicators-Overview](Indicators-Overview) for the full
 twenty-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-387 deep-dive pages.
+397 deep-dive pages.
 
 ### Moving Averages (19)
 
@@ -184,7 +184,7 @@ tables. The links below are a quick alphabetical-by-family index into the
 [VolumePriceTrend](Indicator-VolumePriceTrend) ·
 [Vwap](Indicator-Vwap) · [Vzo](Indicator-Vzo)
 
-### Price Statistics (34)
+### Price Statistics (44)
 
 [Autocorrelation](Indicator-Autocorrelation) · [AvgPrice](Indicator-AvgPrice) ·
 [Beta](Indicator-Beta) · [CoefficientOfVariation](Indicator-CoefficientOfVariation) ·
@@ -203,7 +203,12 @@ tables. The links below are a quick alphabetical-by-family index into the
 [RealizedVolatility](Indicator-RealizedVolatility) · [RollingIqr](Indicator-RollingIqr) ·
 [RollingPercentileRank](Indicator-RollingPercentileRank) ·
 [RollingQuantile](Indicator-RollingQuantile) ·
-[SpreadAr1Coefficient](Indicator-SpreadAr1Coefficient) · [WickRatio](Indicator-WickRatio)
+[SpreadAr1Coefficient](Indicator-SpreadAr1Coefficient) · [WickRatio](Indicator-WickRatio) ·
+[BetaNeutralSpread](Indicator-BetaNeutralSpread) · [DistanceSsd](Indicator-DistanceSsd) ·
+[GrangerCausality](Indicator-GrangerCausality) · [KalmanHedgeRatio](Indicator-KalmanHedgeRatio) ·
+[OuHalfLife](Indicator-OuHalfLife) · [RollingCorrelation](Indicator-RollingCorrelation) ·
+[RollingCovariance](Indicator-RollingCovariance) · [SpreadBollingerBands](Indicator-SpreadBollingerBands) ·
+[SpreadHurst](Indicator-SpreadHurst) · [VarianceRatio](Indicator-VarianceRatio)
 
 ### Ehlers / Cycle (DSP) (19)
 

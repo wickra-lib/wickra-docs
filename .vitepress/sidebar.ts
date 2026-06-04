@@ -826,6 +826,46 @@ export const sidebar = [
       {
         "text": "WickRatio",
         "link": "/Indicator-WickRatio"
+      },
+      {
+        "text": "BetaNeutralSpread",
+        "link": "/Indicator-BetaNeutralSpread"
+      },
+      {
+        "text": "DistanceSsd",
+        "link": "/Indicator-DistanceSsd"
+      },
+      {
+        "text": "GrangerCausality",
+        "link": "/Indicator-GrangerCausality"
+      },
+      {
+        "text": "KalmanHedgeRatio",
+        "link": "/Indicator-KalmanHedgeRatio"
+      },
+      {
+        "text": "OuHalfLife",
+        "link": "/Indicator-OuHalfLife"
+      },
+      {
+        "text": "RollingCorrelation",
+        "link": "/Indicator-RollingCorrelation"
+      },
+      {
+        "text": "RollingCovariance",
+        "link": "/Indicator-RollingCovariance"
+      },
+      {
+        "text": "SpreadBollingerBands",
+        "link": "/Indicator-SpreadBollingerBands"
+      },
+      {
+        "text": "SpreadHurst",
+        "link": "/Indicator-SpreadHurst"
+      },
+      {
+        "text": "VarianceRatio",
+        "link": "/Indicator-VarianceRatio"
       }
     ]
   },

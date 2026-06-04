@@ -294,6 +294,16 @@ Per-bar price transforms and rolling least-squares regressions.
 | `BodySizePct` | Absolute body as a fraction of the bar range. | `Candle` | `f64` | `[0, 1]` | (no parameters) | `1` | [Indicator-BodySizePct](Indicator-BodySizePct) |
 | `WickRatio` | Signed upper-vs-lower shadow imbalance over the range. | `Candle` | `f64` | `[−1, 1]` | (no parameters) | `1` | [Indicator-WickRatio](Indicator-WickRatio) |
 | `HighLowRange` | Bar range as a fraction of close (scale-free volatility). | `Candle` | `f64` | `[0, ∞)` | (no parameters) | `1` | [Indicator-HighLowRange](Indicator-HighLowRange) |
+| `OuHalfLife` | Ornstein–Uhlenbeck half-life of mean reversion of the spread `a − b`. | `(f64, f64)` | `f64` | `[0, ∞)`; `0` = no finite half-life | `period >= 3` | `period` | [Indicator-OuHalfLife](Indicator-OuHalfLife) |
+| `GrangerCausality` | Rolling F-statistic: does `b` help predict `a`? | `(f64, f64)` | `f64` | `[0, ∞)` | `(period, lag)` | `period` | [Indicator-GrangerCausality](Indicator-GrangerCausality) |
+| `KalmanHedgeRatio` | Dynamic hedge ratio between two series via an online Kalman filter. | `(f64, f64)` | `{hedge_ratio, intercept, spread}` | unbounded | `(delta, observation_var)` | `1` | [Indicator-KalmanHedgeRatio](Indicator-KalmanHedgeRatio) |
+| `VarianceRatio` | Lo–MacKinlay variance ratio of the spread `a − b`. | `(f64, f64)` | `f64` | `[0, ∞)`; `1` = random walk | `(period, q)` | `period` | [Indicator-VarianceRatio](Indicator-VarianceRatio) |
+| `RollingCorrelation` | Rolling Pearson correlation of the two series' returns. | `(f64, f64)` | `f64` | `[-1, +1]` | `period` | `period + 1` | [Indicator-RollingCorrelation](Indicator-RollingCorrelation) |
+| `RollingCovariance` | Rolling covariance of the two series' returns. | `(f64, f64)` | `f64` | unbounded | `period` | `period + 1` | [Indicator-RollingCovariance](Indicator-RollingCovariance) |
+| `SpreadHurst` | Hurst exponent of the spread `a − b` (pairs regime detection). | `(f64, f64)` | `f64` | `~[0, 1]` | `period >= 8` | `period` | [Indicator-SpreadHurst](Indicator-SpreadHurst) |
+| `SpreadBollingerBands` | Bollinger bands on the spread `a − b` of two series. | `(f64, f64)` | `{middle, upper, lower, percent_b}` | bands in spread units | `(period, num_std)` | `period` | [Indicator-SpreadBollingerBands](Indicator-SpreadBollingerBands) |
+| `BetaNeutralSpread` | Rolling OLS residual of `a` on `b` — the beta-neutral spread. | `(f64, f64)` | `f64` | unbounded | `period` | `period` | [Indicator-BetaNeutralSpread](Indicator-BetaNeutralSpread) |
+| `DistanceSsd` | Gatev sum of squared deviations between two normalised series. | `(f64, f64)` | `f64` | `[0, ∞)` | `period` | `period` | [Indicator-DistanceSsd](Indicator-DistanceSsd) |
 
 ## Ehlers / Cycle (DSP)
 
