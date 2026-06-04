@@ -28,10 +28,10 @@ VR(q) = Var(Σ of q consecutive r) / (q · Var(r))
 Under a random walk the variance of returns grows linearly with the horizon, so
 `VR(q) = 1`. Departures reveal autocorrelation structure:
 
-* `VR(q) < 1` — **mean reversion** (negatively autocorrelated changes): the
+- `VR(q) < 1` — **mean reversion** (negatively autocorrelated changes): the
   spread's moves partly cancel, the regime pairs traders exploit.
-* `VR(q) ≈ 1` — a **random walk**: no exploitable structure.
-* `VR(q) > 1` — **momentum / trending** (positively autocorrelated changes).
+- `VR(q) ≈ 1` — a **random walk**: no exploitable structure.
+- `VR(q) > 1` — **momentum / trending** (positively autocorrelated changes).
 
 The estimator uses overlapping `q`-step windows. When the one-step changes have
 zero variance (a flat spread) the ratio is undefined and the indicator returns

@@ -27,10 +27,10 @@ H    = slope of log V(τ) on log τ, divided by two
 
 `H` classifies the spread's regime:
 
-* `H < 0.5` — **mean-reverting** (anti-persistent): the spread snaps back, the
+- `H < 0.5` — **mean-reverting** (anti-persistent): the spread snaps back, the
   regime pairs traders want.
-* `H ≈ 0.5` — a **random walk**: no exploitable structure.
-* `H > 0.5` — **trending** (persistent): the spread keeps diverging.
+- `H ≈ 0.5` — a **random walk**: no exploitable structure.
+- `H > 0.5` — **trending** (persistent): the spread keeps diverging.
 
 The fit uses lags `1..=period/4` (at least two). When the spread is flat — every
 lagged difference is zero, so the log-regression has too few valid points — the
