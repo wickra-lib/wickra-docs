@@ -25,7 +25,7 @@ The twenty-four families:
 | 1 | [Moving Averages](#moving-averages) | 26 | Where is the smoothed trend line? |
 | 2 | [Momentum Oscillators](#momentum-oscillators) | 34 | How fast is price changing; is it overbought? |
 | 3 | [Trend & Directional](#trend--directional) | 28 | Is there a trend, and which way? |
-| 4 | [Price Oscillators](#price-oscillators) | 11 | Difference-of-averages momentum around zero. |
+| 4 | [Price Oscillators](#price-oscillators) | 14 | Difference-of-averages momentum around zero. |
 | 5 | [Volatility & Bands](#volatility--bands) | 18 | How wide is the range; where are the envelopes? |
 | 6 | [Bands & Channels](#bands--channels) | 11 | Price-envelope overlays beyond the volatility staples. |
 | 7 | [Trailing Stops](#trailing-stops) | 13 | Where is the stop-loss for this trend? |
@@ -176,6 +176,9 @@ Difference-of-averages and intrabar oscillators that swing around a zero line.
 | `ZeroLagMacd` | MACD with ZLEMA in place of EMA; faster, slightly noisier. | `f64` | `(macd, signal, histogram)` | unbounded around zero | `(fast=12, slow=26, signal=9)` | `~50` | [Indicator-ZeroLagMacd](Indicator-ZeroLagMacd) |
 | `ElderImpulse` | Alexander Elder's `(EMA-slope, MACD-hist-slope)` regime classifier. | `f64` | `f64` (-1, 0, +1) | `{-1, 0, +1}` | `(ema_period=13, macd...)` (Python) | `slow + signal − 1` | [Indicator-ElderImpulse](Indicator-ElderImpulse) |
 | `Stc`     | Schaff Trend Cycle; double-stochastic of MACD. | `f64` | `f64` | `[0, 100]` | `(fast=23, slow=50, cycle=10)` (Python) | `~slow + cycle` | [Indicator-Stc](Indicator-Stc) |
+| `TsfOscillator` | Time Series Forecast Oscillator; `100·(close − TSF)/close` (one bar ahead). | `f64` | `f64` | unbounded around zero (percent) | `period = 14` (Python) | `period` | [Indicator-TsfOscillator](Indicator-TsfOscillator) |
+| `MacdHistogram` | Standalone MACD histogram; `macd − signal`. | `f64` | `f64` | unbounded around zero | `(fast=12, slow=26, signal=9)` (Python) | `slow + signal − 1` | [Indicator-MacdHistogram](Indicator-MacdHistogram) |
+| `PpoHistogram` | PPO histogram; `ppo − EMA(ppo, signal)`, scale-free. | `f64` | `f64` | unbounded around zero (percent) | `(fast=12, slow=26, signal=9)` (Python) | `slow + signal − 1` | [Indicator-PpoHistogram](Indicator-PpoHistogram) |
 
 ## Volatility & Bands
 

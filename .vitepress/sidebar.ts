@@ -474,12 +474,24 @@ export const sidebar = [
         "link": "/Indicator-ElderImpulse"
       },
       {
+        "text": "MacdHistogram",
+        "link": "/Indicator-MacdHistogram"
+      },
+      {
         "text": "Ppo",
         "link": "/Indicator-Ppo"
       },
       {
+        "text": "PpoHistogram",
+        "link": "/Indicator-PpoHistogram"
+      },
+      {
         "text": "Stc",
         "link": "/Indicator-Stc"
+      },
+      {
+        "text": "TsfOscillator",
+        "link": "/Indicator-TsfOscillator"
       },
       {
         "text": "ZeroLagMacd",
