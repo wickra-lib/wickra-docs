@@ -578,6 +578,9 @@ Parameter-free swing-based Fibonacci tools. `warmup_period()` is the minimum num
 | `Apo`                        | `Apo::new(12, 26)`                       | `slow`                   | 26     | 26th                     |
 | `AwesomeOscillatorHistogram` | `AwesomeOscillatorHistogram::new(5, 34)` | `slow + 1`               | 35     | 35th                     |
 | `Cfo`                        | `Cfo::new(14)`                           | `period`                 | 14     | 14th                     |
+| `TsfOscillator`              | `TsfOscillator::new(14)`                 | `period`                 | 14     | 14th                     |
+| `MacdHistogram`              | `MacdHistogram::new(12, 26, 9)`          | `slow + signal − 1`      | 34     | 34th                     |
+| `PpoHistogram`               | `PpoHistogram::new(12, 26, 9)`           | `slow + signal − 1`      | 34     | 34th                     |
 | `ZeroLagMacd`                | `ZeroLagMacd::classic()` (`12, 26, 9`)   | ZLEMA-chain warmup       | 50     | 50th                     |
 | `ElderImpulse`               | `ElderImpulse::classic()`                | `slow + signal - 1`      | 34     | 34th                     |
 | `Stc`                        | `Stc::classic()` (`23, 50, 10`)          | `slow + cycle + 1`       | 61     | 61st                     |

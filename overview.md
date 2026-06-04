@@ -75,7 +75,7 @@ Release notes and tagged builds:
 Start with [Indicators-Overview](Indicators-Overview) for the full
 twenty-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-421 deep-dive pages.
+424 deep-dive pages.
 
 ### Moving Averages (26)
 
@@ -130,15 +130,18 @@ tables. The links below are a quick alphabetical-by-family index into the
 [Vortex](Indicator-Vortex) · [WavePm](Indicator-WavePm) ·
 [WaveTrend](Indicator-WaveTrend) · [TrendLabel](Indicator-TrendLabel)
 
-### Price Oscillators (11)
+### Price Oscillators (14)
 
 [AcceleratorOscillator](Indicator-AcceleratorOscillator) ·
 [Apo](Indicator-Apo) ·
 [AwesomeOscillatorHistogram](Indicator-AwesomeOscillatorHistogram) ·
 [BalanceOfPower](Indicator-BalanceOfPower) · [Cfo](Indicator-Cfo) ·
 [Coppock](Indicator-Coppock) · [Dpo](Indicator-Dpo) ·
-[ElderImpulse](Indicator-ElderImpulse) · [Ppo](Indicator-Ppo) ·
-[Stc](Indicator-Stc) · [ZeroLagMacd](Indicator-ZeroLagMacd)
+[ElderImpulse](Indicator-ElderImpulse) ·
+[MacdHistogram](Indicator-MacdHistogram) · [Ppo](Indicator-Ppo) ·
+[PpoHistogram](Indicator-PpoHistogram) · [Stc](Indicator-Stc) ·
+[TsfOscillator](Indicator-TsfOscillator) ·
+[ZeroLagMacd](Indicator-ZeroLagMacd)
 
 ### Volatility & Bands (20)
 
