@@ -7,7 +7,7 @@ Node.js, WebAssembly, and Rust itself. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
 
-The project ships 396 indicators across twenty-four families — moving averages,
+The project ships 420 indicators across twenty-four families — moving averages,
 momentum oscillators, trend & directional, price oscillators, volatility &
 bands, bands & channels, trailing stops, volume, price statistics, Ehlers /
 cycle (DSP), pivots & S/R, DeMark, Ichimoku & charts, candlestick patterns,
@@ -75,49 +75,60 @@ Release notes and tagged builds:
 Start with [Indicators-Overview](Indicators-Overview) for the full
 twenty-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-397 deep-dive pages.
+421 deep-dive pages.
 
-### Moving Averages (19)
+### Moving Averages (26)
 
-[Alligator](Indicator-Alligator) · [Alma](Indicator-Alma) ·
-[Dema](Indicator-Dema) · [Ema](Indicator-Ema) ·
+[AdaptiveLaguerreFilter](Indicator-AdaptiveLaguerreFilter) · [Alligator](Indicator-Alligator) ·
+[Alma](Indicator-Alma) · [Dema](Indicator-Dema) ·
+[Ehma](Indicator-Ehma) · [Ema](Indicator-Ema) ·
 [Evwma](Indicator-Evwma) · [Frama](Indicator-Frama) ·
-[Hma](Indicator-Hma) · [Jma](Indicator-Jma) ·
-[Kama](Indicator-Kama) · [McGinleyDynamic](Indicator-McGinleyDynamic) ·
-[Sma](Indicator-Sma) · [Smma](Indicator-Smma) ·
-[T3](Indicator-T3) · [Tema](Indicator-Tema) ·
-[Trima](Indicator-Trima) · [Vidya](Indicator-Vidya) ·
-[Vwma](Indicator-Vwma) · [Wma](Indicator-Wma) ·
-[Zlema](Indicator-Zlema)
+[GeneralizedDema](Indicator-GeneralizedDema) · [GeometricMa](Indicator-GeometricMa) ·
+[Hma](Indicator-Hma) · [HoltWinters](Indicator-HoltWinters) ·
+[Jma](Indicator-Jma) · [Kama](Indicator-Kama) ·
+[McGinleyDynamic](Indicator-McGinleyDynamic) · [MedianMa](Indicator-MedianMa) ·
+[SineWeightedMa](Indicator-SineWeightedMa) · [Sma](Indicator-Sma) ·
+[Smma](Indicator-Smma) · [T3](Indicator-T3) ·
+[Tema](Indicator-Tema) · [Trima](Indicator-Trima) ·
+[Vidya](Indicator-Vidya) · [Vwma](Indicator-Vwma) ·
+[Wma](Indicator-Wma) · [Zlema](Indicator-Zlema)
 
-### Momentum Oscillators (24)
+### Momentum Oscillators (34)
 
 [AnchoredRsi](Indicator-AnchoredRsi) · [AwesomeOscillator](Indicator-AwesomeOscillator) ·
 [Cci](Indicator-Cci) · [Cmo](Indicator-Cmo) ·
-[ConnorsRsi](Indicator-ConnorsRsi) · [Inertia](Indicator-Inertia) ·
+[ConnorsRsi](Indicator-ConnorsRsi) · [DerivativeOscillator](Indicator-DerivativeOscillator) ·
+[DisparityIndex](Indicator-DisparityIndex) · [DynamicMomentumIndex](Indicator-DynamicMomentumIndex) ·
+[ElderRay](Indicator-ElderRay) · [FisherRsi](Indicator-FisherRsi) ·
+[Inertia](Indicator-Inertia) · [IntradayMomentumIndex](Indicator-IntradayMomentumIndex) ·
 [Kst](Indicator-Kst) · [LaguerreRsi](Indicator-LaguerreRsi) ·
 [Mfi](Indicator-Mfi) · [Mom](Indicator-Mom) ·
 [Pgo](Indicator-Pgo) · [Pmo](Indicator-Pmo) ·
+[Qqe](Indicator-Qqe) · [Rmi](Indicator-Rmi) ·
 [Roc](Indicator-Roc) · [Rocp](Indicator-Rocp) ·
 [Rocr](Indicator-Rocr) · [Rocr100](Indicator-Rocr100) ·
-[Rsi](Indicator-Rsi) · [Rvi](Indicator-Rvi) ·
-[Smi](Indicator-Smi) · [Stochastic](Indicator-Stochastic) ·
+[Rsi](Indicator-Rsi) · [Rsx](Indicator-Rsx) ·
+[Rvi](Indicator-Rvi) · [Smi](Indicator-Smi) ·
+[Stochastic](Indicator-Stochastic) · [StochasticCci](Indicator-StochasticCci) ·
 [StochRsi](Indicator-StochRsi) · [Tsi](Indicator-Tsi) ·
 [UltimateOscillator](Indicator-UltimateOscillator) · [WilliamsR](Indicator-WilliamsR)
 
-### Trend & Directional (21)
+### Trend & Directional (28)
 
 [Adx](Indicator-Adx) · [Adxr](Indicator-Adxr) ·
 [Aroon](Indicator-Aroon) · [AroonOscillator](Indicator-AroonOscillator) ·
 [ChoppinessIndex](Indicator-ChoppinessIndex) · [Dx](Indicator-Dx) ·
+[GatorOscillator](Indicator-GatorOscillator) · [KasePermissionStochastic](Indicator-KasePermissionStochastic) ·
 [MacdExt](Indicator-MacdExt) · [MacdFix](Indicator-MacdFix) ·
 [MacdIndicator](Indicator-MacdIndicator) · [MassIndex](Indicator-MassIndex) ·
 [MinusDi](Indicator-MinusDi) · [MinusDm](Indicator-MinusDm) ·
 [PlusDi](Indicator-PlusDi) · [PlusDm](Indicator-PlusDm) ·
+[PolarizedFractalEfficiency](Indicator-PolarizedFractalEfficiency) · [Qstick](Indicator-Qstick) ·
 [Rwi](Indicator-Rwi) · [Tii](Indicator-Tii) ·
-[Trix](Indicator-Trix) · [VerticalHorizontalFilter](Indicator-VerticalHorizontalFilter) ·
-[Vortex](Indicator-Vortex) · [WaveTrend](Indicator-WaveTrend) ·
-[TrendLabel](Indicator-TrendLabel)
+[TrendStrengthIndex](Indicator-TrendStrengthIndex) · [Trix](Indicator-Trix) ·
+[TtmTrend](Indicator-TtmTrend) · [VerticalHorizontalFilter](Indicator-VerticalHorizontalFilter) ·
+[Vortex](Indicator-Vortex) · [WavePm](Indicator-WavePm) ·
+[WaveTrend](Indicator-WaveTrend) · [TrendLabel](Indicator-TrendLabel)
 
 ### Price Oscillators (11)
 

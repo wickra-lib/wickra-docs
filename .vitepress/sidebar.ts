@@ -72,6 +72,10 @@ export const sidebar = [
     "collapsed": true,
     "items": [
       {
+        "text": "AdaptiveLaguerreFilter",
+        "link": "/Indicator-AdaptiveLaguerreFilter"
+      },
+      {
         "text": "Alligator",
         "link": "/Indicator-Alligator"
       },
@@ -82,6 +86,10 @@ export const sidebar = [
       {
         "text": "Dema",
         "link": "/Indicator-Dema"
+      },
+      {
+        "text": "Ehma",
+        "link": "/Indicator-Ehma"
       },
       {
         "text": "Ema",
@@ -96,8 +104,20 @@ export const sidebar = [
         "link": "/Indicator-Frama"
       },
       {
+        "text": "GeneralizedDema",
+        "link": "/Indicator-GeneralizedDema"
+      },
+      {
+        "text": "GeometricMa",
+        "link": "/Indicator-GeometricMa"
+      },
+      {
         "text": "Hma",
         "link": "/Indicator-Hma"
+      },
+      {
+        "text": "HoltWinters",
+        "link": "/Indicator-HoltWinters"
       },
       {
         "text": "Jma",
@@ -110,6 +130,14 @@ export const sidebar = [
       {
         "text": "McGinleyDynamic",
         "link": "/Indicator-McGinleyDynamic"
+      },
+      {
+        "text": "MedianMa",
+        "link": "/Indicator-MedianMa"
+      },
+      {
+        "text": "SineWeightedMa",
+        "link": "/Indicator-SineWeightedMa"
       },
       {
         "text": "Sma",
@@ -174,8 +202,32 @@ export const sidebar = [
         "link": "/Indicator-ConnorsRsi"
       },
       {
+        "text": "DerivativeOscillator",
+        "link": "/Indicator-DerivativeOscillator"
+      },
+      {
+        "text": "DisparityIndex",
+        "link": "/Indicator-DisparityIndex"
+      },
+      {
+        "text": "DynamicMomentumIndex",
+        "link": "/Indicator-DynamicMomentumIndex"
+      },
+      {
+        "text": "ElderRay",
+        "link": "/Indicator-ElderRay"
+      },
+      {
+        "text": "FisherRsi",
+        "link": "/Indicator-FisherRsi"
+      },
+      {
         "text": "Inertia",
         "link": "/Indicator-Inertia"
+      },
+      {
+        "text": "IntradayMomentumIndex",
+        "link": "/Indicator-IntradayMomentumIndex"
       },
       {
         "text": "Kst",
@@ -202,6 +254,14 @@ export const sidebar = [
         "link": "/Indicator-Pmo"
       },
       {
+        "text": "Qqe",
+        "link": "/Indicator-Qqe"
+      },
+      {
+        "text": "Rmi",
+        "link": "/Indicator-Rmi"
+      },
+      {
         "text": "Roc",
         "link": "/Indicator-Roc"
       },
@@ -222,6 +282,10 @@ export const sidebar = [
         "link": "/Indicator-Rsi"
       },
       {
+        "text": "Rsx",
+        "link": "/Indicator-Rsx"
+      },
+      {
         "text": "Rvi",
         "link": "/Indicator-Rvi"
       },
@@ -232,6 +296,10 @@ export const sidebar = [
       {
         "text": "Stochastic",
         "link": "/Indicator-Stochastic"
+      },
+      {
+        "text": "StochasticCci",
+        "link": "/Indicator-StochasticCci"
       },
       {
         "text": "StochRsi",
@@ -280,6 +348,14 @@ export const sidebar = [
         "link": "/Indicator-Dx"
       },
       {
+        "text": "GatorOscillator",
+        "link": "/Indicator-GatorOscillator"
+      },
+      {
+        "text": "KasePermissionStochastic",
+        "link": "/Indicator-KasePermissionStochastic"
+      },
+      {
         "text": "MacdExt",
         "link": "/Indicator-MacdExt"
       },
@@ -312,6 +388,14 @@ export const sidebar = [
         "link": "/Indicator-PlusDm"
       },
       {
+        "text": "PolarizedFractalEfficiency",
+        "link": "/Indicator-PolarizedFractalEfficiency"
+      },
+      {
+        "text": "Qstick",
+        "link": "/Indicator-Qstick"
+      },
+      {
         "text": "Rwi",
         "link": "/Indicator-Rwi"
       },
@@ -320,8 +404,16 @@ export const sidebar = [
         "link": "/Indicator-Tii"
       },
       {
+        "text": "TrendStrengthIndex",
+        "link": "/Indicator-TrendStrengthIndex"
+      },
+      {
         "text": "Trix",
         "link": "/Indicator-Trix"
+      },
+      {
+        "text": "TtmTrend",
+        "link": "/Indicator-TtmTrend"
       },
       {
         "text": "VerticalHorizontalFilter",
@@ -330,6 +422,10 @@ export const sidebar = [
       {
         "text": "Vortex",
         "link": "/Indicator-Vortex"
+      },
+      {
+        "text": "WavePm",
+        "link": "/Indicator-WavePm"
       },
       {
         "text": "WaveTrend",
