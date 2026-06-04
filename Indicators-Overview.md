@@ -22,9 +22,9 @@ The twenty-four families:
 
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
-| 1 | [Moving Averages](#moving-averages) | 19 | Where is the smoothed trend line? |
-| 2 | [Momentum Oscillators](#momentum-oscillators) | 24 | How fast is price changing; is it overbought? |
-| 3 | [Trend & Directional](#trend--directional) | 20 | Is there a trend, and which way? |
+| 1 | [Moving Averages](#moving-averages) | 26 | Where is the smoothed trend line? |
+| 2 | [Momentum Oscillators](#momentum-oscillators) | 34 | How fast is price changing; is it overbought? |
+| 3 | [Trend & Directional](#trend--directional) | 28 | Is there a trend, and which way? |
 | 4 | [Price Oscillators](#price-oscillators) | 11 | Difference-of-averages momentum around zero. |
 | 5 | [Volatility & Bands](#volatility--bands) | 18 | How wide is the range; where are the envelopes? |
 | 6 | [Bands & Channels](#bands--channels) | 11 | Price-envelope overlays beyond the volatility staples. |
@@ -73,6 +73,13 @@ single-output (`f64 → f64`) except `Vwma`, which weights by volume.
 | `Jma`   | Jurik MA — three-stage filter reconstruction. | `f64` | `f64` | unbounded (price scale) | `(period=14, phase=0, power=2)` | `1` | [Indicator-Jma](Indicator-Jma) |
 | `Alligator` | Three `Smma`s of `(high + low) / 2`: Jaw / Teeth / Lips. | `Candle` | `AlligatorOutput` (3) | unbounded (price scale) | `(jaw=13, teeth=8, lips=5)` | `max(jaw, teeth, lips)` | [Indicator-Alligator](Indicator-Alligator) |
 | `Evwma` | Elastic volume-weighted recurrence over a rolling window. | `Candle` | `f64` | unbounded (price scale) | `period` (20 in Python) | `period` | [Indicator-Evwma](Indicator-Evwma) |
+| `AdaptiveLaguerreFilter` | Four-stage Laguerre filter whose damping adapts to tracking error. | `f64` | `f64` | price-bounded (no overshoot) | `period` | `period` | [Indicator-AdaptiveLaguerreFilter](Indicator-AdaptiveLaguerreFilter) |
+| `Ehma` | Exponential Hull MA — `EMA(2·EMA(n/2) − EMA(n), √n)`, low lag. | `f64` | `f64` | unbounded (price scale) | `period` | `period + round(√period) − 1` | [Indicator-Ehma](Indicator-Ehma) |
+| `GeneralizedDema` | Tillson volume-factor double EMA `(1 + v)·EMA − v·EMA(EMA)`. | `f64` | `f64` | unbounded (price scale) | `(period, v=0.7)` | `2·period − 1` | [Indicator-GeneralizedDema](Indicator-GeneralizedDema) |
+| `GeometricMa` | Rolling geometric mean of the last `period` prices. | `f64` | `f64` | `(0, ∞)` | `period` | `period` | [Indicator-GeometricMa](Indicator-GeometricMa) |
+| `HoltWinters` | Holt double-exp smoothing (level + trend); one-step forecast. | `f64` | `f64` | unbounded (price scale) | `(alpha=0.2, beta=0.1)` | `2` | [Indicator-HoltWinters](Indicator-HoltWinters) |
+| `MedianMa` | Rolling median of the last `period` prices (outlier-robust). | `f64` | `f64` | unbounded (window min/max) | `period` | `period` | [Indicator-MedianMa](Indicator-MedianMa) |
+| `SineWeightedMa` | Sine-weighted MA (half-cycle weights, centre-heavy). | `f64` | `f64` | unbounded (price scale) | `period` | `period` | [Indicator-SineWeightedMa](Indicator-SineWeightedMa) |
 
 ## Momentum Oscillators
 
@@ -105,6 +112,16 @@ Measure the *rate* of price change. Several are bounded by construction
 | `Rocp` | Rate of Change Percentage; `(close − close[period]) / close[period]`. | `f64` | `f64` | unbounded around zero | `period` required | `period` | [Indicator-Rocp](Indicator-Rocp) |
 | `Rocr` | Rate of Change Ratio; `close / close[period]`. | `f64` | `f64` | `> 0` around `1` | `period` required | `period` | [Indicator-Rocr](Indicator-Rocr) |
 | `Rocr100` | Rate of Change Ratio ×100; `close / close[period] · 100`. | `f64` | `f64` | `> 0` around `100` | `period` required | `period` | [Indicator-Rocr100](Indicator-Rocr100) |
+| `DerivativeOscillator` | Brown's double-EMA-smoothed RSI minus an SMA signal; zero-centered histogram. | `f64` | `f64` | unbounded (around `0`) | `(14, 5, 3, 9)` | `rsi_period + smooth1 + smooth2 + signal − 2` | [Indicator-DerivativeOscillator](Indicator-DerivativeOscillator) |
+| `DisparityIndex` | Percentage gap between price and its SMA (the Japanese *kairi*). | `f64` | `f64` | unbounded (around `0`) | `period` | `period` | [Indicator-DisparityIndex](Indicator-DisparityIndex) |
+| `DynamicMomentumIndex` | Chande RSI whose lookback shortens as volatility rises. | `f64` | `f64` | `[0, 100]` | `period` (14) | `31` | [Indicator-DynamicMomentumIndex](Indicator-DynamicMomentumIndex) |
+| `ElderRay` | Bull/Bear Power: each bar's high/low vs. an EMA of close. | `Candle` | `ElderRayOutput` (2) | unbounded (bull `>0`, bear `<0`) | `period` (13) | `period` | [Indicator-ElderRay](Indicator-ElderRay) |
+| `FisherRsi` | Fisher transform of a normalised RSI; sharp symmetric extremes. | `f64` | `f64` | ≈ `[−3.8, 3.8]` | `period` | `period + 1` | [Indicator-FisherRsi](Indicator-FisherRsi) |
+| `IntradayMomentumIndex` | RSI built from the candle body (open→close). | `Candle` | `f64` | `[0, 100]` | `period` | `period` | [Indicator-IntradayMomentumIndex](Indicator-IntradayMomentumIndex) |
+| `Qqe` | Smoothed RSI with an "ATR-of-RSI" trailing line. | `f64` | `QqeOutput` (2) | `[0, 100]`-ish | `(14, 5, 4.236)` | `72` (defaults) | [Indicator-Qqe](Indicator-Qqe) |
+| `Rmi` | Wilder RSI over a multi-bar momentum lookback. | `f64` | `f64` | `[0, 100]` | `(period, momentum)` | `momentum + period` | [Indicator-Rmi](Indicator-Rmi) |
+| `Rsx` | Jurik-smoothed, low-noise RSI. | `f64` | `f64` | `[0, 100]` | `length` | `length + 1` | [Indicator-Rsx](Indicator-Rsx) |
+| `StochasticCci` | Stochastic oscillator over the CCI; bounded `[0, 100]`. | `Candle` | `f64` | `[0, 100]` | `period` | `2·period − 1` | [Indicator-StochasticCci](Indicator-StochasticCci) |
 
 ## Trend & Directional
 
@@ -134,6 +151,13 @@ crossover packages and trend-versus-range filters.
 | `MinusDi` | Minus Directional Indicator; `100·smoothed(−DM)/smoothed(TR)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-MinusDi](Indicator-MinusDi) |
 | `Dx` | Directional Movement Index; `100·abs(+DI − −DI)/(+DI + −DI)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-Dx](Indicator-Dx) |
 | `TrendLabel` | Discrete trend state from the sign of the rolling OLS slope. | `f64` | `f64` | `{−1, 0, 1}` | `period >= 2` | `period` | [Indicator-TrendLabel](Indicator-TrendLabel) |
+| `GatorOscillator` | Alligator convergence/divergence as a two-sided histogram. | `Candle` | `GatorOscillatorOutput` (2) | `upper ≥ 0`, `lower ≤ 0` | `(13, 8, 5)` | `max(jaw, teeth, lips)` | [Indicator-GatorOscillator](Indicator-GatorOscillator) |
+| `KasePermissionStochastic` | Double-smoothed stochastic fast/slow permission filter. | `Candle` | `KasePermissionStochasticOutput` (2) | `[0, 100]` per line | `(length=9, smooth=3)` | `length + 2·smooth − 2` | [Indicator-KasePermissionStochastic](Indicator-KasePermissionStochastic) |
+| `PolarizedFractalEfficiency` | Direction-signed trend efficiency (straight vs. jagged path). | `f64` | `f64` | `(−100, +100)` | `(period, smoothing)` | `period + smoothing` | [Indicator-PolarizedFractalEfficiency](Indicator-PolarizedFractalEfficiency) |
+| `Qstick` | Running average of the candle body `close − open`. | `Candle` | `f64` | unbounded (price units) | `period` | `period` | [Indicator-Qstick](Indicator-Qstick) |
+| `TrendStrengthIndex` | Signed `r²` of a linear regression of price vs. time. | `f64` | `f64` | `[−1, +1]` | `period >= 2` | `period` | [Indicator-TrendStrengthIndex](Indicator-TrendStrengthIndex) |
+| `TtmTrend` | `±1` by whether close is above the SMA of median prices. | `Candle` | `f64` | `{+1, −1}` | `period` (6) | `period` | [Indicator-TtmTrend](Indicator-TtmTrend) |
+| `WavePm` | Kase variance-normalised peak-momentum statistic. | `f64` | `f64` | `[0, 100)` | `(length=32, smoothing)` | `2·length + smoothing − 1` | [Indicator-WavePm](Indicator-WavePm) |
 
 ## Price Oscillators
 

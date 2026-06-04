@@ -175,6 +175,10 @@ ready" to "ready" together — there are no rows that have a `signal` but no
 | `VwapStdDevBands` | `VwapStdDevBands::new(2.0)`          | first bar with non-zero volume           | 1                                | 1st                      | `upper`, `middle`, `lower`, `stddev`                   |
 | `Rwi`             | `Rwi::new(14)`                       | `period`                                 | 14                               | 14th                     | `high`, `low`                                          |
 | `WaveTrend`       | `WaveTrend::classic()`               | `2 * channel + average + signal - 3`     | 42                               | 42nd                     | `wt1`, `wt2`                                           |
+| `ElderRay`        | `ElderRay::new(13)`                  | `period`                                 | 13                               | 13th                     | `bull_power`, `bear_power`                             |
+| `Qqe`             | `Qqe::new(14, 5, 4.236)`             | `rsi + smoothing + 2*(2*rsi-1) - 2`      | 72                               | 72nd                     | `rsi_ma`, `trailing_line`                              |
+| `GatorOscillator` | `GatorOscillator::new(13, 8, 5)`     | `max(jaw, teeth, lips)`                  | 13                               | 13th                     | `upper`, `lower`                                       |
+| `KasePermissionStochastic` | `KasePermissionStochastic::new(9, 3)` | `length + 2*smooth - 2`           | 13                               | 13th                     | `fast`, `slow`                                         |
 
 ## Family 09 — Trailing Stops (added since 0.2.0)
 
@@ -577,6 +581,31 @@ Parameter-free swing-based Fibonacci tools. `warmup_period()` is the minimum num
 | `ZeroLagMacd`                | `ZeroLagMacd::classic()` (`12, 26, 9`)   | ZLEMA-chain warmup       | 50     | 50th                     |
 | `ElderImpulse`               | `ElderImpulse::classic()`                | `slow + signal - 1`      | 34     | 34th                     |
 | `Stc`                        | `Stc::classic()` (`23, 50, 10`)          | `slow + cycle + 1`       | 61     | 61st                     |
+
+## Additional Moving Averages, Momentum & Trend indicators
+
+| Indicator                    | Constructor                              | Formula                                  | warmup | Inputs at first emission |
+|------------------------------|------------------------------------------|------------------------------------------|--------|--------------------------|
+| `AdaptiveLaguerreFilter`     | `AdaptiveLaguerreFilter::new(14)`        | `period`                                 | 14     | 14th                     |
+| `Ehma`                       | `Ehma::new(16)`                          | `period + round(sqrt(period)) - 1`       | 19     | 19th                     |
+| `GeneralizedDema`            | `GeneralizedDema::new(14, 0.7)`          | `2 * period - 1`                         | 27     | 27th                     |
+| `GeometricMa`                | `GeometricMa::new(14)`                   | `period`                                 | 14     | 14th                     |
+| `HoltWinters`                | `HoltWinters::new(0.2, 0.1)`             | constant `2`                             | 2      | 2nd                      |
+| `MedianMa`                   | `MedianMa::new(14)`                      | `period`                                 | 14     | 14th                     |
+| `SineWeightedMa`             | `SineWeightedMa::new(14)`                | `period`                                 | 14     | 14th                     |
+| `DerivativeOscillator`       | `DerivativeOscillator::new(14, 5, 3, 9)` | `rsi + smooth1 + smooth2 + signal - 2`   | 29     | 29th                     |
+| `DisparityIndex`             | `DisparityIndex::new(14)`                | `period`                                 | 14     | 14th                     |
+| `DynamicMomentumIndex`       | `DynamicMomentumIndex::new(14)`          | constant `31`                            | 31     | 31st                     |
+| `FisherRsi`                  | `FisherRsi::new(14)`                     | `period + 1`                             | 15     | 15th                     |
+| `IntradayMomentumIndex`      | `IntradayMomentumIndex::new(14)`         | `period`                                 | 14     | 14th                     |
+| `Rmi`                        | `Rmi::new(14, 5)`                        | `momentum + period`                      | 19     | 19th                     |
+| `Rsx`                        | `Rsx::new(14)`                           | `length + 1`                             | 15     | 15th                     |
+| `StochasticCci`              | `StochasticCci::new(14)`                 | `2 * period - 1`                         | 27     | 27th                     |
+| `PolarizedFractalEfficiency` | `PolarizedFractalEfficiency::new(10, 5)` | `period + smoothing`                     | 15     | 15th                     |
+| `Qstick`                     | `Qstick::new(14)`                        | `period`                                 | 14     | 14th                     |
+| `TrendStrengthIndex`         | `TrendStrengthIndex::new(20)`            | `period`                                 | 20     | 20th                     |
+| `TtmTrend`                   | `TtmTrend::new(6)`                       | `period`                                 | 6      | 6th                      |
+| `WavePm`                     | `WavePm::new(32, 3)`                     | `2 * length + smoothing - 1`             | 66     | 66th                     |
 
 ## "Off-by-one" cases worth memorising
 
