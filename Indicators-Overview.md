@@ -133,6 +133,7 @@ crossover packages and trend-versus-range filters.
 | `PlusDi` | Plus Directional Indicator; `100·smoothed(+DM)/smoothed(TR)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-PlusDi](Indicator-PlusDi) |
 | `MinusDi` | Minus Directional Indicator; `100·smoothed(−DM)/smoothed(TR)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-MinusDi](Indicator-MinusDi) |
 | `Dx` | Directional Movement Index; `100·abs(+DI − −DI)/(+DI + −DI)`. | `Candle` | `f64` | `[0, 100]` | `period` required | `period` | [Indicator-Dx](Indicator-Dx) |
+| `TrendLabel` | Discrete trend state from the sign of the rolling OLS slope. | `f64` | `f64` | `{−1, 0, 1}` | `period >= 2` | `period` | [Indicator-TrendLabel](Indicator-TrendLabel) |
 
 ## Price Oscillators
 
@@ -177,6 +178,8 @@ around price.
 | `GarmanKlassVolatility` | OHLC realised vol; ~7.4× efficient, biased under drift. | `Candle` | `f64` | `[0, ∞)` (annualised percent) | `(period=20, trading_periods=252)` (Python) | `period` | [Indicator-GarmanKlassVolatility](Indicator-GarmanKlassVolatility) |
 | `RogersSatchellVolatility` | Drift-free OHLC realised vol; exact under arbitrary Brownian drift. | `Candle` | `f64` | `[0, ∞)` (annualised percent) | `(period=20, trading_periods=252)` (Python) | `period` | [Indicator-RogersSatchellVolatility](Indicator-RogersSatchellVolatility) |
 | `YangZhangVolatility` | Drift- and gap-robust OHLC blend of overnight, open-close and Rogers-Satchell. | `Candle` | `f64` | `[0, ∞)` (annualised percent) | `(period=20, trading_periods=252)` (Python) | `period + 1` | [Indicator-YangZhangVolatility](Indicator-YangZhangVolatility) |
+| `JumpIndicator` | Return-outlier flag vs trailing volatility (deviation from the mean). | `f64` | `f64` | `{−1, 0, 1}` | `(period, threshold)` | `period + 2` | [Indicator-JumpIndicator](Indicator-JumpIndicator) |
+| `RegimeLabel` | Volatility-quantile regime: `−1` calm / `0` normal / `+1` stressed. | `f64` | `f64` | `{−1, 0, 1}` | `(vol_period, lookback)` | `vol_period + lookback` | [Indicator-RegimeLabel](Indicator-RegimeLabel) |
 
 ## Bands & Channels
 
@@ -281,6 +284,16 @@ Per-bar price transforms and rolling least-squares regressions.
 | `MidPoint` | `(highest + lowest) / 2` of a scalar series over `period`. | `f64` | `f64` | price scale | `period` required | `period` | [Indicator-MidPoint](Indicator-MidPoint) |
 | `LinRegIntercept` | Intercept `a` of the rolling OLS fit `y = a + b·x` (value at `x = 0`). | `f64` | `f64` | price scale | `period >= 2` | `period` | [Indicator-LinRegIntercept](Indicator-LinRegIntercept) |
 | `Tsf` | Time Series Forecast; OLS line projected one bar ahead (`a + b·period`). | `f64` | `f64` | price scale | `period >= 2` | `period` | [Indicator-Tsf](Indicator-Tsf) |
+| `LogReturn` | Logarithmic return over a fixed lag, `ln(p_t / p_{t−period})`. | `f64` | `f64` | unbounded | `period` | `period + 1` | [Indicator-LogReturn](Indicator-LogReturn) |
+| `RealizedVolatility` | `√(Σ r²)` raw quadratic variation over `period` returns. | `f64` | `f64` | `[0, ∞)` | `period` | `period + 1` | [Indicator-RealizedVolatility](Indicator-RealizedVolatility) |
+| `RollingQuantile` | Interpolated `q`-th quantile over `period` values (type-7). | `f64` | `f64` | within window | `(period, quantile)` | `period` | [Indicator-RollingQuantile](Indicator-RollingQuantile) |
+| `RollingIqr` | Interquartile range `Q3 − Q1`; robust dispersion. | `f64` | `f64` | `[0, ∞)` | `period` | `period` | [Indicator-RollingIqr](Indicator-RollingIqr) |
+| `RollingPercentileRank` | Percentile rank of the latest value within its window. | `f64` | `f64` | `[0, 100]` | `period` | `period` | [Indicator-RollingPercentileRank](Indicator-RollingPercentileRank) |
+| `SpreadAr1Coefficient` | AR(1) coefficient `ρ` of the spread `a − b` (cointegration strength). | `(f64, f64)` | `f64` | `~[0, 1]` if stationary | `period >= 3` | `period` | [Indicator-SpreadAr1Coefficient](Indicator-SpreadAr1Coefficient) |
+| `CloseVsOpen` | Signed body as a fraction of open, `(close − open)/open`. | `Candle` | `f64` | unbounded | (no parameters) | `1` | [Indicator-CloseVsOpen](Indicator-CloseVsOpen) |
+| `BodySizePct` | Absolute body as a fraction of the bar range. | `Candle` | `f64` | `[0, 1]` | (no parameters) | `1` | [Indicator-BodySizePct](Indicator-BodySizePct) |
+| `WickRatio` | Signed upper-vs-lower shadow imbalance over the range. | `Candle` | `f64` | `[−1, 1]` | (no parameters) | `1` | [Indicator-WickRatio](Indicator-WickRatio) |
+| `HighLowRange` | Bar range as a fraction of close (scale-free volatility). | `Candle` | `f64` | `[0, ∞)` | (no parameters) | `1` | [Indicator-HighLowRange](Indicator-HighLowRange) |
 
 ## Ehlers / Cycle (DSP)
 
@@ -462,6 +475,8 @@ take `(asset, benchmark)` pairs.
 | `TreynorRatio` | `(mean_asset − rf) / Beta`. | `(f64, f64)` | `f64` | unbounded | `(period, rf)` | `period` | [Indicator-TreynorRatio](Indicator-TreynorRatio) |
 | `InformationRatio` | `mean(active) / tracking_error`. | `(f64, f64)` | `f64` | unbounded | `period` | `period` | [Indicator-InformationRatio](Indicator-InformationRatio) |
 | `Alpha` | Jensen's alpha — `mean(asset) − (rf + Beta·(mean_bench − rf))`. | `(f64, f64)` | `f64` | unbounded | `(period, rf)` | `period` | [Indicator-Alpha](Indicator-Alpha) |
+| `WinRate` | Fraction of strictly-positive returns over `period`. | `f64` | `f64` | `[0, 1]` | `period` | `period` | [Indicator-WinRate](Indicator-WinRate) |
+| `Expectancy` | Expected return per unit of average loss (R-multiple). | `f64` | `f64` | unbounded | `period` | `period` | [Indicator-Expectancy](Indicator-Expectancy) |
 
 ## Microstructure
 
@@ -487,6 +502,10 @@ per-bucket profile. The Python and Node bindings accept these as plain arrays
 | `RealizedSpread` | Effective spread net of impact over `horizon`. | `TradeQuote` | `f64` | unbounded | `horizon` | `horizon + 1` | [Indicator-RealizedSpread](Indicator-RealizedSpread) |
 | `KylesLambda` | Rolling OLS price impact per unit signed volume. | `TradeQuote` | `f64` | unbounded | `window` | `window + 1` | [Indicator-KylesLambda](Indicator-KylesLambda) |
 | `Footprint` | Buy/sell volume profile per price bucket. | `Trade` | `FootprintOutput` | per-bucket `≥ 0` | `tick_size` | `1` | [Indicator-Footprint](Indicator-Footprint) |
+| `OrderFlowImbalance` | Rolling sum of best-level order-flow events (Cont-Kukanov-Stoikov OFI). | `OrderBook` | `f64` | unbounded | `period` | `period + 1` | [Indicator-OrderFlowImbalance](Indicator-OrderFlowImbalance) |
+| `Vpin` | Volume-bucketed order-flow toxicity (informed trading). | `Trade` | `f64` | `[0, 1]` | `(bucket_volume, num_buckets)` | `num_buckets` | [Indicator-Vpin](Indicator-Vpin) |
+| `AmihudIlliquidity` | Mean `\|return\| / traded value`; price-impact liquidity proxy. | `Trade` | `f64` | `[0, ∞)` | `period` | `period + 1` | [Indicator-AmihudIlliquidity](Indicator-AmihudIlliquidity) |
+| `RollMeasure` | Effective spread from the serial covariance of price changes. | `Trade` | `f64` | `[0, ∞)` | `period >= 3` | `period + 1` | [Indicator-RollMeasure](Indicator-RollMeasure) |
 
 ## Derivatives
 
