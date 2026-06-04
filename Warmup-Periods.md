@@ -556,6 +556,16 @@ Parameter-free swing-based Fibonacci tools. `warmup_period()` is the minimum num
 | `BodySizePct`              | `BodySizePct::new()`                         | constant `1`                                         | 1      | 1st                      |
 | `WickRatio`                | `WickRatio::new()`                           | constant `1`                                         | 1      | 1st                      |
 | `HighLowRange`             | `HighLowRange::new()`                        | constant `1`                                         | 1      | 1st                      |
+| `OuHalfLife`               | `OuHalfLife::new(30)`                        | `period`                                             | 30     | 30th                     |
+| `GrangerCausality`         | `GrangerCausality::new(60, 1)`               | `period`                                             | 60     | 60th                     |
+| `KalmanHedgeRatio`         | `KalmanHedgeRatio::new(0.001, 0.01)`         | constant `1`                                         | 1      | 1st                      |
+| `VarianceRatio`            | `VarianceRatio::new(60, 2)`                  | `period`                                             | 60     | 60th                     |
+| `RollingCorrelation`       | `RollingCorrelation::new(14)`                | `period + 1`                                         | 15     | 15th                     |
+| `RollingCovariance`        | `RollingCovariance::new(14)`                 | `period + 1`                                         | 15     | 15th                     |
+| `SpreadHurst`              | `SpreadHurst::new(40)`                       | `period`                                             | 40     | 40th                     |
+| `SpreadBollingerBands`     | `SpreadBollingerBands::new(20, 2.0)`         | `period`                                             | 20     | 20th                     |
+| `BetaNeutralSpread`        | `BetaNeutralSpread::new(20)`                 | `period`                                             | 20     | 20th                     |
+| `DistanceSsd`              | `DistanceSsd::new(20)`                       | `period`                                             | 20     | 20th                     |
 
 ## Additional Price Oscillators
 
