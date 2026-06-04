@@ -7,7 +7,7 @@ Node.js, WebAssembly, and Rust itself. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
 
-The project ships 377 indicators across twenty-four families — moving averages,
+The project ships 396 indicators across twenty-four families — moving averages,
 momentum oscillators, trend & directional, price oscillators, volatility &
 bands, bands & channels, trailing stops, volume, price statistics, Ehlers /
 cycle (DSP), pivots & S/R, DeMark, Ichimoku & charts, candlestick patterns,
@@ -26,12 +26,12 @@ free for any use, commercial or not.
 
 | Registry  | Package        | Version |
 |-----------|----------------|---------|
-| crates.io | `wickra`       | 0.5.3   |
-| crates.io | `wickra-core`  | 0.5.3   |
-| crates.io | `wickra-data`  | 0.5.3   |
-| PyPI      | `wickra`       | 0.5.3   |
-| npm       | `wickra`       | 0.5.3   |
-| npm       | `wickra-wasm`  | 0.5.3   |
+| crates.io | `wickra`       | 0.5.4   |
+| crates.io | `wickra-core`  | 0.5.4   |
+| crates.io | `wickra-data`  | 0.5.4   |
+| PyPI      | `wickra`       | 0.5.4   |
+| npm       | `wickra`       | 0.5.4   |
+| npm       | `wickra-wasm`  | 0.5.4   |
 
 Release notes and tagged builds:
 <https://github.com/wickra-lib/wickra/releases>.
