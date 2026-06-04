@@ -75,7 +75,7 @@ Release notes and tagged builds:
 Start with [Indicators-Overview](Indicators-Overview) for the full
 twenty-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-368 deep-dive pages.
+387 deep-dive pages.
 
 ### Moving Averages (19)
 
@@ -105,7 +105,7 @@ tables. The links below are a quick alphabetical-by-family index into the
 [StochRsi](Indicator-StochRsi) · [Tsi](Indicator-Tsi) ·
 [UltimateOscillator](Indicator-UltimateOscillator) · [WilliamsR](Indicator-WilliamsR)
 
-### Trend & Directional (20)
+### Trend & Directional (21)
 
 [Adx](Indicator-Adx) · [Adxr](Indicator-Adxr) ·
 [Aroon](Indicator-Aroon) · [AroonOscillator](Indicator-AroonOscillator) ·
@@ -116,7 +116,8 @@ tables. The links below are a quick alphabetical-by-family index into the
 [PlusDi](Indicator-PlusDi) · [PlusDm](Indicator-PlusDm) ·
 [Rwi](Indicator-Rwi) · [Tii](Indicator-Tii) ·
 [Trix](Indicator-Trix) · [VerticalHorizontalFilter](Indicator-VerticalHorizontalFilter) ·
-[Vortex](Indicator-Vortex) · [WaveTrend](Indicator-WaveTrend)
+[Vortex](Indicator-Vortex) · [WaveTrend](Indicator-WaveTrend) ·
+[TrendLabel](Indicator-TrendLabel)
 
 ### Price Oscillators (11)
 
@@ -128,7 +129,7 @@ tables. The links below are a quick alphabetical-by-family index into the
 [ElderImpulse](Indicator-ElderImpulse) · [Ppo](Indicator-Ppo) ·
 [Stc](Indicator-Stc) · [ZeroLagMacd](Indicator-ZeroLagMacd)
 
-### Volatility & Bands (18)
+### Volatility & Bands (20)
 
 [Atr](Indicator-Atr) · [BollingerBands](Indicator-BollingerBands) ·
 [BollingerBandwidth](Indicator-BollingerBandwidth) ·
@@ -142,7 +143,8 @@ tables. The links below are a quick alphabetical-by-family index into the
 [RogersSatchellVolatility](Indicator-RogersSatchellVolatility) ·
 [RviVolatility](Indicator-RviVolatility) · [StdDev](Indicator-StdDev) ·
 [TrueRange](Indicator-TrueRange) · [UlcerIndex](Indicator-UlcerIndex) ·
-[YangZhangVolatility](Indicator-YangZhangVolatility)
+[YangZhangVolatility](Indicator-YangZhangVolatility) ·
+[JumpIndicator](Indicator-JumpIndicator) · [RegimeLabel](Indicator-RegimeLabel)
 
 ### Bands & Channels (11)
 
@@ -182,7 +184,7 @@ tables. The links below are a quick alphabetical-by-family index into the
 [VolumePriceTrend](Indicator-VolumePriceTrend) ·
 [Vwap](Indicator-Vwap) · [Vzo](Indicator-Vzo)
 
-### Price Statistics (24)
+### Price Statistics (34)
 
 [Autocorrelation](Indicator-Autocorrelation) · [AvgPrice](Indicator-AvgPrice) ·
 [Beta](Indicator-Beta) · [CoefficientOfVariation](Indicator-CoefficientOfVariation) ·
@@ -195,7 +197,13 @@ tables. The links below are a quick alphabetical-by-family index into the
 [Skewness](Indicator-Skewness) · [SpearmanCorrelation](Indicator-SpearmanCorrelation) ·
 [StandardError](Indicator-StandardError) · [Tsf](Indicator-Tsf) ·
 [TypicalPrice](Indicator-TypicalPrice) · [Variance](Indicator-Variance) ·
-[WeightedClose](Indicator-WeightedClose) · [ZScore](Indicator-ZScore)
+[WeightedClose](Indicator-WeightedClose) · [ZScore](Indicator-ZScore) ·
+[BodySizePct](Indicator-BodySizePct) · [CloseVsOpen](Indicator-CloseVsOpen) ·
+[HighLowRange](Indicator-HighLowRange) · [LogReturn](Indicator-LogReturn) ·
+[RealizedVolatility](Indicator-RealizedVolatility) · [RollingIqr](Indicator-RollingIqr) ·
+[RollingPercentileRank](Indicator-RollingPercentileRank) ·
+[RollingQuantile](Indicator-RollingQuantile) ·
+[SpreadAr1Coefficient](Indicator-SpreadAr1Coefficient) · [WickRatio](Indicator-WickRatio)
 
 ### Ehlers / Cycle (DSP) (19)
 
@@ -287,7 +295,7 @@ tables. The links below are a quick alphabetical-by-family index into the
 [InitialBalance](Indicator-InitialBalance) ·
 [OpeningRange](Indicator-OpeningRange) · [ValueArea](Indicator-ValueArea)
 
-### Risk / Performance (17)
+### Risk / Performance (19)
 
 [Alpha](Indicator-Alpha) · [AverageDrawdown](Indicator-AverageDrawdown) ·
 [CalmarRatio](Indicator-CalmarRatio) ·
@@ -300,9 +308,10 @@ tables. The links below are a quick alphabetical-by-family index into the
 [PainIndex](Indicator-PainIndex) · [ProfitFactor](Indicator-ProfitFactor) ·
 [RecoveryFactor](Indicator-RecoveryFactor) ·
 [SharpeRatio](Indicator-SharpeRatio) · [SortinoRatio](Indicator-SortinoRatio) ·
-[TreynorRatio](Indicator-TreynorRatio) · [ValueAtRisk](Indicator-ValueAtRisk)
+[TreynorRatio](Indicator-TreynorRatio) · [ValueAtRisk](Indicator-ValueAtRisk) ·
+[Expectancy](Indicator-Expectancy) · [WinRate](Indicator-WinRate)
 
-### Microstructure (13)
+### Microstructure (17)
 
 [CumulativeVolumeDelta](Indicator-CumulativeVolumeDelta) ·
 [DepthSlope](Indicator-DepthSlope) ·
@@ -315,7 +324,10 @@ tables. The links below are a quick alphabetical-by-family index into the
 [QuotedSpread](Indicator-QuotedSpread) ·
 [RealizedSpread](Indicator-RealizedSpread) ·
 [SignedVolume](Indicator-SignedVolume) ·
-[TradeImbalance](Indicator-TradeImbalance)
+[TradeImbalance](Indicator-TradeImbalance) ·
+[AmihudIlliquidity](Indicator-AmihudIlliquidity) ·
+[OrderFlowImbalance](Indicator-OrderFlowImbalance) ·
+[RollMeasure](Indicator-RollMeasure) · [Vpin](Indicator-Vpin)
 
 ### Derivatives (12)
 

@@ -334,6 +334,10 @@ export const sidebar = [
       {
         "text": "WaveTrend",
         "link": "/Indicator-WaveTrend"
+      },
+      {
+        "text": "TrendLabel",
+        "link": "/Indicator-TrendLabel"
       }
     ]
   },
@@ -462,6 +466,14 @@ export const sidebar = [
       {
         "text": "YangZhangVolatility",
         "link": "/Indicator-YangZhangVolatility"
+      },
+      {
+        "text": "JumpIndicator",
+        "link": "/Indicator-JumpIndicator"
+      },
+      {
+        "text": "RegimeLabel",
+        "link": "/Indicator-RegimeLabel"
       }
     ]
   },
@@ -774,6 +786,46 @@ export const sidebar = [
       {
         "text": "ZScore",
         "link": "/Indicator-ZScore"
+      },
+      {
+        "text": "BodySizePct",
+        "link": "/Indicator-BodySizePct"
+      },
+      {
+        "text": "CloseVsOpen",
+        "link": "/Indicator-CloseVsOpen"
+      },
+      {
+        "text": "HighLowRange",
+        "link": "/Indicator-HighLowRange"
+      },
+      {
+        "text": "LogReturn",
+        "link": "/Indicator-LogReturn"
+      },
+      {
+        "text": "RealizedVolatility",
+        "link": "/Indicator-RealizedVolatility"
+      },
+      {
+        "text": "RollingIqr",
+        "link": "/Indicator-RollingIqr"
+      },
+      {
+        "text": "RollingPercentileRank",
+        "link": "/Indicator-RollingPercentileRank"
+      },
+      {
+        "text": "RollingQuantile",
+        "link": "/Indicator-RollingQuantile"
+      },
+      {
+        "text": "SpreadAr1Coefficient",
+        "link": "/Indicator-SpreadAr1Coefficient"
+      },
+      {
+        "text": "WickRatio",
+        "link": "/Indicator-WickRatio"
       }
     ]
   },
@@ -1426,6 +1478,14 @@ export const sidebar = [
       {
         "text": "ValueAtRisk",
         "link": "/Indicator-ValueAtRisk"
+      },
+      {
+        "text": "Expectancy",
+        "link": "/Indicator-Expectancy"
+      },
+      {
+        "text": "WinRate",
+        "link": "/Indicator-WinRate"
       }
     ]
   },
@@ -1484,6 +1544,22 @@ export const sidebar = [
       {
         "text": "TradeImbalance",
         "link": "/Indicator-TradeImbalance"
+      },
+      {
+        "text": "AmihudIlliquidity",
+        "link": "/Indicator-AmihudIlliquidity"
+      },
+      {
+        "text": "OrderFlowImbalance",
+        "link": "/Indicator-OrderFlowImbalance"
+      },
+      {
+        "text": "RollMeasure",
+        "link": "/Indicator-RollMeasure"
+      },
+      {
+        "text": "Vpin",
+        "link": "/Indicator-Vpin"
       }
     ]
   },

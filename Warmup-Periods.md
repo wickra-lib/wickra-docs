@@ -119,6 +119,9 @@ index" in 0-indexed terms is `warmup_period − 1`.
 | `YangZhangVolatility` | `YangZhangVolatility::new(20, 252)`    | `period + 1`                     | 21                               | 21st                     |
 | `Adxr`          | `Adxr::new(14)`                              | `3 * period - 1`                 | 41                               | 41st                     |
 | `Tii`           | `Tii::new(60, 30)`                           | `sma_period + dev_period - 1`    | 89                               | 89th                     |
+| `TrendLabel`    | `TrendLabel::new(10)`                        | `period`                         | 10                               | 10th                     |
+| `JumpIndicator` | `JumpIndicator::new(20, 3.0)`                | `period + 2`                     | 22                               | 22nd                     |
+| `RegimeLabel`   | `RegimeLabel::new(5, 20)`                    | `vol_period + lookback`          | 25                               | 25th                     |
 
 ### Family 05: Bands & Channels (scalar input, scalar projection)
 
@@ -343,6 +346,8 @@ Some risk metrics take a single `f64` (returns / equity), others take an
 | `TreynorRatio`             | `TreynorRatio::new(50, 0.0)`                 | `period`                         | 50     | 50th                     |
 | `InformationRatio`         | `InformationRatio::new(50)`                  | `period`                         | 50     | 50th                     |
 | `Alpha`                    | `Alpha::new(50, 0.0)`                        | `period`                         | 50     | 50th                     |
+| `WinRate`                  | `WinRate::new(20)`                           | `period`                         | 20     | 20th                     |
+| `Expectancy`               | `Expectancy::new(20)`                        | `period`                         | 20     | 20th                     |
 
 ## Family 16 — Market Profile
 
@@ -378,6 +383,10 @@ fixed-window; `Footprint` accumulates until `reset()`.
 | `RealizedSpread`         | `RealizedSpread::new(10)`         | `horizon + 1`  | 11     | 11th trade-quote         |
 | `KylesLambda`            | `KylesLambda::new(50)`            | `window + 1`   | 51     | 51st trade-quote         |
 | `Footprint`              | `Footprint::new(0.5)`             | constant `1`   | 1      | 1st trade (reset per bar) |
+| `OrderFlowImbalance`     | `OrderFlowImbalance::new(20)`     | `period + 1`   | 21     | 21st snapshot            |
+| `Vpin`                   | `Vpin::new(8.0, 5)`               | `num_buckets` (volume-driven) | 5 | 5th bucket          |
+| `AmihudIlliquidity`      | `AmihudIlliquidity::new(20)`      | `period + 1`   | 21     | 21st trade               |
+| `RollMeasure`            | `RollMeasure::new(20)`            | `period + 1`   | 21     | 21st trade               |
 
 ## Family 18 — Derivatives
 
@@ -537,6 +546,16 @@ Parameter-free swing-based Fibonacci tools. `warmup_period()` is the minimum num
 | `MidPoint`                 | `MidPoint::new(14)`                          | `period`                                             | 14     | 14th                     |
 | `LinRegIntercept`          | `LinRegIntercept::new(14)`                   | `period`                                             | 14     | 14th                     |
 | `Tsf`                      | `Tsf::new(14)`                               | `period`                                             | 14     | 14th                     |
+| `LogReturn`                | `LogReturn::new(1)`                          | `period + 1`                                         | 2      | 2nd                      |
+| `RealizedVolatility`       | `RealizedVolatility::new(20)`                | `period + 1`                                         | 21     | 21st                     |
+| `RollingQuantile`          | `RollingQuantile::new(20, 0.5)`              | `period`                                             | 20     | 20th                     |
+| `RollingIqr`               | `RollingIqr::new(14)`                        | `period`                                             | 14     | 14th                     |
+| `RollingPercentileRank`    | `RollingPercentileRank::new(14)`             | `period`                                             | 14     | 14th                     |
+| `SpreadAr1Coefficient`     | `SpreadAr1Coefficient::new(40)`              | `period`                                             | 40     | 40th                     |
+| `CloseVsOpen`              | `CloseVsOpen::new()`                         | constant `1`                                         | 1      | 1st                      |
+| `BodySizePct`              | `BodySizePct::new()`                         | constant `1`                                         | 1      | 1st                      |
+| `WickRatio`                | `WickRatio::new()`                           | constant `1`                                         | 1      | 1st                      |
+| `HighLowRange`             | `HighLowRange::new()`                        | constant `1`                                         | 1      | 1st                      |
 
 ## Additional Price Oscillators
 
