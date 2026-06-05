@@ -114,7 +114,7 @@ chain.warmup_period() = 22
 `Ema::new(14)` needs 14 inputs to seed and `Rsi::new(7)` needs 8 more once
 the EMA starts flowing, so the chain emits its first value at input 21. The
 `warmup_period()` reported by `Chain` is a conservative `first + second` sum
-(here `14 + 8 = 22`); see [Indicator Chaining](Indicator-Chaining) for the
+(here `14 + 8 = 22`); see [Indicator Chaining](/Indicator-Chaining) for the
 exact contract.
 
 ## A deeper example
@@ -137,6 +137,6 @@ is the canonical example for the latter.
 - [Quickstart: Python](Quickstart-Python) — same engine, NumPy-flavoured.
 - [Streaming vs Batch](Streaming-vs-Batch) — the `batch == repeated update`
   contract and the benchmark numbers it buys you.
-- [Indicator Chaining](Indicator-Chaining) — three-stage chains and the
+- [Indicator Chaining](/Indicator-Chaining) — three-stage chains and the
   stacked-warmup rule.
 - Source: <https://github.com/wickra-lib/wickra>

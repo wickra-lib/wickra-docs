@@ -73,107 +73,107 @@ export const sidebar = [
     "items": [
       {
         "text": "AdaptiveLaguerreFilter",
-        "link": "/Indicator-AdaptiveLaguerreFilter"
+        "link": "/Indicators/Indicator-AdaptiveLaguerreFilter"
       },
       {
         "text": "Alligator",
-        "link": "/Indicator-Alligator"
+        "link": "/Indicators/Indicator-Alligator"
       },
       {
         "text": "Alma",
-        "link": "/Indicator-Alma"
+        "link": "/Indicators/Indicator-Alma"
       },
       {
         "text": "Dema",
-        "link": "/Indicator-Dema"
+        "link": "/Indicators/Indicator-Dema"
       },
       {
         "text": "Ehma",
-        "link": "/Indicator-Ehma"
+        "link": "/Indicators/Indicator-Ehma"
       },
       {
         "text": "Ema",
-        "link": "/Indicator-Ema"
+        "link": "/Indicators/Indicator-Ema"
       },
       {
         "text": "Evwma",
-        "link": "/Indicator-Evwma"
+        "link": "/Indicators/Indicator-Evwma"
       },
       {
         "text": "Frama",
-        "link": "/Indicator-Frama"
+        "link": "/Indicators/Indicator-Frama"
       },
       {
         "text": "GeneralizedDema",
-        "link": "/Indicator-GeneralizedDema"
+        "link": "/Indicators/Indicator-GeneralizedDema"
       },
       {
         "text": "GeometricMa",
-        "link": "/Indicator-GeometricMa"
+        "link": "/Indicators/Indicator-GeometricMa"
       },
       {
         "text": "Hma",
-        "link": "/Indicator-Hma"
+        "link": "/Indicators/Indicator-Hma"
       },
       {
         "text": "HoltWinters",
-        "link": "/Indicator-HoltWinters"
+        "link": "/Indicators/Indicator-HoltWinters"
       },
       {
         "text": "Jma",
-        "link": "/Indicator-Jma"
+        "link": "/Indicators/Indicator-Jma"
       },
       {
         "text": "Kama",
-        "link": "/Indicator-Kama"
+        "link": "/Indicators/Indicator-Kama"
       },
       {
         "text": "McGinleyDynamic",
-        "link": "/Indicator-McGinleyDynamic"
+        "link": "/Indicators/Indicator-McGinleyDynamic"
       },
       {
         "text": "MedianMa",
-        "link": "/Indicator-MedianMa"
+        "link": "/Indicators/Indicator-MedianMa"
       },
       {
         "text": "SineWeightedMa",
-        "link": "/Indicator-SineWeightedMa"
+        "link": "/Indicators/Indicator-SineWeightedMa"
       },
       {
         "text": "Sma",
-        "link": "/Indicator-Sma"
+        "link": "/Indicators/Indicator-Sma"
       },
       {
         "text": "Smma",
-        "link": "/Indicator-Smma"
+        "link": "/Indicators/Indicator-Smma"
       },
       {
         "text": "T3",
-        "link": "/Indicator-T3"
+        "link": "/Indicators/Indicator-T3"
       },
       {
         "text": "Tema",
-        "link": "/Indicator-Tema"
+        "link": "/Indicators/Indicator-Tema"
       },
       {
         "text": "Trima",
-        "link": "/Indicator-Trima"
+        "link": "/Indicators/Indicator-Trima"
       },
       {
         "text": "Vidya",
-        "link": "/Indicator-Vidya"
+        "link": "/Indicators/Indicator-Vidya"
       },
       {
         "text": "Vwma",
-        "link": "/Indicator-Vwma"
+        "link": "/Indicators/Indicator-Vwma"
       },
       {
         "text": "Wma",
-        "link": "/Indicator-Wma"
+        "link": "/Indicators/Indicator-Wma"
       },
       {
         "text": "Zlema",
-        "link": "/Indicator-Zlema"
+        "link": "/Indicators/Indicator-Zlema"
       }
     ]
   },
@@ -183,139 +183,139 @@ export const sidebar = [
     "items": [
       {
         "text": "AnchoredRsi",
-        "link": "/Indicator-AnchoredRsi"
+        "link": "/Indicators/Indicator-AnchoredRsi"
       },
       {
         "text": "AwesomeOscillator",
-        "link": "/Indicator-AwesomeOscillator"
+        "link": "/Indicators/Indicator-AwesomeOscillator"
       },
       {
         "text": "Cci",
-        "link": "/Indicator-Cci"
+        "link": "/Indicators/Indicator-Cci"
       },
       {
         "text": "Cmo",
-        "link": "/Indicator-Cmo"
+        "link": "/Indicators/Indicator-Cmo"
       },
       {
         "text": "ConnorsRsi",
-        "link": "/Indicator-ConnorsRsi"
+        "link": "/Indicators/Indicator-ConnorsRsi"
       },
       {
         "text": "DerivativeOscillator",
-        "link": "/Indicator-DerivativeOscillator"
+        "link": "/Indicators/Indicator-DerivativeOscillator"
       },
       {
         "text": "DisparityIndex",
-        "link": "/Indicator-DisparityIndex"
+        "link": "/Indicators/Indicator-DisparityIndex"
       },
       {
         "text": "DynamicMomentumIndex",
-        "link": "/Indicator-DynamicMomentumIndex"
+        "link": "/Indicators/Indicator-DynamicMomentumIndex"
       },
       {
         "text": "ElderRay",
-        "link": "/Indicator-ElderRay"
+        "link": "/Indicators/Indicator-ElderRay"
       },
       {
         "text": "FisherRsi",
-        "link": "/Indicator-FisherRsi"
+        "link": "/Indicators/Indicator-FisherRsi"
       },
       {
         "text": "Inertia",
-        "link": "/Indicator-Inertia"
+        "link": "/Indicators/Indicator-Inertia"
       },
       {
         "text": "IntradayMomentumIndex",
-        "link": "/Indicator-IntradayMomentumIndex"
+        "link": "/Indicators/Indicator-IntradayMomentumIndex"
       },
       {
         "text": "Kst",
-        "link": "/Indicator-Kst"
+        "link": "/Indicators/Indicator-Kst"
       },
       {
         "text": "LaguerreRsi",
-        "link": "/Indicator-LaguerreRsi"
+        "link": "/Indicators/Indicator-LaguerreRsi"
       },
       {
         "text": "Mfi",
-        "link": "/Indicator-Mfi"
+        "link": "/Indicators/Indicator-Mfi"
       },
       {
         "text": "Mom",
-        "link": "/Indicator-Mom"
+        "link": "/Indicators/Indicator-Mom"
       },
       {
         "text": "Pgo",
-        "link": "/Indicator-Pgo"
+        "link": "/Indicators/Indicator-Pgo"
       },
       {
         "text": "Pmo",
-        "link": "/Indicator-Pmo"
+        "link": "/Indicators/Indicator-Pmo"
       },
       {
         "text": "Qqe",
-        "link": "/Indicator-Qqe"
+        "link": "/Indicators/Indicator-Qqe"
       },
       {
         "text": "Rmi",
-        "link": "/Indicator-Rmi"
+        "link": "/Indicators/Indicator-Rmi"
       },
       {
         "text": "Roc",
-        "link": "/Indicator-Roc"
+        "link": "/Indicators/Indicator-Roc"
       },
       {
         "text": "Rocp",
-        "link": "/Indicator-Rocp"
+        "link": "/Indicators/Indicator-Rocp"
       },
       {
         "text": "Rocr",
-        "link": "/Indicator-Rocr"
+        "link": "/Indicators/Indicator-Rocr"
       },
       {
         "text": "Rocr100",
-        "link": "/Indicator-Rocr100"
+        "link": "/Indicators/Indicator-Rocr100"
       },
       {
         "text": "Rsi",
-        "link": "/Indicator-Rsi"
+        "link": "/Indicators/Indicator-Rsi"
       },
       {
         "text": "Rsx",
-        "link": "/Indicator-Rsx"
+        "link": "/Indicators/Indicator-Rsx"
       },
       {
         "text": "Rvi",
-        "link": "/Indicator-Rvi"
+        "link": "/Indicators/Indicator-Rvi"
       },
       {
         "text": "Smi",
-        "link": "/Indicator-Smi"
+        "link": "/Indicators/Indicator-Smi"
       },
       {
         "text": "Stochastic",
-        "link": "/Indicator-Stochastic"
+        "link": "/Indicators/Indicator-Stochastic"
       },
       {
         "text": "StochasticCci",
-        "link": "/Indicator-StochasticCci"
+        "link": "/Indicators/Indicator-StochasticCci"
       },
       {
         "text": "StochRsi",
-        "link": "/Indicator-StochRsi"
+        "link": "/Indicators/Indicator-StochRsi"
       },
       {
         "text": "Tsi",
-        "link": "/Indicator-Tsi"
+        "link": "/Indicators/Indicator-Tsi"
       },
       {
         "text": "UltimateOscillator",
-        "link": "/Indicator-UltimateOscillator"
+        "link": "/Indicators/Indicator-UltimateOscillator"
       },
       {
         "text": "WilliamsR",
-        "link": "/Indicator-WilliamsR"
+        "link": "/Indicators/Indicator-WilliamsR"
       }
     ]
   },
@@ -325,115 +325,115 @@ export const sidebar = [
     "items": [
       {
         "text": "Adx",
-        "link": "/Indicator-Adx"
+        "link": "/Indicators/Indicator-Adx"
       },
       {
         "text": "Adxr",
-        "link": "/Indicator-Adxr"
+        "link": "/Indicators/Indicator-Adxr"
       },
       {
         "text": "Aroon",
-        "link": "/Indicator-Aroon"
+        "link": "/Indicators/Indicator-Aroon"
       },
       {
         "text": "AroonOscillator",
-        "link": "/Indicator-AroonOscillator"
+        "link": "/Indicators/Indicator-AroonOscillator"
       },
       {
         "text": "ChoppinessIndex",
-        "link": "/Indicator-ChoppinessIndex"
+        "link": "/Indicators/Indicator-ChoppinessIndex"
       },
       {
         "text": "Dx",
-        "link": "/Indicator-Dx"
+        "link": "/Indicators/Indicator-Dx"
       },
       {
         "text": "GatorOscillator",
-        "link": "/Indicator-GatorOscillator"
+        "link": "/Indicators/Indicator-GatorOscillator"
       },
       {
         "text": "KasePermissionStochastic",
-        "link": "/Indicator-KasePermissionStochastic"
+        "link": "/Indicators/Indicator-KasePermissionStochastic"
       },
       {
         "text": "MacdExt",
-        "link": "/Indicator-MacdExt"
+        "link": "/Indicators/Indicator-MacdExt"
       },
       {
         "text": "MacdFix",
-        "link": "/Indicator-MacdFix"
+        "link": "/Indicators/Indicator-MacdFix"
       },
       {
         "text": "MacdIndicator",
-        "link": "/Indicator-MacdIndicator"
+        "link": "/Indicators/Indicator-MacdIndicator"
       },
       {
         "text": "MassIndex",
-        "link": "/Indicator-MassIndex"
+        "link": "/Indicators/Indicator-MassIndex"
       },
       {
         "text": "MinusDi",
-        "link": "/Indicator-MinusDi"
+        "link": "/Indicators/Indicator-MinusDi"
       },
       {
         "text": "MinusDm",
-        "link": "/Indicator-MinusDm"
+        "link": "/Indicators/Indicator-MinusDm"
       },
       {
         "text": "PlusDi",
-        "link": "/Indicator-PlusDi"
+        "link": "/Indicators/Indicator-PlusDi"
       },
       {
         "text": "PlusDm",
-        "link": "/Indicator-PlusDm"
+        "link": "/Indicators/Indicator-PlusDm"
       },
       {
         "text": "PolarizedFractalEfficiency",
-        "link": "/Indicator-PolarizedFractalEfficiency"
+        "link": "/Indicators/Indicator-PolarizedFractalEfficiency"
       },
       {
         "text": "Qstick",
-        "link": "/Indicator-Qstick"
+        "link": "/Indicators/Indicator-Qstick"
       },
       {
         "text": "Rwi",
-        "link": "/Indicator-Rwi"
+        "link": "/Indicators/Indicator-Rwi"
       },
       {
         "text": "Tii",
-        "link": "/Indicator-Tii"
+        "link": "/Indicators/Indicator-Tii"
       },
       {
         "text": "TrendStrengthIndex",
-        "link": "/Indicator-TrendStrengthIndex"
+        "link": "/Indicators/Indicator-TrendStrengthIndex"
       },
       {
         "text": "Trix",
-        "link": "/Indicator-Trix"
+        "link": "/Indicators/Indicator-Trix"
       },
       {
         "text": "TtmTrend",
-        "link": "/Indicator-TtmTrend"
+        "link": "/Indicators/Indicator-TtmTrend"
       },
       {
         "text": "VerticalHorizontalFilter",
-        "link": "/Indicator-VerticalHorizontalFilter"
+        "link": "/Indicators/Indicator-VerticalHorizontalFilter"
       },
       {
         "text": "Vortex",
-        "link": "/Indicator-Vortex"
+        "link": "/Indicators/Indicator-Vortex"
       },
       {
         "text": "WavePm",
-        "link": "/Indicator-WavePm"
+        "link": "/Indicators/Indicator-WavePm"
       },
       {
         "text": "WaveTrend",
-        "link": "/Indicator-WaveTrend"
+        "link": "/Indicators/Indicator-WaveTrend"
       },
       {
         "text": "TrendLabel",
-        "link": "/Indicator-TrendLabel"
+        "link": "/Indicators/Indicator-TrendLabel"
       }
     ]
   },
@@ -443,59 +443,59 @@ export const sidebar = [
     "items": [
       {
         "text": "AcceleratorOscillator",
-        "link": "/Indicator-AcceleratorOscillator"
+        "link": "/Indicators/Indicator-AcceleratorOscillator"
       },
       {
         "text": "Apo",
-        "link": "/Indicator-Apo"
+        "link": "/Indicators/Indicator-Apo"
       },
       {
         "text": "AwesomeOscillatorHistogram",
-        "link": "/Indicator-AwesomeOscillatorHistogram"
+        "link": "/Indicators/Indicator-AwesomeOscillatorHistogram"
       },
       {
         "text": "BalanceOfPower",
-        "link": "/Indicator-BalanceOfPower"
+        "link": "/Indicators/Indicator-BalanceOfPower"
       },
       {
         "text": "Cfo",
-        "link": "/Indicator-Cfo"
+        "link": "/Indicators/Indicator-Cfo"
       },
       {
         "text": "Coppock",
-        "link": "/Indicator-Coppock"
+        "link": "/Indicators/Indicator-Coppock"
       },
       {
         "text": "Dpo",
-        "link": "/Indicator-Dpo"
+        "link": "/Indicators/Indicator-Dpo"
       },
       {
         "text": "ElderImpulse",
-        "link": "/Indicator-ElderImpulse"
+        "link": "/Indicators/Indicator-ElderImpulse"
       },
       {
         "text": "MacdHistogram",
-        "link": "/Indicator-MacdHistogram"
+        "link": "/Indicators/Indicator-MacdHistogram"
       },
       {
         "text": "Ppo",
-        "link": "/Indicator-Ppo"
+        "link": "/Indicators/Indicator-Ppo"
       },
       {
         "text": "PpoHistogram",
-        "link": "/Indicator-PpoHistogram"
+        "link": "/Indicators/Indicator-PpoHistogram"
       },
       {
         "text": "Stc",
-        "link": "/Indicator-Stc"
+        "link": "/Indicators/Indicator-Stc"
       },
       {
         "text": "TsfOscillator",
-        "link": "/Indicator-TsfOscillator"
+        "link": "/Indicators/Indicator-TsfOscillator"
       },
       {
         "text": "ZeroLagMacd",
-        "link": "/Indicator-ZeroLagMacd"
+        "link": "/Indicators/Indicator-ZeroLagMacd"
       }
     ]
   },
@@ -505,83 +505,83 @@ export const sidebar = [
     "items": [
       {
         "text": "Atr",
-        "link": "/Indicator-Atr"
+        "link": "/Indicators/Indicator-Atr"
       },
       {
         "text": "BollingerBands",
-        "link": "/Indicator-BollingerBands"
+        "link": "/Indicators/Indicator-BollingerBands"
       },
       {
         "text": "BollingerBandwidth",
-        "link": "/Indicator-BollingerBandwidth"
+        "link": "/Indicators/Indicator-BollingerBandwidth"
       },
       {
         "text": "ChaikinVolatility",
-        "link": "/Indicator-ChaikinVolatility"
+        "link": "/Indicators/Indicator-ChaikinVolatility"
       },
       {
         "text": "DetrendedStdDev",
-        "link": "/Indicator-DetrendedStdDev"
+        "link": "/Indicators/Indicator-DetrendedStdDev"
       },
       {
         "text": "Donchian",
-        "link": "/Indicator-Donchian"
+        "link": "/Indicators/Indicator-Donchian"
       },
       {
         "text": "GarmanKlassVolatility",
-        "link": "/Indicator-GarmanKlassVolatility"
+        "link": "/Indicators/Indicator-GarmanKlassVolatility"
       },
       {
         "text": "HistoricalVolatility",
-        "link": "/Indicator-HistoricalVolatility"
+        "link": "/Indicators/Indicator-HistoricalVolatility"
       },
       {
         "text": "Keltner",
-        "link": "/Indicator-Keltner"
+        "link": "/Indicators/Indicator-Keltner"
       },
       {
         "text": "Natr",
-        "link": "/Indicator-Natr"
+        "link": "/Indicators/Indicator-Natr"
       },
       {
         "text": "ParkinsonVolatility",
-        "link": "/Indicator-ParkinsonVolatility"
+        "link": "/Indicators/Indicator-ParkinsonVolatility"
       },
       {
         "text": "PercentB",
-        "link": "/Indicator-PercentB"
+        "link": "/Indicators/Indicator-PercentB"
       },
       {
         "text": "RogersSatchellVolatility",
-        "link": "/Indicator-RogersSatchellVolatility"
+        "link": "/Indicators/Indicator-RogersSatchellVolatility"
       },
       {
         "text": "RviVolatility",
-        "link": "/Indicator-RviVolatility"
+        "link": "/Indicators/Indicator-RviVolatility"
       },
       {
         "text": "StdDev",
-        "link": "/Indicator-StdDev"
+        "link": "/Indicators/Indicator-StdDev"
       },
       {
         "text": "TrueRange",
-        "link": "/Indicator-TrueRange"
+        "link": "/Indicators/Indicator-TrueRange"
       },
       {
         "text": "UlcerIndex",
-        "link": "/Indicator-UlcerIndex"
+        "link": "/Indicators/Indicator-UlcerIndex"
       },
       {
         "text": "YangZhangVolatility",
-        "link": "/Indicator-YangZhangVolatility"
+        "link": "/Indicators/Indicator-YangZhangVolatility"
       },
       {
         "text": "JumpIndicator",
-        "link": "/Indicator-JumpIndicator"
+        "link": "/Indicators/Indicator-JumpIndicator"
       },
       {
         "text": "RegimeLabel",
-        "link": "/Indicator-RegimeLabel"
+        "link": "/Indicators/Indicator-RegimeLabel"
       }
     ]
   },
@@ -591,47 +591,47 @@ export const sidebar = [
     "items": [
       {
         "text": "AccelerationBands",
-        "link": "/Indicator-AccelerationBands"
+        "link": "/Indicators/Indicator-AccelerationBands"
       },
       {
         "text": "AtrBands",
-        "link": "/Indicator-AtrBands"
+        "link": "/Indicators/Indicator-AtrBands"
       },
       {
         "text": "DoubleBollinger",
-        "link": "/Indicator-DoubleBollinger"
+        "link": "/Indicators/Indicator-DoubleBollinger"
       },
       {
         "text": "FractalChaosBands",
-        "link": "/Indicator-FractalChaosBands"
+        "link": "/Indicators/Indicator-FractalChaosBands"
       },
       {
         "text": "HurstChannel",
-        "link": "/Indicator-HurstChannel"
+        "link": "/Indicators/Indicator-HurstChannel"
       },
       {
         "text": "LinRegChannel",
-        "link": "/Indicator-LinRegChannel"
+        "link": "/Indicators/Indicator-LinRegChannel"
       },
       {
         "text": "MaEnvelope",
-        "link": "/Indicator-MaEnvelope"
+        "link": "/Indicators/Indicator-MaEnvelope"
       },
       {
         "text": "StandardErrorBands",
-        "link": "/Indicator-StandardErrorBands"
+        "link": "/Indicators/Indicator-StandardErrorBands"
       },
       {
         "text": "StarcBands",
-        "link": "/Indicator-StarcBands"
+        "link": "/Indicators/Indicator-StarcBands"
       },
       {
         "text": "TtmSqueeze",
-        "link": "/Indicator-TtmSqueeze"
+        "link": "/Indicators/Indicator-TtmSqueeze"
       },
       {
         "text": "VwapStdDevBands",
-        "link": "/Indicator-VwapStdDevBands"
+        "link": "/Indicators/Indicator-VwapStdDevBands"
       }
     ]
   },
@@ -641,55 +641,55 @@ export const sidebar = [
     "items": [
       {
         "text": "AtrTrailingStop",
-        "link": "/Indicator-AtrTrailingStop"
+        "link": "/Indicators/Indicator-AtrTrailingStop"
       },
       {
         "text": "ChandeKrollStop",
-        "link": "/Indicator-ChandeKrollStop"
+        "link": "/Indicators/Indicator-ChandeKrollStop"
       },
       {
         "text": "ChandelierExit",
-        "link": "/Indicator-ChandelierExit"
+        "link": "/Indicators/Indicator-ChandelierExit"
       },
       {
         "text": "DonchianStop",
-        "link": "/Indicator-DonchianStop"
+        "link": "/Indicators/Indicator-DonchianStop"
       },
       {
         "text": "HiLoActivator",
-        "link": "/Indicator-HiLoActivator"
+        "link": "/Indicators/Indicator-HiLoActivator"
       },
       {
         "text": "PercentageTrailingStop",
-        "link": "/Indicator-PercentageTrailingStop"
+        "link": "/Indicators/Indicator-PercentageTrailingStop"
       },
       {
         "text": "Psar",
-        "link": "/Indicator-Psar"
+        "link": "/Indicators/Indicator-Psar"
       },
       {
         "text": "RenkoTrailingStop",
-        "link": "/Indicator-RenkoTrailingStop"
+        "link": "/Indicators/Indicator-RenkoTrailingStop"
       },
       {
         "text": "SarExt",
-        "link": "/Indicator-SarExt"
+        "link": "/Indicators/Indicator-SarExt"
       },
       {
         "text": "StepTrailingStop",
-        "link": "/Indicator-StepTrailingStop"
+        "link": "/Indicators/Indicator-StepTrailingStop"
       },
       {
         "text": "SuperTrend",
-        "link": "/Indicator-SuperTrend"
+        "link": "/Indicators/Indicator-SuperTrend"
       },
       {
         "text": "VoltyStop",
-        "link": "/Indicator-VoltyStop"
+        "link": "/Indicators/Indicator-VoltyStop"
       },
       {
         "text": "YoyoExit",
-        "link": "/Indicator-YoyoExit"
+        "link": "/Indicators/Indicator-YoyoExit"
       }
     ]
   },
@@ -699,79 +699,79 @@ export const sidebar = [
     "items": [
       {
         "text": "AdOscillator",
-        "link": "/Indicator-AdOscillator"
+        "link": "/Indicators/Indicator-AdOscillator"
       },
       {
         "text": "Adl",
-        "link": "/Indicator-Adl"
+        "link": "/Indicators/Indicator-Adl"
       },
       {
         "text": "AnchoredVwap",
-        "link": "/Indicator-AnchoredVwap"
+        "link": "/Indicators/Indicator-AnchoredVwap"
       },
       {
         "text": "ChaikinMoneyFlow",
-        "link": "/Indicator-ChaikinMoneyFlow"
+        "link": "/Indicators/Indicator-ChaikinMoneyFlow"
       },
       {
         "text": "ChaikinOscillator",
-        "link": "/Indicator-ChaikinOscillator"
+        "link": "/Indicators/Indicator-ChaikinOscillator"
       },
       {
         "text": "DemandIndex",
-        "link": "/Indicator-DemandIndex"
+        "link": "/Indicators/Indicator-DemandIndex"
       },
       {
         "text": "EaseOfMovement",
-        "link": "/Indicator-EaseOfMovement"
+        "link": "/Indicators/Indicator-EaseOfMovement"
       },
       {
         "text": "ForceIndex",
-        "link": "/Indicator-ForceIndex"
+        "link": "/Indicators/Indicator-ForceIndex"
       },
       {
         "text": "Kvo",
-        "link": "/Indicator-Kvo"
+        "link": "/Indicators/Indicator-Kvo"
       },
       {
         "text": "MarketFacilitationIndex",
-        "link": "/Indicator-MarketFacilitationIndex"
+        "link": "/Indicators/Indicator-MarketFacilitationIndex"
       },
       {
         "text": "Nvi",
-        "link": "/Indicator-Nvi"
+        "link": "/Indicators/Indicator-Nvi"
       },
       {
         "text": "Obv",
-        "link": "/Indicator-Obv"
+        "link": "/Indicators/Indicator-Obv"
       },
       {
         "text": "Pvi",
-        "link": "/Indicator-Pvi"
+        "link": "/Indicators/Indicator-Pvi"
       },
       {
         "text": "RollingVwap",
-        "link": "/Indicator-RollingVwap"
+        "link": "/Indicators/Indicator-RollingVwap"
       },
       {
         "text": "Tsv",
-        "link": "/Indicator-Tsv"
+        "link": "/Indicators/Indicator-Tsv"
       },
       {
         "text": "VolumeOscillator",
-        "link": "/Indicator-VolumeOscillator"
+        "link": "/Indicators/Indicator-VolumeOscillator"
       },
       {
         "text": "VolumePriceTrend",
-        "link": "/Indicator-VolumePriceTrend"
+        "link": "/Indicators/Indicator-VolumePriceTrend"
       },
       {
         "text": "Vwap",
-        "link": "/Indicator-Vwap"
+        "link": "/Indicators/Indicator-Vwap"
       },
       {
         "text": "Vzo",
-        "link": "/Indicator-Vzo"
+        "link": "/Indicators/Indicator-Vzo"
       }
     ]
   },
@@ -781,199 +781,199 @@ export const sidebar = [
     "items": [
       {
         "text": "Autocorrelation",
-        "link": "/Indicator-Autocorrelation"
+        "link": "/Indicators/Indicator-Autocorrelation"
       },
       {
         "text": "AvgPrice",
-        "link": "/Indicator-AvgPrice"
+        "link": "/Indicators/Indicator-AvgPrice"
       },
       {
         "text": "Beta",
-        "link": "/Indicator-Beta"
+        "link": "/Indicators/Indicator-Beta"
       },
       {
         "text": "CoefficientOfVariation",
-        "link": "/Indicator-CoefficientOfVariation"
+        "link": "/Indicators/Indicator-CoefficientOfVariation"
       },
       {
         "text": "Cointegration",
-        "link": "/Indicator-Cointegration"
+        "link": "/Indicators/Indicator-Cointegration"
       },
       {
         "text": "HurstExponent",
-        "link": "/Indicator-HurstExponent"
+        "link": "/Indicators/Indicator-HurstExponent"
       },
       {
         "text": "Kurtosis",
-        "link": "/Indicator-Kurtosis"
+        "link": "/Indicators/Indicator-Kurtosis"
       },
       {
         "text": "LeadLagCrossCorrelation",
-        "link": "/Indicator-LeadLagCrossCorrelation"
+        "link": "/Indicators/Indicator-LeadLagCrossCorrelation"
       },
       {
         "text": "LinearRegression",
-        "link": "/Indicator-LinearRegression"
+        "link": "/Indicators/Indicator-LinearRegression"
       },
       {
         "text": "LinRegAngle",
-        "link": "/Indicator-LinRegAngle"
+        "link": "/Indicators/Indicator-LinRegAngle"
       },
       {
         "text": "LinRegIntercept",
-        "link": "/Indicator-LinRegIntercept"
+        "link": "/Indicators/Indicator-LinRegIntercept"
       },
       {
         "text": "LinRegSlope",
-        "link": "/Indicator-LinRegSlope"
+        "link": "/Indicators/Indicator-LinRegSlope"
       },
       {
         "text": "MedianAbsoluteDeviation",
-        "link": "/Indicator-MedianAbsoluteDeviation"
+        "link": "/Indicators/Indicator-MedianAbsoluteDeviation"
       },
       {
         "text": "MedianPrice",
-        "link": "/Indicator-MedianPrice"
+        "link": "/Indicators/Indicator-MedianPrice"
       },
       {
         "text": "MidPoint",
-        "link": "/Indicator-MidPoint"
+        "link": "/Indicators/Indicator-MidPoint"
       },
       {
         "text": "MidPrice",
-        "link": "/Indicator-MidPrice"
+        "link": "/Indicators/Indicator-MidPrice"
       },
       {
         "text": "PairSpreadZScore",
-        "link": "/Indicator-PairSpreadZScore"
+        "link": "/Indicators/Indicator-PairSpreadZScore"
       },
       {
         "text": "PairwiseBeta",
-        "link": "/Indicator-PairwiseBeta"
+        "link": "/Indicators/Indicator-PairwiseBeta"
       },
       {
         "text": "PearsonCorrelation",
-        "link": "/Indicator-PearsonCorrelation"
+        "link": "/Indicators/Indicator-PearsonCorrelation"
       },
       {
         "text": "RelativeStrengthAB",
-        "link": "/Indicator-RelativeStrengthAB"
+        "link": "/Indicators/Indicator-RelativeStrengthAB"
       },
       {
         "text": "RSquared",
-        "link": "/Indicator-RSquared"
+        "link": "/Indicators/Indicator-RSquared"
       },
       {
         "text": "Skewness",
-        "link": "/Indicator-Skewness"
+        "link": "/Indicators/Indicator-Skewness"
       },
       {
         "text": "SpearmanCorrelation",
-        "link": "/Indicator-SpearmanCorrelation"
+        "link": "/Indicators/Indicator-SpearmanCorrelation"
       },
       {
         "text": "StandardError",
-        "link": "/Indicator-StandardError"
+        "link": "/Indicators/Indicator-StandardError"
       },
       {
         "text": "Tsf",
-        "link": "/Indicator-Tsf"
+        "link": "/Indicators/Indicator-Tsf"
       },
       {
         "text": "TypicalPrice",
-        "link": "/Indicator-TypicalPrice"
+        "link": "/Indicators/Indicator-TypicalPrice"
       },
       {
         "text": "Variance",
-        "link": "/Indicator-Variance"
+        "link": "/Indicators/Indicator-Variance"
       },
       {
         "text": "WeightedClose",
-        "link": "/Indicator-WeightedClose"
+        "link": "/Indicators/Indicator-WeightedClose"
       },
       {
         "text": "ZScore",
-        "link": "/Indicator-ZScore"
+        "link": "/Indicators/Indicator-ZScore"
       },
       {
         "text": "BodySizePct",
-        "link": "/Indicator-BodySizePct"
+        "link": "/Indicators/Indicator-BodySizePct"
       },
       {
         "text": "CloseVsOpen",
-        "link": "/Indicator-CloseVsOpen"
+        "link": "/Indicators/Indicator-CloseVsOpen"
       },
       {
         "text": "HighLowRange",
-        "link": "/Indicator-HighLowRange"
+        "link": "/Indicators/Indicator-HighLowRange"
       },
       {
         "text": "LogReturn",
-        "link": "/Indicator-LogReturn"
+        "link": "/Indicators/Indicator-LogReturn"
       },
       {
         "text": "RealizedVolatility",
-        "link": "/Indicator-RealizedVolatility"
+        "link": "/Indicators/Indicator-RealizedVolatility"
       },
       {
         "text": "RollingIqr",
-        "link": "/Indicator-RollingIqr"
+        "link": "/Indicators/Indicator-RollingIqr"
       },
       {
         "text": "RollingPercentileRank",
-        "link": "/Indicator-RollingPercentileRank"
+        "link": "/Indicators/Indicator-RollingPercentileRank"
       },
       {
         "text": "RollingQuantile",
-        "link": "/Indicator-RollingQuantile"
+        "link": "/Indicators/Indicator-RollingQuantile"
       },
       {
         "text": "SpreadAr1Coefficient",
-        "link": "/Indicator-SpreadAr1Coefficient"
+        "link": "/Indicators/Indicator-SpreadAr1Coefficient"
       },
       {
         "text": "WickRatio",
-        "link": "/Indicator-WickRatio"
+        "link": "/Indicators/Indicator-WickRatio"
       },
       {
         "text": "BetaNeutralSpread",
-        "link": "/Indicator-BetaNeutralSpread"
+        "link": "/Indicators/Indicator-BetaNeutralSpread"
       },
       {
         "text": "DistanceSsd",
-        "link": "/Indicator-DistanceSsd"
+        "link": "/Indicators/Indicator-DistanceSsd"
       },
       {
         "text": "GrangerCausality",
-        "link": "/Indicator-GrangerCausality"
+        "link": "/Indicators/Indicator-GrangerCausality"
       },
       {
         "text": "KalmanHedgeRatio",
-        "link": "/Indicator-KalmanHedgeRatio"
+        "link": "/Indicators/Indicator-KalmanHedgeRatio"
       },
       {
         "text": "OuHalfLife",
-        "link": "/Indicator-OuHalfLife"
+        "link": "/Indicators/Indicator-OuHalfLife"
       },
       {
         "text": "RollingCorrelation",
-        "link": "/Indicator-RollingCorrelation"
+        "link": "/Indicators/Indicator-RollingCorrelation"
       },
       {
         "text": "RollingCovariance",
-        "link": "/Indicator-RollingCovariance"
+        "link": "/Indicators/Indicator-RollingCovariance"
       },
       {
         "text": "SpreadBollingerBands",
-        "link": "/Indicator-SpreadBollingerBands"
+        "link": "/Indicators/Indicator-SpreadBollingerBands"
       },
       {
         "text": "SpreadHurst",
-        "link": "/Indicator-SpreadHurst"
+        "link": "/Indicators/Indicator-SpreadHurst"
       },
       {
         "text": "VarianceRatio",
-        "link": "/Indicator-VarianceRatio"
+        "link": "/Indicators/Indicator-VarianceRatio"
       }
     ]
   },
@@ -983,23 +983,23 @@ export const sidebar = [
     "items": [
       {
         "text": "InitialBalance",
-        "link": "/Indicator-InitialBalance"
+        "link": "/Indicators/Indicator-InitialBalance"
       },
       {
         "text": "OpeningRange",
-        "link": "/Indicator-OpeningRange"
+        "link": "/Indicators/Indicator-OpeningRange"
       },
       {
         "text": "TpoProfile",
-        "link": "/Indicator-TpoProfile"
+        "link": "/Indicators/Indicator-TpoProfile"
       },
       {
         "text": "ValueArea",
-        "link": "/Indicator-ValueArea"
+        "link": "/Indicators/Indicator-ValueArea"
       },
       {
         "text": "VolumeProfile",
-        "link": "/Indicator-VolumeProfile"
+        "link": "/Indicators/Indicator-VolumeProfile"
       }
     ]
   },
@@ -1009,11 +1009,11 @@ export const sidebar = [
     "items": [
       {
         "text": "HeikinAshi",
-        "link": "/Indicator-HeikinAshi"
+        "link": "/Indicators/Indicator-HeikinAshi"
       },
       {
         "text": "Ichimoku",
-        "link": "/Indicator-Ichimoku"
+        "link": "/Indicators/Indicator-Ichimoku"
       }
     ]
   },
@@ -1023,31 +1023,31 @@ export const sidebar = [
     "items": [
       {
         "text": "Camarilla",
-        "link": "/Indicator-Camarilla"
+        "link": "/Indicators/Indicator-Camarilla"
       },
       {
         "text": "ClassicPivots",
-        "link": "/Indicator-ClassicPivots"
+        "link": "/Indicators/Indicator-ClassicPivots"
       },
       {
         "text": "DemarkPivots",
-        "link": "/Indicator-DemarkPivots"
+        "link": "/Indicators/Indicator-DemarkPivots"
       },
       {
         "text": "FibonacciPivots",
-        "link": "/Indicator-FibonacciPivots"
+        "link": "/Indicators/Indicator-FibonacciPivots"
       },
       {
         "text": "WilliamsFractals",
-        "link": "/Indicator-WilliamsFractals"
+        "link": "/Indicators/Indicator-WilliamsFractals"
       },
       {
         "text": "WoodiePivots",
-        "link": "/Indicator-WoodiePivots"
+        "link": "/Indicators/Indicator-WoodiePivots"
       },
       {
         "text": "ZigZag",
-        "link": "/Indicator-ZigZag"
+        "link": "/Indicators/Indicator-ZigZag"
       }
     ]
   },
@@ -1057,51 +1057,51 @@ export const sidebar = [
     "items": [
       {
         "text": "TdCombo",
-        "link": "/Indicator-TdCombo"
+        "link": "/Indicators/Indicator-TdCombo"
       },
       {
         "text": "TdCountdown",
-        "link": "/Indicator-TdCountdown"
+        "link": "/Indicators/Indicator-TdCountdown"
       },
       {
         "text": "TdDeMarker",
-        "link": "/Indicator-TdDeMarker"
+        "link": "/Indicators/Indicator-TdDeMarker"
       },
       {
         "text": "TdDifferential",
-        "link": "/Indicator-TdDifferential"
+        "link": "/Indicators/Indicator-TdDifferential"
       },
       {
         "text": "TdLines",
-        "link": "/Indicator-TdLines"
+        "link": "/Indicators/Indicator-TdLines"
       },
       {
         "text": "TdOpen",
-        "link": "/Indicator-TdOpen"
+        "link": "/Indicators/Indicator-TdOpen"
       },
       {
         "text": "TdPressure",
-        "link": "/Indicator-TdPressure"
+        "link": "/Indicators/Indicator-TdPressure"
       },
       {
         "text": "TdRangeProjection",
-        "link": "/Indicator-TdRangeProjection"
+        "link": "/Indicators/Indicator-TdRangeProjection"
       },
       {
         "text": "TdRei",
-        "link": "/Indicator-TdRei"
+        "link": "/Indicators/Indicator-TdRei"
       },
       {
         "text": "TdRiskLevel",
-        "link": "/Indicator-TdRiskLevel"
+        "link": "/Indicators/Indicator-TdRiskLevel"
       },
       {
         "text": "TdSequential",
-        "link": "/Indicator-TdSequential"
+        "link": "/Indicators/Indicator-TdSequential"
       },
       {
         "text": "TdSetup",
-        "link": "/Indicator-TdSetup"
+        "link": "/Indicators/Indicator-TdSetup"
       }
     ]
   },
@@ -1111,243 +1111,243 @@ export const sidebar = [
     "items": [
       {
         "text": "AbandonedBaby",
-        "link": "/Indicator-AbandonedBaby"
+        "link": "/Indicators/Indicator-AbandonedBaby"
       },
       {
         "text": "AdvanceBlock",
-        "link": "/Indicator-AdvanceBlock"
+        "link": "/Indicators/Indicator-AdvanceBlock"
       },
       {
         "text": "BeltHold",
-        "link": "/Indicator-BeltHold"
+        "link": "/Indicators/Indicator-BeltHold"
       },
       {
         "text": "Breakaway",
-        "link": "/Indicator-Breakaway"
+        "link": "/Indicators/Indicator-Breakaway"
       },
       {
         "text": "ClosingMarubozu",
-        "link": "/Indicator-ClosingMarubozu"
+        "link": "/Indicators/Indicator-ClosingMarubozu"
       },
       {
         "text": "ConcealingBabySwallow",
-        "link": "/Indicator-ConcealingBabySwallow"
+        "link": "/Indicators/Indicator-ConcealingBabySwallow"
       },
       {
         "text": "Counterattack",
-        "link": "/Indicator-Counterattack"
+        "link": "/Indicators/Indicator-Counterattack"
       },
       {
         "text": "Doji",
-        "link": "/Indicator-Doji"
+        "link": "/Indicators/Indicator-Doji"
       },
       {
         "text": "DojiStar",
-        "link": "/Indicator-DojiStar"
+        "link": "/Indicators/Indicator-DojiStar"
       },
       {
         "text": "DownsideGapThreeMethods",
-        "link": "/Indicator-DownsideGapThreeMethods"
+        "link": "/Indicators/Indicator-DownsideGapThreeMethods"
       },
       {
         "text": "DragonflyDoji",
-        "link": "/Indicator-DragonflyDoji"
+        "link": "/Indicators/Indicator-DragonflyDoji"
       },
       {
         "text": "Engulfing",
-        "link": "/Indicator-Engulfing"
+        "link": "/Indicators/Indicator-Engulfing"
       },
       {
         "text": "EveningDojiStar",
-        "link": "/Indicator-EveningDojiStar"
+        "link": "/Indicators/Indicator-EveningDojiStar"
       },
       {
         "text": "FallingThreeMethods",
-        "link": "/Indicator-FallingThreeMethods"
+        "link": "/Indicators/Indicator-FallingThreeMethods"
       },
       {
         "text": "GapSideBySideWhite",
-        "link": "/Indicator-GapSideBySideWhite"
+        "link": "/Indicators/Indicator-GapSideBySideWhite"
       },
       {
         "text": "GravestoneDoji",
-        "link": "/Indicator-GravestoneDoji"
+        "link": "/Indicators/Indicator-GravestoneDoji"
       },
       {
         "text": "Hammer",
-        "link": "/Indicator-Hammer"
+        "link": "/Indicators/Indicator-Hammer"
       },
       {
         "text": "HangingMan",
-        "link": "/Indicator-HangingMan"
+        "link": "/Indicators/Indicator-HangingMan"
       },
       {
         "text": "Harami",
-        "link": "/Indicator-Harami"
+        "link": "/Indicators/Indicator-Harami"
       },
       {
         "text": "HighWave",
-        "link": "/Indicator-HighWave"
+        "link": "/Indicators/Indicator-HighWave"
       },
       {
         "text": "Hikkake",
-        "link": "/Indicator-Hikkake"
+        "link": "/Indicators/Indicator-Hikkake"
       },
       {
         "text": "HikkakeModified",
-        "link": "/Indicator-HikkakeModified"
+        "link": "/Indicators/Indicator-HikkakeModified"
       },
       {
         "text": "HomingPigeon",
-        "link": "/Indicator-HomingPigeon"
+        "link": "/Indicators/Indicator-HomingPigeon"
       },
       {
         "text": "IdenticalThreeCrows",
-        "link": "/Indicator-IdenticalThreeCrows"
+        "link": "/Indicators/Indicator-IdenticalThreeCrows"
       },
       {
         "text": "InNeck",
-        "link": "/Indicator-InNeck"
+        "link": "/Indicators/Indicator-InNeck"
       },
       {
         "text": "InvertedHammer",
-        "link": "/Indicator-InvertedHammer"
+        "link": "/Indicators/Indicator-InvertedHammer"
       },
       {
         "text": "Kicking",
-        "link": "/Indicator-Kicking"
+        "link": "/Indicators/Indicator-Kicking"
       },
       {
         "text": "KickingByLength",
-        "link": "/Indicator-KickingByLength"
+        "link": "/Indicators/Indicator-KickingByLength"
       },
       {
         "text": "LadderBottom",
-        "link": "/Indicator-LadderBottom"
+        "link": "/Indicators/Indicator-LadderBottom"
       },
       {
         "text": "LongLeggedDoji",
-        "link": "/Indicator-LongLeggedDoji"
+        "link": "/Indicators/Indicator-LongLeggedDoji"
       },
       {
         "text": "LongLine",
-        "link": "/Indicator-LongLine"
+        "link": "/Indicators/Indicator-LongLine"
       },
       {
         "text": "Marubozu",
-        "link": "/Indicator-Marubozu"
+        "link": "/Indicators/Indicator-Marubozu"
       },
       {
         "text": "MatchingLow",
-        "link": "/Indicator-MatchingLow"
+        "link": "/Indicators/Indicator-MatchingLow"
       },
       {
         "text": "MatHold",
-        "link": "/Indicator-MatHold"
+        "link": "/Indicators/Indicator-MatHold"
       },
       {
         "text": "MorningDojiStar",
-        "link": "/Indicator-MorningDojiStar"
+        "link": "/Indicators/Indicator-MorningDojiStar"
       },
       {
         "text": "MorningEveningStar",
-        "link": "/Indicator-MorningEveningStar"
+        "link": "/Indicators/Indicator-MorningEveningStar"
       },
       {
         "text": "OnNeck",
-        "link": "/Indicator-OnNeck"
+        "link": "/Indicators/Indicator-OnNeck"
       },
       {
         "text": "OpeningMarubozu",
-        "link": "/Indicator-OpeningMarubozu"
+        "link": "/Indicators/Indicator-OpeningMarubozu"
       },
       {
         "text": "PiercingDarkCloud",
-        "link": "/Indicator-PiercingDarkCloud"
+        "link": "/Indicators/Indicator-PiercingDarkCloud"
       },
       {
         "text": "RickshawMan",
-        "link": "/Indicator-RickshawMan"
+        "link": "/Indicators/Indicator-RickshawMan"
       },
       {
         "text": "RisingThreeMethods",
-        "link": "/Indicator-RisingThreeMethods"
+        "link": "/Indicators/Indicator-RisingThreeMethods"
       },
       {
         "text": "SeparatingLines",
-        "link": "/Indicator-SeparatingLines"
+        "link": "/Indicators/Indicator-SeparatingLines"
       },
       {
         "text": "ShootingStar",
-        "link": "/Indicator-ShootingStar"
+        "link": "/Indicators/Indicator-ShootingStar"
       },
       {
         "text": "ShortLine",
-        "link": "/Indicator-ShortLine"
+        "link": "/Indicators/Indicator-ShortLine"
       },
       {
         "text": "SpinningTop",
-        "link": "/Indicator-SpinningTop"
+        "link": "/Indicators/Indicator-SpinningTop"
       },
       {
         "text": "StalledPattern",
-        "link": "/Indicator-StalledPattern"
+        "link": "/Indicators/Indicator-StalledPattern"
       },
       {
         "text": "StickSandwich",
-        "link": "/Indicator-StickSandwich"
+        "link": "/Indicators/Indicator-StickSandwich"
       },
       {
         "text": "Takuri",
-        "link": "/Indicator-Takuri"
+        "link": "/Indicators/Indicator-Takuri"
       },
       {
         "text": "TasukiGap",
-        "link": "/Indicator-TasukiGap"
+        "link": "/Indicators/Indicator-TasukiGap"
       },
       {
         "text": "ThreeInside",
-        "link": "/Indicator-ThreeInside"
+        "link": "/Indicators/Indicator-ThreeInside"
       },
       {
         "text": "ThreeLineStrike",
-        "link": "/Indicator-ThreeLineStrike"
+        "link": "/Indicators/Indicator-ThreeLineStrike"
       },
       {
         "text": "ThreeOutside",
-        "link": "/Indicator-ThreeOutside"
+        "link": "/Indicators/Indicator-ThreeOutside"
       },
       {
         "text": "ThreeSoldiersOrCrows",
-        "link": "/Indicator-ThreeSoldiersOrCrows"
+        "link": "/Indicators/Indicator-ThreeSoldiersOrCrows"
       },
       {
         "text": "ThreeStarsInSouth",
-        "link": "/Indicator-ThreeStarsInSouth"
+        "link": "/Indicators/Indicator-ThreeStarsInSouth"
       },
       {
         "text": "Thrusting",
-        "link": "/Indicator-Thrusting"
+        "link": "/Indicators/Indicator-Thrusting"
       },
       {
         "text": "Tweezer",
-        "link": "/Indicator-Tweezer"
+        "link": "/Indicators/Indicator-Tweezer"
       },
       {
         "text": "TwoCrows",
-        "link": "/Indicator-TwoCrows"
+        "link": "/Indicators/Indicator-TwoCrows"
       },
       {
         "text": "UniqueThreeRiver",
-        "link": "/Indicator-UniqueThreeRiver"
+        "link": "/Indicators/Indicator-UniqueThreeRiver"
       },
       {
         "text": "UpsideGapThreeMethods",
-        "link": "/Indicator-UpsideGapThreeMethods"
+        "link": "/Indicators/Indicator-UpsideGapThreeMethods"
       },
       {
         "text": "UpsideGapTwoCrows",
-        "link": "/Indicator-UpsideGapTwoCrows"
+        "link": "/Indicators/Indicator-UpsideGapTwoCrows"
       }
     ]
   },
@@ -1357,35 +1357,35 @@ export const sidebar = [
     "items": [
       {
         "text": "CupAndHandle",
-        "link": "/Indicator-CupAndHandle"
+        "link": "/Indicators/Indicator-CupAndHandle"
       },
       {
         "text": "DoubleTopBottom",
-        "link": "/Indicator-DoubleTopBottom"
+        "link": "/Indicators/Indicator-DoubleTopBottom"
       },
       {
         "text": "FlagPennant",
-        "link": "/Indicator-FlagPennant"
+        "link": "/Indicators/Indicator-FlagPennant"
       },
       {
         "text": "HeadAndShoulders",
-        "link": "/Indicator-HeadAndShoulders"
+        "link": "/Indicators/Indicator-HeadAndShoulders"
       },
       {
         "text": "RectangleRange",
-        "link": "/Indicator-RectangleRange"
+        "link": "/Indicators/Indicator-RectangleRange"
       },
       {
         "text": "Triangle",
-        "link": "/Indicator-Triangle"
+        "link": "/Indicators/Indicator-Triangle"
       },
       {
         "text": "TripleTopBottom",
-        "link": "/Indicator-TripleTopBottom"
+        "link": "/Indicators/Indicator-TripleTopBottom"
       },
       {
         "text": "Wedge",
-        "link": "/Indicator-Wedge"
+        "link": "/Indicators/Indicator-Wedge"
       }
     ]
   },
@@ -1395,35 +1395,35 @@ export const sidebar = [
     "items": [
       {
         "text": "Abcd",
-        "link": "/Indicator-Abcd"
+        "link": "/Indicators/Indicator-Abcd"
       },
       {
         "text": "Bat",
-        "link": "/Indicator-Bat"
+        "link": "/Indicators/Indicator-Bat"
       },
       {
         "text": "Butterfly",
-        "link": "/Indicator-Butterfly"
+        "link": "/Indicators/Indicator-Butterfly"
       },
       {
         "text": "Crab",
-        "link": "/Indicator-Crab"
+        "link": "/Indicators/Indicator-Crab"
       },
       {
         "text": "Cypher",
-        "link": "/Indicator-Cypher"
+        "link": "/Indicators/Indicator-Cypher"
       },
       {
         "text": "Gartley",
-        "link": "/Indicator-Gartley"
+        "link": "/Indicators/Indicator-Gartley"
       },
       {
         "text": "Shark",
-        "link": "/Indicator-Shark"
+        "link": "/Indicators/Indicator-Shark"
       },
       {
         "text": "ThreeDrives",
-        "link": "/Indicator-ThreeDrives"
+        "link": "/Indicators/Indicator-ThreeDrives"
       }
     ]
   },
@@ -1433,43 +1433,43 @@ export const sidebar = [
     "items": [
       {
         "text": "AutoFib",
-        "link": "/Indicator-AutoFib"
+        "link": "/Indicators/Indicator-AutoFib"
       },
       {
         "text": "FibArcs",
-        "link": "/Indicator-FibArcs"
+        "link": "/Indicators/Indicator-FibArcs"
       },
       {
         "text": "FibChannel",
-        "link": "/Indicator-FibChannel"
+        "link": "/Indicators/Indicator-FibChannel"
       },
       {
         "text": "FibConfluence",
-        "link": "/Indicator-FibConfluence"
+        "link": "/Indicators/Indicator-FibConfluence"
       },
       {
         "text": "FibExtension",
-        "link": "/Indicator-FibExtension"
+        "link": "/Indicators/Indicator-FibExtension"
       },
       {
         "text": "FibFan",
-        "link": "/Indicator-FibFan"
+        "link": "/Indicators/Indicator-FibFan"
       },
       {
         "text": "FibProjection",
-        "link": "/Indicator-FibProjection"
+        "link": "/Indicators/Indicator-FibProjection"
       },
       {
         "text": "FibRetracement",
-        "link": "/Indicator-FibRetracement"
+        "link": "/Indicators/Indicator-FibRetracement"
       },
       {
         "text": "FibTimeZones",
-        "link": "/Indicator-FibTimeZones"
+        "link": "/Indicators/Indicator-FibTimeZones"
       },
       {
         "text": "GoldenPocket",
-        "link": "/Indicator-GoldenPocket"
+        "link": "/Indicators/Indicator-GoldenPocket"
       }
     ]
   },
@@ -1479,79 +1479,79 @@ export const sidebar = [
     "items": [
       {
         "text": "AdaptiveCycle",
-        "link": "/Indicator-AdaptiveCycle"
+        "link": "/Indicators/Indicator-AdaptiveCycle"
       },
       {
         "text": "CenterOfGravity",
-        "link": "/Indicator-CenterOfGravity"
+        "link": "/Indicators/Indicator-CenterOfGravity"
       },
       {
         "text": "CyberneticCycle",
-        "link": "/Indicator-CyberneticCycle"
+        "link": "/Indicators/Indicator-CyberneticCycle"
       },
       {
         "text": "Decycler",
-        "link": "/Indicator-Decycler"
+        "link": "/Indicators/Indicator-Decycler"
       },
       {
         "text": "DecyclerOscillator",
-        "link": "/Indicator-DecyclerOscillator"
+        "link": "/Indicators/Indicator-DecyclerOscillator"
       },
       {
         "text": "EhlersStochastic",
-        "link": "/Indicator-EhlersStochastic"
+        "link": "/Indicators/Indicator-EhlersStochastic"
       },
       {
         "text": "EmpiricalModeDecomposition",
-        "link": "/Indicator-EmpiricalModeDecomposition"
+        "link": "/Indicators/Indicator-EmpiricalModeDecomposition"
       },
       {
         "text": "Fama",
-        "link": "/Indicator-Fama"
+        "link": "/Indicators/Indicator-Fama"
       },
       {
         "text": "FisherTransform",
-        "link": "/Indicator-FisherTransform"
+        "link": "/Indicators/Indicator-FisherTransform"
       },
       {
         "text": "HilbertDominantCycle",
-        "link": "/Indicator-HilbertDominantCycle"
+        "link": "/Indicators/Indicator-HilbertDominantCycle"
       },
       {
         "text": "HtDcPhase",
-        "link": "/Indicator-HtDcPhase"
+        "link": "/Indicators/Indicator-HtDcPhase"
       },
       {
         "text": "HtPhasor",
-        "link": "/Indicator-HtPhasor"
+        "link": "/Indicators/Indicator-HtPhasor"
       },
       {
         "text": "HtTrendMode",
-        "link": "/Indicator-HtTrendMode"
+        "link": "/Indicators/Indicator-HtTrendMode"
       },
       {
         "text": "InstantaneousTrendline",
-        "link": "/Indicator-InstantaneousTrendline"
+        "link": "/Indicators/Indicator-InstantaneousTrendline"
       },
       {
         "text": "InverseFisherTransform",
-        "link": "/Indicator-InverseFisherTransform"
+        "link": "/Indicators/Indicator-InverseFisherTransform"
       },
       {
         "text": "Mama",
-        "link": "/Indicator-Mama"
+        "link": "/Indicators/Indicator-Mama"
       },
       {
         "text": "RoofingFilter",
-        "link": "/Indicator-RoofingFilter"
+        "link": "/Indicators/Indicator-RoofingFilter"
       },
       {
         "text": "SineWave",
-        "link": "/Indicator-SineWave"
+        "link": "/Indicators/Indicator-SineWave"
       },
       {
         "text": "SuperSmoother",
-        "link": "/Indicator-SuperSmoother"
+        "link": "/Indicators/Indicator-SuperSmoother"
       }
     ]
   },
@@ -1561,79 +1561,79 @@ export const sidebar = [
     "items": [
       {
         "text": "Alpha",
-        "link": "/Indicator-Alpha"
+        "link": "/Indicators/Indicator-Alpha"
       },
       {
         "text": "AverageDrawdown",
-        "link": "/Indicator-AverageDrawdown"
+        "link": "/Indicators/Indicator-AverageDrawdown"
       },
       {
         "text": "CalmarRatio",
-        "link": "/Indicator-CalmarRatio"
+        "link": "/Indicators/Indicator-CalmarRatio"
       },
       {
         "text": "ConditionalValueAtRisk",
-        "link": "/Indicator-ConditionalValueAtRisk"
+        "link": "/Indicators/Indicator-ConditionalValueAtRisk"
       },
       {
         "text": "DrawdownDuration",
-        "link": "/Indicator-DrawdownDuration"
+        "link": "/Indicators/Indicator-DrawdownDuration"
       },
       {
         "text": "GainLossRatio",
-        "link": "/Indicator-GainLossRatio"
+        "link": "/Indicators/Indicator-GainLossRatio"
       },
       {
         "text": "InformationRatio",
-        "link": "/Indicator-InformationRatio"
+        "link": "/Indicators/Indicator-InformationRatio"
       },
       {
         "text": "KellyCriterion",
-        "link": "/Indicator-KellyCriterion"
+        "link": "/Indicators/Indicator-KellyCriterion"
       },
       {
         "text": "MaxDrawdown",
-        "link": "/Indicator-MaxDrawdown"
+        "link": "/Indicators/Indicator-MaxDrawdown"
       },
       {
         "text": "OmegaRatio",
-        "link": "/Indicator-OmegaRatio"
+        "link": "/Indicators/Indicator-OmegaRatio"
       },
       {
         "text": "PainIndex",
-        "link": "/Indicator-PainIndex"
+        "link": "/Indicators/Indicator-PainIndex"
       },
       {
         "text": "ProfitFactor",
-        "link": "/Indicator-ProfitFactor"
+        "link": "/Indicators/Indicator-ProfitFactor"
       },
       {
         "text": "RecoveryFactor",
-        "link": "/Indicator-RecoveryFactor"
+        "link": "/Indicators/Indicator-RecoveryFactor"
       },
       {
         "text": "SharpeRatio",
-        "link": "/Indicator-SharpeRatio"
+        "link": "/Indicators/Indicator-SharpeRatio"
       },
       {
         "text": "SortinoRatio",
-        "link": "/Indicator-SortinoRatio"
+        "link": "/Indicators/Indicator-SortinoRatio"
       },
       {
         "text": "TreynorRatio",
-        "link": "/Indicator-TreynorRatio"
+        "link": "/Indicators/Indicator-TreynorRatio"
       },
       {
         "text": "ValueAtRisk",
-        "link": "/Indicator-ValueAtRisk"
+        "link": "/Indicators/Indicator-ValueAtRisk"
       },
       {
         "text": "Expectancy",
-        "link": "/Indicator-Expectancy"
+        "link": "/Indicators/Indicator-Expectancy"
       },
       {
         "text": "WinRate",
-        "link": "/Indicator-WinRate"
+        "link": "/Indicators/Indicator-WinRate"
       }
     ]
   },
@@ -1643,71 +1643,71 @@ export const sidebar = [
     "items": [
       {
         "text": "CumulativeVolumeDelta",
-        "link": "/Indicator-CumulativeVolumeDelta"
+        "link": "/Indicators/Indicator-CumulativeVolumeDelta"
       },
       {
         "text": "DepthSlope",
-        "link": "/Indicator-DepthSlope"
+        "link": "/Indicators/Indicator-DepthSlope"
       },
       {
         "text": "EffectiveSpread",
-        "link": "/Indicator-EffectiveSpread"
+        "link": "/Indicators/Indicator-EffectiveSpread"
       },
       {
         "text": "Footprint",
-        "link": "/Indicator-Footprint"
+        "link": "/Indicators/Indicator-Footprint"
       },
       {
         "text": "KylesLambda",
-        "link": "/Indicator-KylesLambda"
+        "link": "/Indicators/Indicator-KylesLambda"
       },
       {
         "text": "Microprice",
-        "link": "/Indicator-Microprice"
+        "link": "/Indicators/Indicator-Microprice"
       },
       {
         "text": "OrderBookImbalanceFull",
-        "link": "/Indicator-OrderBookImbalanceFull"
+        "link": "/Indicators/Indicator-OrderBookImbalanceFull"
       },
       {
         "text": "OrderBookImbalanceTop1",
-        "link": "/Indicator-OrderBookImbalanceTop1"
+        "link": "/Indicators/Indicator-OrderBookImbalanceTop1"
       },
       {
         "text": "OrderBookImbalanceTopN",
-        "link": "/Indicator-OrderBookImbalanceTopN"
+        "link": "/Indicators/Indicator-OrderBookImbalanceTopN"
       },
       {
         "text": "QuotedSpread",
-        "link": "/Indicator-QuotedSpread"
+        "link": "/Indicators/Indicator-QuotedSpread"
       },
       {
         "text": "RealizedSpread",
-        "link": "/Indicator-RealizedSpread"
+        "link": "/Indicators/Indicator-RealizedSpread"
       },
       {
         "text": "SignedVolume",
-        "link": "/Indicator-SignedVolume"
+        "link": "/Indicators/Indicator-SignedVolume"
       },
       {
         "text": "TradeImbalance",
-        "link": "/Indicator-TradeImbalance"
+        "link": "/Indicators/Indicator-TradeImbalance"
       },
       {
         "text": "AmihudIlliquidity",
-        "link": "/Indicator-AmihudIlliquidity"
+        "link": "/Indicators/Indicator-AmihudIlliquidity"
       },
       {
         "text": "OrderFlowImbalance",
-        "link": "/Indicator-OrderFlowImbalance"
+        "link": "/Indicators/Indicator-OrderFlowImbalance"
       },
       {
         "text": "RollMeasure",
-        "link": "/Indicator-RollMeasure"
+        "link": "/Indicators/Indicator-RollMeasure"
       },
       {
         "text": "Vpin",
-        "link": "/Indicator-Vpin"
+        "link": "/Indicators/Indicator-Vpin"
       }
     ]
   },
@@ -1717,51 +1717,51 @@ export const sidebar = [
     "items": [
       {
         "text": "CalendarSpread",
-        "link": "/Indicator-CalendarSpread"
+        "link": "/Indicators/Indicator-CalendarSpread"
       },
       {
         "text": "FundingBasis",
-        "link": "/Indicator-FundingBasis"
+        "link": "/Indicators/Indicator-FundingBasis"
       },
       {
         "text": "FundingRate",
-        "link": "/Indicator-FundingRate"
+        "link": "/Indicators/Indicator-FundingRate"
       },
       {
         "text": "FundingRateMean",
-        "link": "/Indicator-FundingRateMean"
+        "link": "/Indicators/Indicator-FundingRateMean"
       },
       {
         "text": "FundingRateZScore",
-        "link": "/Indicator-FundingRateZScore"
+        "link": "/Indicators/Indicator-FundingRateZScore"
       },
       {
         "text": "LiquidationFeatures",
-        "link": "/Indicator-LiquidationFeatures"
+        "link": "/Indicators/Indicator-LiquidationFeatures"
       },
       {
         "text": "LongShortRatio",
-        "link": "/Indicator-LongShortRatio"
+        "link": "/Indicators/Indicator-LongShortRatio"
       },
       {
         "text": "OIPriceDivergence",
-        "link": "/Indicator-OIPriceDivergence"
+        "link": "/Indicators/Indicator-OIPriceDivergence"
       },
       {
         "text": "OIWeighted",
-        "link": "/Indicator-OIWeighted"
+        "link": "/Indicators/Indicator-OIWeighted"
       },
       {
         "text": "OpenInterestDelta",
-        "link": "/Indicator-OpenInterestDelta"
+        "link": "/Indicators/Indicator-OpenInterestDelta"
       },
       {
         "text": "TakerBuySellRatio",
-        "link": "/Indicator-TakerBuySellRatio"
+        "link": "/Indicators/Indicator-TakerBuySellRatio"
       },
       {
         "text": "TermStructureBasis",
-        "link": "/Indicator-TermStructureBasis"
+        "link": "/Indicators/Indicator-TermStructureBasis"
       }
     ]
   },
@@ -1771,15 +1771,15 @@ export const sidebar = [
     "items": [
       {
         "text": "KagiBars",
-        "link": "/Indicator-KagiBars"
+        "link": "/Indicators/Indicator-KagiBars"
       },
       {
         "text": "PointAndFigureBars",
-        "link": "/Indicator-PointAndFigureBars"
+        "link": "/Indicators/Indicator-PointAndFigureBars"
       },
       {
         "text": "RenkoBars",
-        "link": "/Indicator-RenkoBars"
+        "link": "/Indicators/Indicator-RenkoBars"
       }
     ]
   },
@@ -1789,63 +1789,63 @@ export const sidebar = [
     "items": [
       {
         "text": "AbsoluteBreadthIndex",
-        "link": "/Indicator-AbsoluteBreadthIndex"
+        "link": "/Indicators/Indicator-AbsoluteBreadthIndex"
       },
       {
         "text": "AdvanceDecline",
-        "link": "/Indicator-AdvanceDecline"
+        "link": "/Indicators/Indicator-AdvanceDecline"
       },
       {
         "text": "AdvanceDeclineRatio",
-        "link": "/Indicator-AdvanceDeclineRatio"
+        "link": "/Indicators/Indicator-AdvanceDeclineRatio"
       },
       {
         "text": "AdVolumeLine",
-        "link": "/Indicator-AdVolumeLine"
+        "link": "/Indicators/Indicator-AdVolumeLine"
       },
       {
         "text": "BreadthThrust",
-        "link": "/Indicator-BreadthThrust"
+        "link": "/Indicators/Indicator-BreadthThrust"
       },
       {
         "text": "BullishPercentIndex",
-        "link": "/Indicator-BullishPercentIndex"
+        "link": "/Indicators/Indicator-BullishPercentIndex"
       },
       {
         "text": "CumulativeVolumeIndex",
-        "link": "/Indicator-CumulativeVolumeIndex"
+        "link": "/Indicators/Indicator-CumulativeVolumeIndex"
       },
       {
         "text": "HighLowIndex",
-        "link": "/Indicator-HighLowIndex"
+        "link": "/Indicators/Indicator-HighLowIndex"
       },
       {
         "text": "McClellanOscillator",
-        "link": "/Indicator-McClellanOscillator"
+        "link": "/Indicators/Indicator-McClellanOscillator"
       },
       {
         "text": "McClellanSummationIndex",
-        "link": "/Indicator-McClellanSummationIndex"
+        "link": "/Indicators/Indicator-McClellanSummationIndex"
       },
       {
         "text": "NewHighsNewLows",
-        "link": "/Indicator-NewHighsNewLows"
+        "link": "/Indicators/Indicator-NewHighsNewLows"
       },
       {
         "text": "PercentAboveMa",
-        "link": "/Indicator-PercentAboveMa"
+        "link": "/Indicators/Indicator-PercentAboveMa"
       },
       {
         "text": "TickIndex",
-        "link": "/Indicator-TickIndex"
+        "link": "/Indicators/Indicator-TickIndex"
       },
       {
         "text": "Trin",
-        "link": "/Indicator-Trin"
+        "link": "/Indicators/Indicator-Trin"
       },
       {
         "text": "UpDownVolumeRatio",
-        "link": "/Indicator-UpDownVolumeRatio"
+        "link": "/Indicators/Indicator-UpDownVolumeRatio"
       }
     ]
   },
@@ -1855,51 +1855,51 @@ export const sidebar = [
     "items": [
       {
         "text": "AverageDailyRange",
-        "link": "/Indicator-AverageDailyRange"
+        "link": "/Indicators/Indicator-AverageDailyRange"
       },
       {
         "text": "DayOfWeekProfile",
-        "link": "/Indicator-DayOfWeekProfile"
+        "link": "/Indicators/Indicator-DayOfWeekProfile"
       },
       {
         "text": "IntradayVolatilityProfile",
-        "link": "/Indicator-IntradayVolatilityProfile"
+        "link": "/Indicators/Indicator-IntradayVolatilityProfile"
       },
       {
         "text": "OvernightGap",
-        "link": "/Indicator-OvernightGap"
+        "link": "/Indicators/Indicator-OvernightGap"
       },
       {
         "text": "OvernightIntradayReturn",
-        "link": "/Indicator-OvernightIntradayReturn"
+        "link": "/Indicators/Indicator-OvernightIntradayReturn"
       },
       {
         "text": "SeasonalZScore",
-        "link": "/Indicator-SeasonalZScore"
+        "link": "/Indicators/Indicator-SeasonalZScore"
       },
       {
         "text": "SessionHighLow",
-        "link": "/Indicator-SessionHighLow"
+        "link": "/Indicators/Indicator-SessionHighLow"
       },
       {
         "text": "SessionRange",
-        "link": "/Indicator-SessionRange"
+        "link": "/Indicators/Indicator-SessionRange"
       },
       {
         "text": "SessionVwap",
-        "link": "/Indicator-SessionVwap"
+        "link": "/Indicators/Indicator-SessionVwap"
       },
       {
         "text": "TimeOfDayReturnProfile",
-        "link": "/Indicator-TimeOfDayReturnProfile"
+        "link": "/Indicators/Indicator-TimeOfDayReturnProfile"
       },
       {
         "text": "TurnOfMonth",
-        "link": "/Indicator-TurnOfMonth"
+        "link": "/Indicators/Indicator-TurnOfMonth"
       },
       {
         "text": "VolumeByTimeProfile",
-        "link": "/Indicator-VolumeByTimeProfile"
+        "link": "/Indicators/Indicator-VolumeByTimeProfile"
       }
     ]
   }
