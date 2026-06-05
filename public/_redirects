@@ -4,3 +4,13 @@
 # request for the old og-banner.png (cached social-share previews, external
 # links) to the current WebP asset instead of serving a stale PNG.
 /og-banner.png  /og-banner.webp  301
+
+# The indicator catalogue moved from the docs root (/Indicator-Foo) into the
+# Indicators/ subfolder (/Indicators/Indicator-Foo). Keep old bookmarks and
+# search-engine results alive with a permanent redirect. Cloudflare matches
+# top-to-bottom, first match wins, so the Indicator-Chaining reference guide —
+# which stayed at the root — is served (200, no redirect) before the wildcard
+# can sweep it into /Indicators/. The new /Indicators/... URLs start with
+# "/Indicators", not "/Indicator-", so the wildcard never re-captures them.
+/Indicator-Chaining  /Indicator-Chaining  200
+/Indicator-*  /Indicators/Indicator-:splat  301
