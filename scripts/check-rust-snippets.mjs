@@ -103,11 +103,26 @@ function wrapSnippet(code) {
   return `fn main() -> Result<(), Box<dyn std::error::Error>> {\n${body}\n;Ok(())\n}`
 }
 
+// Recursively collect every *.md page under repoRoot as paths relative to it.
+// The catalogue pages live under Indicators/, so a flat readdir would miss
+// them; walking subdirectories keeps every page's rust snippets in the check.
+// Dotdirs and node_modules are skipped so a local `npm ci` checkout never pulls
+// dependency markdown into the compile set.
+function collectMarkdown(dir) {
+  const out = []
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue
+    const full = path.join(dir, entry.name)
+    if (entry.isDirectory()) out.push(...collectMarkdown(full))
+    else if (entry.isFile() && entry.name.endsWith('.md')) out.push(full)
+  }
+  return out
+}
+
 function main() {
   const cratePath = resolveCratePath()
-  const pages = fs
-    .readdirSync(repoRoot)
-    .filter((f) => f.endsWith('.md'))
+  const pages = collectMarkdown(repoRoot)
+    .map((p) => path.relative(repoRoot, p))
     .sort()
 
   const work = path.join(os.tmpdir(), 'wickra-doctest-' + process.pid)
