@@ -12,3 +12,14 @@ accept = [200, 206, 429]
 
 scheme = ["https", "http"]
 exclude_all_private = true
+
+# Known false positives (the URLs are valid; lychee just can't verify them):
+# - config.ts builds the per-page canonical with a `${path}` template literal;
+#   lychee scans the .ts as text and extracts the unevaluated placeholder, which
+#   is not a real URL (reported as /$%7Bpath%7D).
+# - npmjs.com returns 403 to non-browser requests (anti-scraping); the package
+#   page is live in a browser.
+exclude = [
+  'docs\.wickra\.org/\$(\{|%7B)path',
+  'www\.npmjs\.com/package/wickra',
+]
