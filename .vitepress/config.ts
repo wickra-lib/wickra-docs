@@ -59,7 +59,7 @@ const structuredData = {
 export default defineConfig({
   title: 'Wickra',
   description:
-    'Streaming-first technical indicators with a Rust core and Python, Node, and WASM bindings — 434 indicators, install-free. Same code for backtest and live tick.',
+    'Streaming-first technical indicators with a Rust core and Python, Node, and WASM bindings — 440 indicators, install-free. Same code for backtest and live tick.',
   lang: 'en-US',
 
   // Served at the domain root (e.g. docs.wickra.org), so the base is '/'.
