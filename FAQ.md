@@ -116,7 +116,7 @@ function-by-function mapping.
 
 ## See also
 
-- [Home](/) — documentation home.
+- [Home](./) — documentation home.
 - [Streaming vs Batch](Streaming-vs-Batch) — the central design idea.
 - [TA-Lib Migration](TA-Lib-Migration) — function-by-function mapping
   table.

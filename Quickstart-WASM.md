@@ -2,7 +2,7 @@
 
 A five-minute tour of the Wickra WebAssembly binding. The same Rust core that
 powers the Python, Node, and Rust APIs is compiled to WebAssembly with
-[wasm-bindgen](https://rustwasm.github.io/wasm-bindgen/), so indicators run
+[wasm-bindgen](https://wasm-bindgen.github.io/wasm-bindgen/), so indicators run
 entirely client-side — in a browser tab, a bundler build, or Node — with no
 server round-trips.
 
@@ -19,7 +19,7 @@ Webpack, Vite, Rollup, and similar toolchains.
 
 ## Build from source
 
-To build the binding yourself you need [`wasm-pack`](https://rustwasm.github.io/wasm-pack/)
+To build the binding yourself you need [`wasm-pack`](https://github.com/rustwasm/wasm-pack)
 and the `wasm32-unknown-unknown` target:
 
 ```bash
