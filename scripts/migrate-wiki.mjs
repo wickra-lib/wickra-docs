@@ -1,7 +1,10 @@
 // Migrate the GitHub-Wiki markdown into this VitePress repo.
 //
-// - copies every wiki page to the docs root (flat structure, same filenames)
+// - copies guide/reference pages to the docs root and the indicator catalogue
+//   into Indicators/ (same filenames); Indicator-Chaining stays at the root
 // - rewrites kingchenc/wickra -> wickra-lib/wickra (org migration)
+// - rewrites the wiki's relative page links to the absolute paths VitePress
+//   serves once the catalogue lives under Indicators/
 // - bumps the published-version references 0.2.7 -> 0.3.1 on the overview page
 // - turns Home.md into overview.md (index.md is a hand-written hero landing)
 // - drops _Footer.md (footer lives in config.ts)
@@ -28,9 +31,47 @@ if (!fs.existsSync(WIKI)) {
   process.exit(1)
 }
 
+const INDICATORS_DIR = path.join(DOCS, 'Indicators')
+
+// Catalogue indicator pages live under Indicators/; Indicator-Chaining is a
+// reference guide that stays at the docs root with the other guides.
+const isCatalogueIndicator = (base) =>
+  base.startsWith('Indicator-') && base !== 'Indicator-Chaining'
+
+// Sidebar link target for a wiki page name (no extension).
+const linkFor = (target) =>
+  isCatalogueIndicator(target) ? '/Indicators/' + target : '/' + target
+
+// The root guides a catalogue page can link back to. After the move these
+// pages sit one level down, so such links have to be absolute to resolve.
+const ROOT_PAGE_SLUGS = [
+  'Indicators-Overview', 'Warmup-Periods', 'Streaming-vs-Batch',
+  'Quickstart-Rust', 'Quickstart-Python', 'Quickstart-Node', 'Quickstart-WASM',
+  'Data-Layer', 'TA-Lib-Migration', 'Cookbook', 'FAQ',
+]
+
 /** Org-migration + misc content fixes applied to every page. */
 function transform(content) {
   return content.replaceAll('kingchenc/wickra', 'wickra-lib/wickra')
+}
+
+// Rewrite the wiki's relative `](Page)` links to the absolute paths VitePress
+// serves after the catalogue moved under Indicators/. Catalogue links become
+// /Indicators/Indicator-*, the chaining guide stays at /Indicator-Chaining, and
+// for catalogue pages (`moved`) the back-links to the root guides are made
+// absolute as well. Mirrors the one-time sed rewrite of the existing pages so a
+// re-run reproduces the committed tree exactly.
+function rewriteLinks(content, moved) {
+  let s = content
+    .replaceAll('](Indicator-Chaining', '](@@CHAIN@@')
+    .replaceAll('](Indicator-', '](/Indicators/Indicator-')
+    .replaceAll('](@@CHAIN@@', '](/Indicator-Chaining')
+  if (moved) {
+    for (const slug of ROOT_PAGE_SLUGS) {
+      s = s.replaceAll('](' + slug, '](/' + slug)
+    }
+  }
+  return s
 }
 
 const files = fs.readdirSync(WIKI).filter((f) => f.endsWith('.md'))
@@ -39,8 +80,12 @@ const SPECIAL = new Set(['_Sidebar.md', '_Footer.md', 'Home.md'])
 let copied = 0
 for (const f of files) {
   if (SPECIAL.has(f)) continue
+  const base = f.replace(/\.md$/, '')
+  const moved = isCatalogueIndicator(base)
+  const dest = moved ? INDICATORS_DIR : DOCS
+  fs.mkdirSync(dest, { recursive: true })
   const src = fs.readFileSync(path.join(WIKI, f), 'utf8')
-  fs.writeFileSync(path.join(DOCS, f), transform(src))
+  fs.writeFileSync(path.join(dest, f), rewriteLinks(transform(src), moved))
   copied++
 }
 
@@ -48,7 +93,7 @@ for (const f of files) {
 {
   const home = transform(fs.readFileSync(path.join(WIKI, 'Home.md'), 'utf8'))
   const bumped = home.replaceAll(OLD_VERSION, CURRENT_VERSION)
-  fs.writeFileSync(path.join(DOCS, 'overview.md'), bumped)
+  fs.writeFileSync(path.join(DOCS, 'overview.md'), rewriteLinks(bumped, false))
   copied++
 }
 

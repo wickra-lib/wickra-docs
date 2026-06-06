@@ -666,6 +666,6 @@ authoritative TypeScript surface.)
 
 - [Streaming vs Batch](Streaming-vs-Batch) — the `is_ready()` gate, and
   why a `len(prices) > warmup_period` check is the wrong abstraction.
-- [Indicator Chaining](Indicator-Chaining) — how warmups stack inside a
+- [Indicator Chaining](/Indicator-Chaining) — how warmups stack inside a
   `Chain`.
 - Source: <https://github.com/wickra-lib/wickra>

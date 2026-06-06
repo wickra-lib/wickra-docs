@@ -79,12 +79,12 @@ is the *timing* of the first emission.)
 
 `Chain::warmup_period` is implemented conservatively:
 
-```rust
-use wickra::{Chain, Ema, Indicator, Rsi};
-
-// Chain::warmup_period is the sum of both stages' warmups:
-let chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
-assert_eq!(chain.warmup_period(), 14 + 8);
+```rust
+use wickra::{Chain, Ema, Indicator, Rsi};
+
+// Chain::warmup_period is the sum of both stages' warmups:
+let chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
+assert_eq!(chain.warmup_period(), 14 + 8);
 ```
 
 For `Chain::new(Ema::new(14)?, Rsi::new(7)?)` this expands to
@@ -114,12 +114,12 @@ if chain.is_ready() {
 
 `Chain<A, B>` propagates `reset()` to both stages:
 
-```rust
-use wickra::{Chain, Ema, Indicator, Rsi};
-
-// Chain::reset propagates to both stages:
-let mut chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
-chain.reset();
+```rust
+use wickra::{Chain, Ema, Indicator, Rsi};
+
+// Chain::reset propagates to both stages:
+let mut chain = Chain::new(Ema::new(14)?, Rsi::new(7)?);
+chain.reset();
 ```
 
 So calling `chain.reset()` returns the whole pipeline to the state of a
@@ -159,10 +159,10 @@ MACD-of-smoothed-prices.
 John Ehlers' digital-signal-processing indicators are designed to be
 *composed*: a band-pass / smoothing filter cleans the price series, and an
 oscillator reads the filtered output. Every one of Wickra's Ehlers scalar
-filters — [RoofingFilter](Indicator-RoofingFilter),
-[SuperSmoother](Indicator-SuperSmoother), [Decycler](Indicator-Decycler) — is
+filters — [RoofingFilter](/Indicators/Indicator-RoofingFilter),
+[SuperSmoother](/Indicators/Indicator-SuperSmoother), [Decycler](/Indicators/Indicator-Decycler) — is
 `Indicator<Input = f64, Output = f64>`, so they slot straight into the first
-stage of a chain feeding [EhlersStochastic](Indicator-EhlersStochastic) (also
+stage of a chain feeding [EhlersStochastic](/Indicators/Indicator-EhlersStochastic) (also
 `f64 → f64`).
 
 Ehlers' canonical pairing is the **Roofing Filter into the Ehlers

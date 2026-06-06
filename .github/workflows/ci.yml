@@ -37,7 +37,10 @@ jobs:
       # wiki-export style noise off).
       - uses: DavidAnson/markdownlint-cli2-action@05f32210e84442804257b2a6f20b273450ec8265 # v19
         with:
-          globs: "*.md"
+          # Root pages plus the relocated indicator catalogue under Indicators/.
+          globs: |
+            *.md
+            Indicators/*.md
 
   rust-snippets:
     name: Rust doc snippets compile

@@ -177,12 +177,12 @@ let prices: Vec<f64> = Vec::new(); // your price series
 let out: Vec<Option<f64>> = chain.batch(&prices);
 ```
 
-See [Indicator Chaining](Indicator-Chaining) for the chained-warmup rule
+See [Indicator Chaining](/Indicator-Chaining) for the chained-warmup rule
 and three-stage examples.
 
 ## 8. Ichimoku Tenkan/Kijun cross with cloud filter
 
-[Ichimoku](Indicator-Ichimoku) returns its five lines as a tuple
+[Ichimoku](/Indicators/Indicator-Ichimoku) returns its five lines as a tuple
 `(tenkan, kijun, senkou_a, senkou_b, chikou)` — any element may be `None`
 until that line is defined. The canonical entry is a Tenkan-above-Kijun
 ("TK") cross *confirmed* by price trading above the cloud (`max(span_a,
@@ -211,7 +211,7 @@ for o, h, l, c, v, ts in candle_feed:
 
 ## 9. TD Sequential exhaustion
 
-[TdSequential](Indicator-TdSequential) returns `(setup, countdown,
+[TdSequential](/Indicators/Indicator-TdSequential) returns `(setup, countdown,
 direction)` — both counts are signed (`+` buy, `−` sell) and capped at ±9
 (setup) and ±13 (countdown). A completed buy setup (`+9`) or buy countdown
 (`+13`) flags downside exhaustion and a mean-reversion long.
@@ -238,7 +238,7 @@ for o, h, l, c, v, ts in candle_feed:
 ## 10. Max-drawdown circuit breaker
 
 Feed your mark-to-market account equity into a rolling
-[MaxDrawdown](Indicator-MaxDrawdown) and halt new entries when the rolling
+[MaxDrawdown](/Indicators/Indicator-MaxDrawdown) and halt new entries when the rolling
 drawdown breaches a risk limit. The output is a *non-negative fraction*
 (`0.20` = a 20 % decline from the window peak).
 
@@ -261,7 +261,7 @@ for equity in equity_curve:
 
 ## 11. Beta-hedged market exposure
 
-[Beta](Indicator-Beta) takes `(asset_return, benchmark_return)` pairs and
+[Beta](/Indicators/Indicator-Beta) takes `(asset_return, benchmark_return)` pairs and
 reports the rolling slope of the asset on the benchmark — exactly the hedge
 ratio you need to neutralise market exposure.
 

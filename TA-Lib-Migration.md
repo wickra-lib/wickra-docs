@@ -70,63 +70,63 @@ Wickra ships several whole *families* that have no TA-Lib equivalent. These
 are the main reasons to reach for Wickra over a TA-Lib port:
 
 - **Risk & performance metrics** — a full streaming risk suite TA-Lib has
-  nothing comparable to: [SharpeRatio](Indicator-SharpeRatio),
-  [SortinoRatio](Indicator-SortinoRatio), [CalmarRatio](Indicator-CalmarRatio),
-  [TreynorRatio](Indicator-TreynorRatio),
-  [InformationRatio](Indicator-InformationRatio),
-  [OmegaRatio](Indicator-OmegaRatio), [MaxDrawdown](Indicator-MaxDrawdown),
-  [AverageDrawdown](Indicator-AverageDrawdown),
-  [DrawdownDuration](Indicator-DrawdownDuration),
-  [UlcerIndex](Indicator-UlcerIndex), [PainIndex](Indicator-PainIndex),
-  [ValueAtRisk](Indicator-ValueAtRisk),
-  [ConditionalValueAtRisk](Indicator-ConditionalValueAtRisk),
-  [KellyCriterion](Indicator-KellyCriterion),
-  [ProfitFactor](Indicator-ProfitFactor),
-  [GainLossRatio](Indicator-GainLossRatio),
-  [RecoveryFactor](Indicator-RecoveryFactor), plus
-  [Beta](Indicator-Beta), [Alpha](Indicator-Alpha) and
-  [RSquared](Indicator-RSquared).
+  nothing comparable to: [SharpeRatio](/Indicators/Indicator-SharpeRatio),
+  [SortinoRatio](/Indicators/Indicator-SortinoRatio), [CalmarRatio](/Indicators/Indicator-CalmarRatio),
+  [TreynorRatio](/Indicators/Indicator-TreynorRatio),
+  [InformationRatio](/Indicators/Indicator-InformationRatio),
+  [OmegaRatio](/Indicators/Indicator-OmegaRatio), [MaxDrawdown](/Indicators/Indicator-MaxDrawdown),
+  [AverageDrawdown](/Indicators/Indicator-AverageDrawdown),
+  [DrawdownDuration](/Indicators/Indicator-DrawdownDuration),
+  [UlcerIndex](/Indicators/Indicator-UlcerIndex), [PainIndex](/Indicators/Indicator-PainIndex),
+  [ValueAtRisk](/Indicators/Indicator-ValueAtRisk),
+  [ConditionalValueAtRisk](/Indicators/Indicator-ConditionalValueAtRisk),
+  [KellyCriterion](/Indicators/Indicator-KellyCriterion),
+  [ProfitFactor](/Indicators/Indicator-ProfitFactor),
+  [GainLossRatio](/Indicators/Indicator-GainLossRatio),
+  [RecoveryFactor](/Indicators/Indicator-RecoveryFactor), plus
+  [Beta](/Indicators/Indicator-Beta), [Alpha](/Indicators/Indicator-Alpha) and
+  [RSquared](/Indicators/Indicator-RSquared).
 - **DeMark studies** — the full Tom DeMark toolkit:
-  [TdSequential](Indicator-TdSequential), [TdSetup](Indicator-TdSetup),
-  [TdCountdown](Indicator-TdCountdown), [TdCombo](Indicator-TdCombo),
-  [TdDeMarker](Indicator-TdDeMarker),
-  [TdDifferential](Indicator-TdDifferential), [TdLines](Indicator-TdLines),
-  [TdOpen](Indicator-TdOpen), [TdPressure](Indicator-TdPressure),
-  [TdRei](Indicator-TdRei),
-  [TdRangeProjection](Indicator-TdRangeProjection),
-  [TdRiskLevel](Indicator-TdRiskLevel) and
-  [DemarkPivots](Indicator-DemarkPivots).
+  [TdSequential](/Indicators/Indicator-TdSequential), [TdSetup](/Indicators/Indicator-TdSetup),
+  [TdCountdown](/Indicators/Indicator-TdCountdown), [TdCombo](/Indicators/Indicator-TdCombo),
+  [TdDeMarker](/Indicators/Indicator-TdDeMarker),
+  [TdDifferential](/Indicators/Indicator-TdDifferential), [TdLines](/Indicators/Indicator-TdLines),
+  [TdOpen](/Indicators/Indicator-TdOpen), [TdPressure](/Indicators/Indicator-TdPressure),
+  [TdRei](/Indicators/Indicator-TdRei),
+  [TdRangeProjection](/Indicators/Indicator-TdRangeProjection),
+  [TdRiskLevel](/Indicators/Indicator-TdRiskLevel) and
+  [DemarkPivots](/Indicators/Indicator-DemarkPivots).
 - **Candlestick patterns** — Wickra implements the common single- and
   multi-bar patterns directly (each emits a signed signal, no separate
-  `CDL*` call per pattern): [Doji](Indicator-Doji),
-  [Hammer](Indicator-Hammer), [InvertedHammer](Indicator-InvertedHammer),
-  [HangingMan](Indicator-HangingMan), [ShootingStar](Indicator-ShootingStar),
-  [Engulfing](Indicator-Engulfing), [Harami](Indicator-Harami),
-  [PiercingDarkCloud](Indicator-PiercingDarkCloud),
-  [MorningEveningStar](Indicator-MorningEveningStar),
-  [Marubozu](Indicator-Marubozu), [SpinningTop](Indicator-SpinningTop),
-  [Tweezer](Indicator-Tweezer), [ThreeInside](Indicator-ThreeInside),
-  [ThreeOutside](Indicator-ThreeOutside) and
-  [ThreeSoldiersOrCrows](Indicator-ThreeSoldiersOrCrows).
-- **Market-profile / session studies** — [ValueArea](Indicator-ValueArea),
-  [InitialBalance](Indicator-InitialBalance),
-  [OpeningRange](Indicator-OpeningRange) and
-  [MarketFacilitationIndex](Indicator-MarketFacilitationIndex).
-- **Trailing stops** — [SuperTrend](Indicator-SuperTrend),
-  [ChandelierExit](Indicator-ChandelierExit),
-  [ChandeKrollStop](Indicator-ChandeKrollStop),
-  [AtrTrailingStop](Indicator-AtrTrailingStop) (TA-Lib only has `SAR`).
-- **Volume oscillators** — [ChaikinMoneyFlow](Indicator-ChaikinMoneyFlow),
-  [ForceIndex](Indicator-ForceIndex), [EaseOfMovement](Indicator-EaseOfMovement),
-  [VolumePriceTrend](Indicator-VolumePriceTrend), plus the windowed
-  [RollingVwap](Indicator-RollingVwap).
-- **Other modern indicators** — [ChoppinessIndex](Indicator-ChoppinessIndex),
-  [VerticalHorizontalFilter](Indicator-VerticalHorizontalFilter),
-  [Coppock](Indicator-Coppock), [Pmo](Indicator-Pmo), [ZScore](Indicator-ZScore),
-  [MassIndex](Indicator-MassIndex), [Vortex](Indicator-Vortex), [Tsi](Indicator-Tsi),
-  [Smma](Indicator-Smma), [Trima](Indicator-Trima), [Zlema](Indicator-Zlema),
-  [Vwma](Indicator-Vwma), [BollingerBandwidth](Indicator-BollingerBandwidth),
-  [PercentB](Indicator-PercentB).
+  `CDL*` call per pattern): [Doji](/Indicators/Indicator-Doji),
+  [Hammer](/Indicators/Indicator-Hammer), [InvertedHammer](/Indicators/Indicator-InvertedHammer),
+  [HangingMan](/Indicators/Indicator-HangingMan), [ShootingStar](/Indicators/Indicator-ShootingStar),
+  [Engulfing](/Indicators/Indicator-Engulfing), [Harami](/Indicators/Indicator-Harami),
+  [PiercingDarkCloud](/Indicators/Indicator-PiercingDarkCloud),
+  [MorningEveningStar](/Indicators/Indicator-MorningEveningStar),
+  [Marubozu](/Indicators/Indicator-Marubozu), [SpinningTop](/Indicators/Indicator-SpinningTop),
+  [Tweezer](/Indicators/Indicator-Tweezer), [ThreeInside](/Indicators/Indicator-ThreeInside),
+  [ThreeOutside](/Indicators/Indicator-ThreeOutside) and
+  [ThreeSoldiersOrCrows](/Indicators/Indicator-ThreeSoldiersOrCrows).
+- **Market-profile / session studies** — [ValueArea](/Indicators/Indicator-ValueArea),
+  [InitialBalance](/Indicators/Indicator-InitialBalance),
+  [OpeningRange](/Indicators/Indicator-OpeningRange) and
+  [MarketFacilitationIndex](/Indicators/Indicator-MarketFacilitationIndex).
+- **Trailing stops** — [SuperTrend](/Indicators/Indicator-SuperTrend),
+  [ChandelierExit](/Indicators/Indicator-ChandelierExit),
+  [ChandeKrollStop](/Indicators/Indicator-ChandeKrollStop),
+  [AtrTrailingStop](/Indicators/Indicator-AtrTrailingStop) (TA-Lib only has `SAR`).
+- **Volume oscillators** — [ChaikinMoneyFlow](/Indicators/Indicator-ChaikinMoneyFlow),
+  [ForceIndex](/Indicators/Indicator-ForceIndex), [EaseOfMovement](/Indicators/Indicator-EaseOfMovement),
+  [VolumePriceTrend](/Indicators/Indicator-VolumePriceTrend), plus the windowed
+  [RollingVwap](/Indicators/Indicator-RollingVwap).
+- **Other modern indicators** — [ChoppinessIndex](/Indicators/Indicator-ChoppinessIndex),
+  [VerticalHorizontalFilter](/Indicators/Indicator-VerticalHorizontalFilter),
+  [Coppock](/Indicators/Indicator-Coppock), [Pmo](/Indicators/Indicator-Pmo), [ZScore](/Indicators/Indicator-ZScore),
+  [MassIndex](/Indicators/Indicator-MassIndex), [Vortex](/Indicators/Indicator-Vortex), [Tsi](/Indicators/Indicator-Tsi),
+  [Smma](/Indicators/Indicator-Smma), [Trima](/Indicators/Indicator-Trima), [Zlema](/Indicators/Indicator-Zlema),
+  [Vwma](/Indicators/Indicator-Vwma), [BollingerBandwidth](/Indicators/Indicator-BollingerBandwidth),
+  [PercentB](/Indicators/Indicator-PercentB).
 
 See the [Indicators Overview](Indicators-Overview) for the complete catalogue
 organised by family.
@@ -139,8 +139,8 @@ organised by family.
 - A few trivial transforms (`AVGPRICE`, `MIDPOINT`, `MIDPRICE`).
 
 (Hilbert-transform studies are covered: Wickra ships
-[HilbertDominantCycle](Indicator-HilbertDominantCycle),
-[InstantaneousTrendline](Indicator-InstantaneousTrendline) and the related
+[HilbertDominantCycle](/Indicators/Indicator-HilbertDominantCycle),
+[InstantaneousTrendline](/Indicators/Indicator-InstantaneousTrendline) and the related
 Ehlers cycle indicators.)
 
 If you need one of these,
