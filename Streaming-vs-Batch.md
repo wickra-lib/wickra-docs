@@ -114,29 +114,23 @@ Wickra's `update` is the opposite: each new bar is O(1) because the
 recursive smoothing state is already inside the indicator. You never carry
 history just to recompute it.
 
-The numbers below are reproduced from the project README, where
-`python -m benchmarks.compare_libraries` is the source script.
+The project README carries the full, current benchmark tables;
+`python -m benchmarks.compare_libraries` and `cargo bench -p wickra-bench` are
+the source scripts. In summary:
 
-### Batch — single full pass over a 20 000-bar series
+- **Python batch** (20 000-bar full pass): Wickra runs each indicator in
+  roughly 60–150 µs — about 3–28× faster than `finta`, the fastest pure-Python
+  peer that installs cleanly on a desktop.
+- **Python streaming** (per tick, O(1) `update`): Wickra updates in roughly
+  0.05–0.09 µs/tick, about 9–57× faster than `talipp`, the only Python library
+  with a true incremental API.
+- **Rust core** (vs the other Rust TA crates `kand`, `ta-rs`, `yata`): an
+  honest mixed picture — Wickra leads RSI, Bollinger and ATR, and trails the
+  leaner crates on the pure recurrences (EMA, MACD) and SMA. The per-indicator
+  numbers, including the losses, are in the README.
 
-| Indicator           | **★&nbsp;Wickra**   | finta                       | talipp                        |
-|---------------------|---------------------|-----------------------------|-------------------------------|
-| SMA(20)             | **95.6 µs ★**       | 343.5 µs (3.6× slower)      | 7 640.6 µs (79.9× slower)     |
-| EMA(20)             | **64.6 µs ★**       | 223.1 µs (3.5× slower)      | 12 160.9 µs (188.2× slower)   |
-| RSI(14)             | **126.2 µs ★**      | 1 107.1 µs (8.8× slower)    | 15 792.2 µs (125.1× slower)   |
-| MACD(12, 26, 9)     | **119.0 µs ★**      | 531.8 µs (4.5× slower)      | 49 788.1 µs (418.2× slower)   |
-| Bollinger(20, 2.0)  | **105.3 µs ★**      | 812.0 µs (7.7× slower)      | 130 938.3 µs (1 243.7× slower)|
-| ATR(14)             | **123.5 µs ★**      | 5 144.8 µs (41.7× slower)   | 28 816.0 µs (233.4× slower)   |
-
-### Streaming — per-tick latency after seeding with 5 000 historical bars
-
-| Indicator | **★&nbsp;Wickra (per tick)** | talipp (per tick)         |
-|-----------|------------------------------|---------------------------|
-| RSI(14)   | **0.119 µs ★**               | 1.644 µs (13.8× slower)   |
-
-The streaming gap widens linearly with how much history a batch-only library
-has to recompute on every new tick; the table above is the gap at a 5 000-bar
-seed followed by 15 000 live updates.
+The streaming advantage over batch-only libraries widens linearly with how much
+history they must recompute on every new tick.
 
 ## Practical consequences
 
