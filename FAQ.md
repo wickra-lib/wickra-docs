@@ -77,11 +77,13 @@ that overflows surfaces an error instead of producing a corrupted candle
 
 ## How fast is Wickra?
 
-The streaming path is O(1) per `update` — the per-tick cost does not grow
-with how much history you have already seen. The README has a benchmark
-table comparing Wickra against `finta` and `talipp`; the gap is roughly
-10–30× on batch workloads and ~17× per tick on a streaming RSI seeded
-with 2 000 historical bars.
+The streaming path is O(1) per `update` — the per-tick cost does not grow with
+how much history you have already seen. Against the pure-Python libraries the
+gap is large: roughly 3–28× faster than `finta` on batch workloads and 9–57×
+faster per tick than `talipp` (the only incremental Python peer). Against the
+other Rust TA crates (`kand`, `ta-rs`, `yata`) it is an honest mixed picture —
+Wickra leads on some indicators (RSI, Bollinger, ATR) and trails the leaner
+crates on others (EMA, MACD, SMA). The README has the full benchmark tables.
 
 ## How do I add a custom indicator?
 
