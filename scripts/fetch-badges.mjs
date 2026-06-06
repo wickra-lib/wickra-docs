@@ -61,6 +61,24 @@ for (const b of badges) {
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const svg = await res.text()
     if (!svg.includes('<svg')) throw new Error('response is not an SVG')
+    // A badge host (shields.io especially) can answer HTTP 200 with a
+    // well-formed SVG whose *text* is an error — "unable to select next github
+    // token from pool", "invalid", "inaccessible", ... — instead of a value.
+    // Snapshotting that would replace a real version with an error string, so
+    // detect it and fall through to keeping the previous good snapshot below.
+    const valueText = ((svg.match(/<text[^>]*>([^<]*)<\/text>/g) || []).pop() || '')
+      .replace(/<[^>]+>/g, '')
+      .trim()
+    const valueLower = valueText.toLowerCase()
+    const errorMarkers = ['unable to select', 'token from pool', 'inaccessible', 'invalid', 'no response', 'not found']
+    if (errorMarkers.some((m) => valueLower.includes(m))) {
+      throw new Error(`badge value is an upstream error: "${valueText}"`)
+    }
+    // Version badges must read like a version (e.g. "v0.5.8"); anything else is
+    // an upstream error that slipped past the marker list above.
+    if (['release', 'crates', 'pypi', 'npm'].includes(b.slug) && !/^v?\d/.test(valueText)) {
+      throw new Error(`version badge value is not a version: "${valueText}"`)
+    }
     writeFileSync(resolve(outDir, `${b.slug}.svg`), svg)
     const { width, height } = dimsOf(svg)
     manifest.push({ alt: b.alt, href: b.href, file, width, height })
