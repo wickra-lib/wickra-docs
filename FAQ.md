@@ -79,7 +79,7 @@ that overflows surfaces an error instead of producing a corrupted candle
 
 The streaming path is O(1) per `update` — the per-tick cost does not grow with
 how much history you have already seen. Against the pure-Python libraries the
-gap is large: roughly 3–28× faster than `finta` on batch workloads and 9–58×
+gap is large: roughly 6–47× faster than `finta` on batch workloads and 11–56×
 faster per tick than `talipp` (the only incremental Python peer). Against the
 other Rust TA crates (`kand`, `ta-rs`, `yata`) it is an honest mixed picture —
 Wickra leads on some indicators (RSI, Bollinger, ATR) and trails the leaner
