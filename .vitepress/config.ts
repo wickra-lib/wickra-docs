@@ -124,6 +124,14 @@ export default defineConfig({
     siteTitle: 'Wickra',
     logo: { src: '/wickra-mark.svg', alt: 'Wickra' },
 
+    // The header logo + site title link to the marketing site root, not the docs
+    // root. VitePress defaults logoLink to the docs home ('/'), which on
+    // docs.wickra.org loops back to docs.wickra.org/ instead of going "home" to
+    // the apex domain. Point it at wickra.org so the brand mark behaves as a
+    // back-to-site affordance, consistent with the nav (Demo/Benchmarks/API all
+    // point at wickra.org).
+    logoLink: 'https://wickra.org/',
+
     // Shared top-level nav, kept 1:1 with the marketing site (wickra.org).
     // On-site targets are relative (SPA navigation); targets that live on the
     // marketing site are absolute. wickra.org mirrors this list with the
