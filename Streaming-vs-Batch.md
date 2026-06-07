@@ -119,10 +119,10 @@ The project README carries the full, current benchmark tables;
 the source scripts. In summary:
 
 - **Python batch** (20 000-bar full pass): Wickra runs each indicator in
-  roughly 60–150 µs — about 3–28× faster than `finta`, the fastest pure-Python
+  roughly 22–130 µs — about 6–47× faster than `finta`, the fastest pure-Python
   peer that installs cleanly on a desktop.
 - **Python streaming** (per tick, O(1) `update`): Wickra updates in roughly
-  0.05–0.09 µs/tick, about 9–58× faster than `talipp`, the only Python library
+  0.06–0.11 µs/tick, about 11–56× faster than `talipp`, the only Python library
   with a true incremental API.
 - **Rust core** (vs the other Rust TA crates `kand`, `ta-rs`, `yata`): an
   honest mixed picture — Wickra leads RSI, Bollinger and ATR, and trails the
