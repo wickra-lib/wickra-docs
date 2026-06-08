@@ -163,7 +163,6 @@ export default defineConfig({
       {
         text: 'Links',
         items: [
-          { text: 'Changelog', link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md' },
           { text: 'crates.io', link: 'https://crates.io/crates/wickra' },
           { text: 'PyPI', link: 'https://pypi.org/project/wickra/' },
           { text: 'npm', link: 'https://www.npmjs.com/package/wickra' },
