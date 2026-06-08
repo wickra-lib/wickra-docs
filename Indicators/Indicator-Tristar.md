@@ -119,6 +119,7 @@ console.log(t.update(100, 101, 99, 100.02)); // -1
 use wickra::{Candle, Indicator, Tristar};
 
 let mut t = Tristar::new();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     match t.update(candle) {
         Some(1.0)  => println!("tristar bottom"),

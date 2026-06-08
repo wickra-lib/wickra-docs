@@ -195,7 +195,7 @@ tables. The links below are a quick alphabetical-by-family index into the
 [TwiggsMoneyFlow](/Indicators/Indicator-TwiggsMoneyFlow) · [VolumeOscillator](/Indicators/Indicator-VolumeOscillator) ·
 [VolumePriceTrend](/Indicators/Indicator-VolumePriceTrend) · [VolumeRsi](/Indicators/Indicator-VolumeRsi) ·
 [VolumeWeightedMacd](/Indicators/Indicator-VolumeWeightedMacd) · [Vwap](/Indicators/Indicator-Vwap) ·
-[Vzo](/Indicators/Indicator-Vzo) · [WilliamsAd](/Indicators/Indicator-WilliamsAd)
+[Vzo](/Indicators/Indicator-Vzo) · [Wad](/Indicators/Indicator-Wad)
 
 ### Price Statistics (54)
 

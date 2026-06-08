@@ -112,6 +112,7 @@ console.log('warmupPeriod:', n.warmupPeriod()); // 20
 use wickra::{Candle, Indicator, NakedPoc};
 
 let mut n = NakedPoc::new(20, 24).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(poc) = n.update(candle) {
         // price drifting toward the naked poc -> expect a magnet / reaction

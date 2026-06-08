@@ -112,6 +112,7 @@ console.log('warmupPeriod:', cv.warmupPeriod()); // 14
 use wickra::{Candle, Indicator, CandleVolume};
 
 let mut cv = CandleVolume::new(14).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(box_) = cv.update(candle) {
         // box_.body > 0 && box_.width > 1.5 -> strong demand bar

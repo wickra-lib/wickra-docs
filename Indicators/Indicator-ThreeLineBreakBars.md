@@ -51,7 +51,7 @@ lines held for the reversal test.
 From `crates/wickra-core/src/indicators/three_line_break_bars.rs`:
 
 ```rust
-use wickra::{BarBuilder, Candle, ThreeLineBreakBars};
+use wickra::{BarBuilder, Candle, LineBreakBar, ThreeLineBreakBars};
 // ThreeLineBreakBars: Input = Candle, Output = Vec<LineBreakBar>
 const _: fn(&mut ThreeLineBreakBars, Candle) -> Vec<LineBreakBar> =
     <ThreeLineBreakBars as BarBuilder>::update;
@@ -129,6 +129,7 @@ console.log(bars.update(11.0)[0].direction); // 1
 use wickra::{BarBuilder, Candle, ThreeLineBreakBars};
 
 let mut bars = ThreeLineBreakBars::new(3).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     for line in bars.update(candle) {
         // a direction flip marks a confirmed three-line-break reversal

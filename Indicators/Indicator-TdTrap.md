@@ -117,6 +117,7 @@ console.log(td.update(112, 100, 109)); // 1
 use wickra::{Candle, Indicator, TdTrap};
 
 let mut td = TdTrap::new();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     match td.update(candle) {
         Some(1.0)  => println!("trap break up"),

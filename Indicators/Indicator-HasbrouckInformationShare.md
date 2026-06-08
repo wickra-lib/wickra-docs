@@ -118,6 +118,7 @@ console.log('warmupPeriod:', h.warmupPeriod()); // 21
 use wickra::{Indicator, HasbrouckInformationShare};
 
 let mut h = HasbrouckInformationShare::new(20).unwrap();
+let price_feed: Vec<(f64, f64)> = Vec::new(); // your live stream
 for (venue_a, venue_b) in price_feed {
     if let Some(share) = h.update((venue_a, venue_b)) {
         // share > 0.5 -> venue_a is leading price discovery

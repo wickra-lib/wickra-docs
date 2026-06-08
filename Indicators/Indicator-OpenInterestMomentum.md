@@ -42,7 +42,7 @@ From `crates/wickra-core/src/indicators/open_interest_momentum.rs`:
 
 ```rust
 use wickra::{Indicator, OpenInterestMomentum};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 // OpenInterestMomentum: Input = DerivativesTick, Output = f64
 const _: fn(&mut OpenInterestMomentum, DerivativesTick) -> Option<f64> =
     <OpenInterestMomentum as Indicator>::update;
@@ -75,7 +75,7 @@ order; only `open_interest` is used.
 
 ```rust
 use wickra::{BatchExt, Indicator, OpenInterestMomentum};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut o = OpenInterestMomentum::new(2)?;
@@ -114,9 +114,10 @@ console.log('warmupPeriod:', o.warmupPeriod()); // 6
 
 ```rust
 use wickra::{Indicator, OpenInterestMomentum};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 let mut o = OpenInterestMomentum::new(5).unwrap();
+let deriv_feed: Vec<DerivativesTick> = Vec::new(); // your live stream
 for tick in deriv_feed {
     if let Some(oim) = o.update(tick) {
         // oim > 0 with rising price -> new-long trend

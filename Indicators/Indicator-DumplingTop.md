@@ -116,6 +116,7 @@ console.log(d.batch([100, 102, 104, 105, 104, 102, 99, 97, 95]).at(-1)); // -1
 use wickra::{Candle, Indicator, DumplingTop};
 
 let mut d = DumplingTop::new(9).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if d.update(candle) == Some(-1.0) { println!("dumpling top"); }
 }

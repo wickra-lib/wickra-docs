@@ -38,7 +38,7 @@ From `crates/wickra-core/src/indicators/oi_to_volume_ratio.rs`:
 
 ```rust
 use wickra::{Indicator, OiToVolumeRatio};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 // OiToVolumeRatio: Input = DerivativesTick, Output = f64
 const _: fn(&mut OiToVolumeRatio, DerivativesTick) -> Option<f64> =
     <OiToVolumeRatio as Indicator>::update;
@@ -71,7 +71,7 @@ this).
 
 ```rust
 use wickra::{Indicator, OiToVolumeRatio};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut o = OiToVolumeRatio::new();
@@ -107,9 +107,10 @@ console.log(o.update(0, 100, 100, 100, 5000, 0, 0, 400, 600, 0, 0)); // 5
 
 ```rust
 use wickra::{Indicator, OiToVolumeRatio};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 let mut o = OiToVolumeRatio::new();
+let deriv_feed: Vec<DerivativesTick> = Vec::new(); // your live stream
 for tick in deriv_feed {
     if let Some(oivr) = o.update(tick) {
         // low oivr -> heavy churn vs outstanding interest

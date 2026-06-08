@@ -48,7 +48,7 @@ The `ticks` and `count` getters expose the configuration and in-progress group s
 From `crates/wickra-core/src/indicators/tick_bars.rs`:
 
 ```rust
-use wickra::{BarBuilder, Candle, TickBars};
+use wickra::{BarBuilder, Candle, TickBar, TickBars};
 // TickBars: Input = Candle, Output = Vec<TickBar>
 const _: fn(&mut TickBars, Candle) -> Vec<TickBar> = <TickBars as BarBuilder>::update;
 ```
@@ -122,6 +122,7 @@ console.log(bars.update(11.0, 11.5, 10.8, 11.2, 120.0)[0].volume); // 370
 use wickra::{BarBuilder, Candle, TickBars};
 
 let mut bars = TickBars::new(100).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     for bar in bars.update(candle) {
         // bar summarises 100 ticks of activity

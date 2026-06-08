@@ -116,6 +116,7 @@ console.log('warmupPeriod:', p.warmupPeriod()); // 20
 use wickra::{Candle, Indicator, ProfileShape};
 
 let mut p = ProfileShape::new(20, 24).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     match p.update(candle) {
         Some(1.0)  => println!("P-shape (short-covering / accumulation)"),

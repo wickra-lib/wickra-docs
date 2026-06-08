@@ -120,6 +120,7 @@ console.log(td.update(11, 14, 10, 13)); // 1
 use wickra::{Candle, Indicator, TdClopwin};
 
 let mut td = TdClopwin::new();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(s) = td.update(candle) { let _ = s; }
 }

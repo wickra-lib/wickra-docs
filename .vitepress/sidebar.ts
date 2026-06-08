@@ -867,8 +867,8 @@ export const sidebar = [
         "link": "/Indicators/Indicator-Vzo"
       },
       {
-        "text": "WilliamsAd",
-        "link": "/Indicators/Indicator-WilliamsAd"
+        "text": "Wad",
+        "link": "/Indicators/Indicator-Wad"
       }
     ]
   },

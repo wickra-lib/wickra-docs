@@ -52,7 +52,7 @@ length.
 From `crates/wickra-core/src/indicators/run_bars.rs`:
 
 ```rust
-use wickra::{BarBuilder, Candle, RunBars};
+use wickra::{BarBuilder, Candle, RunBar, RunBars};
 // RunBars: Input = Candle, Output = Vec<RunBar>
 const _: fn(&mut RunBars, Candle) -> Vec<RunBar> = <RunBars as BarBuilder>::update;
 ```
@@ -131,6 +131,7 @@ console.log(bars.update(13.0)[0].direction); // 1
 use wickra::{BarBuilder, Candle, RunBars};
 
 let mut bars = RunBars::new(10).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     for bar in bars.update(candle) {
         // a closed run bar marks a persistent directional push

@@ -111,6 +111,7 @@ console.log('warmupPeriod:', e.warmupPeriod()); // 14
 use wickra::{Candle, Indicator, Equivolume};
 
 let mut e = Equivolume::new(14).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(box_) = e.update(candle) {
         let ease = box_.height / box_.width.max(1e-9); // tall/narrow -> high

@@ -124,6 +124,7 @@ console.log(n.batch(Array.from({length: 12}, (_, i) => 100 + i)).at(-1)); // -1
 use wickra::{Candle, Indicator, NewPriceLines};
 
 let mut n = NewPriceLines::new(8).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     match n.update(candle) {
         Some(-1.0) => println!("up-run exhausted"),

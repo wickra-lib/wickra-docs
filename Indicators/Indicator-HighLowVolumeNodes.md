@@ -120,6 +120,7 @@ console.log('warmupPeriod:', h.warmupPeriod()); // 20
 use wickra::{Candle, Indicator, HighLowVolumeNodes};
 
 let mut h = HighLowVolumeNodes::new(20, 24).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(n) = h.update(candle) {
         // price approaching n.hvn -> expect support/resistance; n.lvn -> expect a fast move

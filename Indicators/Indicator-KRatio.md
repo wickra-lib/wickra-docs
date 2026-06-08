@@ -116,6 +116,7 @@ console.log(kr.batch([0.01, 0.02, 0.03]).at(-1)); // ~8.66
 use wickra::{Indicator, KRatio};
 
 let mut kr = KRatio::new(30).unwrap();
+let daily_returns: Vec<f64> = Vec::new(); // your live stream
 for r in daily_returns {
     if let Some(k) = kr.update(r) {
         // larger k -> straighter, steadier equity growth

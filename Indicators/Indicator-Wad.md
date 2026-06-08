@@ -1,4 +1,4 @@
-# WilliamsAd
+# Wad
 
 > Larry Williams' Accumulation/Distribution — a cumulative, **volume-free** line
 > that adds true-low accumulation on up-closes and true-high distribution on
@@ -31,24 +31,24 @@ today's low and yesterday's close); on a down-close it debits how far price
 closed below the *true high*; an unchanged close contributes nothing. The running
 total is the line. This is deliberately different from Chaikin's volume-weighted
 [`Adl`](/Indicators/Indicator-Adl). Source:
-`crates/wickra-core/src/indicators/williams_ad.rs`.
+`crates/wickra-core/src/indicators/wad.rs`.
 
 ## Parameters
 
 | Name | Type | Default | Valid range | Source | Description |
 |------|------|---------|-------------|--------|-------------|
-| — | — | — | — | None. | The Williams A/D line takes no parameters; `WilliamsAd::new()` is infallible. |
+| — | — | — | — | None. | The Williams A/D line takes no parameters; `Wad::new()` is infallible. |
 
 The `value` getter returns the current cumulative total if ready.
 
 ## Inputs / Outputs
 
-From `crates/wickra-core/src/indicators/williams_ad.rs`:
+From `crates/wickra-core/src/indicators/wad.rs`:
 
 ```rust
-use wickra::{Candle, Indicator, WilliamsAd};
-// WilliamsAd: Input = Candle, Output = f64
-const _: fn(&mut WilliamsAd, Candle) -> Option<f64> = <WilliamsAd as Indicator>::update;
+use wickra::{Candle, Indicator, Wad};
+// Wad: Input = Candle, Output = f64
+const _: fn(&mut Wad, Candle) -> Option<f64> = <Wad as Indicator>::update;
 ```
 
 A `Candle` in, an `Option<f64>` out. The Python binding takes a candle for
@@ -81,10 +81,10 @@ nothing; the first cumulative value lands on the second bar
 ### Rust
 
 ```rust
-use wickra::{BatchExt, Candle, Indicator, WilliamsAd};
+use wickra::{BatchExt, Candle, Indicator, Wad};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut wad = WilliamsAd::new();
+    let mut wad = Wad::new();
     let candles = [
         Candle::new(100.0, 101.0, 99.0, 100.0, 1_000.0, 0)?, // seed
         Candle::new(100.0, 102.0, 100.0, 101.0, 1_000.0, 0)?, // up-close: +1
@@ -112,7 +112,7 @@ Close rose from `100` to `101`; the true low is `min(100, 100) = 100`, so
 import numpy as np
 import wickra as ta
 
-wad = ta.WilliamsAd()
+wad = ta.Wad()
 high  = np.array([101, 102, 103], dtype=float)
 low   = np.array([ 99, 100, 101], dtype=float)
 close = np.array([100, 101, 102], dtype=float)
@@ -130,7 +130,7 @@ Output:
 ```javascript
 const ta = require('wickra');
 
-const wad = new ta.WilliamsAd();
+const wad = new ta.Wad();
 console.log('warmupPeriod:', wad.warmupPeriod()); // 2
 const high  = [101, 102, 103];
 const low   = [ 99, 100, 101];
@@ -141,9 +141,9 @@ console.log(wad.batch(high, low, close)); // [NaN, 1, 2]
 ### Streaming
 
 ```rust
-use wickra::{Candle, Indicator, WilliamsAd};
+use wickra::{Candle, Indicator, Wad};
 
-let mut wad = WilliamsAd::new();
+let mut wad = Wad::new();
 let mut last = None;
 for i in 0..20 {
     let base = 100.0 + f64::from(i);

@@ -45,7 +45,7 @@ in-progress value.
 From `crates/wickra-core/src/indicators/dollar_bars.rs`:
 
 ```rust
-use wickra::{BarBuilder, Candle, DollarBars};
+use wickra::{BarBuilder, Candle, DollarBar, DollarBars};
 // DollarBars: Input = Candle, Output = Vec<DollarBar>
 const _: fn(&mut DollarBars, Candle) -> Vec<DollarBar> = <DollarBars as BarBuilder>::update;
 ```
@@ -116,6 +116,7 @@ console.log(bars.update(10.0, 10.0, 10.0, 10.0, 60.0)[0].dollar); // 1200
 use wickra::{BarBuilder, Candle, DollarBars};
 
 let mut bars = DollarBars::new(50_000.0).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     for bar in bars.update(candle) {
         // each bar represents ~$50k of traded value

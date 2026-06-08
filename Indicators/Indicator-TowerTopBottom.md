@@ -119,6 +119,7 @@ console.log(t.update(110, 110.1, 99.9, 100)); // -1
 use wickra::{Candle, Indicator, TowerTopBottom};
 
 let mut t = TowerTopBottom::new();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     match t.update(candle) {
         Some(1.0)  => println!("tower bottom"),

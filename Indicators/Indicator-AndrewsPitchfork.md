@@ -120,6 +120,7 @@ console.log('warmupPeriod:', p.warmupPeriod()); // 5 (then swing-dependent)
 use wickra::{Candle, Indicator, AndrewsPitchfork};
 
 let mut p = AndrewsPitchfork::new(2).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(out) = p.update(candle) {
         // trade reversion to out.median, S/R at out.upper / out.lower

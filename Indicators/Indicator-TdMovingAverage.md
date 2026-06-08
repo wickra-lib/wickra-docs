@@ -120,6 +120,7 @@ console.log('warmupPeriod:', td.warmupPeriod()); // 13
 use wickra::{Candle, Indicator, TdMovingAverage};
 
 let mut td = TdMovingAverage::new(5, 13).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(out) = td.update(candle) {
         // out.st1 crossing out.st2 -> trend change

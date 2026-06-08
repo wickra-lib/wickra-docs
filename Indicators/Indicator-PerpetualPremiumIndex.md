@@ -38,7 +38,7 @@ From `crates/wickra-core/src/indicators/perpetual_premium_index.rs`:
 
 ```rust
 use wickra::{Indicator, PerpetualPremiumIndex};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 // PerpetualPremiumIndex: Input = DerivativesTick, Output = f64
 const _: fn(&mut PerpetualPremiumIndex, DerivativesTick) -> Option<f64> =
     <PerpetualPremiumIndex as Indicator>::update;
@@ -68,7 +68,7 @@ this).
 
 ```rust
 use wickra::{Indicator, PerpetualPremiumIndex};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut p = PerpetualPremiumIndex::new();
@@ -104,9 +104,10 @@ console.log(p.update(0, 101, 100, 101, 0, 0, 0, 0, 0, 0, 0)); // 0.01
 
 ```rust
 use wickra::{Indicator, PerpetualPremiumIndex};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 let mut p = PerpetualPremiumIndex::new();
+let deriv_feed: Vec<DerivativesTick> = Vec::new(); // your live stream
 for tick in deriv_feed {
     if let Some(premium) = p.update(tick) {
         // premium >> 0 -> crowded longs, funding pressure building

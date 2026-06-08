@@ -115,6 +115,7 @@ console.log(upr.batch([0.02, -0.01, 0.03, -0.02]).at(-1)); // ~1.118
 use wickra::{Indicator, UpsidePotentialRatio};
 
 let mut upr = UpsidePotentialRatio::new(20, 0.0).unwrap();
+let monthly_returns: Vec<f64> = Vec::new(); // your live stream
 for r in monthly_returns {
     if let Some(ratio) = upr.update(r) {
         // higher ratio -> more upside per unit of downside risk

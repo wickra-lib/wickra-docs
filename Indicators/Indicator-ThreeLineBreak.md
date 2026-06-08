@@ -123,6 +123,7 @@ console.log(t.batch(Array.from({length: 20}, (_, i) => 100 + i)).at(-1)); // 1
 use wickra::{Candle, Indicator, ThreeLineBreak};
 
 let mut t = ThreeLineBreak::new(3).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(dir) = t.update(candle) {
         // dir flips -> three-line-break reversal

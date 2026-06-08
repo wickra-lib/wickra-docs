@@ -116,6 +116,7 @@ console.log(f.batch([100, 98, 96, 95, 96, 98, 101, 103, 105]).at(-1)); // 1
 use wickra::{Candle, Indicator, FryPanBottom};
 
 let mut f = FryPanBottom::new(9).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if f.update(candle) == Some(1.0) { println!("frying pan bottom"); }
 }

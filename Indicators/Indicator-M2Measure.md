@@ -116,6 +116,7 @@ console.log(m2.batch([0.01, 0.02, 0.03, 0.04]).at(-1)); // ~0.0387
 use wickra::{Indicator, M2Measure};
 
 let mut m2 = M2Measure::new(20, 0.0, 0.02).unwrap();
+let monthly_returns: Vec<f64> = Vec::new(); // your live stream
 for r in monthly_returns {
     if let Some(m) = m2.update(r) {
         // m is the risk-matched return, comparable to the benchmark return
