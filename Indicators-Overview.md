@@ -23,24 +23,24 @@ The twenty-four families:
 | # | Family | Count | What it answers |
 |---|--------|-------|-----------------|
 | 1 | [Moving Averages](#moving-averages) | 26 | Where is the smoothed trend line? |
-| 2 | [Momentum Oscillators](#momentum-oscillators) | 34 | How fast is price changing; is it overbought? |
+| 2 | [Momentum Oscillators](#momentum-oscillators) | 33 | How fast is price changing; is it overbought? |
 | 3 | [Trend & Directional](#trend--directional) | 28 | Is there a trend, and which way? |
-| 4 | [Price Oscillators](#price-oscillators) | 14 | Difference-of-averages momentum around zero. |
-| 5 | [Volatility & Bands](#volatility--bands) | 18 | How wide is the range; where are the envelopes? |
-| 6 | [Bands & Channels](#bands--channels) | 11 | Price-envelope overlays beyond the volatility staples. |
-| 7 | [Trailing Stops](#trailing-stops) | 13 | Where is the stop-loss for this trend? |
-| 8 | [Volume](#volume) | 19 | Is volume confirming the move? |
-| 9 | [Price Statistics](#price-statistics) | 24 | Per-bar price transforms and rolling regressions / statistics. |
-| 10 | [Ehlers / Cycle (DSP)](#ehlers--cycle-dsp) | 19 | Cycle-extracting DSP filters and phase-aware tools. |
-| 11 | [Pivots & S/R](#pivots--sr) | 7 | Session-anchored pivot levels and swing detectors. |
-| 12 | [DeMark](#demark) | 12 | Tom DeMark's exhaustion / setup / countdown family. |
-| 13 | [Ichimoku & Charts](#ichimoku--charts) | 2 | Japanese cloud chart and smoothed candles. |
-| 14 | [Candlestick Patterns](#candlestick-patterns) | 60 | Classical 1- / 2- / 3-bar candle patterns. |
-| 15 | [Market Profile](#market-profile) | 5 | Session value-area / opening-range / IB levels. |
-| 16 | [Risk / Performance](#risk--performance) | 17 | Risk-adjusted return, drawdown, and tail-risk metrics. |
-| 17 | [Microstructure](#microstructure) | 13 | Order-book, trade-flow, price-impact and footprint analytics. |
-| 18 | [Derivatives](#derivatives) | 12 | Funding, open-interest, positioning, flow and basis on a perp/futures feed. |
-| 19 | [Alt-Chart Bars](#alt-chart-bars) | 3 | Price-driven Renko / Kagi / Point & Figure bar builders. |
+| 4 | [Price Oscillators](#price-oscillators) | 15 | Difference-of-averages momentum around zero. |
+| 5 | [Volatility & Bands](#volatility--bands) | 26 | How wide is the range; where are the envelopes? |
+| 6 | [Bands & Channels](#bands--channels) | 16 | Price-envelope overlays beyond the volatility staples. |
+| 7 | [Trailing Stops](#trailing-stops) | 19 | Where is the stop-loss for this trend? |
+| 8 | [Volume](#volume) | 26 | Is volume confirming the move? |
+| 9 | [Price Statistics](#price-statistics) | 54 | Per-bar price transforms and rolling regressions / statistics. |
+| 10 | [Ehlers / Cycle (DSP)](#ehlers--cycle-dsp) | 29 | Cycle-extracting DSP filters and phase-aware tools. |
+| 11 | [Pivots & S/R](#pivots--sr) | 12 | Session-anchored pivot levels and swing detectors. |
+| 12 | [DeMark](#demark) | 19 | Tom DeMark's exhaustion / setup / countdown family. |
+| 13 | [Ichimoku & Charts](#ichimoku--charts) | 7 | Japanese cloud chart and smoothed candles. |
+| 14 | [Candlestick Patterns](#candlestick-patterns) | 66 | Classical 1- / 2- / 3-bar candle patterns. |
+| 15 | [Market Profile](#market-profile) | 10 | Session value-area / opening-range / IB levels. |
+| 16 | [Risk / Performance](#risk--performance) | 28 | Risk-adjusted return, drawdown, and tail-risk metrics. |
+| 17 | [Microstructure](#microstructure) | 20 | Order-book, trade-flow, price-impact and footprint analytics. |
+| 18 | [Derivatives](#derivatives) | 17 | Funding, open-interest, positioning, flow and basis on a perp/futures feed. |
+| 19 | [Alt-Chart Bars](#alt-chart-bars) | 10 | Price-driven Renko / Kagi / Point & Figure bar builders. |
 | 20 | [Market Breadth](#market-breadth) | 15 | Universe-wide advance/decline participation. |
 | 21 | [Seasonality & Session](#seasonality--session) | 12 | When in the day / week / month does this happen? |
 | 22 | [Chart Patterns](#chart-patterns) | 8 | Swing-based classical chart patterns — double/triple tops, head & shoulders, triangles, wedges, flags, rectangles, cup & handle. |
@@ -207,6 +207,12 @@ around price.
 | `YangZhangVolatility` | Drift- and gap-robust OHLC blend of overnight, open-close and Rogers-Satchell. | `Candle` | `f64` | `[0, ∞)` (annualised percent) | `(period=20, trading_periods=252)` (Python) | `period + 1` | [Indicator-YangZhangVolatility](/Indicators/Indicator-YangZhangVolatility) |
 | `JumpIndicator` | Return-outlier flag vs trailing volatility (deviation from the mean). | `f64` | `f64` | `{−1, 0, 1}` | `(period, threshold)` | `period + 2` | [Indicator-JumpIndicator](/Indicators/Indicator-JumpIndicator) |
 | `RegimeLabel` | Volatility-quantile regime: `−1` calm / `0` normal / `+1` stressed. | `f64` | `f64` | `{−1, 0, 1}` | `(vol_period, lookback)` | `vol_period + lookback` | [Indicator-RegimeLabel](/Indicators/Indicator-RegimeLabel) |
+| `BipowerVariation` | Realized Bipower Variation — a jump-robust estimator of integrated variance built from products of *adjacent* absolute log returns instead of squares. | `f64` | `f64` | `[0, ∞)` (variance scale) | `(period = 20)` (Python) | `period + 1` | [Indicator-BipowerVariation](/Indicators/Indicator-BipowerVariation) |
+| `EwmaVolatility` | EWMA Volatility — the RiskMetrics exponentially-weighted volatility of log returns, reacting instantly to a shock and forgetting it at rate `λ`. | `f64` | `f64` | `[0, ∞)` (per-period volatility of log returns) | `(lambda = 0.94)` (Python) | `2` | [Indicator-EwmaVolatility](/Indicators/Indicator-EwmaVolatility) |
+| `Garch11` | GARCH(1,1) conditional volatility — the EWMA recursion plus a constant `ω` that anchors the estimate to a finite, mean-reverting long-run variance. | `f64` | `f64` | `(0, ∞)` (strictly positive per-period volatility) | `(omega = 0.000002, alpha = 0.1, beta = 0.88)` (Python) | `2` | [Indicator-Garch11](/Indicators/Indicator-Garch11) |
+| `VolatilityCone` | Volatility Cone — where the current realized volatility sits inside its own historical envelope (min / median / max / percentile) over a lookback window. | `Candle` | `VolatilityConeOutput` | `current/min/median/max` in `[0, ∞)`; `percentile` in `[0, 100]` | `(window = 20, lookback = 60)` (Python) | `window + lookback` | [Indicator-VolatilityCone](/Indicators/Indicator-VolatilityCone) |
+| `VolatilityOfVolatility` | Volatility of Volatility — the standard deviation of a rolling realized- volatility series; how unstable the volatility regime itself is. | `f64` | `f64` | `[0, ∞)` | `(vol_window = 20, vov_window = 20)` (Python) | `vol_window + vov_window` | [Indicator-VolatilityOfVolatility](/Indicators/Indicator-VolatilityOfVolatility) |
+| `VolatilityRatio` | Schwager's Volatility Ratio — today's true range divided by the EMA of the prior true ranges; a reading above `2.0` marks a wide-ranging day. | `Candle` | `f64` | `[0, ∞)` (1.0 = today's range equals its typical level) | `(period = 14)` (Python) | `period + 2` | [Indicator-VolatilityRatio](/Indicators/Indicator-VolatilityRatio) |
 
 ## Bands & Channels
 
@@ -228,6 +234,11 @@ swings, or volume-weighted stddev.
 | `TtmSqueeze` | BB-inside-KC squeeze flag + detrended-close momentum (LinReg). | `Candle` | `(squeeze, momentum)` | `squeeze ∈ {0,1}`; `momentum` unbounded | `(period=20, bb_mult=2.0, kc_mult=1.5)` (Python) | `period` | [Indicator-TtmSqueeze](/Indicators/Indicator-TtmSqueeze) |
 | `FractalChaosBands` | Step-function envelope of the latest Bill Williams 5-bar fractals. | `Candle` | `(upper, lower)` | unbounded (price scale) | `k = 2` (Python) | `2k + 1` plus first fractal of each kind | [Indicator-FractalChaosBands](/Indicators/Indicator-FractalChaosBands) |
 | `VwapStdDevBands` | Cumulative VWAP `± k·σ` (volume-weighted standard deviation). | `Candle` | `(upper, middle, lower, stddev)` | unbounded (price scale) | `multiplier = 2.0` (Python) | `1` | [Indicator-VwapStdDevBands](/Indicators/Indicator-VwapStdDevBands) |
+| `BomarBands` | Adaptive percentage bands around a moving average, sized so that a fixed `coverage` fraction of recent closes falls inside them. | `f64` | `BomarBandsOutput { upper, middle, lower }` | unbounded; `lower ≤ middle ≤ upper` | `period = 20`, `coverage = 0.85` | `period` (exact — first emission on bar `period`) | [Indicator-BomarBands](/Indicators/Indicator-BomarBands) |
+| `MedianChannel` | A robust analogue of Bollinger Bands: centre on the rolling median, size by the median absolute deviation (MAD). | `f64` | `MedianChannelOutput { upper, middle, lower }` | unbounded; `lower ≤ middle ≤ upper` | `period = 20`, `multiplier = 2.0` | `period` (exact — first emission on bar `period`) | [Indicator-MedianChannel](/Indicators/Indicator-MedianChannel) |
+| `ProjectionBands` | Mel Widner's forward-projected high/low envelope: fit a separate regression to the highs and to the lows, slide every bar forward along its slope, and take the running max / min. | `Candle` | `ProjectionBandsOutput { upper, middle, lower }` | unbounded; `lower ≤ middle ≤ upper` | `period = 14` | `period` (exact — first emission on bar `period`) | [Indicator-ProjectionBands](/Indicators/Indicator-ProjectionBands) |
+| `ProjectionOscillator` | Mel Widner's companion to the projection bands: where the close sits inside the `[lower, upper]` projection envelope, scaled to `0..100`. | `Candle` | `f64` | `0..100` (≈) — `0` on the lower band, `100` on the upper, `50` at the midline | `period = 14` | `period` (exact — first emission on bar `period`) | [Indicator-ProjectionOscillator](/Indicators/Indicator-ProjectionOscillator) |
+| `QuartileBands` | A non-parametric envelope drawn at the rolling 25th / 50th / 75th percentiles — order statistics instead of mean ± sigma. | `f64` | `QuartileBandsOutput { upper, middle, lower }` | unbounded; `lower ≤ middle ≤ upper` | `period = 20` | `period` (exact — first emission on bar `period`) | [Indicator-QuartileBands](/Indicators/Indicator-QuartileBands) |
 
 ## Trailing Stops
 
@@ -249,6 +260,12 @@ when price closes through them.
 | `StepTrailingStop` | Grid-snapped trail; ratchets in discrete `step_size` increments. | `f64` | `f64` | unbounded (price scale, snapped) | `step_size = 1.0` | `1` | [Indicator-StepTrailingStop](/Indicators/Indicator-StepTrailingStop) |
 | `RenkoTrailingStop` | Renko-brick-anchored trail; anchor moves only after full-brick advance. | `f64` | `f64` | unbounded (price scale) | `block_size = 1.0` | `1` | [Indicator-RenkoTrailingStop](/Indicators/Indicator-RenkoTrailingStop) |
 | `SarExt` | Extended Parabolic SAR: start value, reversal offset, separate long/short acceleration, signed output. | `Candle` | `f64` (signed) | price scale; sign = direction | Wilder defaults `(0.02, 0.02, 0.20)` both ways | `2` | [Indicator-SarExt](/Indicators/Indicator-SarExt) |
+| `AtrRatchet` | Perry Kaufman's time-based volatility stop — it tightens by a fixed fraction of ATR **every bar**, so a stalled trade is squeezed out even in a flat market. | `Candle` | `AtrRatchetOutput { value, direction }` | `value` in price units; `direction` ∈ {−1, +1} | `(atr_period = 14, start_mult = 4.0, increment = 0.1)` | `atr_period` | [Indicator-AtrRatchet](/Indicators/Indicator-AtrRatchet) |
+| `ElderSafeZone` | Alexander Elder's trailing stop placed a multiple of the **average market noise** away from price — wide enough to survive normal pullbacks, tight enough to exit a real reversal. | `Candle` | `ElderSafeZoneOutput { value, direction }` | `value` in price units; `direction` ∈ {−1, +1} | `(period = 14, coeff = 2.0)` | `period + 1` | [Indicator-ElderSafeZone](/Indicators/Indicator-ElderSafeZone) |
+| `KaseDevStop` | Cynthia Kase's volatility trailing stop, built on the **standard deviation of the two-bar true range** — it ratchets in the trend's favour and flips on a close through the line. | `Candle` | `KaseDevStopOutput { value, direction }` | `value` in price units; `direction` ∈ {−1, +1} | `(period = 30, dev = 1.0)` | `period + 1` | [Indicator-KaseDevStop](/Indicators/Indicator-KaseDevStop) |
+| `ModifiedMaStop` | A trailing stop riding the Modified Moving Average (SMMA / Wilder's RMA), ratcheted so it only moves in the trend's favour and flips on a decisive cross. | `Candle` | `ModifiedMaStopOutput { value, direction }` | `value` in price units; `direction` ∈ {−1, +1} | `(period = 14)` (Python) | `period` | [Indicator-ModifiedMaStop](/Indicators/Indicator-ModifiedMaStop) |
+| `Nrtr` | Nick Rypock Trailing Reverse — a scale-free **percentage** trailing-reverse stop that follows the trend extreme and flips when price retraces by a fixed percentage. | `Candle` | `NrtrOutput { value, direction }` | `value` in price units; `direction` ∈ {−1, +1} | `(pct = 2.0)` (Python) | `1` | [Indicator-Nrtr](/Indicators/Indicator-Nrtr) |
+| `TimeBasedStop` | A holding-period timer — it ignores price entirely and fires after a fixed number of bars, reporting the fraction of the window elapsed. | `Candle` | `f64` | `[0, 1]` (`1.0` = stop fired) | `(max_bars = 10)` (Python) | `1` | [Indicator-TimeBasedStop](/Indicators/Indicator-TimeBasedStop) |
 
 ## Volume
 
@@ -275,6 +292,13 @@ Price moves weighted or confirmed by traded volume. All take `Candle` input.
 | `Pvi` | Positive Volume Index — mirror of NVI; updates only on volume expansion. | `Candle` | `f64` | unbounded (anchored at 1000) | (no parameters) | `2` | [Indicator-Pvi](/Indicators/Indicator-Pvi) |
 | `DemandIndex` | Sibbet's EMA-smoothed buying-vs-selling pressure ratio. | `Candle` | `f64` | unbounded (typically `[-100, +100]`) | `period = 20` | `period + 1` | [Indicator-DemandIndex](/Indicators/Indicator-DemandIndex) |
 | `MarketFacilitationIndex` | Williams' `(high − low) / volume` per-bar facilitation. | `Candle` | `f64` | `[0, ∞)` | (no parameters) | `1` | [Indicator-MarketFacilitationIndex](/Indicators/Indicator-MarketFacilitationIndex) |
+| `BetterVolume` | A Volume-Spread-Analysis "effort versus result" oscillator — positive means a bar spent more volume than its range warranted (churn), negative means it moved far on light volume (ease of movement). | `Candle` | `f64` | centred near `0` (`+` = churn, `−` = ease of movement) | `(period = 20)` (Python) | `period` | [Indicator-BetterVolume](/Indicators/Indicator-BetterVolume) |
+| `IntradayIntensity` | David Bostian's Intraday Intensity Index — a cumulative line weighting each bar's volume by where the close sits inside its range. | `Candle` | `f64` | `(−∞, +∞)` (a cumulative line; only slope/divergence matters) | (no parameters) | `1` | [Indicator-IntradayIntensity](/Indicators/Indicator-IntradayIntensity) |
+| `TradeVolumeIndex` | Cumulative volume signed by a **minimum-tick** rule — adds volume on up-ticks, subtracts on down-ticks, and holds direction through sub-tick churn. | `Candle` | `f64` | `(−∞, +∞)` (a cumulative line; only slope/divergence matters) | `(min_tick = 0.5)` (Python) | `2` | [Indicator-TradeVolumeIndex](/Indicators/Indicator-TradeVolumeIndex) |
+| `TwiggsMoneyFlow` | Colin Twiggs' refinement of Chaikin Money Flow — true-range boundaries and Wilder exponential smoothing make a faster, gap-aware `[−1, +1]` money-flow oscillator. | `Candle` | `f64` | `≈ [−1, +1]` (positive = buying pressure) | `(period = 21)` (Python) | `period + 1` | [Indicator-TwiggsMoneyFlow](/Indicators/Indicator-TwiggsMoneyFlow) |
+| `VolumeRsi` | Wilder's RSI applied to the volume stream instead of price — a `[0, 100]` oscillator of expanding versus contracting participation. | `Candle` | `f64` | `[0, 100]` (50 = balanced volume changes) | `(period = 14)` (Python) | `period + 1` | [Indicator-VolumeRsi](/Indicators/Indicator-VolumeRsi) |
+| `VolumeWeightedMacd` | MACD built on volume-weighted moving averages — heavy-volume bars dominate the trend estimate, so crossovers reflect where real participation occurred. | `Candle` | `VolumeWeightedMacdOutput { macd, signal, histogram }` | `(−∞, +∞)` for each field | `(fast = 12, slow = 26, signal = 9)` | `slow + signal − 1` | [Indicator-VolumeWeightedMacd](/Indicators/Indicator-VolumeWeightedMacd) |
+| `Wad` | Larry Williams' Accumulation/Distribution — a cumulative, **volume-free** line that adds true-low accumulation on up-closes and true-high distribution on down-closes. | `Candle` | `f64` | `(−∞, +∞)` (a cumulative line; only slope/divergence matters) | (no parameters) | `2` | [Indicator-Wad](/Indicators/Indicator-Wad) |
 
 ## Price Statistics
 
@@ -331,6 +355,11 @@ Per-bar price transforms and rolling least-squares regressions.
 | `SpreadBollingerBands` | Bollinger bands on the spread `a − b` of two series. | `(f64, f64)` | `{middle, upper, lower, percent_b}` | bands in spread units | `(period, num_std)` | `period` | [Indicator-SpreadBollingerBands](/Indicators/Indicator-SpreadBollingerBands) |
 | `BetaNeutralSpread` | Rolling OLS residual of `a` on `b` — the beta-neutral spread. | `(f64, f64)` | `f64` | unbounded | `period` | `period` | [Indicator-BetaNeutralSpread](/Indicators/Indicator-BetaNeutralSpread) |
 | `DistanceSsd` | Gatev sum of squared deviations between two normalised series. | `(f64, f64)` | `f64` | `[0, ∞)` | `period` | `period` | [Indicator-DistanceSsd](/Indicators/Indicator-DistanceSsd) |
+| `JarqueBera` | The Jarque-Bera statistic on a rolling window — a normality test that flags fat-tailed or skewed return regimes from skewness and excess kurtosis. | `f64` | `f64` | `[0, ∞)` (0 = perfectly normal sample) | `(period = 50)` (Python) | `period` | [Indicator-JarqueBera](/Indicators/Indicator-JarqueBera) |
+| `KendallTau` | Kendall's tau-b — a robust rank correlation between two series measured by the balance of concordant and discordant pairs, with a tie correction. | `(f64, f64)` | `f64` | `[−1, +1]` | `(period = 20)` (Python) | `period` | [Indicator-KendallTau](/Indicators/Indicator-KendallTau) |
+| `RollingMinMaxScaler` | The streaming `MinMaxScaler` — maps the current value onto `[0, 1]` against the min and max of the trailing window. | `f64` | `f64` | `[0, 1]` (0 = window low, 1 = window high) | `(period = 14)` (Python) | `period` | [Indicator-RollingMinMaxScaler](/Indicators/Indicator-RollingMinMaxScaler) |
+| `SampleEntropy` | Richman & Moorman's Sample Entropy (SampEn) — how *regular* a window is: the negative log probability that points similar for `m` steps stay similar at the next step. | `f64` | `f64` | `[0, ∞)` (low = regular/predictable, high = irregular) | `(period = 50, m = 2, r_factor = 0.2)` | `period` | [Indicator-SampleEntropy](/Indicators/Indicator-SampleEntropy) |
+| `ShannonEntropy` | The Shannon information entropy (in bits) of a rolling window's binned distribution — a regime gauge for how spread-out and unpredictable recent prices are. | `f64` | `f64` | `[0, log2(bins)]` | `(period = 32, bins = 8)` (Python) | `period` | [Indicator-ShannonEntropy](/Indicators/Indicator-ShannonEntropy) |
 
 ## Ehlers / Cycle (DSP)
 
@@ -358,6 +387,16 @@ adaptive smoothers. All take `f64` price input.
 | `HtPhasor` | Hilbert-transform in-phase / quadrature components of the analytic signal. | `f64` | `(inphase, quadrature)` | unbounded | none | `19` | [Indicator-HtPhasor](/Indicators/Indicator-HtPhasor) |
 | `HtDcPhase` | Hilbert-transform dominant-cycle phase, in degrees. | `f64` | `f64` | bounded phase band (deg) | none | `50` | [Indicator-HtDcPhase](/Indicators/Indicator-HtDcPhase) |
 | `HtTrendMode` | Ehlers' trend (`1`) vs cycle (`0`) classification. | `f64` | `f64` | `{0, 1}` | none | `50` | [Indicator-HtTrendMode](/Indicators/Indicator-HtTrendMode) |
+| `AdaptiveCci` | Lambert's CCI with an efficiency-ratio-adaptive centre line — it leads in trends and stays calm in chop. | `Candle` | `f64` | unbounded around `0` (≈ `±100` bands) | `(period = 20)` (Python) | `period` | [Indicator-AdaptiveCci](/Indicators/Indicator-AdaptiveCci) |
+| `AdaptiveRsi` | Wilder's RSI whose up/down averaging adapts to trendiness via Kaufman's efficiency ratio — fast in clean moves, smooth through chop. | `f64` | `f64` | `[0, 100]` (50 = neutral) | `(period = 14)` (Python) | `period + 1` | [Indicator-AdaptiveRsi](/Indicators/Indicator-AdaptiveRsi) |
+| `AutocorrelationPeriodogram` | Ehlers' Autocorrelation Periodogram — estimates the market's **dominant cycle period** by correlating a roofing-filtered price with lagged copies of itself. | `f64` | `f64` | `[min_period, max_period]` | `(min_period = 10, max_period = 48)` | `max_period + 3` | [Indicator-AutocorrelationPeriodogram](/Indicators/Indicator-AutocorrelationPeriodogram) |
+| `BandpassFilter` | Ehlers' two-pole bandpass resonator — isolates the cyclic component around a target period, rejecting both trend and high-frequency noise. | `f64` | `f64` | zero-mean oscillator (price units) | `(period = 20, bandwidth = 0.3)` | `1` | [Indicator-BandpassFilter](/Indicators/Indicator-BandpassFilter) |
+| `CorrelationTrendIndicator` | Ehlers' CTI — the Pearson correlation of price against a straight time ramp; `+1` is a clean uptrend, `−1` a clean downtrend, `0` no linear trend. | `f64` | `f64` | `[−1, +1]` | `(period = 20)` (Python) | `period` | [Indicator-CorrelationTrendIndicator](/Indicators/Indicator-CorrelationTrendIndicator) |
+| `EvenBetterSinewave` | Ehlers' EBSW — a self-normalising cycle oscillator that swings cleanly in `[−1, +1]` regardless of price amplitude. | `f64` | `f64` | `[−1, +1]` | `(hp_period = 40, ssf_length = 10)` | `3` | [Indicator-EvenBetterSinewave](/Indicators/Indicator-EvenBetterSinewave) |
+| `HighpassFilter` | Ehlers' two-pole highpass filter — strips the low-frequency trend and leaves the cyclic content; the complement of the Decycler. | `f64` | `f64` | zero-mean (price units) | `(period = 48)` (Python) | `1` | [Indicator-HighpassFilter](/Indicators/Indicator-HighpassFilter) |
+| `Reflex` | Ehlers' near-zero-lag cycle oscillator — averages how far the SuperSmoothed price deviates from the straight line across the lookback, then self-normalises. | `f64` | `f64` | self-normalised, roughly `[−3, +3]` | `(period = 20)` (Python) | `period + 1` | [Indicator-Reflex](/Indicators/Indicator-Reflex) |
+| `Trendflex` | Ehlers' trend-sensitive companion to Reflex — averages how far the SuperSmoothed price sits above/below its recent values, then self-normalises. | `f64` | `f64` | self-normalised, roughly `[−3, +3]` | `(period = 20)` (Python) | `period + 1` | [Indicator-Trendflex](/Indicators/Indicator-Trendflex) |
+| `UniversalOscillator` | Ehlers' Universal Oscillator — whitens the price, SuperSmooths it, then AGC-normalises to a clean `[−1, +1]` cycle reading on any instrument. | `f64` | `f64` | `[−1, +1]` | `(period = 20)` (Python) | `3` | [Indicator-UniversalOscillator](/Indicators/Indicator-UniversalOscillator) |
 
 ## Pivots & S/R
 
@@ -374,6 +413,11 @@ session; swing detectors run continuously and mark structural pivots.
 | `DemarkPivots` | Open-conditional 1-tier pivot (different formula per bar direction). | `Candle` | `(pp, r1, s1)` | unbounded (price scale) | (no parameters) | `1` | [Indicator-DemarkPivots](/Indicators/Indicator-DemarkPivots) |
 | `WilliamsFractals` | Bill Williams' 5-bar swing-high / swing-low detector. | `Candle` | `(up, down: Option<f64>)` | unbounded (price scale) | (no parameters) | `5` | [Indicator-WilliamsFractals](/Indicators/Indicator-WilliamsFractals) |
 | `ZigZag` | Non-repainting percentage-threshold swing detector. | `Candle` | `(swing, direction)` | unbounded (price scale) | `threshold = 0.05` | `2` | [Indicator-ZigZag](/Indicators/Indicator-ZigZag) |
+| `AndrewsPitchfork` | Alan Andrews' median-line tool — a central line through three auto-detected swing pivots, flanked by two parallels, projected to the current bar. | `Candle` | `AndrewsPitchforkOutput { median, upper, lower }` | price units; `upper >= lower` | `(strength = 2)` (Python) | `2·strength + 1` (then swing-dependent) | [Indicator-AndrewsPitchfork](/Indicators/Indicator-AndrewsPitchfork) |
+| `CentralPivotRange` | The pivot point plus its two central lines — the width of the range forecasts a trending vs. | `Candle` | `CentralPivotRangeOutput { pivot, tc, bc }` | price units; `tc >= bc` | (no parameters) | `1` | [Indicator-CentralPivotRange](/Indicators/Indicator-CentralPivotRange) |
+| `MurreyMathLines` | T. | `Candle` | `MurreyMathLinesOutput { mm0_8 … mm8_8 }` | price units; `mm0_8 <= … <= mm8_8` | `(period = 64)` (Python) | `period` | [Indicator-MurreyMathLines](/Indicators/Indicator-MurreyMathLines) |
+| `PivotReversal` | A breakout signal off the most recent confirmed swing pivots — `+1` when price closes back above a swing high, `−1` when it closes below a swing low. | `Candle` | `f64` | `{−1, 0, +1}` | `(left = 2, right = 2)` (Python) | `left + right + 1` | [Indicator-PivotReversal](/Indicators/Indicator-PivotReversal) |
+| `VolumeWeightedSr` | A support/resistance band whose edges are the volume-weighted average of recent lows and highs — levels gravitate to where trading actually happened. | `Candle` | `VolumeWeightedSrOutput { support, resistance }` | price units; `support <= resistance` | `(period = 20)` (Python) | `period` | [Indicator-VolumeWeightedSr](/Indicators/Indicator-VolumeWeightedSr) |
 
 ## DeMark
 
@@ -394,6 +438,13 @@ oscillators, exhaustion detectors, and protective-stop levels.
 | `TdDifferential` | 2-bar pressure-shift reversal pattern. | `Candle` | `f64` | `{-1, 0, +1}` | (no parameters) | `2` | [Indicator-TdDifferential](/Indicators/Indicator-TdDifferential) |
 | `TdOpen` | Gap-and-fade reversal signal (open outside prior range). | `Candle` | `f64` | `{-1, 0, +1}` | (no parameters) | `2` | [Indicator-TdOpen](/Indicators/Indicator-TdOpen) |
 | `TdRiskLevel` | Protective-stop level from setup extreme + true range. | `Candle` | `(buy_risk, sell_risk)` | unbounded; NaN before first setup | `(4, 9)` | `lookback + 1` | [Indicator-TdRiskLevel](/Indicators/Indicator-TdRiskLevel) |
+| `TdCamouflage` | Tom DeMark's TD Camouflage — a one-bar reversal that looks weak (or strong) on the close but reveals hidden accumulation (or distribution) intrabar. | `Candle` | `f64` | `{−1, 0, +1}` | (no parameters) | `2` | [Indicator-TdCamouflage](/Indicators/Indicator-TdCamouflage) |
+| `TdClop` | Tom DeMark's TD Clop — a two-bar open/close reversal: the bar opens beyond the whole prior body and closes back beyond it. | `Candle` | `f64` | `{−1, 0, +1}` | (no parameters) | `2` | [Indicator-TdClop](/Indicators/Indicator-TdClop) |
+| `TdClopwin` | Tom DeMark's TD Clopwin — the inside-body cousin of TD Clop: the bar's open and close both sit inside the prior body, a compression bar whose direction hints at the next move. | `Candle` | `f64` | `{−1, 0, +1}` | (no parameters) | `2` | [Indicator-TdClopwin](/Indicators/Indicator-TdClopwin) |
+| `TdDWave` | Tom DeMark's TD D-Wave — an objective Elliott-style wave counter that labels the swing sequence `1–5` (impulse) then `A–C` (correction). | `Candle` | `f64` | `[1, 8]` (6/7/8 = corrective A/B/C) | `(strength = 2)` (Python) | `2·strength + 1` (then swing-dependent) | [Indicator-TdDWave](/Indicators/Indicator-TdDWave) |
+| `TdMovingAverage` | Tom DeMark's TD Moving Averages — a fast (ST1) / slow (ST2) ribbon on the median price; their relationship defines the trend. | `Candle` | `TdMovingAverageOutput { st1, st2 }` | price units | `(period_st1 = 5, period_st2 = 13)` | `period_st2` | [Indicator-TdMovingAverage](/Indicators/Indicator-TdMovingAverage) |
+| `TdPropulsion` | Tom DeMark's TD Propulsion — a two-bar continuation thrust: open on the trend side of the prior close, then close beyond the prior bar's extreme. | `Candle` | `f64` | `{−1, 0, +1}` | (no parameters) | `2` | [Indicator-TdPropulsion](/Indicators/Indicator-TdPropulsion) |
+| `TdTrap` | Tom DeMark's TD Trap — an inside ("trap") bar followed by a close beyond its range fires a directional breakout signal. | `Candle` | `f64` | `{−1, 0, +1}` | (no parameters) | `3` | [Indicator-TdTrap](/Indicators/Indicator-TdTrap) |
 
 ## Ichimoku & Charts
 
@@ -403,6 +454,11 @@ Japanese cloud charting and candle-smoothing transforms.
 |-----------|-----------|-------|--------|-------|----------|--------|-----------|
 | `Ichimoku` | Five-line cloud system (Tenkan, Kijun, Senkou A/B, Chikou). | `Candle` | 5 `Option<f64>` fields | unbounded (price scale) | `(9, 26, 52, 26)` | `senkou_b + displacement - 1` (77 at defaults) | [Indicator-Ichimoku](/Indicators/Indicator-Ichimoku) |
 | `HeikinAshi` | "Average bar" candle-smoothing transform. | `Candle` | `(open, high, low, close)` | unbounded (price scale) | (no parameters) | `1` | [Indicator-HeikinAshi](/Indicators/Indicator-HeikinAshi) |
+| `CandleVolume` | The candlestick analogue of Equivolume — each bar's signed body paired with a width proportional to its volume relative to the recent average. | `Candle` | `CandleVolumeOutput { body, width }` | `body` signed (price units); `width` ≥ 0 (1.0 = average) | `(period = 14)` (Python) | `period` | [Indicator-CandleVolume](/Indicators/Indicator-CandleVolume) |
+| `Equivolume` | Richard Arms' Equivolume chart as numbers — each bar is a box whose height is its price range and whose width is its volume relative to the recent average. | `Candle` | `EquivolumeOutput { height, width }` | `height` ≥ 0 (price units); `width` ≥ 0 (1.0 = average volume) | `(period = 14)` (Python) | `period` | [Indicator-Equivolume](/Indicators/Indicator-Equivolume) |
+| `HeikinAshiOscillator` | The Heikin-Ashi candle body (`ha_close − ha_open`), optionally EMA-smoothed, as a zero-line oscillator — the HA colour/strength turned into a number. | `Candle` | `f64` | zero-mean (price units) | `(period = 5)` (Python) | `period` | [Indicator-HeikinAshiOscillator](/Indicators/Indicator-HeikinAshiOscillator) |
+| `SmoothedHeikinAshi` | The Heikin-Ashi transform applied to EMA-smoothed OHLC — long, clean runs of same-colour candles for an even clearer trend read. | `Candle` | `SmoothedHeikinAshiOutput { open, high, low, close }` | price units; `low <= open,close <= high` | `(period = 10)` (Python) | `period` | [Indicator-SmoothedHeikinAshi](/Indicators/Indicator-SmoothedHeikinAshi) |
+| `ThreeLineBreak` | The trend direction of a line-break chart — a reversal needs the close to break the extreme of the last three lines, filtering out minor pullbacks. | `Candle` | `f64` | `{−1, +1}` | `(lines = 3)` (Python) | `2` (then data-dependent) | [Indicator-ThreeLineBreak](/Indicators/Indicator-ThreeLineBreak) |
 
 ## Candlestick Patterns
 
@@ -473,6 +529,12 @@ actionable signals.
 | `TasukiGap` | Counter candle into a gap that holds (continuation). | 3 | `f64` (`{-1, 0, +1}`) | (no parameters) | `3` | [Indicator-TasukiGap](/Indicators/Indicator-TasukiGap) |
 | `UniqueThreeRiver` | Black, new-low black inside, small white (bottom). | 3 | `f64` (`0` or `+1`) | (no parameters) | `3` | [Indicator-UniqueThreeRiver](/Indicators/Indicator-UniqueThreeRiver) |
 | `ConcealingBabySwallow` | Rare 4-bar capitulation; black run then engulf. | 4 | `f64` (`0` or `+1`) | (no parameters) | `4` | [Indicator-ConcealingBabySwallow](/Indicators/Indicator-ConcealingBabySwallow) |
+| `DumplingTop` | The bearish mirror of the Frying Pan Bottom — a gently rounded top (dome) confirmed by a close back below where the dome began. | `period` | `f64` (`{−1, 0}`) | `(period = 9)` (Python) | `period` | [Indicator-DumplingTop](/Indicators/Indicator-DumplingTop) |
+| `FryPanBottom` | A gently rounded (U-shaped) base confirmed by recovery above the rim — a bullish accumulation pattern. | `period` | `f64` (`{0, +1}`) | `(period = 9)` (Python) | `period` | [Indicator-FryPanBottom](/Indicators/Indicator-FryPanBottom) |
+| `HaramiCross` | A stronger Harami — a large real body followed by a Doji contained within it; the total indecision after a strong move makes the reversal more potent. | `2` | `f64` (`{−1, 0, +1}`) | (no parameters) | `2` | [Indicator-HaramiCross](/Indicators/Indicator-HaramiCross) |
+| `NewPriceLines` | The Japanese "eight/ten new price lines" exhaustion count — `count` consecutive higher (or lower) closes warns the run is stretched. | `2` | `f64` (`{−1, 0, +1}`) | `(count = 8)` (Python) | `2` | [Indicator-NewPriceLines](/Indicators/Indicator-NewPriceLines) |
+| `TowerTopBottom` | A tall directional bar, a small pause bar, then a tall opposite bar — two "towers" flanking a low wall, a compact reversal. | `3` | `f64` (`{−1, 0, +1}`) | (no parameters) | `3` | [Indicator-TowerTopBottom](/Indicators/Indicator-TowerTopBottom) |
+| `Tristar` | Three consecutive Doji where the middle gaps away from its neighbours — a rare top (middle above) or bottom (middle below) reversal. | `3` | `f64` (`{−1, 0, +1}`) | (no parameters) | `3` | [Indicator-Tristar](/Indicators/Indicator-Tristar) |
 
 ## Market Profile
 
@@ -486,6 +548,11 @@ All require manual `reset()` at session boundaries.
 | `TpoProfile` | Time-Price-Opportunity (letter) count per price bucket. | `Candle` | `(price_low, price_high, counts)` | `counts ≥ 0` | `(period=30, bin_count=50)` | `period` | [Indicator-TpoProfile](/Indicators/Indicator-TpoProfile) |
 | `InitialBalance` | First-N-bar session range, locked after warmup. | `Candle` | `(high, low)` | unbounded (price scale) | `period = 12` | `period` | [Indicator-InitialBalance](/Indicators/Indicator-InitialBalance) |
 | `OpeningRange` | Locked first-N range + live breakout-distance from midpoint. | `Candle` | `(high, low, breakout_distance)` | unbounded (price scale) | `period = 6` | `period` | [Indicator-OpeningRange](/Indicators/Indicator-OpeningRange) |
+| `CompositeProfile` | A multi-session volume profile reduced to its point of control and value area — the swing-horizon levels that matter. | `Candle` | `CompositeProfileOutput { poc, vah, val }` | price levels; `val <= poc <= vah` | `(period = 100, bins = 50, value_area_pct = 0.70)` | `period` | [Indicator-CompositeProfile](/Indicators/Indicator-CompositeProfile) |
+| `HighLowVolumeNodes` | The price levels of greatest (HVN) and least (LVN) acceptance in a rolling volume profile — magnets and rejection zones. | `Candle` | `HighLowVolumeNodesOutput { hvn, lvn }` | price levels | `(period = 20, bins = 24)` (Python) | `period` | [Indicator-HighLowVolumeNodes](/Indicators/Indicator-HighLowVolumeNodes) |
+| `NakedPoc` | The nearest untested ("virgin") point of control — a heavily-traded prior-session price the market has not yet revisited, an outstanding magnet. | `Candle` | `f64` | price units | `(session_len = 20, bins = 24)` (Python) | `session_len` (then session-paced) | [Indicator-NakedPoc](/Indicators/Indicator-NakedPoc) |
+| `ProfileShape` | Classifies the rolling volume profile by where its point of control sits: P-shape (+1), b-shape (−1), or D/normal (0). | `Candle` | `f64` | `{−1, 0, +1}` | `(period = 20, bins = 24)` (Python) | `period` | [Indicator-ProfileShape](/Indicators/Indicator-ProfileShape) |
+| `SinglePrints` | The count of price levels touched by exactly one bar — Market Profile "single prints" that mark fast, low-acceptance moves. | `Candle` | `f64` | `[0, bins]` | `(period = 20, bins = 24)` (Python) | `period` | [Indicator-SinglePrints](/Indicators/Indicator-SinglePrints) |
 
 ## Risk / Performance
 
@@ -514,6 +581,15 @@ take `(asset, benchmark)` pairs.
 | `Alpha` | Jensen's alpha — `mean(asset) − (rf + Beta·(mean_bench − rf))`. | `(f64, f64)` | `f64` | unbounded | `(period, rf)` | `period` | [Indicator-Alpha](/Indicators/Indicator-Alpha) |
 | `WinRate` | Fraction of strictly-positive returns over `period`. | `f64` | `f64` | `[0, 1]` | `period` | `period` | [Indicator-WinRate](/Indicators/Indicator-WinRate) |
 | `Expectancy` | Expected return per unit of average loss (R-multiple). | `f64` | `f64` | unbounded | `period` | `period` | [Indicator-Expectancy](/Indicators/Indicator-Expectancy) |
+| `BurkeRatio` | Return per unit of *severe* pain — mean return over the Euclidean norm of the equity-curve drawdowns. | `f64` | `f64` | unbounded (negative for net-losing windows) | `(period = 36)` (Python) | `period` | [Indicator-BurkeRatio](/Indicators/Indicator-BurkeRatio) |
+| `CommonSenseRatio` | One number that must win on both fronts — the profit factor (the body) multiplied by the tail ratio (the extremes). | `f64` | `f64` | `>= 0`, unbounded (`> 1` sound, `< 1` flawed) | `(period = 252)` (Python) | `period` | [Indicator-CommonSenseRatio](/Indicators/Indicator-CommonSenseRatio) |
+| `GainToPainRatio` | Jack Schwager's return-per-unit-of-downside — the sum of all returns over the sum of the absolute losses. | `f64` | `f64` | unbounded (negative for net-losing windows) | `(period = 12)` (Python) | `period` | [Indicator-GainToPainRatio](/Indicators/Indicator-GainToPainRatio) |
+| `KRatio` | Kestner's consistency score — the slope of the cumulative-return curve divided by the standard error of that slope. | `f64` | `f64` | unbounded (sign follows the equity-curve slope) | `(period = 30)` (Python) | `period` | [Indicator-KRatio](/Indicators/Indicator-KRatio) |
+| `M2Measure` | The Modigliani–Modigliani measure — the Sharpe ratio rescaled into the benchmark's return units. | `f64` | `f64` | unbounded | `(period = 20, risk_free = 0.0, benchmark_stddev = 0.02)` (Python) | `period` | [Indicator-M2Measure](/Indicators/Indicator-M2Measure) |
+| `MartinRatio` | The Ulcer Performance Index — mean return over the Ulcer Index (the RMS of percentage drawdowns). | `f64` | `f64` | unbounded (negative for net-losing windows) | `(period = 14)` (Python) | `period` | [Indicator-MartinRatio](/Indicators/Indicator-MartinRatio) |
+| `SterlingRatio` | Return per unit of *typical* pain — mean return over the average drawdown of the compounded equity curve. | `f64` | `f64` | unbounded (negative for net-losing windows) | `(period = 36)` (Python) | `period` | [Indicator-SterlingRatio](/Indicators/Indicator-SterlingRatio) |
+| `TailRatio` | The fatness of the right tail against the left — the 95th percentile of returns over the absolute 5th percentile. | `f64` | `f64` | `>= 0`, unbounded (`> 1` = fatter upside, `< 1` = fatter downside) | `(period = 252)` (Python) | `period` | [Indicator-TailRatio](/Indicators/Indicator-TailRatio) |
+| `UpsidePotentialRatio` | The Sortino purist's ratio — average outperformance above a threshold over the downside deviation below it. | `f64` | `f64` | `>= 0`, unbounded | `(period = 20, mar = 0.0)` (Python) | `period` | [Indicator-UpsidePotentialRatio](/Indicators/Indicator-UpsidePotentialRatio) |
 
 ## Microstructure
 
@@ -543,6 +619,9 @@ per-bucket profile. The Python and Node bindings accept these as plain arrays
 | `Vpin` | Volume-bucketed order-flow toxicity (informed trading). | `Trade` | `f64` | `[0, 1]` | `(bucket_volume, num_buckets)` | `num_buckets` | [Indicator-Vpin](/Indicators/Indicator-Vpin) |
 | `AmihudIlliquidity` | Mean `\|return\| / traded value`; price-impact liquidity proxy. | `Trade` | `f64` | `[0, ∞)` | `period` | `period + 1` | [Indicator-AmihudIlliquidity](/Indicators/Indicator-AmihudIlliquidity) |
 | `RollMeasure` | Effective spread from the serial covariance of price changes. | `Trade` | `f64` | `[0, ∞)` | `period >= 3` | `period + 1` | [Indicator-RollMeasure](/Indicators/Indicator-RollMeasure) |
+| `HasbrouckInformationShare` | Each venue's contribution to price discovery — the share of total return variance carried by the first of two synchronised price series. | `(f64, f64)` | `f64` | `[0, 1]` (share of venue x) | `(period = 20)` (Python) | `period + 1` | [Indicator-HasbrouckInformationShare](/Indicators/Indicator-HasbrouckInformationShare) |
+| `Pin` | The Probability of Informed Trading (EKOP) — estimated from the buy/sell imbalance over a rolling window of trades. | `Trade` | `f64` | `[0, 1]` | `(window = 20)` (Python) | `window` | [Indicator-Pin](/Indicators/Indicator-Pin) |
+| `TradeSignAutocorrelation` | The lag-1 autocorrelation of the trade-aggressor side — how strongly signed order flow persists, a footprint of order-splitting and informed execution. | `Trade` | `f64` | `[−1, +1]` | `(period = 20)` (Python) | `period` | [Indicator-TradeSignAutocorrelation](/Indicators/Indicator-TradeSignAutocorrelation) |
 
 ## Derivatives
 
@@ -567,6 +646,11 @@ per-tick `update`.
 | `LiquidationFeatures` | Long/short liquidation → net / total / imbalance. | `DerivativesTick` | `LiquidationFeaturesOutput` | `imbalance ∈ [−1, 1]` | (no parameters) | `1` | [Indicator-LiquidationFeatures](/Indicators/Indicator-LiquidationFeatures) |
 | `TermStructureBasis` | Dated-future premium to spot `(futures − index)/index`. | `DerivativesTick` | `f64` | unbounded around zero | (no parameters) | `1` | [Indicator-TermStructureBasis](/Indicators/Indicator-TermStructureBasis) |
 | `CalendarSpread` | Dated-future premium to the perpetual `(futures − mark)/mark`. | `DerivativesTick` | `f64` | unbounded around zero | (no parameters) | `1` | [Indicator-CalendarSpread](/Indicators/Indicator-CalendarSpread) |
+| `EstimatedLeverageRatio` | Open interest relative to aggregate position size — a proxy for how leveraged the outstanding positions are. | `DerivativesTick` | `f64` | `[0, ∞)` | (no parameters) | `1` | [Indicator-EstimatedLeverageRatio](/Indicators/Indicator-EstimatedLeverageRatio) |
+| `FundingImpliedApr` | The per-interval funding rate annualised — the carry cost (or yield) of holding a perpetual position for a year. | `DerivativesTick` | `f64` | signed fraction (×100 for %) | `(intervals_per_year = 1095)` (8h funding) | `1` | [Indicator-FundingImpliedApr](/Indicators/Indicator-FundingImpliedApr) |
+| `OiToVolumeRatio` | Open interest divided by traded volume — how much position is held versus turned over. | `DerivativesTick` | `f64` | `[0, ∞)` | (no parameters) | `1` | [Indicator-OiToVolumeRatio](/Indicators/Indicator-OiToVolumeRatio) |
+| `OpenInterestMomentum` | The percentage rate of change of open interest over a lookback — positioning trend rather than the single-tick delta. | `DerivativesTick` | `f64` | signed (percent) | `(period = 5)` (Python) | `period + 1` | [Indicator-OpenInterestMomentum](/Indicators/Indicator-OpenInterestMomentum) |
+| `PerpetualPremiumIndex` | The perpetual's mark price relative to spot — positive means the perp trades at a premium (net long demand), negative a discount. | `DerivativesTick` | `f64` | centred on `0` (fraction) | (no parameters) | `1` | [Indicator-PerpetualPremiumIndex](/Indicators/Indicator-PerpetualPremiumIndex) |
 
 ## Pick the right indicator for…
 
@@ -617,6 +701,13 @@ candle. They are close-driven and not `Chain`-able.
 | `RenkoBars` | Fixed box-size bricks with the two-box reversal rule. | `Candle` | `Vec<RenkoBrick>` | n/a | `box_size` | seeds on 1st candle | [Indicator-RenkoBars](/Indicators/Indicator-RenkoBars) |
 | `KagiBars` | Reversal-amount line segments. | `Candle` | `Vec<KagiBar>` | n/a | `reversal` | seeds on 1st candle | [Indicator-KagiBars](/Indicators/Indicator-KagiBars) |
 | `PointAndFigureBars` | Box-size X/O columns with an N-box reversal. | `Candle` | `Vec<PnfColumn>` | n/a | `(box_size, reversal=3)` | seeds on 1st candle | [Indicator-PointAndFigureBars](/Indicators/Indicator-PointAndFigureBars) |
+| `DollarBars` | Drift-robust OHLC bars — one bar per fixed amount of traded *value* (`price × volume`). | `Candle` | `Vec<DollarBar>` | n/a | `(dollar_per_bar = 50000.0)` | none (emits once accumulated value reaches the threshold) | [Indicator-DollarBars](/Indicators/Indicator-DollarBars) |
+| `ImbalanceBars` | Order-flow bars — sample when cumulative signed tick imbalance becomes one-sided. | `Candle` | `Vec<ImbalanceBar>` | n/a | `(threshold = 20.0)` | none (seeds on the first candle) | [Indicator-ImbalanceBars](/Indicators/Indicator-ImbalanceBars) |
+| `RangeBars` | Fixed price-range bars with no reversal penalty — one bar per `range` of close movement in either direction. | `Candle` | `Vec<RangeBar>` | n/a | `(range = 1.0)` | none (first candle seeds the anchor) | [Indicator-RangeBars](/Indicators/Indicator-RangeBars) |
+| `RunBars` | Persistence bars — sample on an uninterrupted run of same-signed ticks. | `Candle` | `Vec<RunBar>` | n/a | `(run_length = 10)` | none (seeds on the first candle) | [Indicator-RunBars](/Indicators/Indicator-RunBars) |
+| `ThreeLineBreakBars` | Line-break chart segments — a new line per close extreme, reversing only on a break of the last three lines. | `Candle` | `Vec<LineBreakBar>` | n/a | `(lines = 3)` | none (seeds on the first candle) | [Indicator-ThreeLineBreakBars](/Indicators/Indicator-ThreeLineBreakBars) |
+| `TickBars` | Activity-sampled OHLCV bars — one bar per fixed number of input candles (ticks). | `Candle` | `Vec<TickBar>` | n/a | `(ticks = 100)` | none (emits once `ticks` candles accumulate) | [Indicator-TickBars](/Indicators/Indicator-TickBars) |
+| `VolumeBars` | Equal-participation OHLCV bars — one bar per fixed amount of traded volume. | `Candle` | `Vec<VolumeBar>` | n/a | `(volume_per_bar = 1000.0)` | none (emits once accumulated volume reaches the threshold) | [Indicator-VolumeBars](/Indicators/Indicator-VolumeBars) |
 
 ## Market Breadth
 
