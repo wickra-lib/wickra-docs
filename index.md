@@ -20,6 +20,9 @@ hero:
     - theme: alt
       text: Overview
       link: /overview
+    - theme: alt
+      text: Home
+      link: https://wickra.org/
 
 features:
   - title: 485 indicators, 24 families
