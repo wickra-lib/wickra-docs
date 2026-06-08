@@ -42,6 +42,22 @@ jobs:
             *.md
             Indicators/*.md
 
+  doc-counts:
+    name: Doc counts in sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+      # Every page-derived count (deep-dive total, per-family breakdown, the
+      # alphabetical index, the sidebar) is regenerated from Indicators/*.md by
+      # this script. The check fails if any of them drifts — run
+      # `node scripts/sync-doc-counts.mjs` to fix.
+      - run: node scripts/sync-doc-counts.mjs --check
+
   rust-snippets:
     name: Rust doc snippets compile
     runs-on: ubuntu-latest

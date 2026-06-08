@@ -182,16 +182,22 @@ ready" to "ready" together — there are no rows that have a `signal` but no
 
 ## Family 09 — Trailing Stops (added since 0.2.0)
 
-| Indicator                | Constructor                                  | Formula                          | warmup for shown args | Inputs at first emission |
-|--------------------------|----------------------------------------------|----------------------------------|----------------------|--------------------------|
-| `HiLoActivator`          | `HiLoActivator::new(3)`                      | `period + 1`                     | 4                    | 4th                      |
-| `VoltyStop`              | `VoltyStop::classic()` (`14, 2.0`)           | `atr_period + 1`                 | 15                   | 15th                     |
-| `YoyoExit`               | `YoyoExit::classic()` (`14, 2.0`)            | `atr_period + 1`                 | 15                   | 15th                     |
-| `DonchianStop`           | `DonchianStop::classic()` (`10`)             | `period`                         | 10                   | 10th                     |
-| `PercentageTrailingStop` | `PercentageTrailingStop::classic()` (`5.0`)  | constant `1`                     | 1                    | 1st                      |
-| `StepTrailingStop`       | `StepTrailingStop::classic()` (`1.0`)        | constant `1`                     | 1                    | 1st                      |
-| `RenkoTrailingStop`      | `RenkoTrailingStop::classic()` (`1.0`)       | constant `1`                     | 1                    | 1st                      |
-| `SarExt`                 | `SarExt::classic()`                          | constant `2`                     | 2                    | 2nd                      |
+| Indicator                | Constructor                                 | Formula          | warmup for shown args | Inputs at first emission |
+|--------------------------|---------------------------------------------|------------------|-----------------------|--------------------------|
+| `HiLoActivator`          | `HiLoActivator::new(3)`                     | `period + 1`     | 4                     | 4th                      |
+| `VoltyStop`              | `VoltyStop::classic()` (`14, 2.0`)          | `atr_period + 1` | 15                    | 15th                     |
+| `YoyoExit`               | `YoyoExit::classic()` (`14, 2.0`)           | `atr_period + 1` | 15                    | 15th                     |
+| `DonchianStop`           | `DonchianStop::classic()` (`10`)            | `period`         | 10                    | 10th                     |
+| `PercentageTrailingStop` | `PercentageTrailingStop::classic()` (`5.0`) | constant `1`     | 1                     | 1st                      |
+| `StepTrailingStop`       | `StepTrailingStop::classic()` (`1.0`)       | constant `1`     | 1                     | 1st                      |
+| `RenkoTrailingStop`      | `RenkoTrailingStop::classic()` (`1.0`)      | constant `1`     | 1                     | 1st                      |
+| `SarExt`                 | `SarExt::classic()`                         | constant `2`     | 2                     | 2nd                      |
+| `AtrRatchet`             | `AtrRatchet::new(14, 4.0, 0.1)`             | `atr_period`     | atr_period            | see formula              |
+| `ElderSafeZone`          | `ElderSafeZone::new(14, 2.0)`               | `period + 1`     | period + 1            | see formula              |
+| `KaseDevStop`            | `KaseDevStop::new(30, 1.0)`                 | `period + 1`     | period + 1            | see formula              |
+| `ModifiedMaStop`         | `ModifiedMaStop::new(14)`                   | `period`         | 14                    | 14th                     |
+| `Nrtr`                   | `Nrtr::new(2.0)`                            | `1`              | 1                     | 1st                      |
+| `TimeBasedStop`          | `TimeBasedStop::new(10)`                    | `1`              | 1                     | 1st                      |
 
 ## Family 10 — Ehlers / Cycle (DSP)
 
@@ -199,63 +205,90 @@ The Hilbert-chain indicators (Mama / Fama / HilbertDominantCycle / SineWave /
 AdaptiveCycle) inherit a long warmup from the truncated-Hilbert phase
 extractor — `warmup_period()` reports a conservative ~50.
 
-| Indicator                  | Constructor                                       | Formula                                | warmup | Inputs at first emission |
-|----------------------------|---------------------------------------------------|----------------------------------------|--------|--------------------------|
-| `Mama`                     | `Mama::classic()` (`0.5, 0.05`)                   | Hilbert-chain warmup                   | ~30    | ~30th                    |
-| `Fama`                     | `Fama::classic()` (`0.5, 0.05`)                   | delegates to `Mama`                    | ~30    | ~30th                    |
-| `FisherTransform`          | `FisherTransform::new(10)`                        | `period`                               | 10     | 10th                     |
-| `InverseFisherTransform`   | `InverseFisherTransform::new(1.0)`                | constant `1`                           | 1      | 1st                      |
-| `SuperSmoother`            | `SuperSmoother::new(10)`                          | constant `2` (pass-through warmup)     | 2      | 2nd                      |
-| `HilbertDominantCycle`     | `HilbertDominantCycle::new()`                     | Hilbert-chain warmup                   | ~50    | ~50th                    |
-| `SineWave`                 | `SineWave::new()`                                 | Hilbert-chain warmup                   | ~50    | ~50th                    |
-| `Decycler`                 | `Decycler::new(20)`                               | constant `2`                           | 2      | 2nd                      |
-| `DecyclerOscillator`       | `DecyclerOscillator::new(10, 30)`                 | constant `2`                           | 2      | 2nd                      |
-| `RoofingFilter`            | `RoofingFilter::new(10, 48)`                      | constant `2`                           | 2      | 2nd                      |
-| `CenterOfGravity`          | `CenterOfGravity::new(10)`                        | `period`                               | 10     | 10th                     |
-| `CyberneticCycle`          | `CyberneticCycle::new(10)`                        | constant `6`                           | 6      | 6th                      |
-| `AdaptiveCycle`            | `AdaptiveCycle::new()`                            | inherits HilbertDominantCycle          | ~50    | ~50th                    |
-| `EmpiricalModeDecomposition` | `EmpiricalModeDecomposition::new(20, 0.5)`      | `period`                               | 20     | 20th                     |
-| `EhlersStochastic`         | `EhlersStochastic::new(20)`                       | `period` + RoofingFilter warmup        | ~70    | ~70th                    |
-| `InstantaneousTrendline`   | `InstantaneousTrendline::new(20)`                 | `period`                               | 20     | 20th                     |
-| `HtPhasor`                 | `HtPhasor::new()`                                 | Hilbert-chain warmup                   | 19     | 19th                     |
-| `HtDcPhase`                | `HtDcPhase::new()`                                | Hilbert-chain warmup                   | 50     | 50th                     |
-| `HtTrendMode`              | `HtTrendMode::new()`                              | Hilbert-chain warmup                   | 50     | 50th                     |
+| Indicator                    | Constructor                                | Formula                            | warmup         | Inputs at first emission |
+|------------------------------|--------------------------------------------|------------------------------------|----------------|--------------------------|
+| `Mama`                       | `Mama::classic()` (`0.5, 0.05`)            | Hilbert-chain warmup               | ~30            | ~30th                    |
+| `Fama`                       | `Fama::classic()` (`0.5, 0.05`)            | delegates to `Mama`                | ~30            | ~30th                    |
+| `FisherTransform`            | `FisherTransform::new(10)`                 | `period`                           | 10             | 10th                     |
+| `InverseFisherTransform`     | `InverseFisherTransform::new(1.0)`         | constant `1`                       | 1              | 1st                      |
+| `SuperSmoother`              | `SuperSmoother::new(10)`                   | constant `2` (pass-through warmup) | 2              | 2nd                      |
+| `HilbertDominantCycle`       | `HilbertDominantCycle::new()`              | Hilbert-chain warmup               | ~50            | ~50th                    |
+| `SineWave`                   | `SineWave::new()`                          | Hilbert-chain warmup               | ~50            | ~50th                    |
+| `Decycler`                   | `Decycler::new(20)`                        | constant `2`                       | 2              | 2nd                      |
+| `DecyclerOscillator`         | `DecyclerOscillator::new(10, 30)`          | constant `2`                       | 2              | 2nd                      |
+| `RoofingFilter`              | `RoofingFilter::new(10, 48)`               | constant `2`                       | 2              | 2nd                      |
+| `CenterOfGravity`            | `CenterOfGravity::new(10)`                 | `period`                           | 10             | 10th                     |
+| `CyberneticCycle`            | `CyberneticCycle::new(10)`                 | constant `6`                       | 6              | 6th                      |
+| `AdaptiveCycle`              | `AdaptiveCycle::new()`                     | inherits HilbertDominantCycle      | ~50            | ~50th                    |
+| `EmpiricalModeDecomposition` | `EmpiricalModeDecomposition::new(20, 0.5)` | `period`                           | 20             | 20th                     |
+| `EhlersStochastic`           | `EhlersStochastic::new(20)`                | `period` + RoofingFilter warmup    | ~70            | ~70th                    |
+| `InstantaneousTrendline`     | `InstantaneousTrendline::new(20)`          | `period`                           | 20             | 20th                     |
+| `HtPhasor`                   | `HtPhasor::new()`                          | Hilbert-chain warmup               | 19             | 19th                     |
+| `HtDcPhase`                  | `HtDcPhase::new()`                         | Hilbert-chain warmup               | 50             | 50th                     |
+| `HtTrendMode`                | `HtTrendMode::new()`                       | Hilbert-chain warmup               | 50             | 50th                     |
+| `AdaptiveCci`                | `AdaptiveCci::new(20)`                     | `period`                           | 20             | 20th                     |
+| `AdaptiveRsi`                | `AdaptiveRsi::new(14)`                     | `period + 1`                       | 15             | 15th                     |
+| `AutocorrelationPeriodogram` | `AutocorrelationPeriodogram::new(10, 48)`  | `max_period + 3`                   | max_period + 3 | see formula              |
+| `BandpassFilter`             | `BandpassFilter::new(20, 0.3)`             | `1`                                | 1              | 1st                      |
+| `CorrelationTrendIndicator`  | `CorrelationTrendIndicator::new(20)`       | `period`                           | 20             | 20th                     |
+| `EvenBetterSinewave`         | `EvenBetterSinewave::new(40, 10)`          | `3`                                | 3              | 3rd                      |
+| `HighpassFilter`             | `HighpassFilter::new(48)`                  | `1`                                | 1              | 1st                      |
+| `Reflex`                     | `Reflex::new(20)`                          | `period + 1`                       | 21             | 21st                     |
+| `Trendflex`                  | `Trendflex::new(20)`                       | `period + 1`                       | 21             | 21st                     |
+| `UniversalOscillator`        | `UniversalOscillator::new(20)`             | `3`                                | 3              | 3rd                      |
 
 ## Family 11 — Pivots & S/R
 
-| Indicator           | Constructor                          | Formula                          | warmup | Inputs at first emission |
-|---------------------|--------------------------------------|----------------------------------|--------|--------------------------|
-| `ClassicPivots`     | `ClassicPivots::new()`               | constant `1`                     | 1      | 1st                      |
-| `FibonacciPivots`   | `FibonacciPivots::new()`             | constant `1`                     | 1      | 1st                      |
-| `Camarilla`         | `Camarilla::new()`                   | constant `1`                     | 1      | 1st                      |
-| `WoodiePivots`      | `WoodiePivots::new()`                | constant `1`                     | 1      | 1st                      |
-| `DemarkPivots`      | `DemarkPivots::new()`                | constant `1`                     | 1      | 1st                      |
-| `WilliamsFractals`  | `WilliamsFractals::new()`            | constant `5`                     | 5      | 5th (centre bar at index 3) |
-| `ZigZag`            | `ZigZag::new(0.05)`                  | constant `2`                     | 2      | 2nd (only emits on confirmation) |
+| Indicator           | Constructor                 | Formula                                  | warmup                                 | Inputs at first emission         |
+|---------------------|-----------------------------|------------------------------------------|----------------------------------------|----------------------------------|
+| `ClassicPivots`     | `ClassicPivots::new()`      | constant `1`                             | 1                                      | 1st                              |
+| `FibonacciPivots`   | `FibonacciPivots::new()`    | constant `1`                             | 1                                      | 1st                              |
+| `Camarilla`         | `Camarilla::new()`          | constant `1`                             | 1                                      | 1st                              |
+| `WoodiePivots`      | `WoodiePivots::new()`       | constant `1`                             | 1                                      | 1st                              |
+| `DemarkPivots`      | `DemarkPivots::new()`       | constant `1`                             | 1                                      | 1st                              |
+| `WilliamsFractals`  | `WilliamsFractals::new()`   | constant `5`                             | 5                                      | 5th (centre bar at index 3)      |
+| `ZigZag`            | `ZigZag::new(0.05)`         | constant `2`                             | 2                                      | 2nd (only emits on confirmation) |
+| `AndrewsPitchfork`  | `AndrewsPitchfork::new(2)`  | `2·strength + 1` (then swing-dependent)` | 2·strength + 1` (then swing-dependent) | see formula                      |
+| `CentralPivotRange` | `CentralPivotRange::new()`  | `1`                                      | 1                                      | 1st                              |
+| `MurreyMathLines`   | `MurreyMathLines::new(64)`  | `period`                                 | 64                                     | 64th                             |
+| `PivotReversal`     | `PivotReversal::new(2, 2)`  | `left + right + 1`                       | left + right + 1                       | see formula                      |
+| `VolumeWeightedSr`  | `VolumeWeightedSr::new(20)` | `period`                                 | 20                                     | 20th                             |
 
 ## Family 12 — DeMark
 
-| Indicator            | Constructor                                  | Formula                                        | warmup | Inputs at first emission |
-|----------------------|----------------------------------------------|------------------------------------------------|--------|--------------------------|
-| `TdSetup`            | `TdSetup::classic()` (`4, 9`)                | `lookback + 1`                                 | 5      | 5th                      |
-| `TdSequential`       | `TdSequential::classic()` (`4, 9, 2, 13`)    | `max(setup_lookback, countdown_lookback) + 1`  | 5      | 5th                      |
-| `TdCountdown`        | `TdCountdown::classic()` (`4, 9, 2, 13`)     | `max(setup_lookback, countdown_lookback) + 1`  | 5      | 5th                      |
-| `TdCombo`            | `TdCombo::classic()` (`4, 9, 2, 13`)         | `max(setup_lookback, countdown_lookback) + 1`  | 5      | 5th                      |
-| `TdLines` (TDST)     | `TdLines::new(4, 9)`                         | `lookback + 1` (NaN until first setup)         | 5      | 5th (level emits later)  |
-| `TdDeMarker`         | `TdDeMarker::new(14)`                        | `period + 1`                                   | 15     | 15th                     |
-| `TdRei`              | `TdRei::classic()` (`5`)                     | `period + 7`                                   | 12     | 12th                     |
-| `TdPressure`         | `TdPressure::new(5)`                         | `period`                                       | 5      | 5th                      |
-| `TdRangeProjection`  | `TdRangeProjection::new()`                   | constant `1`                                   | 1      | 1st                      |
-| `TdDifferential`     | `TdDifferential::new()`                      | constant `2`                                   | 2      | 2nd                      |
-| `TdOpen`             | `TdOpen::new()`                              | constant `2`                                   | 2      | 2nd                      |
-| `TdRiskLevel`        | `TdRiskLevel::new(4, 9)`                     | `lookback + 1` (NaN until first setup)         | 5      | 5th (level emits later)  |
+| Indicator           | Constructor                               | Formula                                       | warmup                                 | Inputs at first emission |
+|---------------------|-------------------------------------------|-----------------------------------------------|----------------------------------------|--------------------------|
+| `TdSetup`           | `TdSetup::classic()` (`4, 9`)             | `lookback + 1`                                | 5                                      | 5th                      |
+| `TdSequential`      | `TdSequential::classic()` (`4, 9, 2, 13`) | `max(setup_lookback, countdown_lookback) + 1` | 5                                      | 5th                      |
+| `TdCountdown`       | `TdCountdown::classic()` (`4, 9, 2, 13`)  | `max(setup_lookback, countdown_lookback) + 1` | 5                                      | 5th                      |
+| `TdCombo`           | `TdCombo::classic()` (`4, 9, 2, 13`)      | `max(setup_lookback, countdown_lookback) + 1` | 5                                      | 5th                      |
+| `TdLines` (TDST)    | `TdLines::new(4, 9)`                      | `lookback + 1` (NaN until first setup)        | 5                                      | 5th (level emits later)  |
+| `TdDeMarker`        | `TdDeMarker::new(14)`                     | `period + 1`                                  | 15                                     | 15th                     |
+| `TdRei`             | `TdRei::classic()` (`5`)                  | `period + 7`                                  | 12                                     | 12th                     |
+| `TdPressure`        | `TdPressure::new(5)`                      | `period`                                      | 5                                      | 5th                      |
+| `TdRangeProjection` | `TdRangeProjection::new()`                | constant `1`                                  | 1                                      | 1st                      |
+| `TdDifferential`    | `TdDifferential::new()`                   | constant `2`                                  | 2                                      | 2nd                      |
+| `TdOpen`            | `TdOpen::new()`                           | constant `2`                                  | 2                                      | 2nd                      |
+| `TdRiskLevel`       | `TdRiskLevel::new(4, 9)`                  | `lookback + 1` (NaN until first setup)        | 5                                      | 5th (level emits later)  |
+| `TdCamouflage`      | `TdCamouflage::new()`                     | `2`                                           | 2                                      | 2nd                      |
+| `TdClop`            | `TdClop::new()`                           | `2`                                           | 2                                      | 2nd                      |
+| `TdClopwin`         | `TdClopwin::new()`                        | `2`                                           | 2                                      | 2nd                      |
+| `TdDWave`           | `TdDWave::new(2)`                         | `2·strength + 1` (then swing-dependent)`      | 2·strength + 1` (then swing-dependent) | see formula              |
+| `TdMovingAverage`   | `TdMovingAverage::new(5, 13)`             | `period_st2`                                  | period_st2                             | see formula              |
+| `TdPropulsion`      | `TdPropulsion::new()`                     | `2`                                           | 2                                      | 2nd                      |
+| `TdTrap`            | `TdTrap::new()`                           | `3`                                           | 3                                      | 3rd                      |
 
 ## Family 13 — Ichimoku & Charts
 
-| Indicator    | Constructor                          | Formula                                    | warmup | Inputs at first emission |
-|--------------|--------------------------------------|--------------------------------------------|--------|--------------------------|
-| `Ichimoku`   | `Ichimoku::classic()` (`9, 26, 52, 26`) | `senkou_b_period + displacement - 1`    | 77     | 77th                     |
-| `HeikinAshi` | `HeikinAshi::new()`                  | constant `1`                               | 1      | 1st                      |
+| Indicator              | Constructor                             | Formula                              | warmup                   | Inputs at first emission |
+|------------------------|-----------------------------------------|--------------------------------------|--------------------------|--------------------------|
+| `Ichimoku`             | `Ichimoku::classic()` (`9, 26, 52, 26`) | `senkou_b_period + displacement - 1` | 77                       | 77th                     |
+| `HeikinAshi`           | `HeikinAshi::new()`                     | constant `1`                         | 1                        | 1st                      |
+| `CandleVolume`         | `CandleVolume::new(14)`                 | `period`                             | 14                       | 14th                     |
+| `Equivolume`           | `Equivolume::new(14)`                   | `period`                             | 14                       | 14th                     |
+| `HeikinAshiOscillator` | `HeikinAshiOscillator::new(5)`          | `period`                             | 5                        | 5th                      |
+| `SmoothedHeikinAshi`   | `SmoothedHeikinAshi::new(10)`           | `period`                             | 10                       | 10th                     |
+| `ThreeLineBreak`       | `ThreeLineBreak::new(3)`                | `2` (then data-dependent)`           | 2` (then data-dependent) | see formula              |
 
 ## Family 14 — Candlestick Patterns
 
@@ -263,95 +296,110 @@ All single-bar patterns warm up in 1; 2-bar patterns in 2; 3-bar patterns
 in 3. Pattern-shape only — combine with a trend filter for actionable
 signals.
 
-| Indicator              | Constructor                          | Formula      | warmup | Inputs at first emission |
-|------------------------|--------------------------------------|--------------|--------|--------------------------|
-| `Doji`                 | `Doji::default()`                    | constant `1` | 1      | 1st                      |
-| `Hammer`               | `Hammer::new()`                      | constant `1` | 1      | 1st                      |
-| `InvertedHammer`       | `InvertedHammer::new()`              | constant `1` | 1      | 1st                      |
-| `HangingMan`           | `HangingMan::new()`                  | constant `1` | 1      | 1st                      |
-| `ShootingStar`         | `ShootingStar::new()`                | constant `1` | 1      | 1st                      |
-| `Marubozu`             | `Marubozu::default()`                | constant `1` | 1      | 1st                      |
-| `SpinningTop`          | `SpinningTop::new(0.3)`              | constant `1` | 1      | 1st                      |
-| `Engulfing`            | `Engulfing::new()`                   | constant `2` | 2      | 2nd                      |
-| `Harami`               | `Harami::new()`                      | constant `2` | 2      | 2nd                      |
-| `PiercingDarkCloud`    | `PiercingDarkCloud::new()`           | constant `2` | 2      | 2nd                      |
-| `Tweezer`              | `Tweezer::new(0.001)`                | constant `2` | 2      | 2nd                      |
-| `MorningEveningStar`   | `MorningEveningStar::new()`          | constant `3` | 3      | 3rd                      |
-| `ThreeSoldiersOrCrows` | `ThreeSoldiersOrCrows::new()`        | constant `3` | 3      | 3rd                      |
-| `ThreeInside`          | `ThreeInside::new()`                 | constant `3` | 3      | 3rd                      |
-| `ThreeOutside`         | `ThreeOutside::new()`                | constant `3` | 3      | 3rd                      |
-| `TwoCrows` | `TwoCrows::new()` | constant `3` | 3 | 3rd |
-| `UpsideGapTwoCrows` | `UpsideGapTwoCrows::new()` | constant `3` | 3 | 3rd |
-| `IdenticalThreeCrows` | `IdenticalThreeCrows::new()` | constant `3` | 3 | 3rd |
-| `ThreeLineStrike` | `ThreeLineStrike::new()` | constant `4` | 4 | 4th |
-| `ThreeStarsInSouth` | `ThreeStarsInSouth::new()` | constant `3` | 3 | 3rd |
-| `AbandonedBaby` | `AbandonedBaby::new()` | constant `3` | 3 | 3rd |
-| `AdvanceBlock` | `AdvanceBlock::new()` | constant `3` | 3 | 3rd |
-| `BeltHold` | `BeltHold::new()` | constant `1` | 1 | 1st |
-| `Breakaway` | `Breakaway::new()` | constant `5` | 5 | 5th |
-| `Counterattack` | `Counterattack::new()` | constant `2` | 2 | 2nd |
-| `DojiStar` | `DojiStar::new()` | constant `2` | 2 | 2nd |
-| `DragonflyDoji` | `DragonflyDoji::new()` | constant `1` | 1 | 1st |
-| `GravestoneDoji` | `GravestoneDoji::new()` | constant `1` | 1 | 1st |
-| `LongLeggedDoji` | `LongLeggedDoji::new()` | constant `1` | 1 | 1st |
-| `RickshawMan` | `RickshawMan::new()` | constant `1` | 1 | 1st |
-| `EveningDojiStar` | `EveningDojiStar::new()` | constant `3` | 3 | 3rd |
-| `MorningDojiStar` | `MorningDojiStar::new()` | constant `3` | 3 | 3rd |
-| `GapSideBySideWhite` | `GapSideBySideWhite::new()` | constant `3` | 3 | 3rd |
-| `HighWave` | `HighWave::new()` | constant `1` | 1 | 1st |
-| `Hikkake` | `Hikkake::new()` | constant `3` | 3 | 3rd |
-| `HikkakeModified` | `HikkakeModified::new()` | constant `3` | 3 | 3rd |
-| `HomingPigeon` | `HomingPigeon::new()` | constant `2` | 2 | 2nd |
-| `OnNeck` | `OnNeck::new()` | constant `2` | 2 | 2nd |
-| `InNeck` | `InNeck::new()` | constant `2` | 2 | 2nd |
-| `Thrusting` | `Thrusting::new()` | constant `2` | 2 | 2nd |
-| `SeparatingLines` | `SeparatingLines::new()` | constant `2` | 2 | 2nd |
-| `Kicking` | `Kicking::new()` | constant `2` | 2 | 2nd |
-| `KickingByLength` | `KickingByLength::new()` | constant `2` | 2 | 2nd |
-| `LadderBottom` | `LadderBottom::new()` | constant `5` | 5 | 5th |
-| `MatHold` | `MatHold::new()` | constant `5` | 5 | 5th |
-| `MatchingLow` | `MatchingLow::new()` | constant `2` | 2 | 2nd |
-| `LongLine` | `LongLine::new()` | constant `5` | 5 | 5th |
-| `ShortLine` | `ShortLine::new()` | constant `5` | 5 | 5th |
-| `RisingThreeMethods` | `RisingThreeMethods::new()` | constant `5` | 5 | 5th |
-| `FallingThreeMethods` | `FallingThreeMethods::new()` | constant `5` | 5 | 5th |
-| `UpsideGapThreeMethods` | `UpsideGapThreeMethods::new()` | constant `3` | 3 | 3rd |
-| `DownsideGapThreeMethods` | `DownsideGapThreeMethods::new()` | constant `3` | 3 | 3rd |
-| `StalledPattern` | `StalledPattern::new()` | constant `3` | 3 | 3rd |
-| `StickSandwich` | `StickSandwich::new()` | constant `3` | 3 | 3rd |
-| `Takuri` | `Takuri::new()` | constant `1` | 1 | 1st |
-| `ClosingMarubozu` | `ClosingMarubozu::new()` | constant `1` | 1 | 1st |
-| `OpeningMarubozu` | `OpeningMarubozu::new()` | constant `1` | 1 | 1st |
-| `TasukiGap` | `TasukiGap::new()` | constant `3` | 3 | 3rd |
-| `UniqueThreeRiver` | `UniqueThreeRiver::new()` | constant `3` | 3 | 3rd |
-| `ConcealingBabySwallow` | `ConcealingBabySwallow::new()` | constant `4` | 4 | 4th |
+| Indicator                 | Constructor                      | Formula      | warmup | Inputs at first emission |
+|---------------------------|----------------------------------|--------------|--------|--------------------------|
+| `Doji`                    | `Doji::default()`                | constant `1` | 1      | 1st                      |
+| `Hammer`                  | `Hammer::new()`                  | constant `1` | 1      | 1st                      |
+| `InvertedHammer`          | `InvertedHammer::new()`          | constant `1` | 1      | 1st                      |
+| `HangingMan`              | `HangingMan::new()`              | constant `1` | 1      | 1st                      |
+| `ShootingStar`            | `ShootingStar::new()`            | constant `1` | 1      | 1st                      |
+| `Marubozu`                | `Marubozu::default()`            | constant `1` | 1      | 1st                      |
+| `SpinningTop`             | `SpinningTop::new(0.3)`          | constant `1` | 1      | 1st                      |
+| `Engulfing`               | `Engulfing::new()`               | constant `2` | 2      | 2nd                      |
+| `Harami`                  | `Harami::new()`                  | constant `2` | 2      | 2nd                      |
+| `PiercingDarkCloud`       | `PiercingDarkCloud::new()`       | constant `2` | 2      | 2nd                      |
+| `Tweezer`                 | `Tweezer::new(0.001)`            | constant `2` | 2      | 2nd                      |
+| `MorningEveningStar`      | `MorningEveningStar::new()`      | constant `3` | 3      | 3rd                      |
+| `ThreeSoldiersOrCrows`    | `ThreeSoldiersOrCrows::new()`    | constant `3` | 3      | 3rd                      |
+| `ThreeInside`             | `ThreeInside::new()`             | constant `3` | 3      | 3rd                      |
+| `ThreeOutside`            | `ThreeOutside::new()`            | constant `3` | 3      | 3rd                      |
+| `TwoCrows`                | `TwoCrows::new()`                | constant `3` | 3      | 3rd                      |
+| `UpsideGapTwoCrows`       | `UpsideGapTwoCrows::new()`       | constant `3` | 3      | 3rd                      |
+| `IdenticalThreeCrows`     | `IdenticalThreeCrows::new()`     | constant `3` | 3      | 3rd                      |
+| `ThreeLineStrike`         | `ThreeLineStrike::new()`         | constant `4` | 4      | 4th                      |
+| `ThreeStarsInSouth`       | `ThreeStarsInSouth::new()`       | constant `3` | 3      | 3rd                      |
+| `AbandonedBaby`           | `AbandonedBaby::new()`           | constant `3` | 3      | 3rd                      |
+| `AdvanceBlock`            | `AdvanceBlock::new()`            | constant `3` | 3      | 3rd                      |
+| `BeltHold`                | `BeltHold::new()`                | constant `1` | 1      | 1st                      |
+| `Breakaway`               | `Breakaway::new()`               | constant `5` | 5      | 5th                      |
+| `Counterattack`           | `Counterattack::new()`           | constant `2` | 2      | 2nd                      |
+| `DojiStar`                | `DojiStar::new()`                | constant `2` | 2      | 2nd                      |
+| `DragonflyDoji`           | `DragonflyDoji::new()`           | constant `1` | 1      | 1st                      |
+| `GravestoneDoji`          | `GravestoneDoji::new()`          | constant `1` | 1      | 1st                      |
+| `LongLeggedDoji`          | `LongLeggedDoji::new()`          | constant `1` | 1      | 1st                      |
+| `RickshawMan`             | `RickshawMan::new()`             | constant `1` | 1      | 1st                      |
+| `EveningDojiStar`         | `EveningDojiStar::new()`         | constant `3` | 3      | 3rd                      |
+| `MorningDojiStar`         | `MorningDojiStar::new()`         | constant `3` | 3      | 3rd                      |
+| `GapSideBySideWhite`      | `GapSideBySideWhite::new()`      | constant `3` | 3      | 3rd                      |
+| `HighWave`                | `HighWave::new()`                | constant `1` | 1      | 1st                      |
+| `Hikkake`                 | `Hikkake::new()`                 | constant `3` | 3      | 3rd                      |
+| `HikkakeModified`         | `HikkakeModified::new()`         | constant `3` | 3      | 3rd                      |
+| `HomingPigeon`            | `HomingPigeon::new()`            | constant `2` | 2      | 2nd                      |
+| `OnNeck`                  | `OnNeck::new()`                  | constant `2` | 2      | 2nd                      |
+| `InNeck`                  | `InNeck::new()`                  | constant `2` | 2      | 2nd                      |
+| `Thrusting`               | `Thrusting::new()`               | constant `2` | 2      | 2nd                      |
+| `SeparatingLines`         | `SeparatingLines::new()`         | constant `2` | 2      | 2nd                      |
+| `Kicking`                 | `Kicking::new()`                 | constant `2` | 2      | 2nd                      |
+| `KickingByLength`         | `KickingByLength::new()`         | constant `2` | 2      | 2nd                      |
+| `LadderBottom`            | `LadderBottom::new()`            | constant `5` | 5      | 5th                      |
+| `MatHold`                 | `MatHold::new()`                 | constant `5` | 5      | 5th                      |
+| `MatchingLow`             | `MatchingLow::new()`             | constant `2` | 2      | 2nd                      |
+| `LongLine`                | `LongLine::new()`                | constant `5` | 5      | 5th                      |
+| `ShortLine`               | `ShortLine::new()`               | constant `5` | 5      | 5th                      |
+| `RisingThreeMethods`      | `RisingThreeMethods::new()`      | constant `5` | 5      | 5th                      |
+| `FallingThreeMethods`     | `FallingThreeMethods::new()`     | constant `5` | 5      | 5th                      |
+| `UpsideGapThreeMethods`   | `UpsideGapThreeMethods::new()`   | constant `3` | 3      | 3rd                      |
+| `DownsideGapThreeMethods` | `DownsideGapThreeMethods::new()` | constant `3` | 3      | 3rd                      |
+| `StalledPattern`          | `StalledPattern::new()`          | constant `3` | 3      | 3rd                      |
+| `StickSandwich`           | `StickSandwich::new()`           | constant `3` | 3      | 3rd                      |
+| `Takuri`                  | `Takuri::new()`                  | constant `1` | 1      | 1st                      |
+| `ClosingMarubozu`         | `ClosingMarubozu::new()`         | constant `1` | 1      | 1st                      |
+| `OpeningMarubozu`         | `OpeningMarubozu::new()`         | constant `1` | 1      | 1st                      |
+| `TasukiGap`               | `TasukiGap::new()`               | constant `3` | 3      | 3rd                      |
+| `UniqueThreeRiver`        | `UniqueThreeRiver::new()`        | constant `3` | 3      | 3rd                      |
+| `ConcealingBabySwallow`   | `ConcealingBabySwallow::new()`   | constant `4` | 4      | 4th                      |
+| `DumplingTop`             | `DumplingTop::new(9)`            | `period`     | 9      | 9th                      |
+| `FryPanBottom`            | `FryPanBottom::new(9)`           | `period`     | 9      | 9th                      |
+| `HaramiCross`             | `HaramiCross::new()`             | `2`          | 2      | 2nd                      |
+| `NewPriceLines`           | `NewPriceLines::new(8)`          | `2`          | 2      | 2nd                      |
+| `TowerTopBottom`          | `TowerTopBottom::new()`          | `3`          | 3      | 3rd                      |
+| `Tristar`                 | `Tristar::new()`                 | `3`          | 3      | 3rd                      |
 
 ## Family 15 — Risk / Performance
 
 Some risk metrics take a single `f64` (returns / equity), others take an
 `(asset, benchmark)` pair.
 
-| Indicator                  | Constructor                                  | Formula                          | warmup | Inputs at first emission |
-|----------------------------|----------------------------------------------|----------------------------------|--------|--------------------------|
-| `SharpeRatio`              | `SharpeRatio::new(20, 0.0)`                  | `period`                         | 20     | 20th                     |
-| `SortinoRatio`             | `SortinoRatio::new(20, 0.0)`                 | `period`                         | 20     | 20th                     |
-| `CalmarRatio`              | `CalmarRatio::new(20)`                       | `period`                         | 20     | 20th                     |
-| `OmegaRatio`               | `OmegaRatio::new(20, 0.0)`                   | `period`                         | 20     | 20th                     |
-| `MaxDrawdown`              | `MaxDrawdown::new(252)`                      | constant `1`                     | 1      | 1st                      |
-| `AverageDrawdown`          | `AverageDrawdown::new(20)`                   | `period`                         | 20     | 20th                     |
-| `DrawdownDuration`         | `DrawdownDuration::new()`                    | constant `1`                     | 1      | 1st                      |
-| `PainIndex`                | `PainIndex::new(20)`                         | `period`                         | 20     | 20th                     |
-| `ValueAtRisk`              | `ValueAtRisk::new(100, 0.95)`                | `period`                         | 100    | 100th                    |
-| `ConditionalValueAtRisk`   | `ConditionalValueAtRisk::new(100, 0.95)`     | `period`                         | 100    | 100th                    |
-| `ProfitFactor`             | `ProfitFactor::new(20)`                      | `period`                         | 20     | 20th                     |
-| `GainLossRatio`            | `GainLossRatio::new(20)`                     | `period`                         | 20     | 20th                     |
-| `RecoveryFactor`           | `RecoveryFactor::new()`                      | constant `1`                     | 1      | 1st                      |
-| `KellyCriterion`           | `KellyCriterion::new(100)`                   | `period`                         | 100    | 100th                    |
-| `TreynorRatio`             | `TreynorRatio::new(50, 0.0)`                 | `period`                         | 50     | 50th                     |
-| `InformationRatio`         | `InformationRatio::new(50)`                  | `period`                         | 50     | 50th                     |
-| `Alpha`                    | `Alpha::new(50, 0.0)`                        | `period`                         | 50     | 50th                     |
-| `WinRate`                  | `WinRate::new(20)`                           | `period`                         | 20     | 20th                     |
-| `Expectancy`               | `Expectancy::new(20)`                        | `period`                         | 20     | 20th                     |
+| Indicator                | Constructor                              | Formula      | warmup | Inputs at first emission |
+|--------------------------|------------------------------------------|--------------|--------|--------------------------|
+| `SharpeRatio`            | `SharpeRatio::new(20, 0.0)`              | `period`     | 20     | 20th                     |
+| `SortinoRatio`           | `SortinoRatio::new(20, 0.0)`             | `period`     | 20     | 20th                     |
+| `CalmarRatio`            | `CalmarRatio::new(20)`                   | `period`     | 20     | 20th                     |
+| `OmegaRatio`             | `OmegaRatio::new(20, 0.0)`               | `period`     | 20     | 20th                     |
+| `MaxDrawdown`            | `MaxDrawdown::new(252)`                  | constant `1` | 1      | 1st                      |
+| `AverageDrawdown`        | `AverageDrawdown::new(20)`               | `period`     | 20     | 20th                     |
+| `DrawdownDuration`       | `DrawdownDuration::new()`                | constant `1` | 1      | 1st                      |
+| `PainIndex`              | `PainIndex::new(20)`                     | `period`     | 20     | 20th                     |
+| `ValueAtRisk`            | `ValueAtRisk::new(100, 0.95)`            | `period`     | 100    | 100th                    |
+| `ConditionalValueAtRisk` | `ConditionalValueAtRisk::new(100, 0.95)` | `period`     | 100    | 100th                    |
+| `ProfitFactor`           | `ProfitFactor::new(20)`                  | `period`     | 20     | 20th                     |
+| `GainLossRatio`          | `GainLossRatio::new(20)`                 | `period`     | 20     | 20th                     |
+| `RecoveryFactor`         | `RecoveryFactor::new()`                  | constant `1` | 1      | 1st                      |
+| `KellyCriterion`         | `KellyCriterion::new(100)`               | `period`     | 100    | 100th                    |
+| `TreynorRatio`           | `TreynorRatio::new(50, 0.0)`             | `period`     | 50     | 50th                     |
+| `InformationRatio`       | `InformationRatio::new(50)`              | `period`     | 50     | 50th                     |
+| `Alpha`                  | `Alpha::new(50, 0.0)`                    | `period`     | 50     | 50th                     |
+| `WinRate`                | `WinRate::new(20)`                       | `period`     | 20     | 20th                     |
+| `Expectancy`             | `Expectancy::new(20)`                    | `period`     | 20     | 20th                     |
+| `BurkeRatio`             | `BurkeRatio::new(36)`                    | `period`     | 36     | 36th                     |
+| `CommonSenseRatio`       | `CommonSenseRatio::new(252)`             | `period`     | 252    | 252nd                    |
+| `GainToPainRatio`        | `GainToPainRatio::new(12)`               | `period`     | 12     | 12th                     |
+| `KRatio`                 | `KRatio::new(30)`                        | `period`     | 30     | 30th                     |
+| `M2Measure`              | `M2Measure::new(20, 0.0, 0.02)`          | `period`     | period | see formula              |
+| `MartinRatio`            | `MartinRatio::new(14)`                   | `period`     | 14     | 14th                     |
+| `SterlingRatio`          | `SterlingRatio::new(36)`                 | `period`     | 36     | 36th                     |
+| `TailRatio`              | `TailRatio::new(252)`                    | `period`     | 252    | 252nd                    |
+| `UpsidePotentialRatio`   | `UpsidePotentialRatio::new(20, 0.0)`     | `period`     | period | see formula              |
 
 ## Family 16 — Market Profile
 
@@ -359,38 +407,46 @@ Some risk metrics take a single `f64` (returns / equity), others take an
 at session boundaries; `ValueArea`, `VolumeProfile` and `TpoProfile` are rolling
 and evict automatically.
 
-| Indicator         | Constructor                              | Formula      | warmup | Inputs at first emission |
-|-------------------|------------------------------------------|--------------|--------|--------------------------|
-| `ValueArea`       | `ValueArea::new(20, 50, 0.70)`           | `period`     | 20     | 20th                     |
-| `VolumeProfile`   | `VolumeProfile::new(20, 50)`             | `period`     | 20     | 20th                     |
-| `TpoProfile`      | `TpoProfile::new(30, 50)`                | `period`     | 30     | 30th                     |
-| `InitialBalance`  | `InitialBalance::classic()` (`12`)       | `period`     | 12     | 12th (then locks)         |
-| `OpeningRange`    | `OpeningRange::classic()` (`6`)          | `period`     | 6      | 6th (then locks; live `breakout_distance`) |
+| Indicator            | Constructor                            | Formula                             | warmup                            | Inputs at first emission                   |
+|----------------------|----------------------------------------|-------------------------------------|-----------------------------------|--------------------------------------------|
+| `ValueArea`          | `ValueArea::new(20, 50, 0.70)`         | `period`                            | 20                                | 20th                                       |
+| `VolumeProfile`      | `VolumeProfile::new(20, 50)`           | `period`                            | 20                                | 20th                                       |
+| `TpoProfile`         | `TpoProfile::new(30, 50)`              | `period`                            | 30                                | 30th                                       |
+| `InitialBalance`     | `InitialBalance::classic()` (`12`)     | `period`                            | 12                                | 12th (then locks)                          |
+| `OpeningRange`       | `OpeningRange::classic()` (`6`)        | `period`                            | 6                                 | 6th (then locks; live `breakout_distance`) |
+| `CompositeProfile`   | `CompositeProfile::new(100, 50, 0.70)` | `period`                            | period                            | see formula                                |
+| `HighLowVolumeNodes` | `HighLowVolumeNodes::new(20, 24)`      | `period`                            | period                            | see formula                                |
+| `NakedPoc`           | `NakedPoc::new(20, 24)`                | `session_len` (then session-paced)` | session_len` (then session-paced) | see formula                                |
+| `ProfileShape`       | `ProfileShape::new(20, 24)`            | `period`                            | period                            | see formula                                |
+| `SinglePrints`       | `SinglePrints::new(20, 24)`            | `period`                            | period                            | see formula                                |
 
 ## Family 17 — Microstructure
 
 Non-OHLCV indicators over the order book and trade tape. Most are stateless or
 fixed-window; `Footprint` accumulates until `reset()`.
 
-| Indicator                | Constructor                       | Formula        | warmup | Inputs at first emission |
-|--------------------------|-----------------------------------|----------------|--------|--------------------------|
-| `OrderBookImbalanceTop1` | `OrderBookImbalanceTop1::new()`   | constant `1`   | 1      | 1st snapshot             |
-| `OrderBookImbalanceTopN` | `OrderBookImbalanceTopN::new(5)`  | constant `1`   | 1      | 1st snapshot             |
-| `OrderBookImbalanceFull` | `OrderBookImbalanceFull::new()`   | constant `1`   | 1      | 1st snapshot             |
-| `Microprice`             | `Microprice::new()`               | constant `1`   | 1      | 1st snapshot             |
-| `QuotedSpread`           | `QuotedSpread::new()`             | constant `1`   | 1      | 1st snapshot             |
-| `DepthSlope`             | `DepthSlope::new()`               | constant `1`   | 1      | 1st snapshot             |
-| `SignedVolume`           | `SignedVolume::new()`             | constant `1`   | 1      | 1st trade                |
-| `CumulativeVolumeDelta`  | `CumulativeVolumeDelta::new()`    | constant `1`   | 1      | 1st trade (reset per session) |
-| `TradeImbalance`         | `TradeImbalance::new(20)`         | `window`       | 20     | 20th trade               |
-| `EffectiveSpread`        | `EffectiveSpread::new()`          | constant `1`   | 1      | 1st trade-quote          |
-| `RealizedSpread`         | `RealizedSpread::new(10)`         | `horizon + 1`  | 11     | 11th trade-quote         |
-| `KylesLambda`            | `KylesLambda::new(50)`            | `window + 1`   | 51     | 51st trade-quote         |
-| `Footprint`              | `Footprint::new(0.5)`             | constant `1`   | 1      | 1st trade (reset per bar) |
-| `OrderFlowImbalance`     | `OrderFlowImbalance::new(20)`     | `period + 1`   | 21     | 21st snapshot            |
-| `Vpin`                   | `Vpin::new(8.0, 5)`               | `num_buckets` (volume-driven) | 5 | 5th bucket          |
-| `AmihudIlliquidity`      | `AmihudIlliquidity::new(20)`      | `period + 1`   | 21     | 21st trade               |
-| `RollMeasure`            | `RollMeasure::new(20)`            | `period + 1`   | 21     | 21st trade               |
+| Indicator                   | Constructor                          | Formula                       | warmup | Inputs at first emission      |
+|-----------------------------|--------------------------------------|-------------------------------|--------|-------------------------------|
+| `OrderBookImbalanceTop1`    | `OrderBookImbalanceTop1::new()`      | constant `1`                  | 1      | 1st snapshot                  |
+| `OrderBookImbalanceTopN`    | `OrderBookImbalanceTopN::new(5)`     | constant `1`                  | 1      | 1st snapshot                  |
+| `OrderBookImbalanceFull`    | `OrderBookImbalanceFull::new()`      | constant `1`                  | 1      | 1st snapshot                  |
+| `Microprice`                | `Microprice::new()`                  | constant `1`                  | 1      | 1st snapshot                  |
+| `QuotedSpread`              | `QuotedSpread::new()`                | constant `1`                  | 1      | 1st snapshot                  |
+| `DepthSlope`                | `DepthSlope::new()`                  | constant `1`                  | 1      | 1st snapshot                  |
+| `SignedVolume`              | `SignedVolume::new()`                | constant `1`                  | 1      | 1st trade                     |
+| `CumulativeVolumeDelta`     | `CumulativeVolumeDelta::new()`       | constant `1`                  | 1      | 1st trade (reset per session) |
+| `TradeImbalance`            | `TradeImbalance::new(20)`            | `window`                      | 20     | 20th trade                    |
+| `EffectiveSpread`           | `EffectiveSpread::new()`             | constant `1`                  | 1      | 1st trade-quote               |
+| `RealizedSpread`            | `RealizedSpread::new(10)`            | `horizon + 1`                 | 11     | 11th trade-quote              |
+| `KylesLambda`               | `KylesLambda::new(50)`               | `window + 1`                  | 51     | 51st trade-quote              |
+| `Footprint`                 | `Footprint::new(0.5)`                | constant `1`                  | 1      | 1st trade (reset per bar)     |
+| `OrderFlowImbalance`        | `OrderFlowImbalance::new(20)`        | `period + 1`                  | 21     | 21st snapshot                 |
+| `Vpin`                      | `Vpin::new(8.0, 5)`                  | `num_buckets` (volume-driven) | 5      | 5th bucket                    |
+| `AmihudIlliquidity`         | `AmihudIlliquidity::new(20)`         | `period + 1`                  | 21     | 21st trade                    |
+| `RollMeasure`               | `RollMeasure::new(20)`               | `period + 1`                  | 21     | 21st trade                    |
+| `HasbrouckInformationShare` | `HasbrouckInformationShare::new(20)` | `period + 1`                  | 21     | 21st                          |
+| `Pin`                       | `Pin::new(20)`                       | `window`                      | 20     | 20th                          |
+| `TradeSignAutocorrelation`  | `TradeSignAutocorrelation::new(20)`  | `period`                      | 20     | 20th                          |
 
 ## Family 18 — Derivatives
 
@@ -398,20 +454,25 @@ Perpetual- and dated-futures analytics over a `DerivativesTick`. Most are
 stateless or fixed-window; `OpenInterestDelta` needs a previous tick and
 `OIPriceDivergence` a full `window`-tick lookback.
 
-| Indicator             | Constructor                     | Formula        | warmup | Inputs at first emission |
-|-----------------------|---------------------------------|----------------|--------|--------------------------|
-| `FundingRate`         | `FundingRate::new()`            | constant `1`   | 1      | 1st tick                 |
-| `FundingRateMean`     | `FundingRateMean::new(20)`      | `window`       | 20     | 20th tick                |
-| `FundingRateZScore`   | `FundingRateZScore::new(20)`    | `window`       | 20     | 20th tick                |
-| `FundingBasis`        | `FundingBasis::new()`           | constant `1`   | 1      | 1st tick                 |
-| `OpenInterestDelta`   | `OpenInterestDelta::new()`      | constant `2`   | 2      | 2nd tick                 |
-| `OIPriceDivergence`   | `OIPriceDivergence::new(20)`    | `window + 1`   | 21     | 21st tick                |
-| `OIWeighted`          | `OIWeighted::new()`             | constant `1`   | 1      | 1st tick                 |
-| `LongShortRatio`      | `LongShortRatio::new()`         | constant `1`   | 1      | 1st tick                 |
-| `TakerBuySellRatio`   | `TakerBuySellRatio::new()`      | constant `1`   | 1      | 1st tick                 |
-| `LiquidationFeatures` | `LiquidationFeatures::new()`    | constant `1`   | 1      | 1st tick                 |
-| `TermStructureBasis`  | `TermStructureBasis::new()`     | constant `1`   | 1      | 1st tick                 |
-| `CalendarSpread`      | `CalendarSpread::new()`         | constant `1`   | 1      | 1st tick                 |
+| Indicator                | Constructor                     | Formula      | warmup | Inputs at first emission |
+|--------------------------|---------------------------------|--------------|--------|--------------------------|
+| `FundingRate`            | `FundingRate::new()`            | constant `1` | 1      | 1st tick                 |
+| `FundingRateMean`        | `FundingRateMean::new(20)`      | `window`     | 20     | 20th tick                |
+| `FundingRateZScore`      | `FundingRateZScore::new(20)`    | `window`     | 20     | 20th tick                |
+| `FundingBasis`           | `FundingBasis::new()`           | constant `1` | 1      | 1st tick                 |
+| `OpenInterestDelta`      | `OpenInterestDelta::new()`      | constant `2` | 2      | 2nd tick                 |
+| `OIPriceDivergence`      | `OIPriceDivergence::new(20)`    | `window + 1` | 21     | 21st tick                |
+| `OIWeighted`             | `OIWeighted::new()`             | constant `1` | 1      | 1st tick                 |
+| `LongShortRatio`         | `LongShortRatio::new()`         | constant `1` | 1      | 1st tick                 |
+| `TakerBuySellRatio`      | `TakerBuySellRatio::new()`      | constant `1` | 1      | 1st tick                 |
+| `LiquidationFeatures`    | `LiquidationFeatures::new()`    | constant `1` | 1      | 1st tick                 |
+| `TermStructureBasis`     | `TermStructureBasis::new()`     | constant `1` | 1      | 1st tick                 |
+| `CalendarSpread`         | `CalendarSpread::new()`         | constant `1` | 1      | 1st tick                 |
+| `EstimatedLeverageRatio` | `EstimatedLeverageRatio::new()` | `1`          | 1      | 1st                      |
+| `FundingImpliedApr`      | `FundingImpliedApr::new(1095)`  | `1`          | 1      | 1st                      |
+| `OiToVolumeRatio`        | `OiToVolumeRatio::new()`        | `1`          | 1      | 1st                      |
+| `OpenInterestMomentum`   | `OpenInterestMomentum::new(5)`  | `period + 1` | 6      | 6th                      |
+| `PerpetualPremiumIndex`  | `PerpetualPremiumIndex::new()`  | `1`          | 1      | 1st                      |
 
 ## Family 20 — Market Breadth
 
@@ -510,66 +571,78 @@ Parameter-free swing-based Fibonacci tools. `warmup_period()` is the minimum num
 
 ## Additional Volume indicators
 
-| Indicator                  | Constructor                          | Formula                  | warmup | Inputs at first emission |
-|----------------------------|--------------------------------------|--------------------------|--------|--------------------------|
-| `AdOscillator`             | `AdOscillator::new()`                | constant `2`             | 2      | 2nd                      |
-| `AnchoredVwap`             | `AnchoredVwap::new()`                | `1` post-anchor          | n/a    | 1st bar after `set_anchor()` |
-| `Kvo`                      | `Kvo::classic()` (`34, 55, 13`)      | `slow + signal - 1`      | 67     | 67th                     |
-| `MarketFacilitationIndex`  | `MarketFacilitationIndex::new()`     | constant `1`             | 1      | 1st                      |
-| `Nvi`                      | `Nvi::new()`                         | constant `2`             | 2      | 2nd                      |
-| `Pvi`                      | `Pvi::new()`                         | constant `2`             | 2      | 2nd                      |
-| `Tsv`                      | `Tsv::new(18)`                       | `period + 1`             | 19     | 19th                     |
-| `Vzo`                      | `Vzo::new(14)`                       | `period + 1`             | 15     | 15th                     |
-| `VolumeOscillator`         | `VolumeOscillator::new(14, 28)`      | `slow`                   | 28     | 28th                     |
-| `DemandIndex`              | `DemandIndex::new(20)`               | `period + 1`             | 21     | 21st                     |
+| Indicator                 | Constructor                          | Formula             | warmup            | Inputs at first emission     |
+|---------------------------|--------------------------------------|---------------------|-------------------|------------------------------|
+| `AdOscillator`            | `AdOscillator::new()`                | constant `2`        | 2                 | 2nd                          |
+| `AnchoredVwap`            | `AnchoredVwap::new()`                | `1` post-anchor     | n/a               | 1st bar after `set_anchor()` |
+| `Kvo`                     | `Kvo::classic()` (`34, 55, 13`)      | `slow + signal - 1` | 67                | 67th                         |
+| `MarketFacilitationIndex` | `MarketFacilitationIndex::new()`     | constant `1`        | 1                 | 1st                          |
+| `Nvi`                     | `Nvi::new()`                         | constant `2`        | 2                 | 2nd                          |
+| `Pvi`                     | `Pvi::new()`                         | constant `2`        | 2                 | 2nd                          |
+| `Tsv`                     | `Tsv::new(18)`                       | `period + 1`        | 19                | 19th                         |
+| `Vzo`                     | `Vzo::new(14)`                       | `period + 1`        | 15                | 15th                         |
+| `VolumeOscillator`        | `VolumeOscillator::new(14, 28)`      | `slow`              | 28                | 28th                         |
+| `DemandIndex`             | `DemandIndex::new(20)`               | `period + 1`        | 21                | 21st                         |
+| `BetterVolume`            | `BetterVolume::new(20)`              | `period`            | 20                | 20th                         |
+| `IntradayIntensity`       | `IntradayIntensity::new()`           | `1`                 | 1                 | 1st                          |
+| `TradeVolumeIndex`        | `TradeVolumeIndex::new(0.5)`         | `2`                 | 2                 | 2nd                          |
+| `TwiggsMoneyFlow`         | `TwiggsMoneyFlow::new(21)`           | `period + 1`        | 22                | 22nd                         |
+| `VolumeRsi`               | `VolumeRsi::new(14)`                 | `period + 1`        | 15                | 15th                         |
+| `VolumeWeightedMacd`      | `VolumeWeightedMacd::new(12, 26, 9)` | `slow + signal − 1` | slow + signal − 1 | see formula                  |
+| `WilliamsAd`              | `WilliamsAd::new()`                  | `2`                 | 2                 | 2nd                          |
 
 ## Additional Price Statistics indicators
 
-| Indicator                  | Constructor                                  | Formula                                              | warmup | Inputs at first emission |
-|----------------------------|----------------------------------------------|------------------------------------------------------|--------|--------------------------|
-| `Variance`                 | `Variance::new(20)`                          | `period`                                             | 20     | 20th                     |
-| `CoefficientOfVariation`   | `CoefficientOfVariation::new(20)`            | `period`                                             | 20     | 20th                     |
-| `Skewness`                 | `Skewness::new(20)`                          | `period`                                             | 20     | 20th                     |
-| `Kurtosis`                 | `Kurtosis::new(20)`                          | `period`                                             | 20     | 20th                     |
-| `StandardError`            | `StandardError::new(20)`                     | `period`                                             | 20     | 20th                     |
-| `RSquared`                 | `RSquared::new(20)`                          | `period`                                             | 20     | 20th                     |
-| `MedianAbsoluteDeviation`  | `MedianAbsoluteDeviation::new(20)`           | `period`                                             | 20     | 20th                     |
-| `Autocorrelation`          | `Autocorrelation::new(50, 1)`                | `period`                                             | 50     | 50th                     |
-| `HurstExponent`            | `HurstExponent::new(100, 4)`                 | `period`                                             | 100    | 100th                    |
-| `PearsonCorrelation`       | `PearsonCorrelation::new(50)`                | `period`                                             | 50     | 50th                     |
-| `Beta`                     | `Beta::new(50)`                              | `period`                                             | 50     | 50th                     |
-| `PairwiseBeta`             | `PairwiseBeta::new(50)`                      | `period + 1`                                         | 51     | 51st                     |
-| `PairSpreadZScore`         | `PairSpreadZScore::new(30, 20)`              | `beta_period + z_period − 1`                         | 49     | 49th                     |
-| `LeadLagCrossCorrelation`  | `LeadLagCrossCorrelation::new(20, 10)`       | `window + 2·max_lag`                                 | 40     | 40th                     |
-| `Cointegration`            | `Cointegration::new(30, 1)`                  | `period`                                             | 30     | 30th                     |
-| `RelativeStrengthAB`       | `RelativeStrengthAB::new(20, 14)`            | `max(ma_period, rsi_period + 1)`                     | 20     | 20th                     |
-| `SpearmanCorrelation`      | `SpearmanCorrelation::new(50)`               | `period`                                             | 50     | 50th                     |
-| `DetrendedStdDev`          | `DetrendedStdDev::new(20)`                   | `period`                                             | 20     | 20th                     |
-| `AvgPrice`                 | `AvgPrice::new()`                            | constant `1`                                         | 1      | 1st                      |
-| `MidPrice`                 | `MidPrice::new(14)`                          | `period`                                             | 14     | 14th                     |
-| `MidPoint`                 | `MidPoint::new(14)`                          | `period`                                             | 14     | 14th                     |
-| `LinRegIntercept`          | `LinRegIntercept::new(14)`                   | `period`                                             | 14     | 14th                     |
-| `Tsf`                      | `Tsf::new(14)`                               | `period`                                             | 14     | 14th                     |
-| `LogReturn`                | `LogReturn::new(1)`                          | `period + 1`                                         | 2      | 2nd                      |
-| `RealizedVolatility`       | `RealizedVolatility::new(20)`                | `period + 1`                                         | 21     | 21st                     |
-| `RollingQuantile`          | `RollingQuantile::new(20, 0.5)`              | `period`                                             | 20     | 20th                     |
-| `RollingIqr`               | `RollingIqr::new(14)`                        | `period`                                             | 14     | 14th                     |
-| `RollingPercentileRank`    | `RollingPercentileRank::new(14)`             | `period`                                             | 14     | 14th                     |
-| `SpreadAr1Coefficient`     | `SpreadAr1Coefficient::new(40)`              | `period`                                             | 40     | 40th                     |
-| `CloseVsOpen`              | `CloseVsOpen::new()`                         | constant `1`                                         | 1      | 1st                      |
-| `BodySizePct`              | `BodySizePct::new()`                         | constant `1`                                         | 1      | 1st                      |
-| `WickRatio`                | `WickRatio::new()`                           | constant `1`                                         | 1      | 1st                      |
-| `HighLowRange`             | `HighLowRange::new()`                        | constant `1`                                         | 1      | 1st                      |
-| `OuHalfLife`               | `OuHalfLife::new(30)`                        | `period`                                             | 30     | 30th                     |
-| `GrangerCausality`         | `GrangerCausality::new(60, 1)`               | `period`                                             | 60     | 60th                     |
-| `KalmanHedgeRatio`         | `KalmanHedgeRatio::new(0.001, 0.01)`         | constant `1`                                         | 1      | 1st                      |
-| `VarianceRatio`            | `VarianceRatio::new(60, 2)`                  | `period`                                             | 60     | 60th                     |
-| `RollingCorrelation`       | `RollingCorrelation::new(14)`                | `period + 1`                                         | 15     | 15th                     |
-| `RollingCovariance`        | `RollingCovariance::new(14)`                 | `period + 1`                                         | 15     | 15th                     |
-| `SpreadHurst`              | `SpreadHurst::new(40)`                       | `period`                                             | 40     | 40th                     |
-| `SpreadBollingerBands`     | `SpreadBollingerBands::new(20, 2.0)`         | `period`                                             | 20     | 20th                     |
-| `BetaNeutralSpread`        | `BetaNeutralSpread::new(20)`                 | `period`                                             | 20     | 20th                     |
-| `DistanceSsd`              | `DistanceSsd::new(20)`                       | `period`                                             | 20     | 20th                     |
+| Indicator                 | Constructor                            | Formula                          | warmup | Inputs at first emission |
+|---------------------------|----------------------------------------|----------------------------------|--------|--------------------------|
+| `Variance`                | `Variance::new(20)`                    | `period`                         | 20     | 20th                     |
+| `CoefficientOfVariation`  | `CoefficientOfVariation::new(20)`      | `period`                         | 20     | 20th                     |
+| `Skewness`                | `Skewness::new(20)`                    | `period`                         | 20     | 20th                     |
+| `Kurtosis`                | `Kurtosis::new(20)`                    | `period`                         | 20     | 20th                     |
+| `StandardError`           | `StandardError::new(20)`               | `period`                         | 20     | 20th                     |
+| `RSquared`                | `RSquared::new(20)`                    | `period`                         | 20     | 20th                     |
+| `MedianAbsoluteDeviation` | `MedianAbsoluteDeviation::new(20)`     | `period`                         | 20     | 20th                     |
+| `Autocorrelation`         | `Autocorrelation::new(50, 1)`          | `period`                         | 50     | 50th                     |
+| `HurstExponent`           | `HurstExponent::new(100, 4)`           | `period`                         | 100    | 100th                    |
+| `PearsonCorrelation`      | `PearsonCorrelation::new(50)`          | `period`                         | 50     | 50th                     |
+| `Beta`                    | `Beta::new(50)`                        | `period`                         | 50     | 50th                     |
+| `PairwiseBeta`            | `PairwiseBeta::new(50)`                | `period + 1`                     | 51     | 51st                     |
+| `PairSpreadZScore`        | `PairSpreadZScore::new(30, 20)`        | `beta_period + z_period − 1`     | 49     | 49th                     |
+| `LeadLagCrossCorrelation` | `LeadLagCrossCorrelation::new(20, 10)` | `window + 2·max_lag`             | 40     | 40th                     |
+| `Cointegration`           | `Cointegration::new(30, 1)`            | `period`                         | 30     | 30th                     |
+| `RelativeStrengthAB`      | `RelativeStrengthAB::new(20, 14)`      | `max(ma_period, rsi_period + 1)` | 20     | 20th                     |
+| `SpearmanCorrelation`     | `SpearmanCorrelation::new(50)`         | `period`                         | 50     | 50th                     |
+| `DetrendedStdDev`         | `DetrendedStdDev::new(20)`             | `period`                         | 20     | 20th                     |
+| `AvgPrice`                | `AvgPrice::new()`                      | constant `1`                     | 1      | 1st                      |
+| `MidPrice`                | `MidPrice::new(14)`                    | `period`                         | 14     | 14th                     |
+| `MidPoint`                | `MidPoint::new(14)`                    | `period`                         | 14     | 14th                     |
+| `LinRegIntercept`         | `LinRegIntercept::new(14)`             | `period`                         | 14     | 14th                     |
+| `Tsf`                     | `Tsf::new(14)`                         | `period`                         | 14     | 14th                     |
+| `LogReturn`               | `LogReturn::new(1)`                    | `period + 1`                     | 2      | 2nd                      |
+| `RealizedVolatility`      | `RealizedVolatility::new(20)`          | `period + 1`                     | 21     | 21st                     |
+| `RollingQuantile`         | `RollingQuantile::new(20, 0.5)`        | `period`                         | 20     | 20th                     |
+| `RollingIqr`              | `RollingIqr::new(14)`                  | `period`                         | 14     | 14th                     |
+| `RollingPercentileRank`   | `RollingPercentileRank::new(14)`       | `period`                         | 14     | 14th                     |
+| `SpreadAr1Coefficient`    | `SpreadAr1Coefficient::new(40)`        | `period`                         | 40     | 40th                     |
+| `CloseVsOpen`             | `CloseVsOpen::new()`                   | constant `1`                     | 1      | 1st                      |
+| `BodySizePct`             | `BodySizePct::new()`                   | constant `1`                     | 1      | 1st                      |
+| `WickRatio`               | `WickRatio::new()`                     | constant `1`                     | 1      | 1st                      |
+| `HighLowRange`            | `HighLowRange::new()`                  | constant `1`                     | 1      | 1st                      |
+| `OuHalfLife`              | `OuHalfLife::new(30)`                  | `period`                         | 30     | 30th                     |
+| `GrangerCausality`        | `GrangerCausality::new(60, 1)`         | `period`                         | 60     | 60th                     |
+| `KalmanHedgeRatio`        | `KalmanHedgeRatio::new(0.001, 0.01)`   | constant `1`                     | 1      | 1st                      |
+| `VarianceRatio`           | `VarianceRatio::new(60, 2)`            | `period`                         | 60     | 60th                     |
+| `RollingCorrelation`      | `RollingCorrelation::new(14)`          | `period + 1`                     | 15     | 15th                     |
+| `RollingCovariance`       | `RollingCovariance::new(14)`           | `period + 1`                     | 15     | 15th                     |
+| `SpreadHurst`             | `SpreadHurst::new(40)`                 | `period`                         | 40     | 40th                     |
+| `SpreadBollingerBands`    | `SpreadBollingerBands::new(20, 2.0)`   | `period`                         | 20     | 20th                     |
+| `BetaNeutralSpread`       | `BetaNeutralSpread::new(20)`           | `period`                         | 20     | 20th                     |
+| `DistanceSsd`             | `DistanceSsd::new(20)`                 | `period`                         | 20     | 20th                     |
+| `JarqueBera`              | `JarqueBera::new(50)`                  | `period`                         | 50     | 50th                     |
+| `KendallTau`              | `KendallTau::new(20)`                  | `period`                         | 20     | 20th                     |
+| `RollingMinMaxScaler`     | `RollingMinMaxScaler::new(14)`         | `period`                         | 14     | 14th                     |
+| `SampleEntropy`           | `SampleEntropy::new(50, 2, 0.2)`       | `period`                         | period | see formula              |
+| `ShannonEntropy`          | `ShannonEntropy::new(32, 8)`           | `period`                         | period | see formula              |
 
 ## Additional Price Oscillators
 
