@@ -110,6 +110,7 @@ console.log('warmupPeriod:', s.warmupPeriod()); // 20
 use wickra::{Candle, Indicator, SinglePrints};
 
 let mut s = SinglePrints::new(20, 24).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(n) = s.update(candle) {
         // n high -> fast, low-rotation move; expect retests of the single-print zone

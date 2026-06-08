@@ -117,6 +117,7 @@ console.log(cpr.update(110, 90, 105)); // { pivot: 101.67, tc: 103.33, bc: 100 }
 use wickra::{Candle, Indicator, CentralPivotRange};
 
 let mut cpr = CentralPivotRange::new();
+let completed_daily_bars: Vec<Candle> = Vec::new(); // your daily bars
 for day in completed_daily_bars {
     if let Some(out) = cpr.update(day) {
         println!("CPR width = {:.2}", out.tc - out.bc);

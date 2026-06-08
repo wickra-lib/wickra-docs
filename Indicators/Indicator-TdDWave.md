@@ -118,6 +118,7 @@ console.log('warmupPeriod:', td.warmupPeriod()); // 5 (then swing-dependent)
 use wickra::{Candle, Indicator, TdDWave};
 
 let mut td = TdDWave::new(2).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(w) = td.update(candle) {
         // w == 3.0 -> likely the strongest impulse leg

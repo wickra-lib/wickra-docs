@@ -119,6 +119,7 @@ console.log(h.update(105, 106, 104, 105.02)); // 1
 use wickra::{Candle, Indicator, HaramiCross};
 
 let mut h = HaramiCross::new();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(s) = h.update(candle) { if s != 0.0 { /* reversal */ } }
 }

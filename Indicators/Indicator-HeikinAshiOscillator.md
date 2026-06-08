@@ -119,6 +119,7 @@ console.log('warmupPeriod:', h.warmupPeriod()); // 5
 use wickra::{Candle, Indicator, HeikinAshiOscillator};
 
 let mut h = HeikinAshiOscillator::new(5).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(v) = h.update(candle) {
         // v crossing zero -> HA colour flip

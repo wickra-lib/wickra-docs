@@ -116,6 +116,7 @@ console.log(td.update(9, 13, 8, 12)); // 1
 use wickra::{Candle, Indicator, TdClop};
 
 let mut td = TdClop::new();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(s) = td.update(candle) { if s != 0.0 { /* reversal */ } }
 }

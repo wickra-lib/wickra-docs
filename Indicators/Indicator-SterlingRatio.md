@@ -116,6 +116,7 @@ console.log(sr.batch([0.1, -0.1, 0.1]).at(-1)); // ~0.909
 use wickra::{Indicator, SterlingRatio};
 
 let mut sr = SterlingRatio::new(36).unwrap();
+let monthly_returns: Vec<f64> = Vec::new(); // your live stream
 for r in monthly_returns {
     if let Some(ratio) = sr.update(r) {
         // higher ratio -> more return per average drawdown

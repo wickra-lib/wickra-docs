@@ -165,7 +165,7 @@ Streaming `update` and `batch` are equivalent tick-for-tick
 - **It is not CMF.** Wilder smoothing and true-range boundaries make TMF react
   faster and handle gaps differently; do not expect the two lines to overlay.
 - **Volume quality.** Like all money-flow tools it depends on trustworthy volume;
-  on FX or synthetic feeds prefer [`WilliamsAd`](/Indicators/Indicator-WilliamsAd).
+  on FX or synthetic feeds prefer [`Wad`](/Indicators/Indicator-Wad).
 - **Range collapse.** When the true range is zero (a doji equal to the prior
   close) that bar contributes nothing, which is intentional.
 
@@ -178,6 +178,6 @@ boundaries.
 ## See also
 
 - [Indicator-ChaikinMoneyFlow](/Indicators/Indicator-ChaikinMoneyFlow) — the simple-sum money-flow original.
-- [Indicator-WilliamsAd](/Indicators/Indicator-WilliamsAd) — volume-free accumulation/distribution.
+- [Indicator-Wad](/Indicators/Indicator-Wad) — volume-free accumulation/distribution.
 - [Indicator-Mfi](/Indicators/Indicator-Mfi) — the volume-weighted RSI of typical price.
 - [Indicators-Overview](/Indicators-Overview) — the full taxonomy.

@@ -46,7 +46,7 @@ The `range` and `anchor` getters expose the configuration and current state.
 From `crates/wickra-core/src/indicators/range_bars.rs`:
 
 ```rust
-use wickra::{BarBuilder, Candle, RangeBars};
+use wickra::{BarBuilder, Candle, RangeBar, RangeBars};
 // RangeBars: Input = Candle, Output = Vec<RangeBar>
 const _: fn(&mut RangeBars, Candle) -> Vec<RangeBar> = <RangeBars as BarBuilder>::update;
 ```
@@ -123,6 +123,7 @@ console.log(bars.update(11.0).length);   // 1
 use wickra::{BarBuilder, Candle, RangeBars};
 
 let mut bars = RangeBars::new(0.5).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     for bar in bars.update(candle) {
         // each bar marks one 0.5 increment of price travel

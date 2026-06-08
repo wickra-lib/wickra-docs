@@ -115,6 +115,7 @@ console.log(csr.batch([-0.04, -0.02, 0.0, 0.02, 0.04]).at(-1)); // 1
 use wickra::{Indicator, CommonSenseRatio};
 
 let mut csr = CommonSenseRatio::new(252).unwrap();
+let daily_returns: Vec<f64> = Vec::new(); // your live stream
 for r in daily_returns {
     if let Some(ratio) = csr.update(r) {
         // ratio > 1 -> sound on both body and tails

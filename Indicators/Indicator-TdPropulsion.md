@@ -115,6 +115,7 @@ console.log(td.update(10.5, 12, 10, 11.5)); // 1
 use wickra::{Candle, Indicator, TdPropulsion};
 
 let mut td = TdPropulsion::new();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(s) = td.update(candle) { let _ = s; }
 }

@@ -119,6 +119,7 @@ console.log('warmupPeriod:', p.warmupPeriod()); // 100
 use wickra::{Candle, Indicator, CompositeProfile};
 
 let mut p = CompositeProfile::new(100, 50, 0.70).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(out) = p.update(candle) {
         // price below out.val -> potential value migration / breakdown

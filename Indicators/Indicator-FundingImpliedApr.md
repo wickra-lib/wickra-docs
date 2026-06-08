@@ -40,7 +40,7 @@ From `crates/wickra-core/src/indicators/funding_implied_apr.rs`:
 
 ```rust
 use wickra::{Indicator, FundingImpliedApr};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 // FundingImpliedApr: Input = DerivativesTick, Output = f64
 const _: fn(&mut FundingImpliedApr, DerivativesTick) -> Option<f64> =
     <FundingImpliedApr as Indicator>::update;
@@ -70,7 +70,7 @@ the first emission).
 
 ```rust
 use wickra::{Indicator, FundingImpliedApr};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut f = FundingImpliedApr::new(1095.0)?;
@@ -106,9 +106,10 @@ console.log(f.update(0.0001, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0)); // 0.1095
 
 ```rust
 use wickra::{Indicator, FundingImpliedApr};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 let mut f = FundingImpliedApr::new(1095.0).unwrap();
+let deriv_feed: Vec<DerivativesTick> = Vec::new(); // your live stream
 for tick in deriv_feed {
     if let Some(apr) = f.update(tick) {
         // apr vs spot lending -> cash-and-carry edge

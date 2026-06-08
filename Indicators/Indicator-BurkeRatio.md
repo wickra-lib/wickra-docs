@@ -118,6 +118,7 @@ console.log(br.batch([0.1, -0.1, 0.1]).at(-1)); // ~0.332
 use wickra::{Indicator, BurkeRatio};
 
 let mut br = BurkeRatio::new(36).unwrap();
+let monthly_returns: Vec<f64> = Vec::new(); // your live stream
 for r in monthly_returns {
     if let Some(ratio) = br.update(r) {
         // a falling Burke flags a deep drawdown forming

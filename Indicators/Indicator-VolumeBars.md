@@ -44,7 +44,7 @@ in-progress volume.
 From `crates/wickra-core/src/indicators/volume_bars.rs`:
 
 ```rust
-use wickra::{BarBuilder, Candle, VolumeBars};
+use wickra::{BarBuilder, Candle, VolumeBar, VolumeBars};
 // VolumeBars: Input = Candle, Output = Vec<VolumeBar>
 const _: fn(&mut VolumeBars, Candle) -> Vec<VolumeBar> = <VolumeBars as BarBuilder>::update;
 ```
@@ -115,6 +115,7 @@ console.log(bars.update(10.5, 10.5, 10.5, 10.5, 60.0)[0].volume); // 120
 use wickra::{BarBuilder, Candle, VolumeBars};
 
 let mut bars = VolumeBars::new(1000.0).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     for bar in bars.update(candle) {
         // each bar represents ~1000 units of traded volume

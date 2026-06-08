@@ -117,6 +117,7 @@ console.log(td.update(9, 10, 7, 9.5)); // 1
 use wickra::{Candle, Indicator, TdCamouflage};
 
 let mut td = TdCamouflage::new();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     match td.update(candle) {
         Some(1.0)  => println!("camouflage buy"),

@@ -44,7 +44,7 @@ From `crates/wickra-core/src/indicators/trade_sign_autocorrelation.rs`:
 
 ```rust
 use wickra::{Indicator, TradeSignAutocorrelation};
-use wickra::microstructure::Trade;
+use wickra::Trade;
 // TradeSignAutocorrelation: Input = Trade, Output = f64
 const _: fn(&mut TradeSignAutocorrelation, Trade) -> Option<f64> =
     <TradeSignAutocorrelation as Indicator>::update;
@@ -75,7 +75,7 @@ trade signs (`first_emission_at_warmup_period` pins this).
 
 ```rust
 use wickra::{BatchExt, Indicator, TradeSignAutocorrelation};
-use wickra::microstructure::{Side, Trade};
+use wickra::{Side, Trade};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut t = TradeSignAutocorrelation::new(10)?;
@@ -115,9 +115,10 @@ console.log('warmupPeriod:', t.warmupPeriod()); // 20
 
 ```rust
 use wickra::{Indicator, TradeSignAutocorrelation};
-use wickra::microstructure::Trade;
+use wickra::Trade;
 
 let mut t = TradeSignAutocorrelation::new(20).unwrap();
+let trade_feed: Vec<Trade> = Vec::new(); // your live stream
 for trade in trade_feed {
     if let Some(rho) = t.update(trade) {
         // rho high -> persistent directional pressure

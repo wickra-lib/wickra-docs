@@ -114,6 +114,7 @@ console.log(tr.batch([-0.04, -0.02, 0.0, 0.02, 0.04]).at(-1)); // 1
 use wickra::{Indicator, TailRatio};
 
 let mut tr = TailRatio::new(252).unwrap();
+let daily_returns: Vec<f64> = Vec::new(); // your live stream
 for r in daily_returns {
     if let Some(ratio) = tr.update(r) {
         // ratio < 1 -> the left tail is fatter than the right

@@ -110,6 +110,7 @@ console.log(g.batch([0.04, -0.02]).at(-1)); // 1
 use wickra::{Indicator, GainToPainRatio};
 
 let mut g = GainToPainRatio::new(12).unwrap();
+let monthly_returns: Vec<f64> = Vec::new(); // your live stream
 for r in monthly_returns {
     if let Some(gpr) = g.update(r) {
         // gpr > 2 -> excellent return-per-pain

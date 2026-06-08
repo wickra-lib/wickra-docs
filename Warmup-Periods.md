@@ -589,7 +589,7 @@ Parameter-free swing-based Fibonacci tools. `warmup_period()` is the minimum num
 | `TwiggsMoneyFlow`         | `TwiggsMoneyFlow::new(21)`           | `period + 1`        | 22                | 22nd                         |
 | `VolumeRsi`               | `VolumeRsi::new(14)`                 | `period + 1`        | 15                | 15th                         |
 | `VolumeWeightedMacd`      | `VolumeWeightedMacd::new(12, 26, 9)` | `slow + signal − 1` | slow + signal − 1 | see formula                  |
-| `WilliamsAd`              | `WilliamsAd::new()`                  | `2`                 | 2                 | 2nd                          |
+| `Wad`              | `Wad::new()`                  | `2`                 | 2                 | 2nd                          |
 
 ## Additional Price Statistics indicators
 

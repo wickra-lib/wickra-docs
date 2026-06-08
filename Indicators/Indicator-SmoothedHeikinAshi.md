@@ -122,6 +122,7 @@ console.log('warmupPeriod:', s.warmupPeriod()); // 10
 use wickra::{Candle, Indicator, SmoothedHeikinAshi};
 
 let mut s = SmoothedHeikinAshi::new(10).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     if let Some(ha) = s.update(candle) {
         // ha.close > ha.open -> bullish; colour flip -> trend change

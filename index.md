@@ -11,6 +11,9 @@ hero:
     src: /wickra-mark.svg
     alt: Wickra
   actions:
+    - theme: alt
+      text: Home
+      link: https://wickra.org/
     - theme: brand
       text: Get started
       link: /Quickstart-Rust
@@ -20,12 +23,9 @@ hero:
     - theme: alt
       text: Overview
       link: /overview
-    - theme: alt
-      text: Home
-      link: https://wickra.org/
 
 features:
-  - title: 485 indicators, 24 families
+  - title: 514 indicators, 24 families
     details: Moving averages, momentum, trend, volatility, bands, volume, statistics, Ehlers/DSP, pivots, DeMark, Ichimoku, candlesticks, market profile, risk/performance, microstructure, derivatives, and market breadth.
   - title: Same code, live and backtest
     details: Every indicator is an O(1) state machine. The update call in your live loop is the exact same code path that drives the historical backtest — no drift.

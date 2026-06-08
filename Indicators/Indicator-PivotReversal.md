@@ -124,6 +124,7 @@ console.log('warmupPeriod:', p.warmupPeriod()); // 5
 use wickra::{Candle, Indicator, PivotReversal};
 
 let mut p = PivotReversal::new(2, 2).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     match p.update(candle) {
         Some(1.0)  => println!("bullish reversal breakout"),

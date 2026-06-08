@@ -39,7 +39,7 @@ From `crates/wickra-core/src/indicators/estimated_leverage_ratio.rs`:
 
 ```rust
 use wickra::{Indicator, EstimatedLeverageRatio};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 // EstimatedLeverageRatio: Input = DerivativesTick, Output = f64
 const _: fn(&mut EstimatedLeverageRatio, DerivativesTick) -> Option<f64> =
     <EstimatedLeverageRatio as Indicator>::update;
@@ -73,7 +73,7 @@ this).
 
 ```rust
 use wickra::{Indicator, EstimatedLeverageRatio};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut e = EstimatedLeverageRatio::new();
@@ -110,9 +110,10 @@ console.log(e.update(0.0001, 100, 100, 100, 1000, 400, 600, 0, 0, 0, 0)); // 1
 
 ```rust
 use wickra::{Indicator, EstimatedLeverageRatio};
-use wickra::derivatives::DerivativesTick;
+use wickra::DerivativesTick;
 
 let mut e = EstimatedLeverageRatio::new();
+let deriv_feed: Vec<DerivativesTick> = Vec::new(); // your live stream
 for tick in deriv_feed {
     if let Some(elr) = e.update(tick) {
         // elr spiking -> crowded leverage, cascade risk

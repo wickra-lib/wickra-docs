@@ -120,6 +120,7 @@ console.log(mr.batch([0.1, -0.1, 0.1]).at(-1)); // ~0.00574
 use wickra::{Indicator, MartinRatio};
 
 let mut mr = MartinRatio::new(14).unwrap();
+let daily_returns: Vec<f64> = Vec::new(); // your live stream
 for r in daily_returns {
     if let Some(upi) = mr.update(r) {
         // a falling UPI means rising underwater stress

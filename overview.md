@@ -7,7 +7,7 @@ Node.js, WebAssembly, and Rust itself. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
 
-The project ships 485 indicators across twenty-four families — moving averages,
+The project ships 514 indicators across twenty-four families — moving averages,
 momentum oscillators, trend & directional, price oscillators, volatility &
 bands, bands & channels, trailing stops, volume, price statistics, Ehlers /
 cycle (DSP), pivots & S/R, DeMark, Ichimoku & charts, candlestick patterns,
@@ -26,12 +26,12 @@ free for any use, commercial or not.
 
 | Registry  | Package        | Version |
 |-----------|----------------|---------|
-| crates.io | `wickra`       | 0.6.9   |
-| crates.io | `wickra-core`  | 0.6.9   |
-| crates.io | `wickra-data`  | 0.6.9   |
-| PyPI      | `wickra`       | 0.6.9   |
-| npm       | `wickra`       | 0.6.9   |
-| npm       | `wickra-wasm`  | 0.6.9   |
+| crates.io | `wickra`       | 0.7.4   |
+| crates.io | `wickra-core`  | 0.7.4   |
+| crates.io | `wickra-data`  | 0.7.4   |
+| PyPI      | `wickra`       | 0.7.4   |
+| npm       | `wickra`       | 0.7.4   |
+| npm       | `wickra-wasm`  | 0.7.4   |
 
 Release notes and tagged builds:
 <https://github.com/wickra-lib/wickra/releases>.
@@ -195,7 +195,7 @@ tables. The links below are a quick alphabetical-by-family index into the
 [TwiggsMoneyFlow](/Indicators/Indicator-TwiggsMoneyFlow) · [VolumeOscillator](/Indicators/Indicator-VolumeOscillator) ·
 [VolumePriceTrend](/Indicators/Indicator-VolumePriceTrend) · [VolumeRsi](/Indicators/Indicator-VolumeRsi) ·
 [VolumeWeightedMacd](/Indicators/Indicator-VolumeWeightedMacd) · [Vwap](/Indicators/Indicator-Vwap) ·
-[Vzo](/Indicators/Indicator-Vzo) · [WilliamsAd](/Indicators/Indicator-WilliamsAd)
+[Vzo](/Indicators/Indicator-Vzo) · [Wad](/Indicators/Indicator-Wad)
 
 ### Price Statistics (54)
 

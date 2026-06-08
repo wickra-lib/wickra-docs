@@ -54,7 +54,7 @@ signed imbalance.
 From `crates/wickra-core/src/indicators/imbalance_bars.rs`:
 
 ```rust
-use wickra::{BarBuilder, Candle, ImbalanceBars};
+use wickra::{BarBuilder, Candle, ImbalanceBar, ImbalanceBars};
 // ImbalanceBars: Input = Candle, Output = Vec<ImbalanceBar>
 const _: fn(&mut ImbalanceBars, Candle) -> Vec<ImbalanceBar> =
     <ImbalanceBars as BarBuilder>::update;
@@ -137,6 +137,7 @@ console.log(bars.update(13.0)[0].direction); // 1
 use wickra::{BarBuilder, Candle, ImbalanceBars};
 
 let mut bars = ImbalanceBars::new(20.0).unwrap();
+let feed: Vec<Candle> = Vec::new(); // your live stream
 for candle in feed {
     for bar in bars.update(candle) {
         // bar.direction reveals which side dominated the flow

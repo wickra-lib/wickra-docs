@@ -44,7 +44,7 @@ From `crates/wickra-core/src/indicators/pin.rs`:
 
 ```rust
 use wickra::{Indicator, Pin};
-use wickra::microstructure::Trade;
+use wickra::Trade;
 // Pin: Input = Trade, Output = f64
 const _: fn(&mut Pin, Trade) -> Option<f64> = <Pin as Indicator>::update;
 ```
@@ -74,7 +74,7 @@ trades (`first_emission_at_warmup_period` pins this).
 
 ```rust
 use wickra::{BatchExt, Indicator, Pin};
-use wickra::microstructure::{Side, Trade};
+use wickra::{Side, Trade};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut p = Pin::new(10)?;
@@ -114,9 +114,10 @@ console.log('warmupPeriod:', p.warmupPeriod()); // 20
 
 ```rust
 use wickra::{Indicator, Pin};
-use wickra::microstructure::Trade;
+use wickra::Trade;
 
 let mut p = Pin::new(20).unwrap();
+let trade_feed: Vec<Trade> = Vec::new(); // your live stream
 for trade in trade_feed {
     if let Some(pin) = p.update(trade) {
         // pin high -> elevated probability of informed trading
