@@ -1,6 +1,6 @@
 # Indicators Overview
 
-Wickra ships **507 indicators** organised into **twenty-four families**. Each
+Wickra ships **514 indicators** organised into **twenty-four families**. Each
 family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
