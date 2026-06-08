@@ -44,19 +44,19 @@
   filter: drop-shadow(0 4px 24px rgba(14, 165, 233, 0.18));
 }
 
-/* Feature cards: an explicit CSS grid so the 4 cards never orphan one onto a
-   second row. VitePress' default flex layout plus our `gap` override pushes the
-   4th card to wrap (4×25% + three 16px gaps exceed 100%), leaving a 3+1 split.
-   Grid tracks absorb the gap: 2×2 on desktop, single column on phones (the card
-   copy is long, so a 2-up phone layout would be unreadable). */
+/* Feature cards: an explicit CSS grid so the 4 cards lay out predictably.
+   VitePress' default flex layout plus our `gap` override overflows the row
+   (4×25% + three 16px gaps exceed 100%), so the 4th card wraps to a 3+1 split.
+   Grid tracks absorb the gap: all 4 in one row on desktop, single column on
+   phones (the card copy is long, so a multi-up phone layout is unreadable). */
 .VPFeatures .container .items {
   display: grid !important;
   grid-template-columns: 1fr !important;
   gap: 16px !important;
 }
-@media (min-width: 768px) {
+@media (min-width: 960px) {
   .VPFeatures .container .items {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(4, 1fr) !important;
   }
 }
 .VPFeatures .container .items .item {
