@@ -11,6 +11,9 @@ hero:
     src: /wickra-mark.svg
     alt: Wickra
   actions:
+    - theme: alt
+      text: Home
+      link: https://wickra.org/
     - theme: brand
       text: Get started
       link: /Quickstart-Rust
@@ -20,9 +23,6 @@ hero:
     - theme: alt
       text: Overview
       link: /overview
-    - theme: alt
-      text: Home
-      link: https://wickra.org/
 
 features:
   - title: 488 indicators, 24 families
