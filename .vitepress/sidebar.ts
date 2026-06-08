@@ -21,6 +21,10 @@ export const sidebar = [
       {
         "text": "Quickstart: WASM",
         "link": "/Quickstart-WASM"
+      },
+      {
+        "text": "Quickstart: C",
+        "link": "/Quickstart-C"
       }
     ]
   },
