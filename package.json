@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vitepress dev",
     "gen:banner": "node scripts/gen-og-banner.mjs",
+    "gen:badges": "node scripts/gen-badges.mjs",
     "build": "node scripts/gen-og-banner.mjs && vitepress build",
     "preview": "vitepress preview",
     "migrate": "node scripts/migrate-wiki.mjs"
