@@ -3,7 +3,8 @@
 Wickra is a streaming-first technical-indicators library. Every indicator is
 implemented in Rust as an O(1) state machine that consumes one input at a
 time, and the same engine is exposed through ergonomic bindings for Python,
-Node.js, WebAssembly, and Rust itself. The same `update` call you write inside
+Node.js, WebAssembly, and Rust itself, plus a C ABI that any C-capable language
+(C, C++, Go, C#, Java, R) links against. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
 
@@ -49,6 +50,9 @@ Release notes and tagged builds:
 - [Quickstart: WASM](Quickstart-WASM) — `npm install wickra-wasm`,
   building with `wasm-pack`, and running indicators client-side in a
   browser or bundler.
+- [Quickstart: C](Quickstart-C) — link the generated `wickra.h` + library,
+  the five-function opaque-handle shape, multi-output structs, and the
+  `wickra.hpp` C++ RAII wrapper.
 - [Data Layer](Data-Layer) — the `wickra-data` crate: the CSV reader,
   the tick-to-candle aggregator, the multi-timeframe resampler, and the
   Binance live feed.
