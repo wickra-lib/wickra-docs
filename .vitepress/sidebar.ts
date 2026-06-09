@@ -29,6 +29,10 @@ export const sidebar = [
       {
         "text": "Quickstart: C#",
         "link": "/Quickstart-CSharp"
+      },
+      {
+        "text": "Quickstart: Go",
+        "link": "/Quickstart-Go"
       }
     ]
   },
