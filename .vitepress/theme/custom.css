@@ -246,3 +246,12 @@
     height: 54px;
   }
 }
+
+/*
+ * Header brand mark. VitePress sizes the nav logo at 24px, which leaves the
+ * hexagon reading small beside the "Wickra" wordmark. Bump it so the mark
+ * carries the same visual weight as the (now full-bleed) tab favicon.
+ */
+.VPNavBarTitle .logo {
+  height: 30px;
+}
