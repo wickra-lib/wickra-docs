@@ -27,12 +27,12 @@ free for any use, commercial or not.
 
 | Registry  | Package        | Version |
 |-----------|----------------|---------|
-| crates.io | `wickra`       | 0.7.5   |
-| crates.io | `wickra-core`  | 0.7.5   |
-| crates.io | `wickra-data`  | 0.7.5   |
-| PyPI      | `wickra`       | 0.7.5   |
-| npm       | `wickra`       | 0.7.5   |
-| npm       | `wickra-wasm`  | 0.7.5   |
+| crates.io | `wickra`       | 0.7.6   |
+| crates.io | `wickra-core`  | 0.7.6   |
+| crates.io | `wickra-data`  | 0.7.6   |
+| PyPI      | `wickra`       | 0.7.6   |
+| npm       | `wickra`       | 0.7.6   |
+| npm       | `wickra-wasm`  | 0.7.6   |
 
 Release notes and tagged builds:
 <https://github.com/wickra-lib/wickra/releases>.
