@@ -33,6 +33,10 @@ export const sidebar = [
       {
         "text": "Quickstart: Go",
         "link": "/Quickstart-Go"
+      },
+      {
+        "text": "Quickstart: R",
+        "link": "/Quickstart-R"
       }
     ]
   },
