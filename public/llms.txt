@@ -16,6 +16,7 @@ Wickra implements each indicator once in Rust as a state machine, then re-export
 - [C](https://docs.wickra.org/Quickstart-C): Link the generated `wickra.h` + library from C, C++ or any C-capable language.
 - [C#](https://docs.wickra.org/Quickstart-CSharp): `dotnet add package Wickra` and idiomatic .NET indicator classes over the C ABI.
 - [Go](https://docs.wickra.org/Quickstart-Go): `go get` the cgo binding and idiomatic Go indicator types over the C ABI.
+- [Java](https://docs.wickra.org/Quickstart-Java): `org.wickra:wickra` on Maven Central and idiomatic Java indicator classes over the C ABI via the Java FFM API.
 - [R](https://docs.wickra.org/Quickstart-R): install the `.Call` binding and idiomatic R indicator constructors over the C ABI.
 
 ## Reference

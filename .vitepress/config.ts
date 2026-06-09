@@ -47,7 +47,7 @@ const structuredData = {
       url: 'https://wickra.org/',
       applicationCategory: 'DeveloperApplication',
       operatingSystem: 'Windows, macOS, Linux, WebAssembly',
-      programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly', 'C', 'C#', 'Go', 'R'],
+      programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly', 'C', 'C#', 'Go', 'Java', 'R'],
       description:
         'Streaming-first technical indicators with a Rust core and Python, Node, WASM, C ABI, and .NET bindings. Same code for backtesting and live ticks.',
       license: 'https://github.com/wickra-lib/wickra#license',
@@ -103,7 +103,7 @@ export default defineConfig({
       {
         property: 'og:description',
         content:
-          '514 streaming-first technical indicators. Rust core, Python / Node / WASM / C / C# / Go / R bindings.',
+          '514 streaming-first technical indicators. Rust core, Python / Node / WASM / C / C# / Go / Java / R bindings.',
       },
     ],
     ['meta', { property: 'og:image', content: 'https://docs.wickra.org/og-banner.webp' }],
@@ -156,6 +156,7 @@ export default defineConfig({
           { text: 'C', link: '/Quickstart-C' },
           { text: 'C#', link: '/Quickstart-CSharp' },
           { text: 'Go', link: '/Quickstart-Go' },
+          { text: 'Java', link: '/Quickstart-Java' },
           { text: 'R', link: '/Quickstart-R' },
         ],
       },
@@ -170,6 +171,7 @@ export default defineConfig({
           { text: 'C', link: 'https://wickra.org/api/c' },
           { text: 'C#', link: 'https://wickra.org/api/csharp' },
           { text: 'Go', link: 'https://wickra.org/api/go' },
+          { text: 'Java', link: 'https://wickra.org/api/java' },
           { text: 'R', link: 'https://wickra.org/api/r' },
         ],
       },
