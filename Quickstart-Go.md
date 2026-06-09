@@ -7,22 +7,14 @@ MACD, all as idiomatic Go.
 ## Install
 
 ```bash
-go get github.com/wickra-lib/wickra/bindings/go
+go get github.com/wickra-lib/wickra-go
 ```
 
-The binding uses cgo, so a C compiler is required, and it links against the
-prebuilt Wickra C ABI library. Build that library from the workspace and stage it
-under the package's `lib/` directory:
-
-```bash
-cargo build -p wickra-c --release
-cp target/release/libwickra.so    bindings/go/lib/   # Linux
-cp target/release/libwickra.dylib bindings/go/lib/   # macOS
-cp target/release/wickra.dll      bindings/go/lib/   # Windows (also on PATH at run time)
-```
-
-On Linux and macOS the library path is baked in via rpath; on Windows the DLL
-must be discoverable at run time (next to the executable or on `PATH`).
+The binding uses cgo, so a C compiler is required. The prebuilt Wickra C ABI
+libraries are committed in the module per platform under `lib/<goos>_<goarch>/`,
+so `go get` builds with no manual library build or staging. On Linux and macOS
+the library path is baked in via rpath; on Windows the bundled `wickra.dll` must
+be discoverable at run time (next to the executable or on `PATH`).
 
 ## The type shape
 
@@ -30,7 +22,7 @@ Every indicator is a type over an opaque native handle, with the same operations
 as the C ABI underneath:
 
 ```go
-import wickra "github.com/wickra-lib/wickra/bindings/go"
+import wickra "github.com/wickra-lib/wickra-go"
 
 sma, err := wickra.NewSma(14) // err is ErrInvalidParams on invalid params
 if err != nil {
@@ -55,7 +47,7 @@ import (
     "fmt"
     "math"
 
-    wickra "github.com/wickra-lib/wickra/bindings/go"
+    wickra "github.com/wickra-lib/wickra-go"
 )
 
 func main() {
