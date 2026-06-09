@@ -49,6 +49,13 @@
     "height": 20
   },
   {
+    "alt": "NuGet",
+    "href": "https://www.nuget.org/packages/Wickra",
+    "file": "/badges/nuget.svg",
+    "width": 103,
+    "height": 20
+  },
+  {
     "alt": "License: MIT OR Apache-2.0",
     "href": "https://github.com/wickra-lib/wickra#license",
     "file": "/badges/license.svg",
