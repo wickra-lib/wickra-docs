@@ -57,6 +57,8 @@ Release notes and tagged builds:
   `IDisposable` indicator classes, and nullable `record struct` multi-output.
 - [Quickstart: Go](Quickstart-Go) — `go get` the cgo binding, idiomatic types
   with `New<Indicator>`/`Close`, and `(value, ok)` multi-output.
+- [Quickstart: R](Quickstart-R) — install the `.Call` binding, indicator
+  constructors with `update`/`batch`/`reset`, and named-vector multi-output.
 - [Data Layer](Data-Layer) — the `wickra-data` crate: the CSV reader,
   the tick-to-candle aggregator, the multi-timeframe resampler, and the
   Binance live feed.
