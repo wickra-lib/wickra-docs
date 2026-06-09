@@ -86,6 +86,11 @@ export default defineConfig({
   lastUpdated: true,
 
   head: [
+    // SVG favicon first: modern browsers prefer the scalable mark, which fills
+    // the tab edge-to-edge. The .ico/.png below are rendered from the same
+    // transparent mark (not the dark-square avatar), so the hexagon is large at
+    // every size instead of floating in padding. .ico is the legacy fallback.
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/wickra-mark.svg' }],
     ['link', { rel: 'icon', href: '/favicon.ico', sizes: 'any' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16.png' }],
