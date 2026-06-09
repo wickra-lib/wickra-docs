@@ -34,7 +34,7 @@ import wickra "github.com/wickra-lib/wickra/bindings/go"
 
 sma, err := wickra.NewSma(14) // err is ErrInvalidParams on invalid params
 if err != nil {
-	panic(err)
+    panic(err)
 }
 defer sma.Close() // frees the handle (a finalizer is a backstop)
 
@@ -52,33 +52,33 @@ permanently.
 package main
 
 import (
-	"fmt"
-	"math"
+    "fmt"
+    "math"
 
-	wickra "github.com/wickra-lib/wickra/bindings/go"
+    wickra "github.com/wickra-lib/wickra/bindings/go"
 )
 
 func main() {
-	// 1. Streaming: feed Wilder's textbook example into RSI(14).
-	rsi, _ := wickra.NewRsi(14)
-	defer rsi.Close()
-	prices := []float64{
-		44.34, 44.09, 44.15, 43.61, 44.33, 44.83, 45.10, 45.42,
-		45.84, 46.08, 45.89, 46.03, 45.61, 46.28, 46.28, 46.00,
-	}
-	for i, p := range prices {
-		r := rsi.Update(p)
-		if !math.IsNaN(r) { // NaN during the 15-bar warmup
-			fmt.Printf("tick %2d  rsi=%.4f\n", i+1, r)
-		}
-	}
+    // 1. Streaming: feed Wilder's textbook example into RSI(14).
+    rsi, _ := wickra.NewRsi(14)
+    defer rsi.Close()
+    prices := []float64{
+        44.34, 44.09, 44.15, 43.61, 44.33, 44.83, 45.10, 45.42,
+        45.84, 46.08, 45.89, 46.03, 45.61, 46.28, 46.28, 46.00,
+    }
+    for i, p := range prices {
+        r := rsi.Update(p)
+        if !math.IsNaN(r) { // NaN during the 15-bar warmup
+            fmt.Printf("tick %2d  rsi=%.4f\n", i+1, r)
+        }
+    }
 
-	// 2. Batch: one SMA(3) call over five prices writes NaN at warmup.
-	sma, _ := wickra.NewSma(3)
-	defer sma.Close()
-	out := sma.Batch([]float64{1, 2, 3, 4, 5})
-	// out -> { NaN, NaN, 2.0, 3.0, 4.0 }
-	_ = out
+    // 2. Batch: one SMA(3) call over five prices writes NaN at warmup.
+    sma, _ := wickra.NewSma(3)
+    defer sma.Close()
+    out := sma.Batch([]float64{1, 2, 3, 4, 5})
+    // out -> { NaN, NaN, 2.0, 3.0, 4.0 }
+    _ = out
 }
 ```
 
@@ -94,9 +94,9 @@ Indicators with several outputs (MACD, Bollinger, ADX, …) return a value plus 
 macd, _ := wickra.NewMacdIndicator(12, 26, 9)
 defer macd.Close()
 for _, price := range feed {
-	if m, ok := macd.Update(price); ok {
-		fmt.Printf("macd=%.4f signal=%.4f hist=%.4f\n", m.Macd, m.Signal, m.Histogram)
-	}
+    if m, ok := macd.Update(price); ok {
+        fmt.Printf("macd=%.4f signal=%.4f hist=%.4f\n", m.Macd, m.Signal, m.Histogram)
+    }
 }
 ```
 
