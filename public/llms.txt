@@ -1,6 +1,6 @@
 # Wickra
 
-> Documentation for Wickra — streaming-first technical indicators with one Rust core and Python, Node, WASM, and C ABI bindings. Every indicator updates in O(1) constant time per tick, and the same code runs for backtesting and live ticks. The native packages are install-free — no C toolchain required.
+> Documentation for Wickra — streaming-first technical indicators with one Rust core and Python, Node, WASM, C ABI, and .NET bindings. Every indicator updates in O(1) constant time per tick, and the same code runs for backtesting and live ticks. The native packages are install-free — no C toolchain required.
 
 Wickra implements each indicator once in Rust as a state machine, then re-exports that single implementation to Python (PyO3), Node (napi-rs), the browser (wasm-bindgen), and Rust itself, plus a C ABI (cbindgen) that any C-capable language — C, C++, Go, C#, Java, R — links against. Batch and streaming evaluation are guaranteed to produce identical output, pinned by reference-value tests. Dual-licensed under MIT or Apache-2.0.
 
@@ -14,6 +14,7 @@ Wickra implements each indicator once in Rust as a state machine, then re-export
 - [Node](https://docs.wickra.org/Quickstart-Node): `npm install wickra` and a streaming RSI example.
 - [WASM](https://docs.wickra.org/Quickstart-WASM): Run indicators in the browser via WebAssembly.
 - [C](https://docs.wickra.org/Quickstart-C): Link the generated `wickra.h` + library from C, C++ or any C-capable language.
+- [C#](https://docs.wickra.org/Quickstart-CSharp): `dotnet add package Wickra` and idiomatic .NET indicator classes over the C ABI.
 
 ## Reference
 - [Warmup periods](https://docs.wickra.org/Warmup-Periods): How many bars each indicator needs before it emits a value.

@@ -53,6 +53,8 @@ Release notes and tagged builds:
 - [Quickstart: C](Quickstart-C) — link the generated `wickra.h` + library,
   the five-function opaque-handle shape, multi-output structs, and the
   `wickra.hpp` C++ RAII wrapper.
+- [Quickstart: C#](Quickstart-CSharp) — `dotnet add package Wickra`, idiomatic
+  `IDisposable` indicator classes, and nullable `record struct` multi-output.
 - [Data Layer](Data-Layer) — the `wickra-data` crate: the CSV reader,
   the tick-to-candle aggregator, the multi-timeframe resampler, and the
   Binance live feed.

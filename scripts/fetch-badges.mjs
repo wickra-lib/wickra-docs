@@ -31,6 +31,7 @@ const badges = [
   { alt: 'crates.io', slug: 'crates', src: 'https://img.shields.io/crates/v/wickra.svg?logo=rust&color=orange', href: 'https://crates.io/crates/wickra' },
   { alt: 'PyPI', slug: 'pypi', src: 'https://img.shields.io/pypi/v/wickra.svg?logo=pypi&color=blue', href: 'https://pypi.org/project/wickra/' },
   { alt: 'npm', slug: 'npm', src: 'https://img.shields.io/npm/v/wickra.svg?logo=npm&color=red', href: 'https://www.npmjs.com/package/wickra' },
+  { alt: 'NuGet', slug: 'nuget', src: 'https://img.shields.io/nuget/v/Wickra.svg?logo=nuget&color=blue', href: 'https://www.nuget.org/packages/Wickra' },
   { alt: 'License: MIT OR Apache-2.0', slug: 'license', src: 'https://img.shields.io/badge/license-MIT_OR_Apache--2.0-blue', href: 'https://github.com/wickra-lib/wickra#license' },
   { alt: 'OpenSSF Scorecard', slug: 'scorecard', src: 'https://api.securityscorecards.dev/projects/github.com/wickra-lib/wickra/badge', href: 'https://scorecard.dev/viewer/?uri=github.com/wickra-lib/wickra' },
   { alt: 'OpenSSF Best Practices', slug: 'best-practices', src: 'https://www.bestpractices.dev/projects/13094/badge', href: 'https://www.bestpractices.dev/projects/13094' },
@@ -76,7 +77,7 @@ for (const b of badges) {
     }
     // Version badges must read like a version (e.g. "v0.5.8"); anything else is
     // an upstream error that slipped past the marker list above.
-    if (['release', 'crates', 'pypi', 'npm'].includes(b.slug) && !/^v?\d/.test(valueText)) {
+    if (['release', 'crates', 'pypi', 'npm', 'nuget'].includes(b.slug) && !/^v?\d/.test(valueText)) {
       throw new Error(`version badge value is not a version: "${valueText}"`)
     }
     writeFileSync(resolve(outDir, `${b.slug}.svg`), svg)
