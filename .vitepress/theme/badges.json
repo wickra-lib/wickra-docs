@@ -66,14 +66,14 @@
     "alt": "Go module",
     "href": "https://pkg.go.dev/github.com/wickra-lib/wickra-go",
     "file": "/badges/go.svg",
-    "width": 100,
+    "width": 85,
     "height": 20
   },
   {
     "alt": "r-universe",
     "href": "https://wickra-lib.r-universe.dev",
     "file": "/badges/r-universe.svg",
-    "width": 126,
+    "width": 106,
     "height": 20
   },
   {
