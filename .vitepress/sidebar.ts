@@ -35,6 +35,10 @@ export const sidebar = [
         "link": "/Quickstart-Go"
       },
       {
+        "text": "Quickstart: Java",
+        "link": "/Quickstart-Java"
+      },
+      {
         "text": "Quickstart: R",
         "link": "/Quickstart-R"
       }
