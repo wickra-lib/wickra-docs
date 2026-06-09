@@ -55,6 +55,8 @@ Release notes and tagged builds:
   `wickra.hpp` C++ RAII wrapper.
 - [Quickstart: C#](Quickstart-CSharp) — `dotnet add package Wickra`, idiomatic
   `IDisposable` indicator classes, and nullable `record struct` multi-output.
+- [Quickstart: Go](Quickstart-Go) — `go get` the cgo binding, idiomatic types
+  with `New<Indicator>`/`Close`, and `(value, ok)` multi-output.
 - [Data Layer](Data-Layer) — the `wickra-data` crate: the CSV reader,
   the tick-to-candle aggregator, the multi-timeframe resampler, and the
   Binance live feed.
