@@ -6,7 +6,7 @@ titleTemplate: false
 hero:
   name: Wickra
   text: Streaming-first technical indicators
-  tagline: One Rust core. The same O(1) update for live ticks and backtests. Python, Node, WASM and Rust bindings, plus a C ABI for everything else — install-free.
+  tagline: One Rust core. The same O(1) update for live ticks and backtests. Native Python, Node, WASM and Rust bindings, plus a C ABI reaching C, C++, C#, Go, Java and R — install-free.
   image:
     src: /wickra-mark.svg
     alt: Wickra

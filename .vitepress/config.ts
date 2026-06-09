@@ -181,6 +181,10 @@ export default defineConfig({
           { text: 'crates.io', link: 'https://crates.io/crates/wickra' },
           { text: 'PyPI', link: 'https://pypi.org/project/wickra/' },
           { text: 'npm', link: 'https://www.npmjs.com/package/wickra' },
+          { text: 'NuGet', link: 'https://www.nuget.org/packages/Wickra' },
+          { text: 'Maven Central', link: 'https://central.sonatype.com/artifact/org.wickra/wickra' },
+          { text: 'Go module', link: 'https://pkg.go.dev/github.com/wickra-lib/wickra-go' },
+          { text: 'r-universe', link: 'https://wickra-lib.r-universe.dev' },
         ],
       },
       {

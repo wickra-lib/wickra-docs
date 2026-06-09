@@ -56,6 +56,27 @@
     "height": 20
   },
   {
+    "alt": "Maven Central",
+    "href": "https://central.sonatype.com/artifact/org.wickra/wickra",
+    "file": "/badges/maven.svg",
+    "width": 153,
+    "height": 20
+  },
+  {
+    "alt": "Go module",
+    "href": "https://pkg.go.dev/github.com/wickra-lib/wickra-go",
+    "file": "/badges/go.svg",
+    "width": 100,
+    "height": 20
+  },
+  {
+    "alt": "r-universe",
+    "href": "https://wickra-lib.r-universe.dev",
+    "file": "/badges/r-universe.svg",
+    "width": 126,
+    "height": 20
+  },
+  {
     "alt": "License: MIT OR Apache-2.0",
     "href": "https://github.com/wickra-lib/wickra#license",
     "file": "/badges/license.svg",

@@ -33,6 +33,10 @@ free for any use, commercial or not.
 | PyPI      | `wickra`       | 0.8.0   |
 | npm       | `wickra`       | 0.8.0   |
 | npm       | `wickra-wasm`  | 0.8.0   |
+| NuGet     | `Wickra`       | 0.8.0   |
+| Maven Central | `org.wickra:wickra` | 0.8.0 |
+| Go        | `github.com/wickra-lib/wickra-go` | v0.8.0 |
+| r-universe | `wickra`      | 0.8.0   |
 
 Release notes and tagged builds:
 <https://github.com/wickra-lib/wickra/releases>.
