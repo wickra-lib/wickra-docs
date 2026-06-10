@@ -132,6 +132,33 @@ the source scripts. In summary:
 The streaming advantage over batch-only libraries widens linearly with how much
 history they must recompute on every new tick.
 
+## Per-binding throughput
+
+Every binding calls the **same** Rust core, so the cost that differs between them
+is the FFI boundary, not the algorithm. Each ships a `throughput` benchmark; here
+is `SMA(20)` over 200 000 bars (median of 3, AMD Ryzen 9 9950X), in million
+updates per second:
+
+| Target               | streaming (Mupd/s) | batch (Mupd/s) |
+|----------------------|-------------------:|---------------:|
+| Rust core (no FFI)   |                391 |            500 |
+| C                    |                383 |            330 |
+| C# / .NET            |                337 |            244 |
+| Python               |                 33 |            488 |
+| Java                 |                 28 |            175 |
+| Go                   |                 24 |            400 |
+| WebAssembly          |                 19 |            167 |
+| Node.js              |                 17 |             10 |
+| R                    |                0.1 |            193 |
+
+This is exactly the streaming-vs-batch story at the binding layer: a per-tick
+`update` crosses the boundary once per value, so streaming throughput exposes the
+boundary cost (the raw C ABI is nearly the FFI-free Rust ceiling; R's interpreter
+loop is ~2000× slower than its own batch). A single `batch` call crosses once and
+the core does the rest, so batch converges near the core speed for the zero-copy
+bindings. These are machine-dependent FFI-overhead numbers, not a speed claim —
+see [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md).
+
 ## Practical consequences
 
 - **Mix freely.** A common pattern is "warm up the indicator on historical
@@ -153,4 +180,8 @@ history they must recompute on every new tick.
   error handling.
 - [Warmup Periods](Warmup-Periods) — the exact `warmup_period()` for
   every indicator.
+- [Per-binding throughput](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md)
+  — BENCHMARKS.md §3: raw updates/sec for each language binding (C, C#, Go, Java,
+  Python, R, WASM and the Rust core baseline), measuring FFI overhead rather than
+  a cross-library comparison.
 - Source: <https://github.com/wickra-lib/wickra>
