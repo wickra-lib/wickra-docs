@@ -153,4 +153,8 @@ history they must recompute on every new tick.
   error handling.
 - [Warmup Periods](Warmup-Periods) — the exact `warmup_period()` for
   every indicator.
+- [Per-binding throughput](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md)
+  — BENCHMARKS.md §3: raw updates/sec for each language binding (C, C#, Go, Java,
+  Python, R, WASM and the Rust core baseline), measuring FFI overhead rather than
+  a cross-library comparison.
 - Source: <https://github.com/wickra-lib/wickra>
