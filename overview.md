@@ -27,16 +27,16 @@ free for any use, commercial or not.
 
 | Registry  | Package        | Version |
 |-----------|----------------|---------|
-| [crates.io](https://crates.io/crates/wickra) | `wickra` | 0.8.2 |
-| [crates.io](https://crates.io/crates/wickra-core) | `wickra-core` | 0.8.2 |
-| [crates.io](https://crates.io/crates/wickra-data) | `wickra-data` | 0.8.2 |
-| [PyPI](https://pypi.org/project/wickra/) | `wickra` | 0.8.2 |
-| [npm](https://www.npmjs.com/package/wickra) | `wickra` | 0.8.2 |
-| [npm](https://www.npmjs.com/package/wickra-wasm) | `wickra-wasm` | 0.8.2 |
-| [NuGet](https://www.nuget.org/packages/Wickra) | `Wickra` | 0.8.2 |
-| [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) | `org.wickra:wickra` | 0.8.2 |
-| [Go](https://pkg.go.dev/github.com/wickra-lib/wickra-go) | `github.com/wickra-lib/wickra-go` | 0.8.2 |
-| [r-universe](https://wickra-lib.r-universe.dev/wickra) | `wickra` | 0.8.2 |
+| [crates.io](https://crates.io/crates/wickra) | `wickra` | 0.8.3 |
+| [crates.io](https://crates.io/crates/wickra-core) | `wickra-core` | 0.8.3 |
+| [crates.io](https://crates.io/crates/wickra-data) | `wickra-data` | 0.8.3 |
+| [PyPI](https://pypi.org/project/wickra/) | `wickra` | 0.8.3 |
+| [npm](https://www.npmjs.com/package/wickra) | `wickra` | 0.8.3 |
+| [npm](https://www.npmjs.com/package/wickra-wasm) | `wickra-wasm` | 0.8.3 |
+| [NuGet](https://www.nuget.org/packages/Wickra) | `Wickra` | 0.8.3 |
+| [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) | `org.wickra:wickra` | 0.8.3 |
+| [Go](https://pkg.go.dev/github.com/wickra-lib/wickra-go) | `github.com/wickra-lib/wickra-go` | 0.8.3 |
+| [r-universe](https://wickra-lib.r-universe.dev/wickra) | `wickra` | 0.8.3 |
 
 Release notes and tagged builds:
 <https://github.com/wickra-lib/wickra/releases>.
