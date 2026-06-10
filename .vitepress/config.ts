@@ -16,8 +16,10 @@ const overview = readFileSync(
   resolve(dirname(fileURLToPath(import.meta.url)), '../overview.md'),
   'utf-8',
 )
+// The first cell is a markdown link (`[crates.io](…)`), so match on the cell
+// containing "crates.io" rather than the bare word.
 const versionMatch = overview.match(
-  /^\|\s*crates\.io\s*\|\s*`wickra`\s*\|\s*([0-9]+\.[0-9]+\.[0-9]+)/m,
+  /^\|[^|\n]*crates\.io[^|\n]*\|\s*`wickra`\s*\|\s*([0-9]+\.[0-9]+\.[0-9]+)/m,
 )
 const version = versionMatch ? versionMatch[1] : 'latest'
 
@@ -203,11 +205,6 @@ export default defineConfig({
     search: { provider: 'local' },
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/wickra-lib/wickra' }],
-
-    editLink: {
-      pattern: 'https://github.com/wickra-lib/wickra-docs/edit/main/:path',
-      text: 'Edit this page on GitHub',
-    },
 
     outline: { level: [2, 3] },
 
