@@ -83,6 +83,19 @@ for (const b of badges) {
     if (['release', 'crates', 'pypi', 'npm', 'nuget', 'maven', 'go', 'r-universe'].includes(b.slug) && !/^v?\d/.test(valueText)) {
       throw new Error(`version badge value is not a version: "${valueText}"`)
     }
+    // Version badges are monotonic: a value lower than the committed snapshot is
+    // a stale badge-host cache, not a real downgrade — reject it so the badge can
+    // never move backwards (e.g. shields serving 0.8.4 over a committed 0.8.5).
+    const verTarget = resolve(outDir, `${b.slug}.svg`)
+    if (['release', 'crates', 'pypi', 'npm', 'nuget', 'maven', 'go', 'r-universe'].includes(b.slug) && existsSync(verTarget)) {
+      const toTuple = (t) => { const m = String(t).match(/(\d+)\.(\d+)\.(\d+)/); return m ? m.slice(1).map(Number) : null }
+      const next = toTuple(valueText)
+      const prevText = ((readFileSync(verTarget, 'utf-8').match(/<text[^>]*>([^<]*)<\/text>/g) || []).pop() || '').replace(/<[^>]+>/g, '').trim()
+      const prev = toTuple(prevText)
+      if (next && prev && (next[0] < prev[0] || (next[0] === prev[0] && (next[1] < prev[1] || (next[1] === prev[1] && next[2] < prev[2]))))) {
+        throw new Error(`version went backwards: "${valueText}" < committed "${prev.join('.')}" (stale cache)`)
+      }
+    }
     writeFileSync(resolve(outDir, `${b.slug}.svg`), svg)
     const { width, height } = dimsOf(svg)
     manifest.push({ alt: b.alt, href: b.href, file, width, height })
