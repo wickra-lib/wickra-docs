@@ -23,14 +23,14 @@ Maven:
 <dependency>
   <groupId>org.wickra</groupId>
   <artifactId>wickra</artifactId>
-  <version>0.8.7</version>
+  <version>0.8.8</version>
 </dependency>
 ```
 
 Gradle:
 
 ```kotlin
-implementation("org.wickra:wickra:0.8.7")
+implementation("org.wickra:wickra:0.8.8")
 ```
 
 ## The class shape
