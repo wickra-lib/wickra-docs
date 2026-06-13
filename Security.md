@@ -6,7 +6,7 @@ Report it privately through one of:
 
 - GitHub's **private vulnerability reporting** — open the affected repository's
   *Security* tab and choose *"Report a vulnerability"*, or
-- email **support@wickra.org** with a subject line starting with
+- email **[support@wickra.org](mailto:support@wickra.org)** with a subject line starting with
   `[wickra security]`.
 
 Please include the affected repository and version (or commit), a description of

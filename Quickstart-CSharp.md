@@ -1,4 +1,4 @@
-# Quickstart: C#
+# Quickstart: C&#35;
 
 A five-minute tour of the Wickra C# binding — the first language shim on the
 C ABI hub. By the end you will have streamed an RSI, run a batch SMA, and read a
