@@ -13,7 +13,7 @@ npm run build    # static output -> .vitepress/dist
 npm run preview  # serve the built site
 ```
 
-Requires Node 20 (see `.nvmrc`).
+Requires Node 22 (see `.nvmrc`).
 
 ## Content
 
