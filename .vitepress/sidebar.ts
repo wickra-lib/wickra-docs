@@ -7,6 +7,10 @@ export const sidebar = [
     "collapsed": false,
     "items": [
       {
+        "text": "Requirements",
+        "link": "/Requirements"
+      },
+      {
         "text": "Quickstart: Rust",
         "link": "/Quickstart-Rust"
       },
