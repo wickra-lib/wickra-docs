@@ -1,6 +1,6 @@
-# Quickstart: C# / .NET
+# Quickstart: C#
 
-A five-minute tour of the Wickra .NET binding — the first language stecker on the
+A five-minute tour of the Wickra C# binding — the first language shim on the
 C ABI hub. By the end you will have streamed an RSI, run a batch SMA, and read a
 multi-output MACD, all as idiomatic C#.
 
@@ -98,7 +98,7 @@ dotnet run --project examples/csharp/streaming
 
 ## See also
 
-- [Quickstart: C](Quickstart-C) — the C ABI hub the .NET binding links against.
+- [Quickstart: C](Quickstart-C) — the C ABI hub the C# binding links against.
 - [Streaming vs Batch](Streaming-vs-Batch) — the `batch == repeated update`
   contract that holds across every binding.
 - [Indicators overview](Indicators-Overview) — the full catalogue.

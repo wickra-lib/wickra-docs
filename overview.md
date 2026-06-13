@@ -3,8 +3,8 @@
 Wickra is a streaming-first technical-indicators library. Every indicator is
 implemented in Rust as an O(1) state machine that consumes one input at a
 time, and the same engine is exposed through ergonomic bindings for Python,
-Node.js, WebAssembly, and Rust itself, plus a C ABI that any C-capable language
-(C, C++, Go, C#, Java, R) links against. The same `update` call you write inside
+Node.js, WASM, and Rust itself, plus a C ABI that any C-capable language
+(C, C++, C#, Go, Java, R) links against. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
 

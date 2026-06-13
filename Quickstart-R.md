@@ -1,6 +1,6 @@
 # Quickstart: R
 
-A five-minute tour of the Wickra R binding — a `.Call` stecker on the C ABI hub.
+A five-minute tour of the Wickra R binding — a `.Call` shim on the C ABI hub.
 By the end you will have streamed an RSI, run a batch SMA, and read a
 multi-output MACD, all from idiomatic R.
 

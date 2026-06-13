@@ -1,6 +1,6 @@
 # Quickstart: Java
 
-A five-minute tour of the Wickra Java binding — a language stecker on the C ABI
+A five-minute tour of the Wickra Java binding — a language shim on the C ABI
 hub built on the Java Foreign Function & Memory API (Panama). By the end you
 will have streamed an RSI, run a batch SMA, and read a multi-output MACD, all as
 idiomatic Java.

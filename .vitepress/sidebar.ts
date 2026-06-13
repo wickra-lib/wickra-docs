@@ -67,6 +67,10 @@ export const sidebar = [
       {
         "text": "Data layer",
         "link": "/Data-Layer"
+      },
+      {
+        "text": "Security",
+        "link": "/Security"
       }
     ]
   },
