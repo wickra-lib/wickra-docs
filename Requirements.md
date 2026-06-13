@@ -65,7 +65,7 @@ range the CI matrix actually exercises on every push.
   [GitHub release](https://github.com/wickra-lib/wickra/releases) for Linux,
   macOS and Windows — link against the library, no Rust toolchain required.
 
-### C#
+### C&#35;
 
 - **.NET 8 or later.** The binding targets `net8.0` and ships on NuGet as
   `Wickra` with the native library bundled per RID, so `dotnet add package
