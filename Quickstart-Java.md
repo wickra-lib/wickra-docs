@@ -36,16 +36,22 @@ implementation("org.wickra:wickra:0.9.0")
 ## The class shape
 
 Every indicator is an `AutoCloseable` class over an opaque native handle, with
-the same five operations as the C ABI underneath:
+the same operations as the C ABI underneath:
 
 ```java
 import org.wickra.Sma;
 
-try (Sma sma = new Sma(14)) {   // throws IllegalArgumentException on invalid params
-    double v = sma.update(42.0); // NaN while warming up
-    sma.reset();                 // back to a fresh state
+try (Sma sma = new Sma(14)) {      // throws IllegalArgumentException on invalid params
+    int w = sma.warmupPeriod();    // updates until ready: 14
+    double v = sma.update(42.0);   // NaN while warming up
+    boolean ready = sma.isReady(); // false until warmed up
+    sma.reset();                   // back to a fresh state
 } // freed at the end of the try-with-resources scope
 ```
+
+The alt-chart bar builders (`RenkoBars`, `KagiBars`, …) have no
+`warmupPeriod` / `isReady` — a candle can complete 0..n bars, so they have no
+warmup.
 
 `update` is O(1) per call. Prefer try-with-resources for deterministic cleanup;
 a `Cleaner` also frees the handle once the wrapper becomes unreachable, so a

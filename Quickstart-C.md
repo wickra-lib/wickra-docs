@@ -27,15 +27,17 @@ cc app.c -I path/to/include -L path/to/lib -lwickra -lm -o app
 gcc app.c -I path\to\include path\to\wickra.dll -lm -o app.exe
 ```
 
-## The five-function shape
+## The handle shape
 
-Every indicator is an opaque handle with the same five functions:
+Every indicator is an opaque handle with the same set of functions:
 
 ```c
 #include "wickra.h"
 
-struct Sma *sma = wickra_sma_new(14);     /* NULL on invalid params  */
-double v = wickra_sma_update(sma, 42.0);  /* NaN while warming up     */
+struct Sma *sma = wickra_sma_new(14);      /* NULL on invalid params  */
+size_t w = wickra_sma_warmup_period(sma);  /* updates until ready: 14  */
+double v = wickra_sma_update(sma, 42.0);   /* NaN while warming up     */
+bool ready = wickra_sma_is_ready(sma);     /* false until warmed up    */
 wickra_sma_reset(sma);                     /* back to a fresh state    */
 wickra_sma_free(sma);                      /* exactly once per _new    */
 ```
@@ -43,6 +45,9 @@ wickra_sma_free(sma);                      /* exactly once per _new    */
 `update` is O(1) per call. There is no RAII across the C boundary, so every
 `wickra_<ind>_new` must be paired with exactly one `wickra_<ind>_free`. Every
 function is NULL-safe: a NULL handle yields `NaN` (or a no-op), never a crash.
+The alt-chart bar builders (`renko_bars`, `kagi_bars`, …) omit
+`warmup_period` / `is_ready` — a candle can complete 0..n bars, so they have no
+warmup.
 
 ## Streaming and batch side by side
 
