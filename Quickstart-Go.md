@@ -30,9 +30,15 @@ if err != nil {
 }
 defer sma.Close() // frees the handle (a finalizer is a backstop)
 
-v := sma.Update(42.0) // NaN while warming up
-sma.Reset()           // back to a fresh state
+w := sma.WarmupPeriod() // updates until ready: 14
+v := sma.Update(42.0)   // NaN while warming up
+ready := sma.IsReady()  // false until warmed up
+sma.Reset()             // back to a fresh state
 ```
+
+The alt-chart bar builders (`RenkoBars`, `KagiBars`, …) have no
+`WarmupPeriod` / `IsReady` — a candle can complete 0..n bars, so they have no
+warmup.
 
 `Update` is O(1) per call. Prefer `defer x.Close()` for prompt cleanup; a
 `runtime.SetFinalizer` also frees the handle, so a missed `Close` never leaks

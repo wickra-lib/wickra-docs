@@ -29,11 +29,17 @@ opaque native handle, with the same operations as the C ABI underneath:
 ```r
 library(wickra)
 
-sma <- Sma(14)        # stops with an error on invalid params
-v <- update(sma, 42)  # NA while warming up
-reset(sma)            # back to a fresh state
+sma <- Sma(14)             # stops with an error on invalid params
+w <- warmup_period(sma)    # updates until ready: 14
+v <- update(sma, 42)       # NA while warming up
+ready <- is_ready(sma)     # FALSE until warmed up
+reset(sma)                 # back to a fresh state
 # the native handle is freed automatically when `sma` is garbage-collected
 ```
+
+The alt-chart bar builders (`RenkoBars()`, `KagiBars()`, …) have no
+`warmup_period()` / `is_ready()` — a candle can complete 0..n bars, so they have
+no warmup.
 
 `update()` is O(1) per call. Handles are released by a registered finalizer, so
 there is nothing to free by hand.

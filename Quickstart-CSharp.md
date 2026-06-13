@@ -19,16 +19,22 @@ It targets .NET 8 and later.
 ## The class shape
 
 Every indicator is an `IDisposable` class over an opaque native handle, with the
-same five operations as the C ABI underneath:
+same operations as the C ABI underneath:
 
 ```csharp
 using Wickra;
 
 using var sma = new Sma(14);     // throws ArgumentException on invalid params
+int w = sma.WarmupPeriod();      // updates until ready: 14
 double v = sma.Update(42.0);     // NaN while warming up
+bool ready = sma.IsReady();      // false until warmed up
 sma.Reset();                     // back to a fresh state
 // disposed (freed) at the end of the using scope
 ```
+
+The alt-chart bar builders (`RenkoBars`, `KagiBars`, …) have no
+`WarmupPeriod` / `IsReady` — a candle can complete 0..n bars, so they have no
+warmup.
 
 `Update` is O(1) per call. Prefer `using` for deterministic cleanup; a
 `SafeHandle` also frees the handle from the finalizer, so a missed `Dispose`
