@@ -2,7 +2,7 @@
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 
 // Floating "scroll back to top" control. Fades in once the page is scrolled a
-// bit, sits above the fixed footer (offset via --wk-footer-h), and smooth-
+// bit, sits in the bottom-right corner, and smooth-
 // scrolls to the top on click.
 const visible = ref(false)
 
