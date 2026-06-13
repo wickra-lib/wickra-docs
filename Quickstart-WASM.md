@@ -1,7 +1,7 @@
-# Quickstart: WebAssembly
+# Quickstart: WASM
 
-A five-minute tour of the Wickra WebAssembly binding. The same Rust core that
-powers the Python, Node, and Rust APIs is compiled to WebAssembly with
+A five-minute tour of the Wickra WASM binding. The same Rust core that
+powers the Python, Node.js, and Rust APIs is compiled to WebAssembly with
 [wasm-bindgen](https://wasm-bindgen.github.io/wasm-bindgen/), so indicators run
 entirely client-side — in a browser tab, a bundler build, or Node — with no
 server round-trips.

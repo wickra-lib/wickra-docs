@@ -142,12 +142,12 @@ updates per second:
 | Target               | streaming (Mupd/s) | batch (Mupd/s) |
 |----------------------|-------------------:|---------------:|
 | Rust core (no FFI)   |                391 |            500 |
-| C                    |                383 |            330 |
-| C# / .NET            |                337 |            244 |
+| C / C++              |                383 |            330 |
+| C#                   |                337 |            244 |
 | Python               |                 33 |            488 |
 | Java                 |                 28 |            175 |
 | Go                   |                 24 |            400 |
-| WebAssembly          |                 19 |            167 |
+| WASM                 |                 19 |            167 |
 | Node.js              |                 17 |             10 |
 | R                    |                0.1 |            193 |
 
@@ -181,7 +181,7 @@ see [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARK
 - [Warmup Periods](Warmup-Periods) — the exact `warmup_period()` for
   every indicator.
 - [Per-binding throughput](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md)
-  — BENCHMARKS.md §3: raw updates/sec for each language binding (C, C#, Go, Java,
+  — BENCHMARKS.md §3: raw updates/sec for each language binding (C, C++, C#, Go, Java,
   Python, R, WASM and the Rust core baseline), measuring FFI overhead rather than
   a cross-library comparison.
 - Source: <https://github.com/wickra-lib/wickra>

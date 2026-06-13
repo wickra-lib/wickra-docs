@@ -1,6 +1,6 @@
 # Quickstart: Go
 
-A five-minute tour of the Wickra Go binding — a cgo stecker on the C ABI hub. By
+A five-minute tour of the Wickra Go binding — a cgo shim on the C ABI hub. By
 the end you will have streamed an RSI, run a batch SMA, and read a multi-output
 MACD, all as idiomatic Go.
 
