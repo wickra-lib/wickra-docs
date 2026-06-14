@@ -82,7 +82,7 @@ import wickra as ta
 
 close = 100 + np.arange(20, dtype=float)
 vol = np.where(np.arange(20) % 3 == 0, 500.0, 200.0)
-nvi = ta.Nvi()
+nvi = ta.NVI()
 print(nvi.batch(close, vol)[-1])
 ```
 
@@ -90,7 +90,7 @@ print(nvi.batch(close, vol)[-1])
 
 ```javascript
 const wickra = require('wickra');
-const nvi = new wickra.Nvi();
+const nvi = new wickra.NVI();
 // feed c, v
 ```
 

@@ -102,7 +102,7 @@ at `x = 3` is `0 + 4·3 = 12`. This matches the `reference_value` unit test in
 import numpy as np
 import wickra as ta
 
-tsf = ta.Tsf(3)
+tsf = ta.TSF(3)
 print(tsf.batch(np.array([1.0, 2.0, 9.0])))
 ```
 
@@ -116,7 +116,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const tsf = new ta.Tsf(3);
+const tsf = new ta.TSF(3);
 for (const x of [1, 2, 9]) console.log(x, '->', tsf.update(x));
 ```
 

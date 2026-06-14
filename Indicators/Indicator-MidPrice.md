@@ -103,7 +103,7 @@ test in `crates/wickra-core/src/indicators/mid_price.rs`.
 import numpy as np
 import wickra as ta
 
-mp = ta.MidPrice(3)
+mp = ta.MIDPRICE(3)
 high  = np.array([12.0, 14.0, 16.0])
 low   = np.array([8.0,  9.0,  10.0])
 close = np.array([10.0, 11.0, 12.0])
@@ -120,7 +120,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const mp = new ta.MidPrice(3);
+const mp = new ta.MIDPRICE(3);
 const bars = [[12, 8, 10], [14, 9, 11], [16, 10, 12]];
 for (const [h, l, c] of bars) console.log(mp.update(c, h, l, c));
 ```

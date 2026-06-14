@@ -102,7 +102,7 @@ h = np.array([105.0, 104.0])
 l = np.array([ 99.0,  95.0])
 c = np.array([100.0,  99.5])
 
-td = ta.TdDifferential()
+td = ta.TDDifferential()
 print(td.batch(h, l, c))  # [NaN, ±1 or 0]
 ```
 
@@ -110,7 +110,7 @@ print(td.batch(h, l, c))  # [NaN, ±1 or 0]
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TdDifferential();
+const td = new wickra.TDDifferential();
 console.log(td.batch([105, 104], [99, 95], [100, 99.5]));
 ```
 

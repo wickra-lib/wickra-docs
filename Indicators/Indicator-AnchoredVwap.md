@@ -85,7 +85,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 import numpy as np
 import wickra as ta
 
-av = ta.AnchoredVwap()
+av = ta.AnchoredVWAP()
 av.set_anchor()
 # ... feed bars
 ```
@@ -94,7 +94,7 @@ av.set_anchor()
 
 ```javascript
 const wickra = require('wickra');
-const av = new wickra.AnchoredVwap();
+const av = new wickra.AnchoredVWAP();
 av.setAnchor();
 // ... feed candles
 ```

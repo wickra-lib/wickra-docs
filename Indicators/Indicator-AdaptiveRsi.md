@@ -101,7 +101,7 @@ Some(100.0)
 import numpy as np
 import wickra as ta
 
-r = ta.AdaptiveRsi(14)
+r = ta.ADAPTIVERSI(14)
 x = 100 + np.sin(np.arange(200) * 0.3) * 8
 print(r.batch(x)[-1])   # in [0, 100]
 ```
@@ -111,7 +111,7 @@ print(r.batch(x)[-1])   # in [0, 100]
 ```javascript
 const ta = require('wickra');
 
-const r = new ta.AdaptiveRsi(14);
+const r = new ta.ADAPTIVERSI(14);
 console.log('warmupPeriod:', r.warmupPeriod()); // 15
 ```
 

@@ -103,7 +103,7 @@ import wickra as ta
 
 t = np.arange(120)
 prices = 100 + np.sin(t * 2 * np.pi / 20) * 5
-ht = ta.HtPhasor()
+ht = ta.HT_PHASOR()
 out = ht.batch(prices)          # (120, 2): columns inphase, quadrature
 print('row 60 (inphase, quadrature):', out[60])
 ```
@@ -112,7 +112,7 @@ print('row 60 (inphase, quadrature):', out[60])
 
 ```javascript
 const ta = require('wickra');
-const ht = new ta.HtPhasor();
+const ht = new ta.HT_PHASOR();
 const prices = Array.from({ length: 120 },
   (_, i) => 100 + Math.sin(i * 2 * Math.PI / 20) * 5);
 let last = null;

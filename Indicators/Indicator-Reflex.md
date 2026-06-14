@@ -92,7 +92,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 import numpy as np
 import wickra as ta
 
-r = ta.Reflex(20)
+r = ta.REFLEX(20)
 x = 100 + np.sin(2 * np.pi * np.arange(200) / 20) * 5
 print(r.batch(x)[-5:])  # ~[-3, 3] oscillation
 ```
@@ -102,7 +102,7 @@ print(r.batch(x)[-5:])  # ~[-3, 3] oscillation
 ```javascript
 const ta = require('wickra');
 
-const r = new ta.Reflex(20);
+const r = new ta.REFLEX(20);
 console.log('warmupPeriod:', r.warmupPeriod()); // 21
 ```
 

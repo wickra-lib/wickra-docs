@@ -92,7 +92,7 @@ h = np.array([110.0])
 l = np.array([ 98.0])
 c = np.array([108.0])
 
-p = ta.TdRangeProjection()
+p = ta.TDRangeProjection()
 print(p.batch(o, h, l, c))  # [projected_high, projected_low]
 ```
 
@@ -100,7 +100,7 @@ print(p.batch(o, h, l, c))  # [projected_high, projected_low]
 
 ```javascript
 const wickra = require('wickra');
-const p = new wickra.TdRangeProjection();
+const p = new wickra.TDRangeProjection();
 console.log(p.batch([100], [110], [98], [108]));
 ```
 

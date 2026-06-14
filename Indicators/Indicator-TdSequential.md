@@ -112,7 +112,7 @@ import numpy as np
 import wickra as ta
 
 close = 100 - np.arange(60, dtype=float) * 0.4
-td = ta.TdSequential()
+td = ta.TDSequential()
 out = td.batch(close + 0.3, close - 0.3, close)
 # out shape (60, 2): columns [setup, countdown]
 print('row 30:', out[30])
@@ -122,7 +122,7 @@ print('row 30:', out[30])
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TdSequential();
+const td = new wickra.TDSequential();
 const close = Array.from({ length: 60 }, (_, i) => 100 - i * 0.4);
 const flat = td.batch(close.map(c => c + 0.3), close.map(c => c - 0.3), close);
 console.log('row 30: setup =', flat[30 * 2], 'countdown =', flat[30 * 2 + 1]);

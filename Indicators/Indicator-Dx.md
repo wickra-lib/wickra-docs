@@ -110,7 +110,7 @@ a strong trend" contract.)
 import numpy as np
 import wickra as ta
 
-dx = ta.Dx(3)
+dx = ta.DX(3)
 i = np.arange(5.0)
 print(dx.batch(102 + 2 * i, 98 + 2 * i, 101 + 2 * i))
 ```
@@ -125,7 +125,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const dx = new ta.Dx(3);
+const dx = new ta.DX(3);
 for (let i = 0; i < 5; i++) console.log(dx.update(102 + 2 * i, 98 + 2 * i, 101 + 2 * i));
 ```
 

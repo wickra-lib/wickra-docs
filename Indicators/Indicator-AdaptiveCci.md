@@ -104,7 +104,7 @@ last > 0: true
 import numpy as np
 import wickra as ta
 
-c = ta.AdaptiveCci(20)
+c = ta.ADAPTIVECCI(20)
 n = 60
 base = 100 + np.sin(np.arange(n) * 0.3) * 5
 print(c.batch(base + 1, base - 1, base)[-1])
@@ -115,7 +115,7 @@ print(c.batch(base + 1, base - 1, base)[-1])
 ```javascript
 const ta = require('wickra');
 
-const c = new ta.AdaptiveCci(20);
+const c = new ta.ADAPTIVECCI(20);
 console.log('warmupPeriod:', c.warmupPeriod()); // 20
 ```
 

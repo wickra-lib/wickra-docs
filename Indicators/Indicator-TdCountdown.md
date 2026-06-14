@@ -111,7 +111,7 @@ import wickra as ta
 
 # Sustained downtrend → buy countdown should complete (13)
 close = 100 - np.arange(50, dtype=float) * 0.5
-td = ta.TdCountdown(4, 9, 2, 13)
+td = ta.TDCountdown(4, 9, 2, 13)
 out = td.batch(close + 0.3, close - 0.3, close)
 print('max:', np.nanmax(out))
 ```
@@ -120,7 +120,7 @@ print('max:', np.nanmax(out))
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TdCountdown(4, 9, 2, 13);
+const td = new wickra.TDCountdown(4, 9, 2, 13);
 const close = Array.from({ length: 50 }, (_, i) => 100 - i * 0.5);
 const out = td.batch(close.map(c => c + 0.3), close.map(c => c - 0.3), close);
 console.log('max:', Math.max(...out.filter(x => x != null)));

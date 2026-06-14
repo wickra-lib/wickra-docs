@@ -100,7 +100,7 @@ Period 1 over `[10, 11]`: `11 / 10 = 1.1`. This matches the
 import numpy as np
 import wickra as ta
 
-r = ta.Rocr(1)
+r = ta.ROCR(1)
 print(r.batch(np.array([10.0, 11.0])))
 ```
 
@@ -114,7 +114,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const r = new ta.Rocr(1);
+const r = new ta.ROCR(1);
 for (const x of [10, 11]) console.log(x, '->', r.update(x));
 ```
 

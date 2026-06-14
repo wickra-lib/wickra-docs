@@ -103,7 +103,7 @@ import numpy as np
 import wickra as ta
 
 close = 100 - np.arange(30, dtype=float) * 0.5
-tr = ta.TdRiskLevel(4, 9)
+tr = ta.TDRiskLevel(4, 9)
 print('row 25:', tr.batch(close + 0.3, close - 0.3, close)[25])
 ```
 
@@ -111,7 +111,7 @@ print('row 25:', tr.batch(close + 0.3, close - 0.3, close)[25])
 
 ```javascript
 const wickra = require('wickra');
-const tr = new wickra.TdRiskLevel(4, 9);
+const tr = new wickra.TDRiskLevel(4, 9);
 const close = Array.from({ length: 30 }, (_, i) => 100 - i * 0.5);
 const flat = tr.batch(close.map(c => c + 0.3), close.map(c => c - 0.3), close);
 console.log('row 25 buy stop:', flat[25 * 2]);

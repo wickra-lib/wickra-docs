@@ -98,7 +98,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 import numpy as np
 import wickra as ta
 
-td = ta.TdDWave(2)
+td = ta.TDDWave(2)
 base = 100 + np.sin(np.arange(200) * 0.5) * 10
 print(td.batch(base + 1, base - 1)[-1])  # 1..8
 ```
@@ -108,7 +108,7 @@ print(td.batch(base + 1, base - 1)[-1])  # 1..8
 ```javascript
 const ta = require('wickra');
 
-const td = new ta.TdDWave(2);
+const td = new ta.TDDWave(2);
 console.log('warmupPeriod:', td.warmupPeriod()); // 5 (then swing-dependent)
 ```
 

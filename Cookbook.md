@@ -219,7 +219,7 @@ direction)` — both counts are signed (`+` buy, `−` sell) and capped at ±9
 ```python
 import wickra as ta
 
-td = ta.TdSequential(4, 9, 2, 13)
+td = ta.TDSequential(4, 9, 2, 13)
 for o, h, l, c, v, ts in candle_feed:
     out = td.update((o, h, l, c, v, ts))
     if out is None:

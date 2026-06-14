@@ -96,7 +96,7 @@ Some(1.0)
 import numpy as np
 import wickra as ta
 
-td = ta.TdClop()
+td = ta.TDClop()
 o = np.array([10, 9]); h = np.array([12, 13]); l = np.array([9, 8]); c = np.array([11, 12])
 print(td.batch(o, h, l, c))  # [nan, 1.0]
 ```
@@ -105,7 +105,7 @@ print(td.batch(o, h, l, c))  # [nan, 1.0]
 
 ```javascript
 const ta = require('wickra');
-const td = new ta.TdClop();
+const td = new ta.TDClop();
 td.update(10, 12, 9, 11);
 console.log(td.update(9, 13, 8, 12)); // 1
 ```
