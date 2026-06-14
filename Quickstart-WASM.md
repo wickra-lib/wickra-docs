@@ -1,5 +1,7 @@
 # Quickstart: WASM
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 A five-minute tour of the Wickra WASM binding. The same Rust core that
 powers the Python, Node.js, and Rust APIs is compiled to WebAssembly with
 [wasm-bindgen](https://wasm-bindgen.github.io/wasm-bindgen/), so indicators run

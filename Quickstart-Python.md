@@ -1,5 +1,7 @@
 # Quickstart: Python
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 A five-minute tour of the Wickra Python binding. By the end you will have run
 a batch RSI over a NumPy array, fed the same indicator one tick at a time,
 and read a multi-column MACD result correctly during warmup.

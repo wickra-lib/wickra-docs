@@ -1,5 +1,7 @@
 # Quickstart: C / C++
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 A five-minute tour of the Wickra C ABI — the hub every C-capable language links
 against. By the end you will have streamed an RSI, run a batch SMA, and read a
 multi-output MACD across the FFI boundary.
