@@ -7,6 +7,10 @@ Node.js, WASM, and Rust itself, plus a C ABI that any C-capable language
 (C, C++, C#, Go, Java, R) links against. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
+There is also only one *implementation*: every one of the 514 indicators is
+replayed through all 10 languages and checked bit-for-bit against the Rust
+reference (golden fixtures, in CI), so the math is verifiably identical
+everywhere.
 
 The project ships 514 indicators across twenty-four families — moving averages,
 momentum oscillators, trend & directional, price oscillators, volatility &
