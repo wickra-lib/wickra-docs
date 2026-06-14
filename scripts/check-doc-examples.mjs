@@ -10,8 +10,8 @@
 // Usage: node scripts/check-doc-examples.mjs [glob ...]   (default: *.md, Indicators/*.md)
 // Exit code 1 if any referenced name is unknown.
 
-import { readFileSync } from 'node:fs';
-import { globSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { basename, dirname } from 'node:path';
 import wickra from 'wickra';
 
 const patterns = process.argv.slice(2);
@@ -21,7 +21,18 @@ const valid = new Set([...Object.keys(wickra), 'Candle']);
 const BLOCK = /```(js|javascript)\r?\n([\s\S]*?)```/g;
 const REF = /\b(?:ta|wickra)\.([A-Z][A-Za-z0-9_]*)/g;
 
-const files = globs.flatMap((g) => globSync(g));
+// Minimal glob for `*.md` and `DIR/*.md` patterns. `fs.globSync` only exists
+// from Node 22, and the repo's CI runs Node 20.
+function expand(pattern) {
+  const base = basename(pattern);
+  if (!base.includes('*')) return [pattern];
+  const dir = pattern.includes('/') ? dirname(pattern) : '.';
+  const re = new RegExp(`^${base.replace(/[.+]/g, '\\$&').replace(/\*/g, '.*')}$`);
+  return readdirSync(dir)
+    .filter((f) => re.test(f))
+    .map((f) => (dir === '.' ? f : `${dir}/${f}`));
+}
+const files = globs.flatMap(expand);
 const missing = [];
 let checked = 0;
 
