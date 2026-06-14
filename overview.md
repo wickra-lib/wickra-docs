@@ -93,7 +93,7 @@ Release notes and tagged builds:
 ## Indicator reference
 
 Start with [Indicators-Overview](Indicators-Overview) for the full
-twenty-family taxonomy with per-indicator formula / parameter / warmup
+twenty-four-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
 514 deep-dive pages.
 
