@@ -106,7 +106,7 @@ Some(0.0)
 import numpy as np
 import wickra as ta
 
-s = ta.SampleEntropy(50, 2, 0.2)
+s = ta.SAMPLEENT(50, 2, 0.2)
 x = np.sin(np.arange(200) * 0.3) * 5.0
 print(s.batch(x)[-1])   # small, positive (smooth -> regular)
 ```
@@ -116,7 +116,7 @@ print(s.batch(x)[-1])   # small, positive (smooth -> regular)
 ```javascript
 const ta = require('wickra');
 
-const s = new ta.SampleEntropy(50, 2, 0.2);
+const s = new ta.SAMPLEENT(50, 2, 0.2);
 console.log('warmupPeriod:', s.warmupPeriod()); // 50
 ```
 

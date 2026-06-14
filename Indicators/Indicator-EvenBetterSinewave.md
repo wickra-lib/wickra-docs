@@ -97,7 +97,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 import numpy as np
 import wickra as ta
 
-e = ta.EvenBetterSinewave(40, 10)
+e = ta.EVENBETTERSINE(40, 10)
 x = 100 + np.sin(2 * np.pi * np.arange(200) / 30) * 5
 print(e.batch(x)[-5:])  # in [-1, 1]
 ```
@@ -107,7 +107,7 @@ print(e.batch(x)[-5:])  # in [-1, 1]
 ```javascript
 const ta = require('wickra');
 
-const e = new ta.EvenBetterSinewave(40, 10);
+const e = new ta.EVENBETTERSINE(40, 10);
 console.log('warmupPeriod:', e.warmupPeriod()); // 3
 ```
 
