@@ -39,6 +39,7 @@ const badges = [
   { alt: 'OpenSSF Scorecard', slug: 'scorecard', src: 'https://api.securityscorecards.dev/projects/github.com/wickra-lib/wickra/badge', href: 'https://scorecard.dev/viewer/?uri=github.com/wickra-lib/wickra' },
   { alt: 'OpenSSF Best Practices', slug: 'best-practices', src: 'https://www.bestpractices.dev/projects/13094/badge', href: 'https://www.bestpractices.dev/projects/13094' },
   { alt: 'Build provenance', slug: 'provenance', src: 'https://img.shields.io/badge/provenance-attested-brightgreen?logo=github', href: 'https://github.com/wickra-lib/wickra/attestations' },
+  { alt: 'Verified across 10 languages', slug: 'verified', src: 'https://img.shields.io/badge/verified-10_languages-brightgreen?logo=checkmarx&logoColor=white', href: 'https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values' },
 ]
 
 const outDir = resolve(root, 'public/badges')
