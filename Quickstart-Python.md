@@ -170,7 +170,7 @@ because the warmup pattern is identical across all of them.
 (RSI, EMA, Bollinger, MACD, ATR, ADX, OBV) over an OHLCV CSV and prints a
 summary. It's a good template for "I have historical data on disk, give me a
 table of indicator values" workflows; for live workflows, see
-`examples/python/live_trading.py`.
+`examples/python/live_binance.py`.
 
 ## See also
 
