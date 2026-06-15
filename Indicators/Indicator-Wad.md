@@ -30,8 +30,10 @@ up-close it credits how far price closed above the *true low* (the lower of
 today's low and yesterday's close); on a down-close it debits how far price
 closed below the *true high*; an unchanged close contributes nothing. The running
 total is the line. This is deliberately different from Chaikin's volume-weighted
-[`Adl`](/Indicators/Indicator-Adl). Source:
-`crates/wickra-core/src/indicators/wad.rs`.
+[`Adl`](/Indicators/Indicator-Adl). For the zero-centred, mean-reverting form of
+this same line — `WAD − SMA(WAD, 13)` — see the
+[`AdOscillator`](/Indicators/Indicator-AdOscillator) (native alias `ADOSC`).
+Source: `crates/wickra-core/src/indicators/wad.rs`.
 
 ## Parameters
 
@@ -187,6 +189,7 @@ volume-free construction implemented here.
 
 ## See also
 
+- [AdOscillator](/Indicators/Indicator-AdOscillator) — this line minus its 13-bar SMA (`ADOSC`), zero-centred.
 - [Indicator-Adl](/Indicators/Indicator-Adl) — Chaikin's volume-weighted A/D line.
 - [Indicator-ChaikinMoneyFlow](/Indicators/Indicator-ChaikinMoneyFlow) — the bounded money-flow oscillator.
 - [Indicator-Obv](/Indicators/Indicator-Obv) — cumulative signed volume.

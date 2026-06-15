@@ -1,8 +1,9 @@
-# AwesomeOscillatorHistogram
+# Awesome Oscillator Histogram
 
-> The difference between the [AwesomeOscillator](/Indicators/Indicator-AwesomeOscillator)
-> and its `sma_period`-bar SMA — a configurable generalisation of the
-> [AcceleratorOscillator](/Indicators/Indicator-AcceleratorOscillator).
+> The bar-to-bar **momentum** of the [AwesomeOscillator](/Indicators/Indicator-AwesomeOscillator):
+> `AO_t − AO_{t−lookback}`. This is the value behind the coloured histogram bars
+> on Bill Williams' charts — positive means `AO` is rising (the histogram "greens
+> up"), negative means it is falling.
 
 ## Quick reference
 
@@ -12,68 +13,82 @@
 | Input type | `Candle` (uses `high` and `low` for the median price) |
 | Output type | `f64` |
 | Output range | unbounded around zero |
-| Default parameters | `fast = 5`, `slow = 34`, `sma_period = 5` |
-| Warmup period | `slow + sma_period − 1` (`38` for defaults) |
-| Interpretation | Positive bars: AO is rising (bullish acceleration). Negative bars: AO is falling. |
+| Default parameters | `fast = 5`, `slow = 34`, `lookback = 1` (`classic()`) |
+| Warmup period | `slow + lookback` (`35` for the defaults) |
+| Interpretation | Positive: `AO` rising; negative: `AO` falling |
 
 ## Formula
 
-```
-median     = (high + low) / 2
-AO         = SMA(median, fast) − SMA(median, slow)
-AOHist     = AO − SMA(AO, sma_period)
+```text
+median  = (high + low) / 2
+AO      = SMA(median, fast) − SMA(median, slow)
+AOHist  = AO_t − AO_{t−lookback}
 ```
 
-With Williams' default `(5, 34, 5)` this collapses to the existing
-[AcceleratorOscillator](/Indicators/Indicator-AcceleratorOscillator) exactly; for any
-other parameterisation it is the more flexible variant. The histogram
-measures the *acceleration* of momentum — the rate of change of the AO
-itself.
+The histogram reports the **rate of change** of the Awesome Oscillator over a
+`lookback` window. The classic one-bar delta (`lookback = 1`) is the coloured
+histogram every charting package draws under the AO.
+
+This is distinct from the two related indicators Wickra ships: the raw
+[`AwesomeOscillator`](/Indicators/Indicator-AwesomeOscillator) is `AO` itself, and
+the [`AcceleratorOscillator`](/Indicators/Indicator-AcceleratorOscillator) is
+`AO − SMA(AO, 5)`. The histogram instead differences `AO` against its own past.
+
+See `crates/wickra-core/src/indicators/awesome_oscillator_histogram.rs` (the
+update is at `awesome_oscillator_histogram.rs:89`).
 
 ## Parameters
 
-| Name         | Type    | Default | Constraint       | Source |
-|--------------|---------|---------|------------------|--------|
-| `fast`       | `usize` | `5`     | `>= 1`, `< slow` | `AwesomeOscillatorHistogram::new` (`awesome_oscillator_histogram.rs:50`) |
-| `slow`       | `usize` | `34`    | `>= 1`, `> fast` | `awesome_oscillator_histogram.rs:50` |
-| `sma_period` | `usize` | `5`     | `>= 1`           | `awesome_oscillator_histogram.rs:50` |
+| Name | Type | Default | Valid range | Source | Description |
+|------|------|---------|-------------|--------|-------------|
+| `fast` | `usize` | `5` | `>= 1`, `< slow` | `awesome_oscillator_histogram.rs:55` | Fast SMA length of the underlying AO. |
+| `slow` | `usize` | `34` | `>= 1`, `> fast` | `awesome_oscillator_histogram.rs:55` | Slow SMA length of the underlying AO. |
+| `lookback` | `usize` | `1` | `>= 1` | `awesome_oscillator_histogram.rs:55` | Momentum window: how many bars back `AO` is differenced against. |
 
-Any zero period returns [`Error::PeriodZero`]; `fast >= slow` returns
-[`Error::InvalidPeriod`]. `AwesomeOscillatorHistogram::classic()` returns
-`(5, 34, 5)`. Python defaults come from the pyo3 signature; the Node
-constructor takes all three arguments explicitly.
+Any zero period returns `Error::PeriodZero`; `fast >= slow` returns
+`Error::InvalidPeriod`. `AwesomeOscillatorHistogram::classic()` is `(5, 34, 1)`
+(`awesome_oscillator_histogram.rs:75`). The Node/WASM constructor's third
+argument is named `smaPeriod` for backward compatibility, but it is this momentum
+`lookback`.
 
 ## Inputs / Outputs
 
+From `crates/wickra-core/src/indicators/awesome_oscillator_histogram.rs`:
+
 ```rust
-use wickra::{Indicator, AwesomeOscillatorHistogram, Candle};
+use wickra::{AwesomeOscillatorHistogram, Candle, Indicator};
 // AwesomeOscillatorHistogram: Input = Candle, Output = f64
-const _: fn(&mut AwesomeOscillatorHistogram, Candle) -> Option<f64> = <AwesomeOscillatorHistogram as Indicator>::update;
+const _: fn(&mut AwesomeOscillatorHistogram, Candle) -> Option<f64> =
+    <AwesomeOscillatorHistogram as Indicator>::update;
 ```
 
-Only `high` and `low` are read (the AO uses the median price), so both
-bindings take just those two series.
-
-- **Python.** `update(candle)` returns `float | None`;
-  `batch(high, low)` returns a 1-D `float64` `np.ndarray` with `NaN` warmup.
-- **Node.** `update(high, low)` returns `number | null`;
-  `batch(high, low)` returns an `Array<number>` with `NaN` warmup.
+Only `high` and `low` are read (the AO uses the median price), so both native
+bindings take just those two series. Python streams as `float | None` and batches
+`AwesomeOscillatorHistogram(fast, slow, lookback).batch(high, low)` to a 1-D
+`numpy.ndarray` (`NaN` warmup). Node streams as `number | null` via
+`update(high, low)` and batches `batch(high, low)`.
 
 ## Warmup
 
-`warmup_period()` returns `slow + sma_period − 1`. The AO emits at `slow`
-candles; the SMA of the AO series then needs `sma_period − 1` further AO
-values to fill its window. For the defaults that is `34 + 5 − 1 = 38`.
-Pinned by `warmup_emits_first_value_at_warmup_period` ((2, 4, 3) → warmup 6:
-candles 1–5 return `None`, candle 6 emits).
+`warmup_period()` returns `slow + lookback`. The AO first emits at `slow`
+candles; `lookback` more AO values are then needed before `AO_t − AO_{t−lookback}`
+can be formed. For the classic `(5, 34, 1)` that is `34 + 1 = 35`. The unit tests
+`accessors_and_metadata` (`classic().warmup_period() == 35`) and
+`warmup_emits_first_value_at_warmup_period` ((2, 4, 2) → warmup `6`: first five
+outputs `None`, `out[5]` is `Some`) pin this.
 
 ## Edge cases
 
-- **Constant series.** A flat median drives AO to `0`; the SMA of `0` is
-  `0`; the histogram is `0` (test `constant_series_converges_to_zero`).
-- **Equivalence to AcceleratorOscillator.** At `(5, 34, 5)` the histogram
-  reproduces [AcceleratorOscillator](/Indicators/Indicator-AcceleratorOscillator).
-- **Reset.** `reset()` resets both the AO and the SMA.
+- **Constant series.** A flat median drives `AO` to `0`, so its momentum is `0`.
+  Unit test `constant_series_yields_zero`.
+- **Equals the AO delta.** The histogram equals `AO_t − AO_{t−lookback}` bar for
+  bar. Unit test `equals_ao_difference`.
+- **Zero period.** Any zero argument returns `Err(Error::PeriodZero)`. Unit test
+  `rejects_zero_period`.
+- **`fast >= slow`.** Returns `Err(Error::InvalidPeriod)`. Unit test
+  `rejects_fast_geq_slow`.
+- **Reset.** `reset()` clears both the AO and the lookback history. Unit test
+  `reset_clears_state`.
 
 ## Examples
 
@@ -83,68 +98,107 @@ candles 1–5 return `None`, candle 6 emits).
 use wickra::{AwesomeOscillatorHistogram, BatchExt, Candle, Indicator};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let candles: Vec<Candle> = (0..80)
-        .map(|i| {
-            let p = 100.0 + (f64::from(i) * 0.3).sin() * 5.0;
-            Candle::new(p, p + 0.5, p - 0.5, p, 1.0, i64::from(i)).unwrap()
-        })
+    // A flat market: AO is zero, so its momentum (the histogram) is zero.
+    let candles: Vec<Candle> = (0..10)
+        .map(|i| Candle::new(42.0, 42.5, 41.5, 42.0, 1.0, i).unwrap())
         .collect();
-    let mut h = AwesomeOscillatorHistogram::classic(); // (5, 34, 5)
-    for v in h.batch(&candles).into_iter().flatten() {
-        println!("{v:.4}");
-    }
+    let mut hist = AwesomeOscillatorHistogram::new(3, 5, 1)?;
+    let out = hist.batch(&candles);
+    println!("warmup_period = {}", hist.warmup_period());
+    println!("out[4] = {:?}, out[5] = {:?}", out[4], out[5]);
     Ok(())
 }
 ```
 
+Output:
+
+```
+warmup_period = 6
+out[4] = None, out[5] = Some(0.0)
+```
+
+With `(fast, slow, lookback) = (3, 5, 1)` the warmup is `5 + 1 = 6`: indices
+`0..5` are `None`, and from index `5` the flat series yields `Some(0.0)` — matching
+the `warmup_emits_first_value_at_warmup_period` and `constant_series_yields_zero`
+unit tests.
+
 ### Python
 
 ```python
-import numpy as np
 import wickra as ta
 
-h = ta.AwesomeOscillatorHistogram(5, 34, 5)
-out = h.batch(high, low)  # 1-D series, NaN for the first 37 rows
+high = [42.5] * 10
+low = [41.5] * 10
+hist = ta.AwesomeOscillatorHistogram(3, 5, 1)
+out = hist.batch(high, low)
+print('out[5]:', out[5])
+```
+
+Output:
+
+```
+out[5]: 0.0
 ```
 
 ### Node
 
 ```javascript
-const ta = require('wickra');
-const h = new ta.AwesomeOscillatorHistogram(5, 34, 5);
-const v = h.update(101.5, 99.5); // null during warmup, else a number
+const wickra = require('wickra');
+
+const high = Array.from({ length: 10 }, () => 42.5);
+const low = Array.from({ length: 10 }, () => 41.5);
+const hist = new wickra.AwesomeOscillatorHistogram(3, 5, 1);
+console.log('out[5]:', hist.batch(high, low)[5]);
+```
+
+Output:
+
+```
+out[5]: 0
+```
+
+### Streaming
+
+```rust
+use wickra::{AwesomeOscillatorHistogram, Candle, Indicator};
+
+let mut hist = AwesomeOscillatorHistogram::classic(); // (5, 34, 1)
+let feed: Vec<Candle> = Vec::new(); // your live OHLCV candle feed
+for bar in feed {
+    if let Some(h) = hist.update(bar) {
+        // h > 0: AO rose this bar (greening histogram); h < 0: AO fell
+        let _ = h;
+    }
+}
 ```
 
 ## Interpretation
 
-Where the [AwesomeOscillator](/Indicators/Indicator-AwesomeOscillator) measures
-momentum, its histogram measures *acceleration* — momentum's first
-derivative:
-
-1. **Zero line.** A cross from negative to positive marks momentum starting
-   to accelerate upward (Williams' "saucer" / first green bar); the reverse
-   for a downturn.
-2. **Early warning.** Because it differentiates the AO, the histogram turns
-   *before* the AO itself crosses zero — an earlier (and noisier) signal.
+1. **Histogram colour.** Each bar is `AO_t − AO_{t−lookback}`: positive bars are
+   the "green" rising-momentum bars, negative bars the "red" falling ones.
+2. **Zero-line cross.** A cross from negative to positive marks `AO` turning up;
+   because it differences `AO`, the histogram turns *before* `AO` itself crosses
+   zero — an earlier (and noisier) signal.
+3. **Tune the lookback.** `lookback = 1` is the classic one-bar delta; a larger
+   lookback smooths the histogram into a slower rate-of-change read.
 
 ## Common pitfalls
 
-- **Treating it as momentum.** It is the *change* in momentum; a positive
-  histogram with a falling AO means momentum is still negative but
-  decelerating, not yet bullish.
-- **Re-deriving AcceleratorOscillator.** If you only want Williams'
-  `(5, 34, 5)` setting, [AcceleratorOscillator](/Indicators/Indicator-AcceleratorOscillator)
-  is the dedicated, identical indicator.
+- **Treating it as momentum.** It is the *change* in momentum: a positive
+  histogram with a still-negative `AO` means momentum is decelerating, not yet
+  bullish.
+- **Confusing it with the Accelerator.** `AcceleratorOscillator` is `AO − SMA(AO, 5)`;
+  this histogram is `AO_t − AO_{t−lookback}`. Different constructions, different
+  signals.
 
 ## References
 
-- Bill Williams, *New Trading Dimensions*, Wiley, 1998 — the Awesome and
-  Accelerator oscillators. The configurable-SMA histogram is Wickra's
-  generalisation of Williams' fixed `(5, 34, 5)` Accelerator.
+- Bill Williams, *New Trading Dimensions*, Wiley (1998) — the Awesome Oscillator
+  and its histogram of bar-to-bar change.
 
 ## See also
 
-- [AwesomeOscillator](/Indicators/Indicator-AwesomeOscillator) — the momentum line.
-- [AcceleratorOscillator](/Indicators/Indicator-AcceleratorOscillator) — the fixed
-  `(5, 34, 5)` equivalent.
+- [AwesomeOscillator](/Indicators/Indicator-AwesomeOscillator) — the momentum line itself.
+- [AcceleratorOscillator](/Indicators/Indicator-AcceleratorOscillator) — `AO − SMA(AO, 5)`.
 - [Alligator](/Indicators/Indicator-Alligator) — Williams' trend filter.
+- [Indicators-Overview](/Indicators-Overview) — the full taxonomy.
