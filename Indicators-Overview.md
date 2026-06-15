@@ -47,6 +47,74 @@ The twenty-four families:
 | 23 | [Harmonic Patterns](#harmonic-patterns) | 8 | Fibonacci-ratio XABCD patterns — Gartley, Bat, Butterfly, Crab, Shark, Cypher, AB=CD, Three Drives. |
 | 24 | [Fibonacci](#fibonacci) | 10 | Swing-based Fibonacci tooling — retracement, extension, projection, auto-fib, golden pocket, confluence, fan, arcs, channel, time zones. |
 
+## Naming across bindings
+
+The deep-dive page title — and the Rust core type — is each indicator's
+**canonical name**. The bindings expose it under three conventions:
+
+- **C#, Go, Java, R** use the canonical PascalCase name unchanged, e.g.
+  `AutocorrelationPeriodogram(10, 48)`.
+- **C / C++** call `wickra_<snake_case>_new(...)`; the opaque handle type keeps
+  the canonical PascalCase (`struct AutocorrelationPeriodogram`).
+- **Python, Node.js, WASM** use TA-Lib-style names: classic acronyms are
+  uppercased (`Sma` → `SMA`, `Rsi` → `RSI`, `Atr` → `ATR`), most other
+  indicators keep the canonical name, and the 42 below carry a distinct short
+  alias you cannot derive mechanically.
+
+So a snippet documented as `AutocorrelationPeriodogram` is `ta.AUTOCORRPGRAM(...)`
+in Python and `new ta.AUTOCORRPGRAM(...)` in Node.js. The table maps the
+canonical name (left — used by the docs, C, C++, C#, Go, Java, R) to the native
+alias (right — used by Python, Node.js, WASM):
+
+| Canonical name (docs · C · C++ · C# · Go · Java · R) | Python · Node.js · WASM alias |
+|---|---|
+| `AdOscillator` | `WilliamsAD` |
+| `AnchoredRsi` | `AnchoredRSI` |
+| `AnchoredVwap` | `AnchoredVWAP` |
+| `AutocorrelationPeriodogram` | `AUTOCORRPGRAM` |
+| `BandpassFilter` | `BANDPASS` |
+| `ConnorsRsi` | `ConnorsRSI` |
+| `CorrelationTrendIndicator` | `CTI` |
+| `FisherRsi` | `FisherRSI` |
+| `GeneralizedDema` | `GD` |
+| `GeometricMa` | `GMA` |
+| `HighpassFilter` | `HIGHPASS` |
+| `HtPhasor` | `HT_PHASOR` |
+| `IntradayMomentumIndex` | `IMI` |
+| `LaguerreRsi` | `LaguerreRSI` |
+| `MacdIndicator` | `MACD` |
+| `MedianMa` | `MedianMA` |
+| `MinusDi` | `MINUS_DI` |
+| `MinusDm` | `MINUS_DM` |
+| `PlusDi` | `PLUS_DI` |
+| `PlusDm` | `PLUS_DM` |
+| `RollingMinMaxScaler` | `ROLLINGMINMAX` |
+| `RollingVwap` | `RollingVWAP` |
+| `RviVolatility` | `RVIVolatility` |
+| `SampleEntropy` | `SAMPLEENT` |
+| `ShannonEntropy` | `SHANNONENT` |
+| `SineWeightedMa` | `SWMA` |
+| `StochasticCci` | `StochasticCCI` |
+| `StochRsi` | `StochRSI` |
+| `TdCombo` | `TDCombo` |
+| `TdCountdown` | `TDCountdown` |
+| `TdDeMarker` | `TDDeMarker` |
+| `TdDWave` | `TDDWave` |
+| `TdLines` | `TDLines` |
+| `TdOpen` | `TDOpen` |
+| `TdPressure` | `TDPressure` |
+| `TdRiskLevel` | `TDRiskLevel` |
+| `TdSequential` | `TDSequential` |
+| `TdSetup` | `TDSetup` |
+| `TtmTrend` | `TTM_TREND` |
+| `UniversalOscillator` | `UNIVERSALOSC` |
+| `WavePm` | `WAVE_PM` |
+| `ZeroLagMacd` | `ZeroLagMACD` |
+
+> `AdOscillator` (the Accumulation/Distribution **oscillator**) is exposed in the
+> native bindings as `WilliamsAD` — note this is a different concept from the
+> traditional Williams Accumulation/Distribution line.
+
 ## Moving Averages
 
 Smooth the price series to surface direction. All are single-input,
