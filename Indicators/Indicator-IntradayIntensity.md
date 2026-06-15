@@ -43,7 +43,7 @@ See `crates/wickra-core/src/indicators/intraday_intensity.rs` (the update is at
 
 | Name | Type | Default | Valid range | Source | Description |
 |------|------|---------|-------------|--------|-------------|
-| _(none)_ | — | — | — | `intraday_intensity.rs:49` | `IntradayIntensity::new()` is parameter-free and infallible. |
+| *(none)* | — | — | — | `intraday_intensity.rs:49` | `IntradayIntensity::new()` is parameter-free and infallible. |
 
 ## Inputs / Outputs
 

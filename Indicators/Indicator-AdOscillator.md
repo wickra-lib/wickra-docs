@@ -42,7 +42,7 @@ constant `SIGNAL_PERIOD` lives at `ad_oscillator.rs:8`; the update at
 
 | Name | Type | Default | Valid range | Source | Description |
 |------|------|---------|-------------|--------|-------------|
-| _(none)_ | — | — | — | `ad_oscillator.rs:8`, `:66` | `AdOscillator::new()` takes no arguments; the signal length is fixed at the classic **13** bars (`SIGNAL_PERIOD`). |
+| *(none)* | — | — | — | `ad_oscillator.rs:8`, `:66` | `AdOscillator::new()` takes no arguments; the signal length is fixed at the classic **13** bars (`SIGNAL_PERIOD`). |
 
 ## Inputs / Outputs
 
