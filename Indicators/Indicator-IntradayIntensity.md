@@ -1,96 +1,105 @@
-# IntradayIntensity
+# Intraday Intensity (Bostian)
 
-> David Bostian's Intraday Intensity Index — a cumulative line weighting each
-> bar's volume by where the close sits inside its range.
+> David Bostian's per-bar, volume-weighted close-location measure: the volume
+> pushed toward a bar's extremes, `+volume` when the bar closes on its high,
+> `−volume` on its low, `0` at the midpoint. Raw and **non-cumulative** — one
+> value per bar, depending only on that bar.
 
 ## Quick reference
 
 | Field | Value |
 |-------|-------|
 | Family | Volume |
-| Input type | `Candle` (high / low / close / volume) |
-| Output type | `f64` |
-| Output range | `(−∞, +∞)` (a cumulative line; only slope/divergence matters) |
-| Default parameters | None (parameter-free) |
+| Input type | `Candle` (uses `high`, `low`, `close`, `volume`) |
+| Output type | `f64` — signed volume |
+| Output range | `[−volume, +volume]` per bar (`0` for a zero-range bar) |
+| Default parameters | none — `IntradayIntensity::new()` |
 | Warmup period | `1` |
-| Interpretation | Rising = accumulation; falling = distribution; watch divergence vs price. |
+| Interpretation | Per-bar accumulation (`+`) / distribution (`−`) pressure |
 
 ## Formula
 
-```
-II_t  = volume * (2*close − high − low) / (high − low)   (0 if high == low)
-III_t = III_{t−1} + II_t
+```text
+II_t = volume_t * (2*close_t − high_t − low_t) / (high_t − low_t)     (0 if high == low)
 ```
 
-The bracketed fraction is the **close-location value**: `+1` when the bar closes
-on its high, `−1` on its low, `0` at the midpoint. Multiplying by volume and
-accumulating gives Bostian's running measure of buying versus selling intensity.
-Source: `crates/wickra-core/src/indicators/intraday_intensity.rs`.
+The fraction `(2*close − high − low) / (high − low)` is the **close location**
+inside the bar: `+1` when the close is on the high, `−1` on the low, `0` at the
+midpoint. Multiplying by `volume` gives the volume committed toward the extremes
+on that single bar — Bostian's per-bar proxy for accumulation (positive) or
+distribution (negative). A doji whose `high == low` has no range and contributes
+exactly `0`.
 
-This is the **cumulative** index, not "Intraday Intensity %". The percent variant
-divides a windowed sum of `II` by a windowed sum of volume — which is exactly
-[`Cmf`](/Indicators/Indicator-ChaikinMoneyFlow) — so it is intentionally not duplicated.
+This emits the **raw per-bar** intensity. The **cumulative** running total is the
+Accumulation/Distribution Line ([`Adl`](/Indicators/Indicator-Adl)); the
+volume-normalized windowed form ("Intraday Intensity %") is mathematically the
+Chaikin Money Flow ([`ChaikinMoneyFlow`](/Indicators/Indicator-ChaikinMoneyFlow)),
+so neither is duplicated here.
+
+See `crates/wickra-core/src/indicators/intraday_intensity.rs` (the update is at
+`intraday_intensity.rs:63`).
 
 ## Parameters
 
 | Name | Type | Default | Valid range | Source | Description |
 |------|------|---------|-------------|--------|-------------|
-| — | — | — | — | None. | The index is parameter-free; `IntradayIntensity::new()` is infallible. |
-
-The `value` getter returns the current cumulative total if ready.
+| *(none)* | — | — | — | `intraday_intensity.rs:49` | `IntradayIntensity::new()` is parameter-free and infallible. |
 
 ## Inputs / Outputs
 
 From `crates/wickra-core/src/indicators/intraday_intensity.rs`:
 
 ```rust
-use wickra::{Candle, Indicator, IntradayIntensity};
+use wickra::{Candle, IntradayIntensity, Indicator};
 // IntradayIntensity: Input = Candle, Output = f64
-const _: fn(&mut IntradayIntensity, Candle) -> Option<f64> = <IntradayIntensity as Indicator>::update;
+const _: fn(&mut IntradayIntensity, Candle) -> Option<f64> =
+    <IntradayIntensity as Indicator>::update;
 ```
 
-A `Candle` in, an `Option<f64>` out. The Python binding takes a candle for
-`update` and four numpy columns `(high, low, close, volume)` for `batch`; Node
-takes `update(high, low, close, volume)` and `batch(high[], low[], close[],
-volume[])`. With `warmup_period == 1` there is no NaN prefix.
+Python streams as `float | None` and batches
+`IntradayIntensity().batch(high, low, close, volume)` to a 1-D `numpy.ndarray`.
+Node streams as `number | null` via `update(high, low, close, volume)` and
+batches `batch(high, low, close, volume)`. With `warmup_period == 1` there is no
+`NaN`/`null` warmup prefix.
 
 ## Warmup
 
-`warmup_period() == 1`. The line accumulates from the very first bar
-(`first_bar_emits` pins this).
+`IntradayIntensity::new().warmup_period() == 1`. Every bar produces a value — the
+first bar already emits, since the measure depends only on the current bar. The
+unit tests `accessors_and_metadata` (`warmup_period() == 1`) and `first_bar_emits`
+pin this.
 
 ## Edge cases
 
-- **Close on the high → +volume.** A close at the high contributes the full volume
-  positively (`close_on_high_adds_full_volume` pins this).
-- **Close on the low → −volume.** A close at the low contributes the full volume
-  negatively (`close_on_low_subtracts_full_volume` pins this).
-- **Close at the midpoint → 0.** A midpoint close contributes nothing
-  (`close_at_midpoint_adds_nothing` pins this).
-- **Zero range → 0.** A bar with `high == low` contributes nothing rather than
-  dividing by zero (`zero_range_adds_nothing` pins this).
-- **Accumulation.** Successive bars sum into the running total
-  (`accumulates_across_bars` pins this).
-- **Finiteness.** `Candle::new` rejects non-finite fields, so no in-method guard
-  is needed.
-- **Reset.** `iii.reset()` clears the running total and the last value
-  (`reset_clears_state`).
+- **Close on the high.** `II = +volume`. Unit test `close_on_high_adds_full_volume`
+  (high `110`, low `100`, close `110`, volume `1000` → `1000`).
+- **Close on the low.** `II = −volume`. Unit test `close_on_low_subtracts_full_volume`
+  (same bar closing at `100` → `−1000`).
+- **Close at the midpoint.** `II = 0`. Unit test `close_at_midpoint_adds_nothing`
+  (close `105` → `0`).
+- **Zero range (`high == low`).** Guarded to `0`, no division by zero. Unit test
+  `zero_range_adds_nothing`.
+- **Per-bar independence.** Output depends only on the current bar; a
+  close-on-high bar is not carried into the next. Unit test `each_bar_is_independent`.
+- **Reset.** `reset()` clears the last value. Unit test `reset_clears_state`.
 
 ## Examples
 
 ### Rust
 
 ```rust
-use wickra::{BatchExt, Candle, Indicator, IntradayIntensity};
+use wickra::{BatchExt, Candle, IntradayIntensity, Indicator};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut iii = IntradayIntensity::new();
+    // Same bar (high 110, low 100, volume 1000) closing on the high, the
+    // midpoint, and the low.
     let candles = [
-        Candle::new(100.0, 110.0, 100.0, 110.0, 1_000.0, 0)?, // close on high -> +1000
-        Candle::new(110.0, 110.0, 100.0, 100.0,   400.0, 0)?, // close on low  -> -400
+        Candle::new(100.0, 110.0, 100.0, 110.0, 1000.0, 0)?, // close on high
+        Candle::new(100.0, 110.0, 100.0, 105.0, 1000.0, 1)?, // close at midpoint
+        Candle::new(100.0, 110.0, 100.0, 100.0, 1000.0, 2)?, // close on low
     ];
-    let out = iii.batch(&candles);
-    println!("{:?}", out); // [Some(1000.0), Some(600.0)]
+    let out = IntradayIntensity::new().batch(&candles);
+    println!("{:?}", out);
     Ok(())
 }
 ```
@@ -98,74 +107,99 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Output:
 
 ```
-[Some(1000.0), Some(600.0)]
+[Some(1000.0), Some(0.0), Some(-1000.0)]
 ```
+
+`(2·110 − 110 − 100)/(110 − 100) = +1`, `·1000 = 1000`; the midpoint close gives
+`0`; the close on the low gives `−1000`. These match the
+`close_on_high_adds_full_volume`, `close_at_midpoint_adds_nothing` and
+`close_on_low_subtracts_full_volume` unit tests — and the per-bar values do **not**
+accumulate (`each_bar_is_independent`).
 
 ### Python
 
 ```python
-import numpy as np
 import wickra as ta
 
-iii = ta.IntradayIntensity()
-high   = np.array([110, 110], dtype=float)
-low    = np.array([100, 100], dtype=float)
-close  = np.array([110, 100], dtype=float)
-volume = np.array([1000, 400], dtype=float)
-print(iii.batch(high, low, close, volume))  # [1000.  600.]
+high = [110.0, 110.0, 110.0]
+low = [100.0, 100.0, 100.0]
+close = [110.0, 105.0, 100.0]
+volume = [1000.0, 1000.0, 1000.0]
+ii = ta.IntradayIntensity()
+print(ii.batch(high, low, close, volume))
+```
+
+Output:
+
+```
+[ 1000.     0. -1000.]
 ```
 
 ### Node
 
 ```javascript
-const ta = require('wickra');
+const wickra = require('wickra');
 
-const iii = new ta.IntradayIntensity();
-console.log(iii.batch([110, 110], [100, 100], [110, 100], [1000, 400])); // [1000, 600]
+const ii = new wickra.IntradayIntensity();
+console.log(
+  ii.batch([110, 110, 110], [100, 100, 100], [110, 105, 100], [1000, 1000, 1000]),
+);
+```
+
+Output:
+
+```
+[ 1000, 0, -1000 ]
 ```
 
 ### Streaming
 
 ```rust
-use wickra::{Candle, Indicator, IntradayIntensity};
+use wickra::{Candle, IntradayIntensity, Indicator};
 
-let mut iii = IntradayIntensity::new();
-let mut last = None;
-for i in 0..20 {
-    let base = 100.0 + f64::from(i);
-    let c = Candle::new(base, base + 1.0, base - 1.0, base + 0.9, 1_000.0, 0).unwrap();
-    last = iii.update(c);
+let mut ii = IntradayIntensity::new();
+let feed: Vec<Candle> = Vec::new(); // your live OHLCV candle feed
+for bar in feed {
+    if let Some(v) = ii.update(bar) {
+        // v > 0: the bar closed in its upper half on real volume (accumulation)
+        // v < 0: lower half (distribution). Sum it yourself for the A/D line.
+        let _ = v;
+    }
 }
-println!("{last:?}");
 ```
-
-Streaming `update` and `batch` are equivalent tick-for-tick
-(`batch_equals_streaming` pins this).
 
 ## Interpretation
 
-1. **Accumulation/distribution.** A persistently rising line says closes are being
-   pushed toward highs on volume — accumulation; a falling line is distribution.
-2. **Divergence.** The line trending opposite to price is the classic warning that
-   the move lacks volume support.
-3. **Smoothing.** Because the raw line is jagged, many traders apply a moving
-   average to it and trade crossovers.
+1. **Per-bar pressure.** Each value is one bar's accumulation/distribution
+   pressure — large positive on a high-volume close-on-high, large negative on a
+   high-volume close-on-low.
+2. **Build your own derived forms.** The running sum of this series is the
+   Accumulation/Distribution Line ([`Adl`](/Indicators/Indicator-Adl)); the
+   volume-normalized windowed average ("Intraday Intensity %") is mathematically
+   the Chaikin Money Flow ([`ChaikinMoneyFlow`](/Indicators/Indicator-ChaikinMoneyFlow)).
+   This indicator gives you the raw per-bar term those are built from.
+3. **Volume quality matters.** Because the term scales with `volume`, noisy or
+   missing volume data dominates the output.
 
 ## Common pitfalls
 
-- **Not the percent version.** This is the cumulative index; for the bounded
-  oscillator use [`Cmf`](/Indicators/Indicator-ChaikinMoneyFlow).
-- **Level is arbitrary.** Only the shape matters.
-- **Volume quality.** Like every money-flow line it needs trustworthy volume.
+- **Expecting a cumulative line.** This is the **raw per-bar** term, not a running
+  total. For the cumulative line use [`Adl`](/Indicators/Indicator-Adl).
+- **Comparing levels across instruments.** The output scales with absolute
+  volume, so levels are not comparable across symbols without normalization
+  (which is what `ChaikinMoneyFlow` does).
+- **Zero on a flat bar.** A `high == low` bar contributes `0` by construction —
+  not a missing value.
 
 ## References
 
-Bostian, D., *Intraday Intensity Index* — popularized via John Bollinger's work;
-see Bollinger, J. (2001), *Bollinger on Bollinger Bands*.
+- David Bostian, *Intraday Intensity Index* — the per-bar volume-weighted
+  close-location measure popularized in John Bollinger's *Bollinger on Bollinger
+  Bands* (2001).
 
 ## See also
 
-- [Indicator-ChaikinMoneyFlow](/Indicators/Indicator-ChaikinMoneyFlow) — the bounded "Intraday Intensity %".
-- [Indicator-Adl](/Indicators/Indicator-Adl) — Chaikin's accumulation/distribution line.
-- [Indicator-Obv](/Indicators/Indicator-Obv) — cumulative signed volume.
+- [Adl](/Indicators/Indicator-Adl) — the cumulative running total of this term.
+- [ChaikinMoneyFlow](/Indicators/Indicator-ChaikinMoneyFlow) — its volume-normalized windowed form.
+- [AdOscillator](/Indicators/Indicator-AdOscillator) — a related volume-less flow oscillator.
 - [Indicators-Overview](/Indicators-Overview) — the full taxonomy.
