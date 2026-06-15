@@ -11,6 +11,16 @@ that calls `update(p)` for every `p` in the input. The same unit test —
 `batch_equals_streaming` — pins this for every indicator. See
 [Streaming vs Batch](Streaming-vs-Batch) for the full contract.
 
+## Do all the language bindings compute the same values?
+
+Yes — proven, not promised. The Rust core emits a shared golden fixture (a
+deterministic input series plus its reference output) for every one of the 514
+indicators, and **all 10 languages** — Rust, Python, Node.js, WASM, C, C++, C#,
+Go, Java and R — replay that input and are checked **bit-for-bit against the
+Rust reference in CI**. There is one implementation; every binding is verified
+to match it exactly (this check has already caught and fixed real cross-language
+marshalling bugs).
+
 ## What does `warmup_period()` mean?
 
 It's the number of inputs an indicator needs before it emits its first

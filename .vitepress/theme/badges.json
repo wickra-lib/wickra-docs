@@ -103,5 +103,12 @@
     "file": "/badges/provenance.svg",
     "width": 147,
     "height": 20
+  },
+  {
+    "alt": "Verified across 10 languages",
+    "href": "https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values",
+    "file": "/badges/verified.svg",
+    "width": 134,
+    "height": 20
   }
 ]

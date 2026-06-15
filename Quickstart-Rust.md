@@ -1,5 +1,7 @@
 # Quickstart: Rust
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 A five-minute tour of the Wickra Rust crate. By the end you will have run a
 batch SMA, fed an RSI tick by tick, and composed two indicators with `Chain`.
 
