@@ -101,7 +101,7 @@ intercept at `x = 0` is `0.0`. This matches the `reference_value` unit test in
 import numpy as np
 import wickra as ta
 
-lr = ta.LinRegIntercept(3)
+lr = ta.LINEARREG_INTERCEPT(3)
 print(lr.batch(np.array([1.0, 2.0, 9.0])))
 ```
 
@@ -115,7 +115,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const lr = new ta.LinRegIntercept(3);
+const lr = new ta.LINEARREG_INTERCEPT(3);
 for (const x of [1, 2, 9]) console.log(x, '->', lr.update(x));
 ```
 

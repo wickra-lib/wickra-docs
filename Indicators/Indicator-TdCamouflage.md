@@ -97,7 +97,7 @@ Some(1.0)
 import numpy as np
 import wickra as ta
 
-td = ta.TdCamouflage()
+td = ta.TDCamouflage()
 o = np.array([10, 9]); h = np.array([11, 10]); l = np.array([8, 7]); c = np.array([10, 9.5])
 print(td.batch(o, h, l, c))  # [nan, 1.0]
 ```
@@ -106,7 +106,7 @@ print(td.batch(o, h, l, c))  # [nan, 1.0]
 
 ```javascript
 const ta = require('wickra');
-const td = new ta.TdCamouflage();
+const td = new ta.TDCamouflage();
 td.update(10, 11, 8, 10);
 console.log(td.update(9, 10, 7, 9.5)); // 1
 ```

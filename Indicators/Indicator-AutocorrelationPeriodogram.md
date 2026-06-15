@@ -103,7 +103,7 @@ dominant cycle ≈ 20.x
 import numpy as np
 import wickra as ta
 
-p = ta.AutocorrelationPeriodogram(10, 48)
+p = ta.AUTOCORRPGRAM(10, 48)
 x = 100 + np.sin(2 * np.pi * np.arange(600) / 20) * 5
 print(round(p.batch(x)[-1], 1))   # ~20
 ```
@@ -113,7 +113,7 @@ print(round(p.batch(x)[-1], 1))   # ~20
 ```javascript
 const ta = require('wickra');
 
-const p = new ta.AutocorrelationPeriodogram(10, 48);
+const p = new ta.AUTOCORRPGRAM(10, 48);
 console.log('warmupPeriod:', p.warmupPeriod()); // 51
 ```
 

@@ -90,7 +90,7 @@ import numpy as np
 import wickra as ta
 
 base = 100 + np.arange(30, dtype=float)
-td = ta.TdDeMarker(14)
+td = ta.TDDeMarker(14)
 out = td.batch(base + 1, base - 1)
 print('row 20:', out[20])
 ```
@@ -99,7 +99,7 @@ print('row 20:', out[20])
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TdDeMarker(14);
+const td = new wickra.TDDeMarker(14);
 const base = Array.from({ length: 30 }, (_, i) => 100 + i);
 console.log('row 20:', td.batch(base.map(b => b + 1), base.map(b => b - 1))[20]);
 ```

@@ -95,7 +95,7 @@ import wickra as ta
 ramp = 100 + np.arange(150) * 0.8
 cycle = 220 + np.sin(np.arange(200) * 0.45) * 12
 prices = np.concatenate([ramp, cycle])
-ht = ta.HtTrendMode()
+ht = ta.HT_TRENDMODE()
 out = ht.batch(prices)
 print('ramp (expect 1.0):', out[120])
 print('cycle (expect 0.0):', out[300])
@@ -107,7 +107,7 @@ print('cycle (expect 0.0):', out[300])
 const ta = require('wickra');
 const ramp = Array.from({ length: 150 }, (_, i) => 100 + i * 0.8);
 const cycle = Array.from({ length: 200 }, (_, i) => 220 + Math.sin(i * 0.45) * 12);
-const ht = new ta.HtTrendMode();
+const ht = new ta.HT_TRENDMODE();
 const out = ht.batch([...ramp, ...cycle]);
 console.log('ramp:', out[120], 'cycle:', out[300]);
 ```

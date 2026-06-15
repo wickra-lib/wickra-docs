@@ -83,7 +83,7 @@ import wickra as ta
 
 n = 30
 base = 100 + np.arange(n, dtype=float) * 0.5
-ad = ta.AdOscillator()
+ad = ta.WilliamsAD()
 print('row 20:', ad.batch(base + 1, base - 1, base + 0.3)[20])
 ```
 
@@ -91,7 +91,7 @@ print('row 20:', ad.batch(base + 1, base - 1, base + 0.3)[20])
 
 ```javascript
 const wickra = require('wickra');
-const ad = new wickra.AdOscillator();
+const ad = new wickra.WilliamsAD();
 const n = 30;
 const base = Array.from({ length: n }, (_, i) => 100 + i * 0.5);
 console.log('row 20:',

@@ -99,7 +99,7 @@ Some(1.0)
 import numpy as np
 import wickra as ta
 
-cti = ta.CorrelationTrendIndicator(20)
+cti = ta.CTI(20)
 x = np.arange(40, dtype=float)
 print(cti.batch(x)[-1])   # 1.0
 ```
@@ -109,7 +109,7 @@ print(cti.batch(x)[-1])   # 1.0
 ```javascript
 const ta = require('wickra');
 
-const cti = new ta.CorrelationTrendIndicator(20);
+const cti = new ta.CTI(20);
 console.log('warmupPeriod:', cti.warmupPeriod()); // 20
 ```
 

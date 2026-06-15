@@ -103,7 +103,7 @@ import numpy as np
 import wickra as ta
 
 close = 100 - np.arange(30, dtype=float) * 0.5
-tl = ta.TdLines(4, 9)
+tl = ta.TDLines(4, 9)
 out = tl.batch(close + 0.5, close - 0.5, close)
 print('row 25:', out[25])  # [resistance, support]
 ```
@@ -112,7 +112,7 @@ print('row 25:', out[25])  # [resistance, support]
 
 ```javascript
 const wickra = require('wickra');
-const tl = new wickra.TdLines(4, 9);
+const tl = new wickra.TDLines(4, 9);
 const close = Array.from({ length: 30 }, (_, i) => 100 - i * 0.5);
 const flat = tl.batch(close.map(c => c + 0.5), close.map(c => c - 0.5), close);
 console.log('row 25 resistance:', flat[25 * 2]);

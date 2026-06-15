@@ -78,7 +78,7 @@ import wickra as ta
 
 close = 100 + np.arange(20, dtype=float)
 vol = np.where(np.arange(20) % 3 == 0, 200.0, 500.0)
-pvi = ta.Pvi()
+pvi = ta.PVI()
 print(pvi.batch(close, vol)[-1])
 ```
 
@@ -86,7 +86,7 @@ print(pvi.batch(close, vol)[-1])
 
 ```javascript
 const wickra = require('wickra');
-const pvi = new wickra.Pvi();
+const pvi = new wickra.PVI();
 ```
 
 ### Streaming

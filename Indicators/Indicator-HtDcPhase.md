@@ -102,7 +102,7 @@ import wickra as ta
 
 t = np.arange(200)
 prices = 100 + np.sin(t * 2 * np.pi / 20) * 5
-ht = ta.HtDcPhase()
+ht = ta.HT_DCPHASE()
 out = ht.batch(prices)
 print('row 120 phase (deg):', out[120])
 ```
@@ -111,7 +111,7 @@ print('row 120 phase (deg):', out[120])
 
 ```javascript
 const ta = require('wickra');
-const ht = new ta.HtDcPhase();
+const ht = new ta.HT_DCPHASE();
 const prices = Array.from({ length: 200 },
   (_, i) => 100 + Math.sin(i * 2 * Math.PI / 20) * 5);
 console.log('row 120:', ht.batch(prices)[120]);

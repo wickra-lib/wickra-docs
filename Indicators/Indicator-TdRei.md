@@ -96,7 +96,7 @@ import numpy as np
 import wickra as ta
 
 base = 100 + np.arange(30, dtype=float)
-r = ta.TdRei(5)
+r = ta.TDREI(5)
 out = r.batch(base + 1, base - 1, base)
 print('warmup:', r.warmup_period())  # 12
 print('row 20:', out[20])
@@ -106,7 +106,7 @@ print('row 20:', out[20])
 
 ```javascript
 const wickra = require('wickra');
-const r = new wickra.TdRei(5);
+const r = new wickra.TDREI(5);
 const base = Array.from({ length: 30 }, (_, i) => 100 + i);
 console.log('row 20:',
   r.batch(base.map(b => b + 1), base.map(b => b - 1), base)[20]);

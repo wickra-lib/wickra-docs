@@ -98,7 +98,7 @@ st1 > st2: true
 import numpy as np
 import wickra as ta
 
-td = ta.TdMovingAverage(5, 13)
+td = ta.TDMovingAverage(5, 13)
 high = np.arange(40, dtype=float) + 101
 low  = np.arange(40, dtype=float) + 99
 st1, st2 = td.batch(high, low).T
@@ -110,7 +110,7 @@ print(st1[-1], st2[-1])
 ```javascript
 const ta = require('wickra');
 
-const td = new ta.TdMovingAverage(5, 13);
+const td = new ta.TDMovingAverage(5, 13);
 console.log('warmupPeriod:', td.warmupPeriod()); // 13
 ```
 

@@ -126,7 +126,7 @@ pins the "positive and below the low" invariant.
 import numpy as np
 import wickra as ta
 
-s = ta.SarExt()  # Wilder defaults
+s = ta.SAREXT()  # Wilder defaults
 high  = np.array([11.0, 12.0])
 low   = np.array([9.0,  10.0])
 close = np.array([10.0, 11.0])
@@ -143,7 +143,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const s = new ta.SarExt(0, 0, 0.02, 0.02, 0.2, 0.02, 0.02, 0.2);
+const s = new ta.SAREXT(0, 0, 0.02, 0.02, 0.2, 0.02, 0.02, 0.2);
 console.log(s.update(11, 9, 10));   // null  (seeds)
 console.log(s.update(12, 10, 11));  // 9
 ```

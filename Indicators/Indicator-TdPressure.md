@@ -102,7 +102,7 @@ l = base - 1
 c = base + 0.5
 v = np.full(n, 100.0)
 
-p = ta.TdPressure(5)
+p = ta.TDPressure(5)
 print('row 20:', p.batch(o, h, l, c, v)[20])
 ```
 
@@ -110,7 +110,7 @@ print('row 20:', p.batch(o, h, l, c, v)[20])
 
 ```javascript
 const wickra = require('wickra');
-const p = new wickra.TdPressure(5);
+const p = new wickra.TDPressure(5);
 const n = 30;
 const base = Array.from({ length: n }, (_, i) => 100 + i);
 const open  = base.map(b => b - 0.5);

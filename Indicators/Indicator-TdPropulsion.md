@@ -95,7 +95,7 @@ Some(1.0)
 import numpy as np
 import wickra as ta
 
-td = ta.TdPropulsion()
+td = ta.TDPropulsion()
 o = np.array([9.5, 10.5]); h = np.array([11, 12]); l = np.array([9, 10]); c = np.array([10, 11.5])
 print(td.batch(o, h, l, c))  # [nan, 1.0]
 ```
@@ -104,7 +104,7 @@ print(td.batch(o, h, l, c))  # [nan, 1.0]
 
 ```javascript
 const ta = require('wickra');
-const td = new ta.TdPropulsion();
+const td = new ta.TDPropulsion();
 td.update(9.5, 11, 9, 10);
 console.log(td.update(10.5, 12, 10, 11.5)); // 1
 ```

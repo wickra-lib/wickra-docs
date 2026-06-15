@@ -95,7 +95,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 import numpy as np
 import wickra as ta
 
-u = ta.UniversalOscillator(20)
+u = ta.UNIVERSALOSC(20)
 x = 100 + np.sin(2 * np.pi * np.arange(200) / 20) * 5
 print(u.batch(x)[-5:])  # in [-1, 1]
 ```
@@ -105,7 +105,7 @@ print(u.batch(x)[-5:])  # in [-1, 1]
 ```javascript
 const ta = require('wickra');
 
-const u = new ta.UniversalOscillator(20);
+const u = new ta.UNIVERSALOSC(20);
 console.log('warmupPeriod:', u.warmupPeriod()); // 3
 ```
 

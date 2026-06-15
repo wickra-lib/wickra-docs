@@ -108,7 +108,7 @@ contract.)
 import numpy as np
 import wickra as ta
 
-di = ta.PlusDi(3)
+di = ta.PLUS_DI(3)
 i = np.arange(5.0)
 print(di.batch(102 + 2 * i, 98 + 2 * i, 101 + 2 * i))
 ```
@@ -123,7 +123,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const di = new ta.PlusDi(3);
+const di = new ta.PLUS_DI(3);
 for (let i = 0; i < 5; i++) console.log(di.update(102 + 2 * i, 98 + 2 * i, 101 + 2 * i));
 ```
 

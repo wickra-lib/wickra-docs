@@ -101,7 +101,7 @@ This matches the `averages_window_min_and_max` unit test in
 import numpy as np
 import wickra as ta
 
-mp = ta.MidPoint(3)
+mp = ta.MIDPOINT(3)
 print(mp.batch(np.array([8.0, 12.0, 10.0])))
 ```
 
@@ -115,7 +115,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const mp = new ta.MidPoint(3);
+const mp = new ta.MIDPOINT(3);
 for (const x of [8, 12, 10]) console.log(x, '->', mp.update(x));
 ```
 

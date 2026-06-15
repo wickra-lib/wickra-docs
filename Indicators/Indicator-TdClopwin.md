@@ -100,7 +100,7 @@ Some(1.0)
 import numpy as np
 import wickra as ta
 
-td = ta.TdClopwin()
+td = ta.TDClopwin()
 o = np.array([10, 11]); h = np.array([15, 14]); l = np.array([9, 10]); c = np.array([14, 13])
 print(td.batch(o, h, l, c))  # [nan, 1.0]
 ```
@@ -109,7 +109,7 @@ print(td.batch(o, h, l, c))  # [nan, 1.0]
 
 ```javascript
 const ta = require('wickra');
-const td = new ta.TdClopwin();
+const td = new ta.TDClopwin();
 td.update(10, 15, 9, 14);
 console.log(td.update(11, 14, 10, 13)); // 1
 ```

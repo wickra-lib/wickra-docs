@@ -90,7 +90,7 @@ o = np.array([100.0, 96.0])
 h = np.array([102.0, 99.0])
 l = np.array([ 98.0, 95.0])
 
-td = ta.TdOpen()
+td = ta.TDOpen()
 print(td.batch(o, h, l))
 ```
 
@@ -98,7 +98,7 @@ print(td.batch(o, h, l))
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TdOpen();
+const td = new wickra.TDOpen();
 console.log(td.batch([100, 96], [102, 99], [98, 95]));
 ```
 

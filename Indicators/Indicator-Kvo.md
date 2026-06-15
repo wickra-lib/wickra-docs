@@ -91,7 +91,7 @@ import wickra as ta
 
 n = 120
 base = 100 + np.sin(np.linspace(0, 25, n)) * 5
-k = ta.Kvo(34, 55, 13)
+k = ta.KVO(34, 55, 13)
 out = k.batch(base + 1, base - 1, base + 0.3, np.full(n, 1000.0))
 print(out[80])
 ```
@@ -100,7 +100,7 @@ print(out[80])
 
 ```javascript
 const wickra = require('wickra');
-const k = new wickra.Kvo(34, 55, 13);
+const k = new wickra.KVO(34, 55, 13);
 // feed h, l, c, v
 ```
 

@@ -96,7 +96,7 @@ unit test in `crates/wickra-core/src/indicators/avg_price.rs`.
 import numpy as np
 import wickra as ta
 
-ap = ta.AvgPrice()
+ap = ta.AVGPRICE()
 print(ap.batch(np.array([10.0]), np.array([14.0]), np.array([6.0]), np.array([12.0])))
 ```
 
@@ -110,7 +110,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const ap = new ta.AvgPrice();
+const ap = new ta.AVGPRICE();
 console.log(ap.update(10, 14, 6, 12));
 ```
 

@@ -97,7 +97,7 @@ Some(0.41...)
 import numpy as np
 import wickra as ta
 
-jb = ta.JarqueBera(50)
+jb = ta.JARQUEBERA(50)
 returns = np.diff(np.log(100 + np.cumsum(np.random.randn(200))))
 print(jb.batch(returns)[-1])   # high in fat-tailed regimes
 ```
@@ -107,7 +107,7 @@ print(jb.batch(returns)[-1])   # high in fat-tailed regimes
 ```javascript
 const ta = require('wickra');
 
-const jb = new ta.JarqueBera(50);
+const jb = new ta.JARQUEBERA(50);
 console.log('warmupPeriod:', jb.warmupPeriod()); // 50
 ```
 

@@ -99,7 +99,7 @@ import numpy as np
 import wickra as ta
 
 close = 100 - np.arange(40, dtype=float) * 0.6  # strict downtrend
-td = ta.TdCombo()
+td = ta.TDCombo()
 print('max:', np.nanmax(td.batch(close + 0.3, close - 0.3, close)))
 ```
 
@@ -107,7 +107,7 @@ print('max:', np.nanmax(td.batch(close + 0.3, close - 0.3, close)))
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TdCombo();
+const td = new wickra.TDCombo();
 const close = Array.from({ length: 40 }, (_, i) => 100 - i * 0.6);
 console.log('max:',
   Math.max(...td.batch(close.map(c => c + 0.3), close.map(c => c - 0.3), close)

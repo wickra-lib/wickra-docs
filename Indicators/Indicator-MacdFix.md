@@ -103,7 +103,7 @@ three lines diverge; the `histogram = macd − signal` identity always holds.
 import numpy as np
 import wickra as ta
 
-m = ta.MacdFix(9)
+m = ta.MACDFIX(9)
 out = m.batch(np.full(60, 100.0))   # (60, 3) array
 print(out[-1])   # last row: macd, signal, histogram
 ```
@@ -118,7 +118,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const m = new ta.MacdFix(9);
+const m = new ta.MACDFIX(9);
 let last = null;
 for (let i = 0; i < 60; i++) last = m.update(100);
 console.log(last);

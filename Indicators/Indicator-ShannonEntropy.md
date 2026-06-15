@@ -100,7 +100,7 @@ Some(2.0)
 import numpy as np
 import wickra as ta
 
-e = ta.ShannonEntropy(32, 8)
+e = ta.SHANNONENT(32, 8)
 x = np.sin(np.arange(200) * 0.3) * 10.0
 print(e.batch(x)[-1])   # in [0, 3]  (log2(8) = 3)
 ```
@@ -110,7 +110,7 @@ print(e.batch(x)[-1])   # in [0, 3]  (log2(8) = 3)
 ```javascript
 const ta = require('wickra');
 
-const e = new ta.ShannonEntropy(4, 4);
+const e = new ta.SHANNONENT(4, 4);
 console.log(e.batch([0, 1, 2, 3]).at(-1)); // 2
 ```
 

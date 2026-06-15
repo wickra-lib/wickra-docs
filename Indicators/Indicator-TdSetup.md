@@ -104,7 +104,7 @@ import wickra as ta
 
 # Down trend → buy setup count grows
 close = 100 - np.arange(15, dtype=float)
-td = ta.TdSetup(4, 9)
+td = ta.TDSetup(4, 9)
 out = td.batch(close + 0.5, close - 0.5, close)  # h, l, c
 print('warmup:', td.warmup_period())  # 5
 print('last:', out[-1])  # should be 9 (capped buy setup)
@@ -114,7 +114,7 @@ print('last:', out[-1])  # should be 9 (capped buy setup)
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TdSetup(4, 9);
+const td = new wickra.TDSetup(4, 9);
 const close = Array.from({ length: 15 }, (_, i) => 100 - i);
 // h, l, c arrays
 const out = td.batch(close.map(c => c + 0.5), close.map(c => c - 0.5), close);

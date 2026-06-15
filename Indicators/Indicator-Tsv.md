@@ -77,7 +77,7 @@ import wickra as ta
 n = 40
 close = 100 + np.sin(np.linspace(0, 12, n)) * 5
 vol = np.full(n, 1000.0)
-t = ta.Tsv(18)
+t = ta.TSV(18)
 print(t.batch(close, vol)[30])
 ```
 
@@ -85,7 +85,7 @@ print(t.batch(close, vol)[30])
 
 ```javascript
 const wickra = require('wickra');
-const t = new wickra.Tsv(18);
+const t = new wickra.TSV(18);
 // feed c, v
 ```
 

@@ -101,7 +101,7 @@ Some(1.0)
 import numpy as np
 import wickra as ta
 
-s = ta.RollingMinMaxScaler(14)
+s = ta.ROLLINGMINMAX(14)
 x = np.sin(np.arange(200) * 0.3) * 10.0
 print(s.batch(x)[-1])   # in [0, 1]
 ```
@@ -111,7 +111,7 @@ print(s.batch(x)[-1])   # in [0, 1]
 ```javascript
 const ta = require('wickra');
 
-const s = new ta.RollingMinMaxScaler(4);
+const s = new ta.ROLLINGMINMAX(4);
 console.log(s.batch([1, 2, 3, 4]).at(-1)); // 1
 ```
 

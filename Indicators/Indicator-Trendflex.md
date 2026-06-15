@@ -100,7 +100,7 @@ last > 0: true
 import numpy as np
 import wickra as ta
 
-t = ta.Trendflex(20)
+t = ta.TRENDFLEX(20)
 x = np.arange(200, dtype=float)
 print(t.batch(x)[-1] > 0)   # True (uptrend)
 ```
@@ -110,7 +110,7 @@ print(t.batch(x)[-1] > 0)   # True (uptrend)
 ```javascript
 const ta = require('wickra');
 
-const t = new ta.Trendflex(20);
+const t = new ta.TRENDFLEX(20);
 console.log('warmupPeriod:', t.warmupPeriod()); // 21
 ```
 

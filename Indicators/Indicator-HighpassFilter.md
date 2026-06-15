@@ -92,7 +92,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 import numpy as np
 import wickra as ta
 
-hp = ta.HighpassFilter(48)
+hp = ta.HIGHPASS(48)
 x = 100 + np.arange(200) + np.sin(np.arange(200) * 0.5) * 3
 print(hp.batch(x)[-5:])  # detrended ripple
 ```
@@ -102,7 +102,7 @@ print(hp.batch(x)[-5:])  # detrended ripple
 ```javascript
 const ta = require('wickra');
 
-const hp = new ta.HighpassFilter(48);
+const hp = new ta.HIGHPASS(48);
 console.log('warmupPeriod:', hp.warmupPeriod()); // 1
 ```
 

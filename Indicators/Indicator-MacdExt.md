@@ -122,7 +122,7 @@ import numpy as np
 import wickra as ta
 
 # fast=12 WMA(2), slow=26 EMA(1), signal=9 SMA(0)
-m = ta.MacdExt(12, 2, 26, 1, 9, 0)
+m = ta.MACDEXT(12, 2, 26, 1, 9, 0)
 out = m.batch(np.full(60, 100.0))   # (60, 3) array
 print(out[-1])
 ```
@@ -138,7 +138,7 @@ Output:
 ```javascript
 const ta = require('wickra');
 // fast=12 WMA(2), slow=26 EMA(1), signal=9 SMA(0)
-const m = new ta.MacdExt(12, 2, 26, 1, 9, 0);
+const m = new ta.MACDEXT(12, 2, 26, 1, 9, 0);
 let last = null;
 for (let i = 0; i < 60; i++) last = m.update(100);
 console.log(last);

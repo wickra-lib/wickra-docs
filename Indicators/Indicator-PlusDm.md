@@ -117,7 +117,7 @@ step at index 4 is `3 − 3/3 + 1 = 3`. This matches the
 import numpy as np
 import wickra as ta
 
-dm = ta.PlusDm(3)
+dm = ta.PLUS_DM(3)
 high  = np.array([11.0, 12.0, 13.0, 14.0, 15.0])
 low   = np.array([9.0,  9.5,  10.0, 10.5, 11.0])
 close = np.array([10.0, 11.0, 12.0, 13.0, 14.0])
@@ -134,7 +134,7 @@ Output:
 
 ```javascript
 const ta = require('wickra');
-const dm = new ta.PlusDm(3);
+const dm = new ta.PLUS_DM(3);
 const bars = [[11, 9], [12, 9.5], [13, 10], [14, 10.5], [15, 11]];
 for (const [h, l] of bars) console.log(dm.update(h, l, l));
 ```

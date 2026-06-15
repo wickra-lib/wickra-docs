@@ -80,7 +80,7 @@ import wickra as ta
 n = 40
 close = 100 + np.sin(np.linspace(0, 12, n)) * 5
 vol = np.full(n, 1000.0)
-v = ta.Vzo(14)
+v = ta.VZO(14)
 print(v.batch(close, vol)[30])
 ```
 
@@ -88,7 +88,7 @@ print(v.batch(close, vol)[30])
 
 ```javascript
 const wickra = require('wickra');
-const v = new wickra.Vzo(14);
+const v = new wickra.VZO(14);
 ```
 
 ### Streaming
