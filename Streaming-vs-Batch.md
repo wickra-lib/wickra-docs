@@ -141,22 +141,24 @@ updates per second:
 
 | Target               | streaming (Mupd/s) | batch (Mupd/s) |
 |----------------------|-------------------:|---------------:|
-| Rust core (no FFI)   |                391 |            500 |
-| C / C++              |                383 |            330 |
-| C#                   |                337 |            244 |
-| Python               |                 33 |            488 |
-| Java                 |                 28 |            175 |
-| Go                   |                 24 |            400 |
-| WASM                 |                 19 |            167 |
-| Node.js              |                 17 |             10 |
-| R                    |                0.1 |            193 |
+| Rust core (no FFI)   |                380 |            498 |
+| C / C++              |                365 |            358 |
+| C#                   |                348 |            259 |
+| Python               |                 31 |             46 |
+| Java                 |                 38 |            173 |
+| Go                   |                 23 |            394 |
+| WASM                 |                 21 |            169 |
+| Node.js              |                 16 |              9 |
+| R                    |                0.1 |            279 |
 
 This is exactly the streaming-vs-batch story at the binding layer: a per-tick
 `update` crosses the boundary once per value, so streaming throughput exposes the
-boundary cost (the raw C ABI is nearly the FFI-free Rust ceiling; R's interpreter
-loop is ~2000× slower than its own batch). A single `batch` call crosses once and
-the core does the rest, so batch converges near the core speed for the zero-copy
-bindings. These are machine-dependent FFI-overhead numbers, not a speed claim —
+boundary cost (the raw C ABI sits just under the FFI-free Rust ceiling; R's
+interpreter loop is ~2800× slower than its own batch). A single `batch` call
+crosses once and the core does the rest, so batch stays high for the bindings that
+return a contiguous buffer; Node (a JS `Array`) and Python (a stdlib `array.array`,
+now that NumPy is optional) copy on the way out and are the two low outliers. These
+are machine-dependent FFI-overhead numbers, not a speed claim —
 see [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md).
 
 ## Practical consequences
