@@ -47,9 +47,9 @@ Release notes and tagged builds:
 
 ## Wiki contents
 
-- [Quickstart: Python](Quickstart-Python) — `pip install wickra`, a batch
-  RSI on a NumPy array, a streaming RSI loop, and the multi-column NaN
-  pattern that MACD and friends share.
+- [Quickstart: Python](Quickstart-Python) — `pip install wickra` (zero
+  third-party deps), a batch RSI returning a stdlib `array.array`, a streaming
+  RSI loop, and the multi-column NaN pattern that MACD and friends share.
 - [Quickstart: Rust](Quickstart-Rust) — `cargo add wickra`, batch and
   streaming via the `Indicator` and `BatchExt` traits, and the `Chain`
   combinator.

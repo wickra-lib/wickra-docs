@@ -3,7 +3,7 @@
 > **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
 
 A five-minute tour of the Wickra Python binding. By the end you will have run
-a batch RSI over a NumPy array, fed the same indicator one tick at a time,
+a batch RSI over a list of prices, fed the same indicator one tick at a time,
 and read a multi-column MACD result correctly during warmup.
 
 ## Install
@@ -12,10 +12,15 @@ and read a multi-column MACD result correctly during warmup.
 pip install wickra
 ```
 
-The published wheels target Python 3.9 – 3.12 on Linux x86_64, macOS
-(Intel + Apple Silicon), and Windows x86_64. The only runtime dependency is
-`numpy >= 1.22`. No system compiler, no C headers, no Rust toolchain are
-needed to install — Wickra ships pre-built native wheels.
+The published wheels target Python 3.9 – 3.13 on Linux x86_64, macOS
+(Intel + Apple Silicon), and Windows x86_64. Wickra has **zero third-party
+dependencies** — `pip install wickra` pulls nothing else, not even NumPy. No
+system compiler, no C headers, no Rust toolchain are needed to install; Wickra
+ships pre-built native wheels.
+
+NumPy is **optional**. Install it (`pip install wickra[numpy]`) only if you want
+to wrap results in NumPy arrays — they expose the buffer protocol, so
+`numpy.asarray(result)` is zero-copy for 1-D outputs.
 
 Verify the install:
 
@@ -24,40 +29,42 @@ import wickra as ta
 print(ta.__version__)
 ```
 
-## Batch: RSI over a NumPy array
+## Batch: RSI over a series
 
-`Indicator.batch(prices)` takes a 1-D `numpy.ndarray` of `float64` closes and
-returns a 1-D `numpy.ndarray` of `float64` outputs. Warmup steps come back as
-`NaN` so the result aligns 1:1 with your input prices and slots straight into
-a pandas column or a NumPy mask.
+`Indicator.batch(prices)` accepts any sequence or buffer of numbers — a plain
+`list`, an `array.array`, a `memoryview`, or a NumPy array — and returns a 1-D
+stdlib **`array.array('d')`** of `float64` outputs. Warmup steps come back as
+`NaN` so the result aligns 1:1 with your input prices. It supports indexing,
+slicing, iteration and `.tolist()`; if you use NumPy, `numpy.asarray(values)`
+wraps it zero-copy.
 
 The first 15 prices below are the classic Wilder textbook example. RSI(14)
 emits its first value at index 14 (the 15th input) because it needs 14
 diffs to seed Wilder's smoothing.
 
 ```python
-import numpy as np
+import math
 import wickra as ta
 
-prices = np.array([
+prices = [
     44.34, 44.09, 44.15, 43.61, 44.33, 44.83, 45.10, 45.42,
     45.84, 46.08, 45.89, 46.03, 45.61, 46.28, 46.28, 46.00,
     46.03, 46.41, 46.22, 45.64,
-], dtype=float)
+]
 
 rsi = ta.RSI(14)
 values = rsi.batch(prices)
 
-print(values.dtype, values.shape)
-print("warmup count:", int(np.isnan(values).sum()))
-print("first value :", float(values[14]))
-print("last value  :", float(values[-1]))
+print(values.typecode, len(values))
+print("warmup count:", sum(math.isnan(v) for v in values))
+print("first value :", values[14])
+print("last value  :", values[-1])
 ```
 
 Running this prints:
 
 ```
-float64 (20,)
+d 20
 warmup count: 14
 first value : 70.46413502109705
 last value  : 57.91502067008556
@@ -107,7 +114,7 @@ The full set of streaming-state methods is:
 | Method                | Returns        | Notes                                      |
 |-----------------------|----------------|--------------------------------------------|
 | `update(price)`       | `float`/`None` | O(1) state transition, `None` during warmup |
-| `batch(prices)`       | `np.ndarray`   | replays `update`, `NaN` during warmup       |
+| `batch(prices)`       | `array.array('d')` | replays `update`, `NaN` during warmup   |
 | `reset()`             | `None`         | returns to a freshly-constructed state      |
 | `is_ready()`          | `bool`         | `True` once the first value has been emitted |
 | `warmup_period()`     | `int`          | inputs required before the first value      |
@@ -116,24 +123,24 @@ The full set of streaming-state methods is:
 
 Some indicators emit several values at once. `MACD` returns three: the MACD
 line, the signal line, and the histogram. The Python `batch` reflects that
-shape directly — instead of a 1-D `float64` vector you get a 2-D
-`(n_rows, n_columns)` array, and each warmup row is filled with `NaN` across
-every column. (`Stochastic` follows the same pattern with two columns,
+shape directly — instead of a 1-D `array.array` you get a `Matrix`: a
+buffer-protocol object with a `(n_rows, n_columns)` `.shape`, integer-row and
+`[i, j]` element access, and `.tolist()`. Each warmup row is filled with `NaN`
+across every column. (`Stochastic` follows the same pattern with two columns,
 `Bollinger Bands` with four, `Keltner`/`Donchian`/`ADX` with three.)
 
 ```python
-import numpy as np
+import math
 import wickra as ta
 
-prices = np.linspace(100.0, 120.0, 40)
+prices = [100.0 + 20.0 * i / 39.0 for i in range(40)]
 macd = ta.MACD(12, 26, 9)
 out = macd.batch(prices)
 
 print("shape       :", out.shape)
-print("warmup rows :", int(np.isnan(out[:, 0]).sum()))
-print("first ready :", int(np.argmax(~np.isnan(out[:, 0]))))
-print("row 33      :", out[33])
-print("row 39      :", out[39])
+print("warmup rows :", sum(math.isnan(out[i, 0]) for i in range(len(out))))
+print("row 33      :", list(out[33]))
+print("row 39      :", list(out[39]))
 ```
 
 Output:
@@ -141,9 +148,8 @@ Output:
 ```
 shape       : (40, 3)
 warmup rows : 33
-first ready : 33
-row 33      : [ 3.58974359e+00  3.58974359e+00 -1.77635684e-15]
-row 39      : [3.58974359e+00 3.58974359e+00 6.21724894e-15]
+row 33      : [3.589743589743577, 3.5897435897435788, -1.7763568394002505e-15]
+row 39      : [3.589743589743591, 3.589743589743585, 6.217248937900877e-15]
 ```
 
 Two things to notice:
@@ -152,19 +158,19 @@ Two things to notice:
    row `34 - 1 = 33` is the first row where every column is finite. Earlier
    rows are entirely `NaN`; you should not slice a partial row out and use,
    say, the `signal` column independently of the `macd` column.
-2. Columns are positional — `out[:, 0]` is MACD, `out[:, 1]` is signal,
-   `out[:, 2]` is histogram. The streaming form returns the same triple as a
-   plain Python tuple: `(macd, signal, histogram)`.
+2. Columns are positional — `out[i, 0]` is MACD, `out[i, 1]` is signal,
+   `out[i, 2]` is histogram, and `out[i]` is the whole row. The streaming form
+   returns the same triple as a plain Python tuple: `(macd, signal, histogram)`.
 
-To filter a warmup-aware mask cleanly:
+If you use NumPy, `numpy.asarray(out.tolist())` gives a 2-D array you can mask
+column-wise — the warmup pattern is identical across all columns:
 
 ```python
-ready = ~np.isnan(out[:, 0])
-clean_rows = out[ready]
-```
+import numpy as np
 
-`ready` is a single boolean column you can apply to every column at once
-because the warmup pattern is identical across all of them.
+arr = np.asarray(out.tolist())          # (40, 3)
+clean_rows = arr[~np.isnan(arr[:, 0])]
+```
 
 ## A deeper example
 

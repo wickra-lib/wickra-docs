@@ -1,7 +1,11 @@
 # Data Layer (`wickra-data`)
 
-`wickra-data` is a separate crate that feeds candles into Wickra's indicators.
-It is not part of `wickra-core` — depend on it explicitly:
+Wickra ships a complete **native data layer** — exposed in **all 10 languages**
+and pulling **zero third-party packages** (no pandas, `csv-parse`, `ws`,
+`jackson`, `jsonlite`). Loading a CSV, rolling ticks into candles, resampling,
+and streaming or fetching live data needs no foreign dependency in any binding.
+
+In Rust it lives in `wickra-data`, a separate crate — depend on it explicitly:
 
 ```toml
 [dependencies]
@@ -9,12 +13,14 @@ wickra = "0.1"
 wickra-data = "0.1"
 ```
 
-It provides four pieces:
+It provides five pieces:
 
-- a streaming OHLCV **CSV reader**,
-- a **tick-to-candle aggregator**,
-- a **candle resampler** for multi-timeframe analysis,
-- an optional **Binance Spot WebSocket** kline feed (feature `live-binance`).
+- a streaming OHLCV **CSV reader** (`CandleReader`),
+- a **tick-to-candle aggregator** (`TickAggregator`),
+- a **candle resampler** for multi-timeframe analysis (`Resampler`),
+- an optional live **Binance Spot WebSocket** kline feed (feature `live-binance`),
+- an optional historical **Binance REST** kline fetcher (`fetch_binance_klines`) —
+  native HTTP + JSON, no third-party client.
 
 ## CSV reader
 

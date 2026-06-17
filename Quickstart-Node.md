@@ -167,8 +167,8 @@ through to the npm sub-package and the install just works.
 
 ## See also
 
-- [Quickstart: Python](Quickstart-Python) — sibling binding with NumPy
-  shapes.
+- [Quickstart: Python](Quickstart-Python) — sibling binding with zero
+  third-party deps (`array.array`/`Matrix` results).
 - [Streaming vs Batch](Streaming-vs-Batch) — why `update` is the primary
   entry point, not `batch`.
 - [Warmup Periods](Warmup-Periods) — exact `warmup_period()` for every

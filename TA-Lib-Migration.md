@@ -17,8 +17,9 @@ The two libraries take the same numeric arguments but differ in shape:
   trading bot — see [Streaming vs Batch](Streaming-vs-Batch).
 
 Multi-output indicators (MACD, Bollinger Bands, Stochastic, ADX, Aroon,
-Keltner, Donchian, SuperTrend, …) return a tuple from `update` and a 2-D
-NumPy array (one column per output) from `batch`.
+Keltner, Donchian, SuperTrend, …) return a tuple from `update` and a `Matrix`
+(one column per output, with `.shape` and `[i, j]` access) from `batch` — no
+NumPy required.
 
 The names in the table below are the Python/Node.js/WASM aliases. C#, Go, Java
 and R use the canonical PascalCase name instead — see

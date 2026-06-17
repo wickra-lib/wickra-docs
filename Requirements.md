@@ -39,7 +39,9 @@ range the CI matrix actually exercises on every push.
 
 - **Python 3.9+.** The wheel is an **abi3** (stable-ABI) wheel built for
   `abi3-py39`, so a single wheel per platform runs on 3.9 through 3.13 (and
-  newer). NumPy ≥ 1.22 is the only runtime dependency.
+  newer). **Zero third-party runtime dependencies** — not even NumPy; batch
+  results are stdlib `array.array`/`Matrix`. NumPy is an optional extra
+  (`pip install wickra[numpy]`) for zero-copy interop.
 - Prebuilt wheels ship for Linux, macOS and Windows (x64 and arm64) — `pip
   install wickra`, no compiler needed.
 
