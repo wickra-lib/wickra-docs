@@ -21,7 +21,7 @@ Webpack, Vite, Rollup, and similar toolchains.
 
 ## Build from source
 
-To build the binding yourself you need [`wasm-pack`](https://github.com/rustwasm/wasm-pack)
+To build the binding yourself you need [`wasm-pack`](https://github.com/wasm-bindgen/wasm-pack)
 and the `wasm32-unknown-unknown` target:
 
 ```bash

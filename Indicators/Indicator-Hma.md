@@ -220,7 +220,7 @@ the lag-reduction in those would manifest as whipsaws. Prefer `Tema` /
 
 Alan Hull, *"How to Reduce Lag in a Moving Average"*, 2005 — the
 original HMA derivation, hosted on Hull's site at
-<https://alanhull.com/hull-moving-average>.
+<https://alanhull.com/the-hull-moving-average/>.
 
 ## See also
 
