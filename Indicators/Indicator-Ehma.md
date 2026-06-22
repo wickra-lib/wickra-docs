@@ -213,8 +213,9 @@ turn.
 ## References
 
 Alan Hull, *"How to Reduce Lag in a Moving Average"*, 2005 — the original Hull
-construction (<https://alanhull.com/hull-moving-average>). The exponential
-variant substitutes EMAs for the WMAs of the canonical HMA.
+construction (documented at
+<https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/hull-moving-average-hma>).
+The exponential variant substitutes EMAs for the WMAs of the canonical HMA.
 
 ## See also
 

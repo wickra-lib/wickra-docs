@@ -198,7 +198,7 @@ export default defineConfig({
           { text: 'Release notes', link: 'https://github.com/wickra-lib/wickra/releases' },
           { text: 'Changelog', link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md' },
           { text: 'Docs', link: 'https://docs.wickra.org/' },
-          { text: 'docs.rs', link: 'https://docs.rs/wickra' },
+          { text: 'docs.rs', link: 'https://docs.rs/wickra/latest/wickra/' },
         ],
       },
     ],
