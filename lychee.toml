@@ -22,6 +22,4 @@ exclude_all_private = true
 exclude = [
   'docs\.wickra\.org/\$(\{|%7B)path',
   'www\.npmjs\.com/package/wickra',
-  # TODO(deploy): drop once the wickra-live site is up.
-  'live\.wickra\.org',
 ]
