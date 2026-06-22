@@ -18,6 +18,9 @@ hero:
       text: Get started
       link: /Quickstart-Rust
     - theme: alt
+      text: Live demo
+      link: https://live.wickra.org
+    - theme: alt
       text: Indicators overview
       link: /Indicators-Overview
     - theme: alt
