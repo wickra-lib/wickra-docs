@@ -9,6 +9,8 @@
 [![License: MIT OR Apache-2.0](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/license.svg)](https://github.com/wickra-lib/wickra#license)
 [![Built with VitePress](https://img.shields.io/badge/built%20with-VitePress-5c73e7?logo=vite&logoColor=white)](https://vitepress.dev)
 
+---
+
 Documentation site for [Wickra](https://github.com/wickra-lib/wickra) —
 streaming-first technical indicators. Built with [VitePress](https://vitepress.dev),
 deployed via **Cloudflare Pages**.
