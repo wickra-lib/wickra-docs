@@ -233,3 +233,14 @@
 .VPNavBarTitle .logo {
   height: 30px;
 }
+
+/* ---- Sticky nav on mobile ----------------------------------------------- */
+/* VitePress fixes the nav at the top on desktop (>=960px) but leaves it static
+ * below that, so on phones the header scrolled away. Pin it there too. */
+@media (max-width: 959px) {
+  .VPNav {
+    position: sticky;
+    top: 0;
+    z-index: var(--vp-z-index-nav);
+  }
+}
