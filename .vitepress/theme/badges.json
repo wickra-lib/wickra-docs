@@ -105,6 +105,13 @@
     "height": 20
   },
   {
+    "alt": "Live demo",
+    "href": "https://live.wickra.org",
+    "file": "/badges/live-demo.svg",
+    "width": 154,
+    "height": 20
+  },
+  {
     "alt": "Verified across 10 languages",
     "href": "https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values",
     "file": "/badges/verified.svg",
