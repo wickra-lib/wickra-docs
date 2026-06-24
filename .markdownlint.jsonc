@@ -6,6 +6,7 @@
   "MD013": false, // line length — prose is hand-wrapped at ~76 columns
   "MD040": false, // allow ``` output blocks with no language
   "MD033": false, // inline HTML (badges, <br>) is used deliberately
+  "MD041": false, // README opens with the centred banner image, not a heading
   "MD024": false, // pages documenting two indicators repeat section headings
   "MD031": false, // fenced blocks embedded inside list items
   "MD060": false  // table pipe-padding style inherited from the wiki export
