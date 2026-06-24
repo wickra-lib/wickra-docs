@@ -39,6 +39,7 @@ const badges = [
   { alt: 'OpenSSF Scorecard', slug: 'scorecard', src: 'https://api.securityscorecards.dev/projects/github.com/wickra-lib/wickra/badge', href: 'https://scorecard.dev/viewer/?uri=github.com/wickra-lib/wickra' },
   { alt: 'OpenSSF Best Practices', slug: 'best-practices', src: 'https://www.bestpractices.dev/projects/13094/badge', href: 'https://www.bestpractices.dev/projects/13094' },
   { alt: 'Build provenance', slug: 'provenance', src: 'https://img.shields.io/badge/provenance-attested-brightgreen?logo=github', href: 'https://github.com/wickra-lib/wickra/attestations' },
+  { alt: 'Live demo', slug: 'live-demo', src: 'https://img.shields.io/badge/live%20demo-live.wickra.org-3b82f6', href: 'https://live.wickra.org' },
   { alt: 'Verified across 10 languages', slug: 'verified', src: 'https://img.shields.io/badge/verified-10_languages-brightgreen', href: 'https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values' },
 ]
 
