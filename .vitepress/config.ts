@@ -120,7 +120,7 @@ export default defineConfig({
   // VitePress emits neither a canonical link nor a per-page og:url on its own;
   // derive both from each page's path so every URL self-references its clean,
   // apex-domain canonical (consistent with `cleanUrls: true`).
-  transformPageData(pageData) {
+  transformPageData(pageData, { siteConfig }) {
     const path = pageData.relativePath.replace(/(?:index)?\.md$/, '')
     const canonical = `https://docs.wickra.org/${path}`
     pageData.frontmatter.head ??= []
@@ -128,6 +128,42 @@ export default defineConfig({
       ['link', { rel: 'canonical', href: canonical }],
       ['meta', { property: 'og:url', content: canonical }],
     )
+
+    // Per-page meta description. Without one, every page falls back to the
+    // global site description, so all 500+ structurally-identical indicator
+    // pages ship a byte-identical <meta name="description">. Search engines
+    // read that (plus the shared template) as near-duplicate content and
+    // override the declared self-canonical — Search Console reports "Duplicate,
+    // Google chose a different canonical" and leaves the pages unindexed.
+    // Derive a unique description from the page's H1 title + its opening summary
+    // blockquote (every indicator page starts with one). Pages without a leading
+    // blockquote (or with an explicit frontmatter description) keep the global.
+    if (!pageData.frontmatter.description) {
+      try {
+        const src = readFileSync(resolve(siteConfig.srcDir, pageData.relativePath), 'utf-8')
+        const body = src.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '')
+        const quote = body.match(/^[ \t]{0,3}>\s?(.+(?:\r?\n[ \t]{0,3}>\s?.+)*)/m)
+        if (quote) {
+          const summary = quote[1]
+            .replace(/\r?\n[ \t]{0,3}>\s?/g, ' ')
+            .replace(/[`*_]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim()
+          const title = (pageData.title || '').trim()
+          let desc =
+            title && !summary.toLowerCase().startsWith(title.toLowerCase())
+              ? `${title} — ${summary}`
+              : summary
+          if (desc.length > 200) desc = `${desc.slice(0, 197).replace(/\s+\S*$/, '')}…`
+          if (desc) {
+            pageData.description = desc
+            pageData.frontmatter.description = desc
+          }
+        }
+      } catch {
+        // Fall back to the global site description.
+      }
+    }
   },
 
   themeConfig: {
