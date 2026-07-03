@@ -13,4 +13,19 @@
 # can sweep it into /Indicators/. The new /Indicators/... URLs start with
 # "/Indicators", not "/Indicator-", so the wildcard never re-captures them.
 /Indicator-Chaining  /Indicator-Chaining  200
+
+# Three indicators were case-renamed after the move (RSI -> Rsi, MACD -> Macd):
+# ConnorsRSI -> ConnorsRsi, LaguerreRSI -> LaguerreRsi, ZeroLagMACD -> ZeroLagMacd.
+# Their old-cased URLs were already indexed by search engines, but the wildcard
+# below only fixes the folder move, not the name change, so the old casing now
+# 404s (and the old root form 301->404). Redirect both the old root and old
+# subfolder casing to the current page. These MUST sit above the wildcard so the
+# root forms (/Indicator-*) match here first (first match wins).
+/Indicator-ConnorsRSI             /Indicators/Indicator-ConnorsRsi   301
+/Indicators/Indicator-ConnorsRSI  /Indicators/Indicator-ConnorsRsi   301
+/Indicator-LaguerreRSI            /Indicators/Indicator-LaguerreRsi  301
+/Indicators/Indicator-LaguerreRSI /Indicators/Indicator-LaguerreRsi  301
+/Indicator-ZeroLagMACD            /Indicators/Indicator-ZeroLagMacd  301
+/Indicators/Indicator-ZeroLagMACD /Indicators/Indicator-ZeroLagMacd  301
+
 /Indicator-*  /Indicators/Indicator-:splat  301
