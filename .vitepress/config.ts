@@ -229,6 +229,21 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Ecosystem',
+        items: [
+          { text: 'Wickra (core)', link: 'https://wickra.org' },
+          { text: 'Docs', link: 'https://docs.wickra.org' },
+          { text: 'Exchange', link: 'https://exchange.wickra.org' },
+          { text: 'Backtest', link: 'https://backtest.wickra.org' },
+          { text: 'Terminal', link: 'https://terminal.wickra.org' },
+          { text: 'Screener', link: 'https://screener.wickra.org' },
+          { text: 'X-Ray', link: 'https://xray.wickra.org' },
+          { text: 'Radar', link: 'https://radar.wickra.org' },
+          { text: 'Copilot', link: 'https://copilot.wickra.org' },
+          { text: 'Shazam', link: 'https://shazam.wickra.org' },
+        ],
+      },
+      {
         text: `v${version}`,
         items: [
           { text: 'Release notes', link: 'https://github.com/wickra-lib/wickra/releases' },
