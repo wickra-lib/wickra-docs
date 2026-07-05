@@ -22,7 +22,4 @@ exclude_all_private = true
 exclude = [
   'docs\.wickra\.org/\$(\{|%7B)path',
   'www\.npmjs\.com/package/wickra',
-  # product marketing subdomains go live once Cloudflare Pages is configured;
-  # excluded until then so the scheduled link check stays green. Remove on launch.
-  '(exchange|backtest|terminal|screener|xray|radar|copilot|shazam)\.wickra\.org',
 ]
