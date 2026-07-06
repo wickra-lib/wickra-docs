@@ -17,5 +17,9 @@
   },
   "dependencies": {
     "sharp": "^0.33.5"
+  },
+  "overrides": {
+    "vite": "^6.4.2",
+    "esbuild": "^0.25.0"
   }
 }
