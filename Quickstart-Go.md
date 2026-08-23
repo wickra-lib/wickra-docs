@@ -42,7 +42,8 @@ The alt-chart bar builders (`RenkoBars`, `KagiBars`, …) have no
 `WarmupPeriod` / `IsReady` — a candle can complete 0..n bars, so they have no
 warmup.
 
-`Update` is O(1) per call. Prefer `defer x.Close()` for prompt cleanup; a
+`Update` never revisits the history behind the tick. Prefer `defer x.Close()`
+for prompt cleanup; a
 `runtime.SetFinalizer` also frees the handle, so a missed `Close` never leaks
 permanently.
 

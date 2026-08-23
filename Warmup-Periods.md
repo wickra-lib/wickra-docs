@@ -44,11 +44,11 @@ index" in 0-indexed terms is `warmup_period − 1`.
 | `Rocp`          | `Rocp::new(12)`                              | `period + 1`                     | 13                               | 13th                     |
 | `Rocr`          | `Rocr::new(12)`                              | `period + 1`                     | 13                               | 13th                     |
 | `Rocr100`       | `Rocr100::new(12)`                           | `period + 1`                     | 13                               | 13th                     |
-| `PlusDm`        | `PlusDm::new(14)`                            | `period` (1st candle seeds prev) | 14                               | 15th                     |
-| `MinusDm`       | `MinusDm::new(14)`                           | `period` (1st candle seeds prev) | 14                               | 15th                     |
-| `PlusDi`        | `PlusDi::new(14)`                            | `period` (1st candle seeds prev) | 14                               | 15th                     |
-| `MinusDi`       | `MinusDi::new(14)`                           | `period` (1st candle seeds prev) | 14                               | 15th                     |
-| `Dx`            | `Dx::new(14)`                                | `period` (1st candle seeds prev) | 14                               | 15th                     |
+| `PlusDm`        | `PlusDm::new(14)`                            | `period + 1` (1st seeds prev)    | 15                               | 15th                     |
+| `MinusDm`       | `MinusDm::new(14)`                           | `period + 1` (1st seeds prev)    | 15                               | 15th                     |
+| `PlusDi`        | `PlusDi::new(14)`                            | `period + 1` (1st seeds prev)    | 15                               | 15th                     |
+| `MinusDi`       | `MinusDi::new(14)`                           | `period + 1` (1st seeds prev)    | 15                               | 15th                     |
+| `Dx`            | `Dx::new(14)`                                | `period + 1` (1st seeds prev)    | 15                               | 15th                     |
 | `WilliamsR`     | `WilliamsR::new(14)`                         | `period`                         | 14                               | 14th                     |
 | `Mfi`           | `Mfi::new(14)`                               | `period`                         | 14                               | 14th                     |
 | `Trix`          | `Trix::new(15)`                              | `3 * period - 1`                 | 44                               | 44th                     |

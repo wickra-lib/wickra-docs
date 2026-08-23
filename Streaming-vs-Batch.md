@@ -110,9 +110,9 @@ input array. To use it inside a streaming loop, you concatenate each new
 tick onto your history and call `rsi(history)` again. That's
 `O(n)` work for every new bar, and the gap widens linearly as `n` grows.
 
-Wickra's `update` is the opposite: each new bar is O(1) because the
-recursive smoothing state is already inside the indicator. You never carry
-history just to recompute it.
+Wickra's `update` is the opposite: a new bar costs the same whether it is the
+tenth or the ten-millionth, because the state it needs is already inside the
+indicator. You never carry history just to recompute it.
 
 The project README carries the full, current benchmark tables;
 `python -m benchmarks.compare_libraries` and `cargo bench -p wickra-bench` are
@@ -121,7 +121,7 @@ the source scripts. In summary:
 - **Python batch** (20 000-bar full pass): Wickra runs each indicator in
   roughly 22–130 µs — about 6–47× faster than `finta`, the fastest pure-Python
   peer that installs cleanly on a desktop.
-- **Python streaming** (per tick, O(1) `update`): Wickra updates in roughly
+- **Python streaming** (one `update` per tick): Wickra updates in roughly
   0.06–0.11 µs/tick, about 11–56× faster than `talipp`, the only Python library
   with a true incremental API.
 - **Rust core** (vs the other Rust TA crates `kand`, `ta-rs`, `yata`): an

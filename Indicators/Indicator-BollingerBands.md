@@ -117,10 +117,10 @@ i=0 -> None
 i=1 -> None
 i=2 -> None
 i=3 -> None
-i=4 -> Some(BollingerOutput { upper: 5.759591794226543, middle: 3.8, lower: 1.8404082057734565, stddev: 0.9797958971132716 })
-i=5 -> Some(BollingerOutput { upper: 5.379795897113269, middle: 4.4, lower: 3.420204102886732, stddev: 0.48989794855663404 })
-i=6 -> Some(BollingerOutput { upper: 7.190890230020663, middle: 5.0, lower: 2.809109769979336, stddev: 1.095445115010332 })
-i=7 -> Some(BollingerOutput { upper: 9.577708763999665, middle: 6.0, lower: 2.422291236000335, stddev: 1.7888543819998326 })
+i=4 -> Some(BollingerOutput { upper: 5.759591794226543, middle: 3.8, lower: 1.8404082057734574, stddev: 0.9797958971132712 })
+i=5 -> Some(BollingerOutput { upper: 5.379795897113271, middle: 4.4, lower: 3.4202041028867294, stddev: 0.48989794855663554 })
+i=6 -> Some(BollingerOutput { upper: 7.190890230020665, middle: 5.0, lower: 2.8091097699793353, stddev: 1.0954451150103324 })
+i=7 -> Some(BollingerOutput { upper: 9.577708763999663, middle: 6.0, lower: 2.4222912360003366, stddev: 1.7888543819998317 })
 ```
 
 The first emission at `i=4` uses the window `[2, 4, 4, 4, 5]` with mean

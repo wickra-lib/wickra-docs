@@ -55,7 +55,8 @@ The alt-chart bar builders (`RenkoBars`, `KagiBars`, …) have no
 `warmupPeriod` / `isReady` — a candle can complete 0..n bars, so they have no
 warmup.
 
-`update` is O(1) per call. Prefer try-with-resources for deterministic cleanup;
+`update` never revisits the history behind the tick. Prefer try-with-resources
+for deterministic cleanup;
 a `Cleaner` also frees the handle once the wrapper becomes unreachable, so a
 missed `close()` never leaks permanently.
 

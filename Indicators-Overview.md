@@ -5,7 +5,7 @@ family collects indicators that answer the same kind of question, so the
 taxonomy here maps one-to-one onto the
 `crates/wickra-core/src/indicators/` source layout.
 
-Every indicator is an O(1) state machine that consumes one input at a time
+Every indicator is an incremental state machine that consumes one input at a time
 and produces either `Option<f64>` (Rust), `float | None` (Python), or
 `number | null` (Node). Inputs are either a `f64` close price or an OHLCV
 `Candle` (Rust) / dict-or-tuple (Python) / column arrays (Node). The full

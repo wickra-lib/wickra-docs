@@ -12,7 +12,7 @@
 | Output type | `f64` |
 | Output range | `[0, 100]` |
 | Default parameters | `period` is required |
-| Warmup period | `period` (first value at candle index `period`) |
+| Warmup period | `period + 1` — the first candle only seeds the previous close (first value at candle index `period`) |
 | Interpretation | Strength of upward directional movement, normalised by true range; `> −DI` marks an up-trend. |
 
 ## Formula
@@ -54,8 +54,8 @@ close)` and the matching `batch`.
 
 ## Warmup
 
-`PlusDi::new(period).warmup_period() == period` (the `accessors_report_config`
-unit test pins `warmup_period() == 7` for `period = 7`). Because directional
+`PlusDi::new(period).warmup_period() == period + 1` (the `accessors_report_config`
+unit test pins `warmup_period() == 8` for `period = 7`). Because directional
 movement and true range both need the previous bar, the **first emitted value**
 appears at candle index `period`. The `uptrend_drives_plus_di_high` test pins
 `out[0] == None` and `out[3].is_some()` for `period = 3`.

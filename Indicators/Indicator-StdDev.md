@@ -19,7 +19,7 @@
 
 ```
 mean     = (1/n) · Σ price
-variance = (1/n) · Σ price² − mean²
+variance = (1/n) · Σ (price − mean)²
 StdDev   = √variance
 ```
 
@@ -84,7 +84,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Output:
 
 ```
-[None, None, Some(1.6329931618554525)]
+[None, None, Some(1.632993161855452)]
 ```
 
 The window `[2, 4, 6]` has mean `4` and variance `(4 + 0 + 4) / 3 = 8/3`,

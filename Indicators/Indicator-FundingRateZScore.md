@@ -49,8 +49,10 @@ is streaming-only.
 
 - **Flat window.** Zero dispersion (a constant funding series) returns exactly
   `0` rather than dividing by zero.
-- **Precision.** The variance uses `E[x²] − E[x]²` with a non-negative clamp;
-  compare z-scores with an `1e-9` tolerance, not `1e-12`.
+- **Precision.** The variance is accumulated around a shifted origin rather
+  than around zero, so the cancellation that `E[x²] − E[x]²` suffers on funding
+  values far from zero does not apply. A non-negative clamp still guards the
+  square root.
 
 ## Examples
 

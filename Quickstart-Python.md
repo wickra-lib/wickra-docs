@@ -77,7 +77,8 @@ in `crates/wickra-core/src/indicators/rsi.rs`.
 ## Streaming: feed one price at a time
 
 The same `RSI` instance can be driven tick-by-tick with `update()`. Each call
-is O(1) and returns either a `float` or `None` while the indicator is still
+never revisits the history behind the tick, and returns either a `float` or
+`None` while the indicator is still
 warming up.
 
 ```python
@@ -113,7 +114,7 @@ The full set of streaming-state methods is:
 
 | Method                | Returns        | Notes                                      |
 |-----------------------|----------------|--------------------------------------------|
-| `update(price)`       | `float`/`None` | O(1) state transition, `None` during warmup |
+| `update(price)`       | `float`/`None` | incremental state transition, `None` during warmup |
 | `batch(prices)`       | `array.array('d')` | replays `update`, `NaN` during warmup   |
 | `reset()`             | `None`         | returns to a freshly-constructed state      |
 | `is_ready()`          | `bool`         | `True` once the first value has been emitted |

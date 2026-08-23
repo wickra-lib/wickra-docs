@@ -43,7 +43,8 @@ The alt-chart bar builders (`RenkoBars()`, `KagiBars()`, …) have no
 `warmup_period()` / `is_ready()` — a candle can complete 0..n bars, so they have
 no warmup.
 
-`update()` is O(1) per call. Handles are released by a registered finalizer, so
+`update()` never revisits the history behind the tick. Handles are released by
+a registered finalizer, so
 there is nothing to free by hand.
 
 ## Streaming and batch side by side

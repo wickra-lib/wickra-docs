@@ -76,7 +76,7 @@ for (const price of liveFeed) {
 }
 ```
 
-Every indicator is an O(1)-per-update state machine: `update` advances the
+Every indicator is an incremental state machine: `update` advances the
 indicator by exactly one input, so a browser charting app pays no cost for
 recomputing history on each tick.
 

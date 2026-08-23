@@ -1,7 +1,7 @@
 # Wickra
 
 Wickra is a streaming-first technical-indicators library. Every indicator is
-implemented in Rust as an O(1) state machine that consumes one input at a
+implemented in Rust as an incremental state machine that consumes one input at a
 time, and the same engine is exposed through ergonomic bindings for Python,
 Node.js, WASM, and Rust itself, plus a C ABI that any C-capable language
 (C, C++, C#, Go, Java, R) links against. The same `update` call you write inside
@@ -73,7 +73,7 @@ Release notes and tagged builds:
   the tick-to-candle aggregator, the multi-timeframe resampler, and the
   Binance live feed.
 - [Streaming vs Batch](Streaming-vs-Batch) — the conceptual difference
-  between Wickra's O(1) `update` and the recompute-everything loops in
+  between Wickra's incremental `update` and the recompute-everything loops in
   batch-only libraries, with the benchmark numbers from the project README.
 - [Warmup Periods](Warmup-Periods) — a verified table of every
   indicator's `warmup_period()`, plus the reasoning behind the off-by-one

@@ -113,7 +113,7 @@ Output:
 
 ```
 warmup_period = 4
-Some(VolatilityConeOutput { current: 0.20218342336724174, min: 0.0, median: 0.10109171168362087, max: 0.20218342336724174, percentile: 100.0 })
+Some(VolatilityConeOutput { current: 0.20218342336724177, min: 0.0, median: 0.10109171168362088, max: 0.20218342336724177, percentile: 100.0 })
 ```
 
 ### Python

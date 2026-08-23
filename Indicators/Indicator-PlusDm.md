@@ -12,7 +12,7 @@
 | Output type | `f64` |
 | Output range | `>= 0` (a smoothed sum of up-moves) |
 | Default parameters | `period` is required |
-| Warmup period | `period` (first value at candle index `period`) |
+| Warmup period | `period + 1` — the first candle only seeds the previous close (first value at candle index `period`) |
 | Interpretation | The accumulated strength of upward directional movement over the window. |
 
 ## Formula
@@ -61,8 +61,8 @@ and WASM expose `update(high, low, close)` and the matching `batch`.
 
 ## Warmup
 
-`PlusDm::new(period).warmup_period() == period` (the `accessors_report_config`
-unit test pins `warmup_period() == 7` for `period = 7`). Because a bar's
+`PlusDm::new(period).warmup_period() == period + 1` (the `accessors_report_config`
+unit test pins `warmup_period() == 8` for `period = 7`). Because a bar's
 directional movement needs the previous bar, the **first emitted value** appears
 at candle index `period` — the `(period + 1)`-th candle. The
 `seeds_then_smooths_a_constant_plus_dm` test pins this: for `period = 3` the

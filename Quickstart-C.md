@@ -44,7 +44,8 @@ wickra_sma_reset(sma);                     /* back to a fresh state    */
 wickra_sma_free(sma);                      /* exactly once per _new    */
 ```
 
-`update` is O(1) per call. There is no RAII across the C boundary, so every
+`update` never revisits the history behind the tick. There is no RAII across
+the C boundary, so every
 `wickra_<ind>_new` must be paired with exactly one `wickra_<ind>_free`. Every
 function is NULL-safe: a NULL handle yields `NaN` (or a no-op), never a crash.
 The alt-chart bar builders (`renko_bars`, `kagi_bars`, …) omit
