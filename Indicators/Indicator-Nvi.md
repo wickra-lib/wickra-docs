@@ -39,7 +39,7 @@ None — `Nvi::new()` takes no arguments.
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:
-`Nvi().batch(close, volume)` returns a 1-D `np.ndarray`. Node:
+`Nvi().batch(close, volume)` returns an `array.array('d')`. Node:
 same.
 
 ## Warmup

@@ -61,7 +61,7 @@ const _: fn(&mut WavePm, f64) -> Option<f64> = <WavePm as Indicator>::update;
 ```
 
 Scalar in, scalar out. Python returns `float | None` (streaming) /
-`numpy.ndarray` (batch, `NaN` for warmup). Node returns `number | null` /
+`array.array('d')` (batch, `NaN` for warmup). Node returns `number | null` /
 `Array<number>` with `NaN`.
 
 ## Warmup

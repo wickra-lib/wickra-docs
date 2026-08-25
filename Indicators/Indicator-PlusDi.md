@@ -49,7 +49,7 @@ const _: fn(&mut PlusDi, Candle) -> Option<f64> = <PlusDi as Indicator>::update;
 `PlusDi` is a **candle-input** indicator that reads `high`, `low` and `close`
 (the last for true range). In Python the streaming `update` accepts a candle; the
 batch helper takes `high`, `low`, `close` numpy arrays and returns a 1-D
-`numpy.ndarray` (`NaN` for warmup). Node and WASM expose `update(high, low,
+`array.array('d')` (`NaN` for warmup). Node and WASM expose `update(high, low,
 close)` and the matching `batch`.
 
 ## Warmup

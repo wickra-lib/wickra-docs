@@ -59,7 +59,7 @@ const _: fn(&mut VwapStdDevBands, Candle) -> Option<VwapStdDevBandsOutput> = <Vw
 - **Python streaming.** `update(candle)` returns
   `(upper, middle, lower, stddev)` or `None`.
 - **Python batch.** `VwapStdDevBands.batch(high, low, close, volume)` returns
-  an `(n, 4)` `np.ndarray` with columns `[upper, middle, lower, stddev]`;
+  an `(n, 4)` `Matrix` with columns `[upper, middle, lower, stddev]`;
   zero-volume warmup rows are `NaN`.
 - **Node streaming.** `update(high, low, close, volume)` returns a
   `{ upper, middle, lower, stddev }` object or `null`.

@@ -47,7 +47,7 @@ or non-positive `scale`.
 
 `Indicator<Input = f64, Output = f64>`. Python:
 `InverseFisherTransform(scale).batch(values)` returns a 1-D
-`np.ndarray` (no warmup `NaN`s). Node: `update(value)` returns
+`array.array('d')` (no warmup `NaN`s). Node: `update(value)` returns
 `number`.
 
 ## Warmup

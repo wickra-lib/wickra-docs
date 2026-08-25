@@ -48,7 +48,7 @@ and `Error::InvalidPeriod` for `lp_period >= hp_period`.
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python:
-`RoofingFilter(lp, hp).batch(prices)` returns a 1-D `np.ndarray`.
+`RoofingFilter(lp, hp).batch(prices)` returns an `array.array('d')`.
 Node: same shape; `update(value)` returns `number`.
 
 ## Warmup

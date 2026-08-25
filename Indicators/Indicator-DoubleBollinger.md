@@ -59,7 +59,7 @@ const _: fn(&mut DoubleBollinger, f64) -> Option<DoubleBollingerOutput> = <Doubl
 - **Python streaming.** `update(value)` returns
   `(upper_outer, upper_inner, middle, lower_inner, lower_outer)` or `None`.
 - **Python batch.** `DoubleBollinger.batch(prices)` returns an `(n, 5)`
-  `np.ndarray` with columns `[upper_outer, upper_inner, middle, lower_inner, lower_outer]`;
+  `Matrix` with columns `[upper_outer, upper_inner, middle, lower_inner, lower_outer]`;
   warmup rows are `NaN`.
 - **Node streaming.** `update(value)` returns a
   `{ upperOuter, upperInner, middle, lowerInner, lowerOuter }` object or `null`.

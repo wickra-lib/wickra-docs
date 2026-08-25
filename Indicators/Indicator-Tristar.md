@@ -51,7 +51,7 @@ const _: fn(&mut Tristar, Candle) -> Option<f64> = <Tristar as Indicator>::updat
 ```
 
 A `Candle` in, an `Option<f64>` out. Python `update(candle)` / `batch(open, high,
-low, close)` → 1-D ndarray; Node `update(open, high, low, close)` / `batch(...)`.
+low, close)` → `array.array('d')`; Node `update(open, high, low, close)` / `batch(...)`.
 
 ## Warmup
 

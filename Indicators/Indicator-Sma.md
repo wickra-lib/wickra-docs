@@ -50,8 +50,8 @@ const _: fn(&mut Sma, f64) -> Option<f64> = <Sma as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. The Python binding maps
-this to `float | None` (streaming) or a `numpy.ndarray` of dtype
-`float64` with `NaN` for warmup rows (batch). The Node binding maps it to
+this to `float | None` (streaming) or an `array.array('d')` with `NaN` for
+warmup rows (batch). The Node binding maps it to
 `number | null` / `Array<number>` with `NaN` for warmup.
 
 ## Warmup

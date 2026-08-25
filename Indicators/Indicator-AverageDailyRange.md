@@ -42,7 +42,7 @@ const _: fn(&mut wickra::AverageDailyRange, wickra::Candle) -> Option<f64> =
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `float | None`;
-  `batch(open, high, low, close, volume, timestamp)` → 1-D `ndarray` (`NaN` warmup).
+  `batch(open, high, low, close, volume, timestamp)` → `array.array('d')` (`NaN` warmup).
 - **Node.** `update(...)` → `number | null`; `batch(...)` → `number[]`.
 - **WASM.** `update(...)` → `number | undefined`.
 

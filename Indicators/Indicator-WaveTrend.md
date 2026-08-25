@@ -55,7 +55,7 @@ const _: fn(&mut WaveTrend, Candle) -> Option<WaveTrendOutput> = <WaveTrend as I
 ```
 
 - **Python.** `update(candle)` returns `(wt1, wt2)` or `None`;
-  `batch(high, low, close)` returns an `(n, 2)` `np.ndarray` with columns
+  `batch(high, low, close)` returns an `(n, 2)` `Matrix` with columns
   `[wt1, wt2]`; warmup rows are `NaN`.
 - **Node.** `update(high, low, close)` returns a `{ wt1, wt2 }` object or
   `null`; `batch(high, low, close)` returns a flat `Array<number>` of length

@@ -43,7 +43,7 @@ const _: fn(&mut wickra::FibRetracement, wickra::Candle) -> Option<wickra::FibRe
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(level_0, level_236, level_382,
   level_500, level_618, level_786, level_1000)` or `None` during warmup;
-  `batch(high, low)` → `(n, 7)` `ndarray` (rows are `NaN` until ready).
+  `batch(high, low)` → `(n, 7)` `Matrix` (rows are `NaN` until ready).
 - **Node.** `update(high, low)` → `{ level0, level236, level382, level500,
   level618, level786, level1000 }` or `null`; `batch(high, low)` → flat
   `number[]` of length `n*7` (`NaN` warmup).

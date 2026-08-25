@@ -43,7 +43,7 @@ const _: fn(&mut wickra::FibFan, wickra::Candle) -> Option<wickra::FibFanOutput>
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(fan_382, fan_500, fan_618)` or `None`;
-  `batch(high, low)` → `(n, 3)` `ndarray` (`NaN` warmup).
+  `batch(high, low)` → `(n, 3)` `Matrix` (`NaN` warmup).
 - **Node.** `update(high, low)` → `{ fan382, fan500, fan618 }` or `null`;
   `batch(high, low)` → flat `number[]` length `n*3`.
 - **WASM.** `update(high, low)` → object (same camelCase keys) or `null`.

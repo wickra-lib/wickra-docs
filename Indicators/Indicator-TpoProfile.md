@@ -54,7 +54,7 @@ const _: fn(&mut TpoProfile, Candle) -> Option<TpoProfileOutput> =
 `TpoProfileOutput` carries `price_low: f64`, `price_high: f64` and
 `counts: Vec<f64>` (length `bin_count`, lowest bucket first).
 
-Python `update(candle)` returns `(price_low, price_high, counts_ndarray)` or
+Python `update(candle)` returns `(price_low, price_high, counts)` or
 `None`; `batch(high, low)` returns a `(n, bin_count + 2)` array with columns
 `[price_low, price_high, count_0, …]` (`NaN` warmup rows). Node
 `update(high, low)` returns `{ priceLow, priceHigh, counts }` or `null`; `batch`

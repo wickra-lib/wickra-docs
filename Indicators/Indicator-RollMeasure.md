@@ -49,7 +49,7 @@ const _: fn(&mut RollMeasure, Trade) -> Option<f64> = <RollMeasure as Indicator>
 ```
 
 Node `update(price, size, isBuy)` and `batch(price[], size[], isBuy[])`; Python
-`update(price, size, is_buy)` and `batch(price, size, is_buy)` → 1-D `ndarray`.
+`update(price, size, is_buy)` and `batch(price, size, is_buy)` → `array.array('d')`.
 (Size and side are accepted for a uniform trade API but only the price is used.)
 
 ## Warmup

@@ -57,7 +57,7 @@ const _: fn(&mut Atr, Candle) -> Option<f64> = <Atr as Indicator>::update;
   `(open, high, low, close, volume, timestamp)` or a dict with keys
   `open`, `high`, `low`, `close`, `volume`, and optional `timestamp`.
 - **Python batch.** `ATR.batch(high, low, close)` takes three equal-length
-  `numpy.ndarray` columns and returns a 1-D `np.ndarray` with `NaN` for
+  `array.array('d')` columns and returns an `array.array('d')` with `NaN` for
   every warmup row.
 - **Node streaming.** `atr.update(high, low, close)` returns `number | null`.
 - **Node batch.** `atr.batch(high, low, close)` returns `Array<number>` of

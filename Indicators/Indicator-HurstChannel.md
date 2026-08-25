@@ -53,7 +53,7 @@ const _: fn(&mut HurstChannel, Candle) -> Option<HurstChannelOutput> = <HurstCha
 
 - **Python streaming.** `update(candle)` returns `(upper, middle, lower)` or `None`.
 - **Python batch.** `HurstChannel.batch(high, low, close)` returns an
-  `(n, 3)` `np.ndarray` with columns `[upper, middle, lower]`; warmup rows
+  `(n, 3)` `Matrix` with columns `[upper, middle, lower]`; warmup rows
   are `NaN` across all three columns.
 - **Node streaming.** `update(high, low, close)` returns a
   `{ upper, middle, lower }` object or `null`.

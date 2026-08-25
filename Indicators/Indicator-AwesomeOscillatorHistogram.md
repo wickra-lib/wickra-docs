@@ -65,7 +65,7 @@ const _: fn(&mut AwesomeOscillatorHistogram, Candle) -> Option<f64> =
 Only `high` and `low` are read (the AO uses the median price), so both native
 bindings take just those two series. Python streams as `float | None` and batches
 `AwesomeOscillatorHistogram(fast, slow, lookback).batch(high, low)` to a 1-D
-`numpy.ndarray` (`NaN` warmup). Node streams as `number | null` via
+`array.array('d')` (`NaN` warmup). Node streams as `number | null` via
 `update(high, low)` and batches `batch(high, low)`.
 
 ## Warmup

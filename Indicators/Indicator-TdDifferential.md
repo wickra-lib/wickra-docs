@@ -54,7 +54,7 @@ None — `TdDifferential::new()` takes no arguments.
 
 `Indicator<Input = Candle, Output = f64>`. Python:
 `TdDifferential().batch(high, low, close)` returns a 1-D
-`np.ndarray` (first bar is `NaN`). Node: same shape;
+`array.array('d')` (first bar is `NaN`). Node: same shape;
 `update(candle)` returns `number | null` (only first bar `null`).
 
 ## Warmup

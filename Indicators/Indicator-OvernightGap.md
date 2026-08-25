@@ -42,7 +42,7 @@ const _: fn(&mut wickra::OvernightGap, wickra::Candle) -> Option<f64> =
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `float | None`;
-  `batch(...)` → 1-D `ndarray` (`NaN` warmup).
+  `batch(...)` → `array.array('d')` (`NaN` warmup).
 - **Node.** `update(...)` → `number | null`; `batch(...)` → `number[]`.
 - **WASM.** `update(...)` → `number | undefined`.
 

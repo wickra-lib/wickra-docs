@@ -45,7 +45,7 @@ must be strictly less than slow period" }` if `fast >= slow`.
 
 `Indicator<Input = f64, Output = f64>`. Python:
 `DecyclerOscillator(fast, slow).batch(prices)` returns a 1-D
-`np.ndarray`. Node: same shape; `update(value)` returns `number`.
+`array.array('d')`. Node: same shape; `update(value)` returns `number`.
 
 ## Warmup
 

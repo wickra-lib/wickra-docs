@@ -47,7 +47,7 @@ the conventional Ehlers initialisation. See
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python:
-`Decycler(period).batch(prices)` returns a 1-D `np.ndarray` (the
+`Decycler(period).batch(prices)` returns an `array.array('d')` (the
 first 2 bars pass through input unchanged). Node: same shape;
 `update(value)` returns `number`.
 

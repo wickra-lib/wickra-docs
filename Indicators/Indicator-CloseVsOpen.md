@@ -44,7 +44,7 @@ const _: fn(&mut CloseVsOpen, Candle) -> Option<f64> = <CloseVsOpen as Indicator
 ```
 
 Node `update(open, high, low, close)` / `batch(open[], high[], low[], close[])`;
-Python `update(candle)` / `batch(open, high, low, close)` → 1-D `ndarray`.
+Python `update(candle)` / `batch(open, high, low, close)` → `array.array('d')`.
 
 ## Warmup
 

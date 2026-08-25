@@ -40,7 +40,7 @@ is O(1). See
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python: `RollingVWAP(period).batch(high, low, close, volume)`
-returns a 1-D `np.ndarray` with `NaN` warmup. Node: same; `update(candle)`
+returns an `array.array('d')` with `NaN` warmup. Node: same; `update(candle)`
 returns `number | null`.
 
 ## Warmup

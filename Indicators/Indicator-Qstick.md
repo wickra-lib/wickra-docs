@@ -50,7 +50,7 @@ const _: fn(&mut Qstick, Candle) -> Option<f64> = <Qstick as Indicator>::update;
 Qstick reads only the **open** and **close** (the candle body), so the batch
 bindings take those two columns. Node: `update(open, close)` /
 `batch(open[], close[])`. Python: `update(candle)` (a full candle object) /
-`batch(open, close)` → 1-D `ndarray` (`NaN` for warmup). Node returns
+`batch(open, close)` → `array.array('d')` (`NaN` for warmup). Node returns
 `number | null` / `Array<number>` with `NaN`.
 
 ## Warmup

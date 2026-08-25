@@ -41,7 +41,7 @@ const _: fn(&mut wickra::FibTimeZones, wickra::Candle) -> Option<wickra::FibTime
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(on_zone, bars_to_next)` or `None`;
-  `batch(high, low)` → `(n, 2)` `ndarray` (`NaN` warmup).
+  `batch(high, low)` → `(n, 2)` `Matrix` (`NaN` warmup).
 - **Node.** `update(high, low)` → `{ onZone, barsToNext }` or `null`;
   `batch(high, low)` → flat `number[]` length `n*2`.
 - **WASM.** `update(high, low)` → object (`onZone`/`barsToNext`) or `null`.

@@ -49,7 +49,7 @@ const _: fn(&mut MacdFix, f64) -> Option<MacdOutput> = <MacdFix as Indicator>::u
 ```
 
 In Python `update` returns a `(macd, signal, histogram)` tuple (or `None` during
-warmup) and `batch` returns an `(n, 3)` `numpy.ndarray`. In Node `update` returns
+warmup) and `batch` returns an `(n, 3)` `Matrix`. In Node `update` returns
 a `{ macd, signal, histogram }` object and `batch` a flat `Array<number>` of
 length `n · 3`.
 

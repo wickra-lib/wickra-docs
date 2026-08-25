@@ -52,7 +52,7 @@ so the result is bounded by `±100`. See
 
 `Indicator<Input = Candle, Output = f64>`. Python:
 `TdPressure(period).batch(open, high, low, close, volume)` returns
-a 1-D `np.ndarray` with `NaN` in the warmup prefix. Node: same
+an `array.array('d')` with `NaN` in the warmup prefix. Node: same
 shape; `update(candle)` returns `number | null`.
 
 ## Warmup

@@ -52,7 +52,7 @@ use wickra::{Indicator, Hma};
 const _: fn(&mut Hma, f64) -> Option<f64> = <Hma as Indicator>::update;
 ```
 
-Python returns `float | None` (streaming) / `numpy.ndarray` (batch,
+Python returns `float | None` (streaming) / `array.array('d')` (batch,
 `NaN` for warmup). Node returns `number | null` / `Array<number>` with
 `NaN`.
 

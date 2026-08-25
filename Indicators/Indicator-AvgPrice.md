@@ -48,7 +48,7 @@ const _: fn(&mut AvgPrice, Candle) -> Option<f64> = <AvgPrice as Indicator>::upd
 `AvgPrice` is a **candle-input** indicator that reads all four OHLC prices. In
 Python the streaming `update` accepts a candle (dict or tuple); the batch helper
 takes `open`, `high`, `low`, `close` numpy arrays and returns a 1-D
-`numpy.ndarray` (`NaN` only never appears here, since warmup is a single bar).
+`array.array('d')` (`NaN` only never appears here, since warmup is a single bar).
 Node and WASM expose `update(open, high, low, close)` and the matching `batch`.
 
 ## Warmup

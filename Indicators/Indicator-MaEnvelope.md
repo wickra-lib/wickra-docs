@@ -51,7 +51,7 @@ const _: fn(&mut MaEnvelope, f64) -> Option<MaEnvelopeOutput> = <MaEnvelope as I
 ```
 
 - **Python streaming.** `update(value)` returns `(upper, middle, lower)` or `None`.
-- **Python batch.** `MaEnvelope.batch(prices)` returns an `(n, 3)` `np.ndarray`
+- **Python batch.** `MaEnvelope.batch(prices)` returns an `(n, 3)` `Matrix`
   with columns `[upper, middle, lower]`; warmup rows are `NaN`.
 - **Node streaming.** `update(value)` returns a `{ upper, middle, lower }`
   object or `null`.

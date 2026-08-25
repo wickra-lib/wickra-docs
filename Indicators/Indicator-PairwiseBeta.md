@@ -39,7 +39,7 @@ See `crates/wickra-core/src/indicators/pairwise_beta.rs`.
 
 `Indicator<Input = (f64, f64), Output = f64>`. Feed **raw prices** `(a, b)`;
 the indicator forms the log-returns for you. Python:
-`PairwiseBeta(period).batch(a, b)` returns a 1-D `np.ndarray` with `NaN`
+`PairwiseBeta(period).batch(a, b)` returns an `array.array('d')` with `NaN`
 warmup. Node and WASM expose the same `update(a, b)` / `batch(a, b)` shape.
 
 ## Warmup

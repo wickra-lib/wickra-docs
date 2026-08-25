@@ -57,7 +57,7 @@ const _: fn(&mut IntradayIntensity, Candle) -> Option<f64> =
 ```
 
 Python streams as `float | None` and batches
-`IntradayIntensity().batch(high, low, close, volume)` to a 1-D `numpy.ndarray`.
+`IntradayIntensity().batch(high, low, close, volume)` to an `array.array('d')`.
 Node streams as `number | null` via `update(high, low, close, volume)` and
 batches `batch(high, low, close, volume)`. With `warmup_period == 1` there is no
 `NaN`/`null` warmup prefix.

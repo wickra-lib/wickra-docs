@@ -49,7 +49,7 @@ const _: fn(&mut MidPrice, Candle) -> Option<f64> = <MidPrice as Indicator>::upd
 
 `MidPrice` is a **candle-input** indicator that reads `high` and `low`. In
 Python the streaming `update` accepts a candle (dict or tuple); the batch helper
-takes `high`, `low`, `close` numpy arrays and returns a 1-D `numpy.ndarray`
+takes `high`, `low`, `close` numpy arrays and returns an `array.array('d')`
 (`NaN` for warmup). Node and WASM expose `update(open, high, low, close)` and the
 matching `batch`.
 

@@ -42,7 +42,7 @@ const _: fn(&mut wickra::GoldenPocket, wickra::Candle) -> Option<wickra::GoldenP
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(low, mid, high)` or `None`;
-  `batch(high, low)` → `(n, 3)` `ndarray` (`NaN` warmup).
+  `batch(high, low)` → `(n, 3)` `Matrix` (`NaN` warmup).
 - **Node.** `update(high, low)` → `{ low, mid, high }` or `null`;
   `batch(high, low)` → flat `number[]` length `n*3`.
 - **WASM.** `update(high, low)` → object (`low`/`mid`/`high`) or `null`.

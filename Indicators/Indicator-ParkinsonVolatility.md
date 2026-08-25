@@ -55,7 +55,7 @@ const _: fn(&mut ParkinsonVolatility, Candle) -> Option<f64> = <ParkinsonVolatil
 Only `high` and `low` are read, so both bindings take just those two series.
 
 - **Python.** `update(candle)` returns `float | None`; `batch(high, low)`
-  returns a 1-D `float64` `np.ndarray` with `NaN` warmup.
+  returns an `array.array('d')` with `NaN` warmup.
 - **Node.** `update(high, low)` returns `number | null`; `batch(high, low)`
   returns an `Array<number>` with `NaN` warmup.
 

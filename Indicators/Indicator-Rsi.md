@@ -55,7 +55,7 @@ const _: fn(&mut Rsi, f64) -> Option<f64> = <Rsi as Indicator>::update;
 ```
 
 The output is a scalar in `[0, 100]`. In Python `batch(prices)` returns a
-1-D `np.ndarray` of `float64`, with `NaN` in the warmup positions. In Node
+`array.array('d')`, with `NaN` in the warmup positions. In Node
 `batch(prices)` returns a flat `number[]`, also `NaN` during warmup.
 
 ## Warmup

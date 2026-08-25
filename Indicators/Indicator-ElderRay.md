@@ -54,7 +54,7 @@ Two outputs per bar. Node: `update(open, high, low, close)` returns
 `{ bullPower, bearPower } | null`; `batch(o[], h[], l[], c[])` returns a flat
 `Array<number>` of length `n*2` (`[bull, bear, bull, bear, …]`, `NaN` for
 warmup). Python: `update(candle)` returns `(bull, bear) | None`;
-`batch(open, high, low, close)` returns an `(n, 2)` `ndarray`.
+`batch(open, high, low, close)` returns an `(n, 2)` `Matrix`.
 
 ## Warmup
 

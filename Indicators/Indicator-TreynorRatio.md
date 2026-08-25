@@ -44,7 +44,7 @@ maintain `Σa, Σb, Σb², Σa·b`. See
 
 `Indicator<Input = (f64, f64), Output = f64>`. Python:
 `TreynorRatio(period, rf).batch(asset_returns, benchmark_returns)`
-returns a 1-D `np.ndarray` with `NaN` warmup. Node: same shape;
+returns an `array.array('d')` with `NaN` warmup. Node: same shape;
 `update(asset, benchmark)` returns `number | null`.
 
 ## Warmup

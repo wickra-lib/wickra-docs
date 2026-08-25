@@ -35,7 +35,7 @@ None.
 
 `Indicator<Input = Candle, Output = f64>`. Python:
 `MarketFacilitationIndex().batch(high, low, volume)` returns a 1-D
-`np.ndarray` with `NaN` for zero-volume bars. Node: same;
+`array.array('d')` with `NaN` for zero-volume bars. Node: same;
 `update(candle)` returns `number | null`.
 
 ## Warmup

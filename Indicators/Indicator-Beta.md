@@ -37,7 +37,7 @@ Population formulas (not sample). Each `update` is O(1). See
 ## Inputs / Outputs
 
 `Indicator<Input = (f64, f64), Output = f64>`. Python:
-`Beta(period).batch(asset, benchmark)` returns a 1-D `np.ndarray`
+`Beta(period).batch(asset, benchmark)` returns an `array.array('d')`
 with `NaN` warmup. Node: same.
 
 ## Warmup

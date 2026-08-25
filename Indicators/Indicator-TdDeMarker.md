@@ -45,7 +45,7 @@ new-low streak; `0.5` = balanced. See
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:
-`TdDeMarker(period).batch(high, low)` returns a 1-D `np.ndarray`
+`TdDeMarker(period).batch(high, low)` returns an `array.array('d')`
 with `NaN` in the warmup prefix. Node: same shape;
 `update(candle)` returns `number | null`.
 

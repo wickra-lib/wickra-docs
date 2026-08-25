@@ -59,7 +59,7 @@ factory (`connors_rsi.rs:74-77`).
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python: `ConnorsRSI.batch(prices)`
-returns a 1-D `np.ndarray` with `NaN` in the warmup prefix. Node:
+returns an `array.array('d')` with `NaN` in the warmup prefix. Node:
 `ConnorsRSI.batch(prices)` returns `Array<number>` (`NaN` in warmup
 slots); `update(value)` returns `number | null`.
 

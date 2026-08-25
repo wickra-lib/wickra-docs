@@ -44,7 +44,7 @@ const _: fn(&mut wickra::FibArcs, wickra::Candle) -> Option<wickra::FibArcsOutpu
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(arc_382, arc_500, arc_618)` or `None`;
-  `batch(high, low)` → `(n, 3)` `ndarray` (`NaN` warmup).
+  `batch(high, low)` → `(n, 3)` `Matrix` (`NaN` warmup).
 - **Node.** `update(high, low)` → `{ arc382, arc500, arc618 }` or `null`;
   `batch(high, low)` → flat `number[]` length `n*3`.
 - **WASM.** `update(high, low)` → object (same camelCase keys) or `null`.

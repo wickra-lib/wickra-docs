@@ -120,7 +120,10 @@ let five_min = resample_all(Timeframe::millis(5 * 60_000)?, one_min_candles)?;
 let mut r = Resampler::new(Timeframe::millis(60 * 60_000)?); // 1-hour bars
 let one_min_candles: Vec<wickra_data::Result<wickra::Candle>> = Vec::new();
 for candle in one_min_candles {
-    if let Some(closed) = r.push(candle?)? {
+    // One push can close several bars at once: with gap filling on, a skipped
+    // bucket still gets a flat placeholder, so this is a list rather than an
+    // `Option`.
+    for closed in r.push(candle?)? {
         // a coarser bar just closed
     }
 }

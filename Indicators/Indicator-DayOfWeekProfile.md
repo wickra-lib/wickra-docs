@@ -40,7 +40,7 @@ const _: fn(&mut wickra::DayOfWeekProfile, wickra::Candle) -> Option<wickra::Day
     <wickra::DayOfWeekProfile as wickra::Indicator>::update;
 ```
 
-- **Python.** `update((o,h,l,c,v,ts))` → length-7 `ndarray` (or `None`);
+- **Python.** `update((o,h,l,c,v,ts))` → length-7 `Matrix` (or `None`);
   `batch(...)` → `(n, 7)` array, warmup rows `NaN`.
 - **Node.** `update(...)` → `number[]` (or `null`); `batch(...)` → flat `number[]` length `n*7`.
 - **WASM.** `update(...)` → `Float64Array` (or `null`).

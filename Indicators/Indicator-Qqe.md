@@ -65,7 +65,7 @@ Two outputs per bar. Node: `update(value)` returns
 `{ rsiMa, trailingLine } | null`; `batch(values)` returns a flat `Array<number>`
 of length `n*2` (`[rsiMa, trailingLine, …]`, `NaN` for warmup). Python:
 `update(value)` returns `(rsi_ma, trailing_line) | None`; `batch(values)` returns
-an `(n, 2)` `ndarray`.
+an `(n, 2)` `Matrix`.
 
 ## Warmup
 

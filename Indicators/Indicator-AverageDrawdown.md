@@ -57,7 +57,7 @@ const _: fn(&mut AverageDrawdown, f64) -> Option<f64> = <AverageDrawdown as Indi
 ```
 
 Python streams as `float | None` and batches `AverageDrawdown(period).batch(prices)`
-to a 1-D `numpy.ndarray` (`NaN` for warmup). Node streams as `number | null` via
+to an `array.array('d')` (`NaN` for warmup). Node streams as `number | null` via
 `update(value)` and batches `batch(prices)`.
 
 ## Warmup

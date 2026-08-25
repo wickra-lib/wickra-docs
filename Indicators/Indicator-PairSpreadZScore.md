@@ -40,7 +40,7 @@ moments. See `crates/wickra-core/src/indicators/pair_spread_zscore.rs`.
 
 `Indicator<Input = (f64, f64), Output = f64>`. Feed positive prices `(a, b)`.
 Python: `PairSpreadZScore(beta_period, z_period).batch(a, b)` → 1-D
-`np.ndarray` with `NaN` warmup. Node and WASM expose `update(a, b)`.
+`array.array('d')` with `NaN` warmup. Node and WASM expose `update(a, b)`.
 
 ## Warmup
 

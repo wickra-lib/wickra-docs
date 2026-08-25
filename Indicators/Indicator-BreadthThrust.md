@@ -54,7 +54,7 @@ The bindings pass a tick as four equal-length parallel arrays; the constructor
 takes the window length:
 
 - **Python**: `BreadthThrust(period)`, `update(change, volume, new_high, new_low)`;
-  `batch(...)` returns a 1-D `ndarray` with `NaN` during warmup.
+  `batch(...)` returns an `array.array('d')` with `NaN` during warmup.
 - **Node**: `new BreadthThrust(period)`, `update(change, volume, newHigh, newLow)`;
   `batch` returns `number[]` with `NaN` during warmup.
 - **WASM**: `new BreadthThrust(period)`, `update(...)` only; flag arrays are numeric.

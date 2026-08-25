@@ -59,7 +59,7 @@ const _: fn(&mut HoltWinters, f64) -> Option<f64> =
     <HoltWinters as Indicator>::update;
 ```
 
-Python returns `float | None` (streaming) / `numpy.ndarray` (batch, `NaN` for
+Python returns `float | None` (streaming) / `array.array('d')` (batch, `NaN` for
 warmup). Node returns `number | null` / `Array<number>` with `NaN`. The
 `level()` and `trend()` accessors expose the two internal states.
 

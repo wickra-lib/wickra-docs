@@ -60,7 +60,7 @@ const _: fn(&mut StandardErrorBands, f64) -> Option<StandardErrorBandsOutput> = 
 
 - **Python streaming.** `update(value)` returns `(upper, middle, lower)` or `None`.
 - **Python batch.** `StandardErrorBands.batch(prices)` returns an `(n, 3)`
-  `np.ndarray` with columns `[upper, middle, lower]`; warmup rows are `NaN`.
+  `Matrix` with columns `[upper, middle, lower]`; warmup rows are `NaN`.
 - **Node streaming.** `update(value)` returns a `{ upper, middle, lower }`
   object or `null`.
 - **Node batch.** `batch(prices)` returns a flat `Array<number>` of length

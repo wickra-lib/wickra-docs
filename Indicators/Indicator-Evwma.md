@@ -49,7 +49,7 @@ const _: fn(&mut Evwma, Candle) -> Option<f64> = <Evwma as Indicator>::update;
 Only `close` and `volume` are read.
 
 - **Python.** `update(candle)` returns `float | None`; `batch(close, volume)`
-  returns a 1-D `float64` `np.ndarray` with `NaN` warmup.
+  returns an `array.array('d')` with `NaN` warmup.
 - **Node.** `update(close, volume)` returns `number | null`;
   `batch(close, volume)` returns an `Array<number>` with `NaN` warmup.
 

@@ -51,7 +51,7 @@ const _: fn(&mut Tema, f64) -> Option<f64> = <Tema as Indicator>::update;
 ```
 
 Python `update` returns `float | None`, `batch` returns a 1-D
-`numpy.ndarray` (`float64`, `NaN` for warmup). Node `update` returns
+`array.array('d')` (`float64`, `NaN` for warmup). Node `update` returns
 `number | null`, `batch` returns `Array<number>` with `NaN`
 placeholders.
 

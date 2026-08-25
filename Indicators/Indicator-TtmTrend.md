@@ -52,7 +52,7 @@ const _: fn(&mut TtmTrend, Candle) -> Option<f64> = <TtmTrend as Indicator>::upd
 The indicator reads only the high, low and close, so the batch bindings take
 those three columns. Node: `update(high, low, close)` / `batch(h[], l[], c[])`.
 Python: `update(candle)` (a full candle object) / `batch(high, low, close)` →
-1-D `ndarray` (`NaN` for warmup). Node returns `number | null` /
+`array.array('d')` (`NaN` for warmup). Node returns `number | null` /
 `Array<number>` with `NaN`.
 
 ## Warmup

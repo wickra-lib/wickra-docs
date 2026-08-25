@@ -61,7 +61,7 @@ uniformity and ignored). Node: `update(high, low, close)` returns
 `{ upper, lower } | null`; `batch(h[], l[], c[])` returns a flat
 `Array<number>` of length `n*2` (`[upper, lower, upper, lower, …]`, `NaN` for
 warmup). Python: `update(candle)` returns `(upper, lower) | None`;
-`batch(high, low, close)` returns an `(n, 2)` `ndarray`.
+`batch(high, low, close)` returns an `(n, 2)` `Matrix`.
 
 ## Warmup
 

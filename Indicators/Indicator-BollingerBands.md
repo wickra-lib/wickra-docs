@@ -62,7 +62,7 @@ const _: fn(&mut BollingerBands, f64) -> Option<BollingerOutput> = <BollingerBan
 
 - **Python streaming** (`update`) returns the 4-tuple `(upper, middle, lower, stddev)`
   or `None` during warmup.
-- **Python batch** (`batch`) returns a 2-D `numpy.ndarray` of shape `(n, 4)` with
+- **Python batch** (`batch`) returns a 2-D `Matrix` of shape `(n, 4)` with
   columns `[upper, middle, lower, stddev]`; warmup rows are entirely `NaN`.
 - **Node streaming** (`update`) returns a `{ upper, middle, lower, stddev }`
   object or `null` during warmup.

@@ -38,7 +38,7 @@ Each `update` is O(1) via running sums. See
 ## Inputs / Outputs
 
 `Indicator<Input = (f64, f64), Output = f64>`. Python:
-`PearsonCorrelation(period).batch(x, y)` returns 1-D `np.ndarray`.
+`PearsonCorrelation(period).batch(x, y)` returns `array.array('d')`.
 
 ## Warmup
 

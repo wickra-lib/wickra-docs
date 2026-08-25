@@ -52,7 +52,7 @@ use wickra::{Indicator, Rmi};
 const _: fn(&mut Rmi, f64) -> Option<f64> = <Rmi as Indicator>::update;
 ```
 
-Python returns `float | None` (streaming) / `numpy.ndarray` (batch, `NaN` for
+Python returns `float | None` (streaming) / `array.array('d')` (batch, `NaN` for
 warmup). Node returns `number | null` / `Array<number>` with `NaN`.
 
 ## Warmup

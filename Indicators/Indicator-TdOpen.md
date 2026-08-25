@@ -43,7 +43,7 @@ None — `TdOpen::new()` takes no arguments.
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:
-`TdOpen().batch(open, high, low)` returns a 1-D `np.ndarray`
+`TdOpen().batch(open, high, low)` returns an `array.array('d')`
 (first bar is `NaN`). Node: same shape; `update(candle)`
 returns `number | null`.
 

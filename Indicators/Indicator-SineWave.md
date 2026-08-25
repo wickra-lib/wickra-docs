@@ -50,7 +50,7 @@ let px = 100.0;
 let sine = sw.update(px); // Option<f64>
 ```
 
-Python: `SineWave().batch(prices)` returns a 1-D `np.ndarray` of the
+Python: `SineWave().batch(prices)` returns an `array.array('d')` of the
 sine line. Node and WASM return the same single sine line.
 
 ## Warmup

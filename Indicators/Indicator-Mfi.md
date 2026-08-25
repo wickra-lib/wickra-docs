@@ -63,7 +63,7 @@ the indicator with a zero-volume candle is legal (every money flow on
 that bar is zero), but mass zero-volume bars will dilute the sums.
 
 Python's `MFI.batch(high, low, close, volume)` returns a 1-D `float64`
-`np.ndarray` (warmup → `NaN`). Node's `MFI.batch(high, low, close,
+`array.array('d')` (warmup → `NaN`). Node's `MFI.batch(high, low, close,
 volume)` returns a flat `number[]` (warmup → `NaN`); only `batch` is
 exposed on the Node binding.
 

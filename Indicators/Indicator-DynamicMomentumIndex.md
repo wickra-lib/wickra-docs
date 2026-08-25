@@ -55,7 +55,7 @@ const _: fn(&mut DynamicMomentumIndex, f64) -> Option<f64> =
     <DynamicMomentumIndex as Indicator>::update;
 ```
 
-Python returns `float | None` (streaming) / `numpy.ndarray` (batch, `NaN` for
+Python returns `float | None` (streaming) / `array.array('d')` (batch, `NaN` for
 warmup). Node returns `number | null` / `Array<number>` with `NaN`.
 
 ## Warmup

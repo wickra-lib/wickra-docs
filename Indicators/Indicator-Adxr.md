@@ -49,7 +49,7 @@ const _: fn(&mut Adxr, Candle) -> Option<f64> = <Adxr as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `float | None`;
-  `batch(high, low, close)` returns a 1-D `float64` `np.ndarray` with `NaN`
+  `batch(high, low, close)` returns an `array.array('d')` with `NaN`
   warmup.
 - **Node.** `update(high, low, close)` returns `number | null`;
   `batch(high, low, close)` returns an `Array<number>` with `NaN` warmup.

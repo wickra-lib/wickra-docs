@@ -53,7 +53,7 @@ const _: fn(&mut VolumeProfile, Candle) -> Option<VolumeProfileOutput> =
 `VolumeProfileOutput` carries `price_low: f64`, `price_high: f64` and
 `bins: Vec<f64>` (length `bin_count`, lowest bucket first).
 
-Python `update(candle)` returns `(price_low, price_high, bins_ndarray)` or `None`
+Python `update(candle)` returns `(price_low, price_high, bins)` or `None`
 during warmup; `batch(high, low, volume)` returns a `(n, bin_count + 2)` array
 whose columns are `[price_low, price_high, bin_0, …]` (warmup rows are `NaN`).
 Node `update(high, low, volume)` returns `{ priceLow, priceHigh, bins }` or

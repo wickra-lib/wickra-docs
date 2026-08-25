@@ -48,7 +48,7 @@ value; lag manually in user code if you need the trigger.
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python:
-`FisherTransform(period).batch(prices)` returns a 1-D `np.ndarray`
+`FisherTransform(period).batch(prices)` returns an `array.array('d')`
 with `NaN` for the warmup prefix. Node: same shape; `update(close)`
 returns `number | null`.
 

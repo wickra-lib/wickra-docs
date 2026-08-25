@@ -46,7 +46,7 @@ use wickra::{Indicator, TrendLabel};
 const _: fn(&mut TrendLabel, f64) -> Option<f64> = <TrendLabel as Indicator>::update;
 ```
 
-Python streams as `float | None`, batches as a 1-D `numpy.ndarray`. Node streams
+Python streams as `float | None`, batches as an `array.array('d')`. Node streams
 as `number | null`, batches as `Array<number>`.
 
 ## Warmup

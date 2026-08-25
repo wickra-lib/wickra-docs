@@ -58,7 +58,7 @@ and `Error::NonPositiveMultiplier` for non-finite or non-positive
 
 `Indicator<Input = Candle, Output = f64>`. Python:
 `VoltyStop(period, mult).batch(high, low, close)` returns a 1-D
-`np.ndarray` with `NaN` in the warmup prefix. Node: same shape;
+`array.array('d')` with `NaN` in the warmup prefix. Node: same shape;
 `update(candle)` returns `number | null`.
 
 ## Warmup

@@ -42,7 +42,7 @@ const _: fn(&mut wickra::FibExtension, wickra::Candle) -> Option<wickra::FibExte
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(level_1272, level_1414, level_1618,
-  level_2000, level_2618)` or `None`; `batch(high, low)` → `(n, 5)` `ndarray`
+  level_2000, level_2618)` or `None`; `batch(high, low)` → `(n, 5)` `Matrix`
   (`NaN` warmup rows).
 - **Node.** `update(high, low)` → `{ level1272, level1414, level1618, level2000,
   level2618 }` or `null`; `batch(high, low)` → flat `number[]` length `n*5`.

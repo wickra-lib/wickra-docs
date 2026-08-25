@@ -52,7 +52,7 @@ const _: fn(&mut DisparityIndex, f64) -> Option<f64> =
     <DisparityIndex as Indicator>::update;
 ```
 
-Python returns `float | None` (streaming) / `numpy.ndarray` (batch, `NaN` for
+Python returns `float | None` (streaming) / `array.array('d')` (batch, `NaN` for
 warmup). Node returns `number | null` / `Array<number>` with `NaN`.
 
 ## Warmup

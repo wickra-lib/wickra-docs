@@ -48,7 +48,7 @@ for non-finite or non-positive `percent`.
 
 `Indicator<Input = f64, Output = f64>`. Python:
 `PercentageTrailingStop(percent).batch(close)` returns a 1-D
-`np.ndarray` — no warmup `NaN`s because the indicator emits on the
+`array.array('d')` — no warmup `NaN`s because the indicator emits on the
 first input. Node: same shape; `update(close)` returns `number`.
 
 ## Warmup

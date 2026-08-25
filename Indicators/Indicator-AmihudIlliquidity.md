@@ -48,7 +48,7 @@ const _: fn(&mut AmihudIlliquidity, Trade) -> Option<f64> =
 ```
 
 Node `update(price, size, isBuy)` and `batch(price[], size[], isBuy[])`; Python
-`update(price, size, is_buy)` and `batch(price, size, is_buy)` → 1-D `ndarray`.
+`update(price, size, is_buy)` and `batch(price, size, is_buy)` → `array.array('d')`.
 (The aggressor side is accepted for a uniform trade API but does not affect the
 value.)
 

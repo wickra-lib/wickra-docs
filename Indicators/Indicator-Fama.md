@@ -52,7 +52,7 @@ the canonical `(0.5, 0.05)` factory.
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python: `FAMA(fast, slow).batch(prices)`
-returns a 1-D `np.ndarray` with `NaN` in the warmup prefix. Node:
+returns an `array.array('d')` with `NaN` in the warmup prefix. Node:
 same shape; `update(value)` returns `number | null`.
 
 ## Warmup

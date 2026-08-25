@@ -53,7 +53,7 @@ const _: fn(&mut ClosingMarubozu, Candle) -> Option<f64> = <ClosingMarubozu as I
 - **Node.** `update(open, high, low, close)` → `number`; `batch(open, high, low,
   close)` → `Array<number>`.
 - **Python.** `update(candle)` → `float`; `batch(open, high, low, close)` → 1-D
-  `numpy.ndarray` (`0.0` on no-match).
+  `array.array('d')` (`0.0` on no-match).
 
 ## Warmup
 

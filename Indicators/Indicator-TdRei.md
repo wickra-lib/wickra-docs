@@ -53,7 +53,7 @@ The conditional weighting filters out bars that don't represent a
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:
-`TdRei(period).batch(high, low, close)` returns a 1-D `np.ndarray`
+`TdRei(period).batch(high, low, close)` returns an `array.array('d')`
 with `NaN` in the warmup prefix. Node: same shape;
 `update(candle)` returns `number | null`.
 

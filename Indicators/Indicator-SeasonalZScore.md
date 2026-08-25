@@ -43,7 +43,7 @@ const _: fn(&mut wickra::SeasonalZScore, wickra::Candle) -> Option<f64> =
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `float | None`;
-  `batch(...)` → 1-D `ndarray` (`NaN` until a bucket has two priors).
+  `batch(...)` → `array.array('d')` (`NaN` until a bucket has two priors).
 - **Node.** `update(...)` → `number | null`; `batch(...)` → `number[]`.
 - **WASM.** `update(...)` → `number | undefined`.
 

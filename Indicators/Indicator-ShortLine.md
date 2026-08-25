@@ -55,7 +55,7 @@ const _: fn(&mut ShortLine, Candle) -> Option<f64> = <ShortLine as Indicator>::u
 - **Node.** `update(open, high, low, close)` → `number`; `batch(open, high, low,
   close)` → `Array<number>`.
 - **Python.** `update(candle)` → `float`; `batch(open, high, low, close)` → 1-D
-  `numpy.ndarray` (`0.0` while the rolling average fills).
+  `array.array('d')` (`0.0` while the rolling average fills).
 
 ## Warmup
 

@@ -47,7 +47,7 @@ use wickra::{Indicator, Expectancy};
 const _: fn(&mut Expectancy, f64) -> Option<f64> = <Expectancy as Indicator>::update;
 ```
 
-Python streams as `float | None`, batches as a 1-D `numpy.ndarray`. Node streams
+Python streams as `float | None`, batches as an `array.array('d')`. Node streams
 as `number | null`, batches as `Array<number>`.
 
 ## Warmup

@@ -35,7 +35,7 @@ See `crates/wickra-core/src/indicators/tsv.rs`.
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:
-`Tsv(period).batch(close, volume)` returns a 1-D `np.ndarray` with
+`Tsv(period).batch(close, volume)` returns an `array.array('d')` with
 `NaN` warmup. Node: same shape.
 
 ## Warmup

@@ -50,7 +50,7 @@ const _: fn(&mut ProjectionOscillator, Candle) -> Option<f64> =
 
 - **Python streaming.** `update(candle)` returns a `float` or `None`.
 - **Python batch.** `ProjectionOscillator.batch(high, low, close)` returns a
-  1-D `np.ndarray`; warmup rows are `NaN`.
+  `array.array('d')`; warmup rows are `NaN`.
 - **Node streaming.** `update(high, low, close)` returns a `number` or `null`.
 - **Node batch.** `batch(high, low, close)` returns a flat `Array<number>`.
 

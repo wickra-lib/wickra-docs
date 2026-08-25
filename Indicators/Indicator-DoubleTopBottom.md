@@ -47,7 +47,7 @@ const _: fn(&mut wickra::DoubleTopBottom, wickra::Candle) -> Option<f64> =
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `float` (`0.0` until a pattern, never
-  `None`); `batch(open, high, low, close)` → 1-D `ndarray`.
+  `None`); `batch(open, high, low, close)` → `array.array('d')`.
 - **Node.** `update(open, high, low, close)` → `number`;
   `batch(open, high, low, close)` → `number[]`.
 - **WASM.** `update(open, high, low, close)` → `number`.

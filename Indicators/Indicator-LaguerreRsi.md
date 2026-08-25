@@ -64,7 +64,7 @@ returns the `gamma = 0.5` factory (`laguerre_rsi.rs:76-79`).
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python: `LaguerreRSI(gamma).batch(prices)`
-returns a 1-D `np.ndarray` (no `NaN` warmup prefix beyond bar 0 — the
+returns an `array.array('d')` (no `NaN` warmup prefix beyond bar 0 — the
 indicator seeds on the first input). Node: `LaguerreRSI(gamma).batch(prices)`
 returns `Array<number>`; `update(value)` returns `number | null`
 (`null` only for non-finite input on bar 0).

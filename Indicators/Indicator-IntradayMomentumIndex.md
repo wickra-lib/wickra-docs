@@ -52,7 +52,7 @@ const _: fn(&mut IntradayMomentumIndex, Candle) -> Option<f64> =
 
 Because the IMI needs the **open** (not just high/low/close), the bindings take
 the full OHLC. Node: `update(open, high, low, close)` / `batch(o[], h[], l[], c[])`.
-Python: `update(candle)` / `batch(open, high, low, close)` → 1-D `ndarray`
+Python: `update(candle)` / `batch(open, high, low, close)` → `array.array('d')`
 (`NaN` for warmup). Node returns `number | null` / `Array<number>` with `NaN`.
 
 ## Warmup

@@ -58,7 +58,7 @@ const _: fn(&mut Rwi, Candle) -> Option<RwiOutput> = <Rwi as Indicator>::update;
 ```
 
 - **Python.** `update(candle)` returns `(high, low)` or `None`;
-  `batch(high, low, close)` returns an `(n, 2)` `np.ndarray` with columns
+  `batch(high, low, close)` returns an `(n, 2)` `Matrix` with columns
   `[high, low]`; warmup rows are `NaN`.
 - **Node.** `update(high, low, close)` returns a `{ high, low }` object or
   `null`; `batch(high, low, close)` returns a flat `Array<number>` of length

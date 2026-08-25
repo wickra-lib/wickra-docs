@@ -59,7 +59,7 @@ const _: fn(&mut Smi, Candle) -> Option<f64> = <Smi as Indicator>::update;
 Uses `high`, `low`, `close`.
 
 - **Python.** `update(candle)` returns `float | None`;
-  `batch(high, low, close)` returns a 1-D `float64` `np.ndarray` with `NaN`
+  `batch(high, low, close)` returns an `array.array('d')` with `NaN`
   warmup.
 - **Node.** `update(high, low, close)` returns `number | null`;
   `batch(high, low, close)` returns an `Array<number>` with `NaN` warmup.

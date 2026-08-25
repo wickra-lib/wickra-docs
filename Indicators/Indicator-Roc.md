@@ -45,7 +45,7 @@ use wickra::{Indicator, Roc};
 const _: fn(&mut Roc, f64) -> Option<f64> = <Roc as Indicator>::update;
 ```
 
-Python's `ROC.batch(prices)` returns a 1-D `float64` `np.ndarray`. Node's
+Python's `ROC.batch(prices)` returns an `array.array('d')`. Node's
 `ROC.batch(prices)` returns a flat `number[]`. Streaming `update(price)`
 returns a scalar (`float` / `number`) or `None` / `null` during warmup.
 

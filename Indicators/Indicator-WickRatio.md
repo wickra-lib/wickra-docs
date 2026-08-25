@@ -44,7 +44,7 @@ const _: fn(&mut WickRatio, Candle) -> Option<f64> = <WickRatio as Indicator>::u
 ```
 
 Node `update(open, high, low, close)` / `batch(open[], high[], low[], close[])`;
-Python `update(candle)` / `batch(open, high, low, close)` → 1-D `ndarray`.
+Python `update(candle)` / `batch(open, high, low, close)` → `array.array('d')`.
 
 ## Warmup
 

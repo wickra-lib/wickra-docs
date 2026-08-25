@@ -45,7 +45,7 @@ const _: fn(&mut wickra::FibChannel, wickra::Candle) -> Option<wickra::FibChanne
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(base, level_618, level_1000,
-  level_1618)` or `None`; `batch(high, low)` → `(n, 4)` `ndarray` (`NaN` warmup).
+  level_1618)` or `None`; `batch(high, low)` → `(n, 4)` `Matrix` (`NaN` warmup).
 - **Node.** `update(high, low)` → `{ base, level618, level1000, level1618 }` or
   `null`; `batch(high, low)` → flat `number[]` length `n*4`.
 - **WASM.** `update(high, low)` → object (same camelCase keys) or `null`.

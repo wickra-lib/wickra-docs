@@ -55,7 +55,7 @@ const _: fn(&mut Alligator, Candle) -> Option<AlligatorOutput> = <Alligator as I
 Uses `high` and `low` (the median price).
 
 - **Python.** `update(candle)` returns `(jaw, teeth, lips)` or `None`;
-  `batch(high, low)` returns an `(n, 3)` `np.ndarray` with columns
+  `batch(high, low)` returns an `(n, 3)` `Matrix` with columns
   `[jaw, teeth, lips]`; warmup rows are `NaN`.
 - **Node.** `update(high, low)` returns a `{ jaw, teeth, lips }` object or
   `null`; `batch(high, low)` returns a flat `Array<number>` of length `3n`,

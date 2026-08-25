@@ -54,7 +54,7 @@ const _: fn(&mut Rvi, Candle) -> Option<f64> = <Rvi as Indicator>::update;
 Uses all four OHLC fields.
 
 - **Python.** `update(candle)` returns `float | None`;
-  `batch(open, high, low, close)` returns a 1-D `float64` `np.ndarray` with
+  `batch(open, high, low, close)` returns an `array.array('d')` with
   `NaN` warmup.
 - **Node.** `update(open, high, low, close)` returns `number | null`;
   `batch(open, high, low, close)` returns an `Array<number>` with `NaN`

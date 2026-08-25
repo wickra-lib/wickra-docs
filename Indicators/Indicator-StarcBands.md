@@ -53,7 +53,7 @@ const _: fn(&mut StarcBands, Candle) -> Option<StarcBandsOutput> = <StarcBands a
 
 - **Python streaming.** `update(candle)` returns `(upper, middle, lower)` or `None`.
 - **Python batch.** `StarcBands.batch(high, low, close)` returns an `(n, 3)`
-  `np.ndarray` with columns `[upper, middle, lower]`; warmup rows are `NaN`.
+  `Matrix` with columns `[upper, middle, lower]`; warmup rows are `NaN`.
 - **Node streaming.** `update(high, low, close)` returns a
   `{ upper, middle, lower }` object or `null`.
 - **Node batch.** `batch(high, low, close)` returns a flat `Array<number>`

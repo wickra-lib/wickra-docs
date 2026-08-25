@@ -51,7 +51,7 @@ const _: fn(&mut HtPhasor, f64) -> Option<HtPhasorOutput> = <HtPhasor as Indicat
 ```
 
 In Python `update` returns an `(inphase, quadrature)` tuple (or `None` during
-warmup) and `batch` returns an `(n, 2)` `numpy.ndarray`. In Node `update` returns
+warmup) and `batch` returns an `(n, 2)` `Matrix`. In Node `update` returns
 a `{ inphase, quadrature }` object (camelCase keys) and `batch` a flat
 `Array<number>` of length `n · 2`.
 

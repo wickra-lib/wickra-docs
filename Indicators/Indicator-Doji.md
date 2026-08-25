@@ -69,7 +69,7 @@ detector into signed mode and composes with `with_threshold`.
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:
-`Doji().batch(open, high, low, close)` returns a 1-D `np.ndarray`.
+`Doji().batch(open, high, low, close)` returns an `array.array('d')`.
 Node: `update(candle)` returns `number | null` (only `null` for a
 non-finite candle).
 

@@ -40,7 +40,7 @@ estimator; `Default` is also implemented.
 
 `Indicator<Input = f64, Output = f64>`. Output is integer-valued
 `f64` (e.g. `7.0`, `12.0`). Python: `AdaptiveCycle().batch(prices)`
-returns a 1-D `np.ndarray`. Node: same shape; `update(value)`
+returns an `array.array('d')`. Node: same shape; `update(value)`
 returns `number | null`.
 
 ## Warmup

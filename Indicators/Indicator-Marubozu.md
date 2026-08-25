@@ -56,7 +56,7 @@ occupy a single dimension.
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python: `Marubozu(tol).batch(open, high, low, close)`
-returns a 1-D `np.ndarray`. Node: same; `update(candle)` returns
+returns an `array.array('d')`. Node: same; `update(candle)` returns
 `number | null`.
 
 ## Warmup

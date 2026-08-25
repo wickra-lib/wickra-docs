@@ -56,7 +56,7 @@ The combo count saturates at `target` (DeMark's classic value is
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>` — signed combo count.
-Same shape as TdCountdown. Python: 1-D `np.ndarray` with `NaN`
+Same shape as TdCountdown. Python: `array.array('d')` with `NaN`
 warmup. Node: same.
 
 ## Warmup

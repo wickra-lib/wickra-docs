@@ -42,7 +42,7 @@ const _: fn(&mut wickra::IntradayVolatilityProfile, wickra::Candle) -> Option<wi
     <wickra::IntradayVolatilityProfile as wickra::Indicator>::update;
 ```
 
-- **Python.** `update((o,h,l,c,v,ts))` → `ndarray` of length `buckets` (or `None`);
+- **Python.** `update((o,h,l,c,v,ts))` → `Matrix` of length `buckets` (or `None`);
   `batch(...)` → `(n, buckets)` array, warmup rows `NaN`.
 - **Node.** `update(...)` → `number[]` (or `null`); `batch(...)` → flat `number[]` length `n*buckets`.
 - **WASM.** `update(...)` → `Float64Array` (or `null`).

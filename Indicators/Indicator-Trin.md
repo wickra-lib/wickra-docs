@@ -52,7 +52,7 @@ const _: fn(&mut Trin, CrossSection) -> Option<f64> = <Trin as Indicator>::updat
 The bindings pass a tick as four equal-length parallel arrays:
 
 - **Python**: `update(change, volume, new_high, new_low)`; `batch(...)` returns a
-  1-D `ndarray`.
+  `array.array('d')`.
 - **Node**: `update(change, volume, newHigh, newLow)`; `batch` returns `number[]`.
 - **WASM**: `update(change, volume, newHigh, newLow)` only; flag arrays are numeric.
 

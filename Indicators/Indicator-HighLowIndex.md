@@ -52,7 +52,7 @@ This indicator reads the `new_high` / `new_low` flags. The bindings pass a tick 
 four equal-length parallel arrays; the constructor takes the window length:
 
 - **Python**: `HighLowIndex(period)`, `update(change, volume, new_high, new_low)`;
-  `batch(...)` returns a 1-D `ndarray` with `NaN` during warmup.
+  `batch(...)` returns an `array.array('d')` with `NaN` during warmup.
 - **Node**: `new HighLowIndex(period)`, `update(change, volume, newHigh, newLow)`;
   `batch` returns `number[]` with `NaN` during warmup.
 - **WASM**: `new HighLowIndex(period)`, `update(...)` only; flag arrays are numeric.

@@ -55,7 +55,7 @@ use wickra::{Indicator, Ema};
 const _: fn(&mut Ema, f64) -> Option<f64> = <Ema as Indicator>::update;
 ```
 
-Python streams as `float | None`, batches as a 1-D `numpy.ndarray`
+Python streams as `float | None`, batches as an `array.array('d')`
 (`NaN` for warmup). Node streams as `number | null`, batches as
 `Array<number>` with `NaN` placeholders.
 

@@ -57,7 +57,7 @@ const _: fn(&mut AnchoredRsi, f64) -> Option<f64> = <AnchoredRsi as Indicator>::
 ```
 
 Python streams as `float | None`, batches a close column to a 1-D
-`numpy.ndarray` (`NaN` for warmup). Node streams as `number | null`, batches as
+`array.array('d')` (`NaN` for warmup). Node streams as `number | null`, batches as
 `Array<number>` with `NaN` placeholders.
 
 ## Warmup

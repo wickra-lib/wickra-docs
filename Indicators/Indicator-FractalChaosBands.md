@@ -56,7 +56,7 @@ const _: fn(&mut FractalChaosBands, Candle) -> Option<FractalChaosBandsOutput> =
 
 - **Python streaming.** `update(candle)` returns `(upper, lower)` or `None`.
 - **Python batch.** `FractalChaosBands.batch(high, low)` returns an `(n, 2)`
-  `np.ndarray` with columns `[upper, lower]`; rows before both bands confirm
+  `Matrix` with columns `[upper, lower]`; rows before both bands confirm
   are `NaN`.
 - **Node streaming.** `update(high, low)` returns a `{ upper, lower }` object
   or `null`.

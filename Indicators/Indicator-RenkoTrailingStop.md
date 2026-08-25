@@ -57,7 +57,7 @@ non-finite or non-positive `block_size`.
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python:
-`RenkoTrailingStop(block).batch(close)` returns a 1-D `np.ndarray`
+`RenkoTrailingStop(block).batch(close)` returns an `array.array('d')`
 without warmup `NaN`s. Node: same shape; `update(close)` returns
 `number`.
 

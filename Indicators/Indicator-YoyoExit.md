@@ -53,7 +53,7 @@ and `Error::NonPositiveMultiplier` for non-finite or non-positive
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python: returns a 1-D
-`np.ndarray` with `NaN` in the warmup prefix. Node: same shape;
+`array.array('d')` with `NaN` in the warmup prefix. Node: same shape;
 `update(candle)` returns `number | null`.
 
 The output is the *trail level*. The active "in vs out" position

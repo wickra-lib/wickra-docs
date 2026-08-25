@@ -44,7 +44,7 @@ streaming-friendly shape. See
 
 `Indicator<Input = Candle, Output = f64>`. Python:
 `DemandIndex(period).batch(high, low, close, volume)` returns a
-1-D `np.ndarray` with `NaN` warmup. Node: same shape.
+`array.array('d')` with `NaN` warmup. Node: same shape.
 
 ## Warmup
 

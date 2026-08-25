@@ -55,7 +55,7 @@ use wickra::{Indicator, Trix};
 const _: fn(&mut Trix, f64) -> Option<f64> = <Trix as Indicator>::update;
 ```
 
-Python's `TRIX.batch(prices)` returns a 1-D `float64` `np.ndarray`
+Python's `TRIX.batch(prices)` returns an `array.array('d')`
 (warmup → `NaN`). Node's `TRIX.batch(prices)` returns a flat
 `number[]` (warmup → `NaN`). Both also expose streaming `update(price)`.
 

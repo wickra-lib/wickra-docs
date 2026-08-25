@@ -51,7 +51,7 @@ const _: fn(&mut WilliamsR, Candle) -> Option<f64> = <WilliamsR as Indicator>::u
 ```
 
 Python's `WilliamsR.batch(high, low, close)` returns a 1-D `float64`
-`np.ndarray` (warmup → `NaN`). Node's `WilliamsR.batch(high, low, close)`
+`array.array('d')` (warmup → `NaN`). Node's `WilliamsR.batch(high, low, close)`
 returns a flat `number[]` (warmup → `NaN`); only `batch` is exposed on
 the Node binding.
 

@@ -65,7 +65,7 @@ const _: fn(&mut MacdExt, f64) -> Option<MacdOutput> = <MacdExt as Indicator>::u
 In Python the constructor takes the three periods interleaved with their TA-Lib
 MA-type codes — `MacdExt(fast, fast_matype, slow, slow_matype, signal,
 signal_matype)`; `update` returns a `(macd, signal, histogram)` tuple and `batch`
-an `(n, 3)` `numpy.ndarray`. Node mirrors this and returns a `{ macd, signal,
+an `(n, 3)` `Matrix`. Node mirrors this and returns a `{ macd, signal,
 histogram }` object from `update`.
 
 ## Warmup

@@ -58,7 +58,7 @@ const _: fn(&mut ElderImpulse, f64) -> Option<f64> = <ElderImpulse as Indicator>
 
 A single `f64` close in, an `Option<f64>` out that is always one of
 `{−1.0, 0.0, +1.0}`. Python maps this to `float | None` / a `float64`
-`np.ndarray` with `NaN` warmup; Node to `number | null` / `Array<number>`.
+`array.array('d')` with `NaN` warmup; Node to `number | null` / `Array<number>`.
 
 ## Warmup
 

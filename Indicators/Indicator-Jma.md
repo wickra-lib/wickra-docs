@@ -56,7 +56,7 @@ const _: fn(&mut Jma, f64) -> Option<f64> = <Jma as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to
-`float | None` / a `float64` `np.ndarray` with `NaN` warmup; Node to
+`float | None` / an `array.array('d')` with `NaN` warmup; Node to
 `number | null` / `Array<number>`.
 
 ## Warmup

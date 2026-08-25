@@ -52,7 +52,7 @@ const _: fn(&mut Vpin, Trade) -> Option<f64> = <Vpin as Indicator>::update;
 ```
 
 Node `update(price, size, isBuy)` and `batch(price[], size[], isBuy[])`; Python
-`update(price, size, is_buy)` and `batch(price, size, is_buy)` → 1-D `ndarray`.
+`update(price, size, is_buy)` and `batch(price, size, is_buy)` → `array.array('d')`.
 
 ## Warmup
 

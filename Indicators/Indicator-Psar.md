@@ -72,7 +72,7 @@ const _: fn(&mut Psar, Candle) -> Option<f64> = <Psar as Indicator>::update;
 
 - **Python streaming.** `psar.update(candle)` returns `float | None`.
 - **Python batch.** `PSAR.batch(high, low, close)` returns a 1-D
-  `np.ndarray`; the first row is `NaN` (warmup) and every subsequent
+  `array.array('d')`; the first row is `NaN` (warmup) and every subsequent
   row holds the SAR level for that bar.
 - **Node streaming.** `psar.update(high, low, close)` returns `number | null`.
 - **Node batch.** `psar.batch(high, low, close)` returns

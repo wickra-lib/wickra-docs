@@ -63,7 +63,7 @@ const _: fn(&mut Vwap, Candle) -> Option<f64> = <Vwap as Indicator>::update;
 - **Rust input.** A full `Candle`; the indicator multiplies
   `typical_price() * volume` and accumulates.
 - **Python batch.** `VWAP.batch(high, low, close, volume)` returns a 1-D
-  `np.ndarray` with `NaN` for any prefix where the cumulative volume is
+  `array.array('d')` with `NaN` for any prefix where the cumulative volume is
   still `0`.
 - **Node batch.** `vwap.batch(high, low, close, volume)` returns
   `Array<number>` with `NaN` for the same prefix.

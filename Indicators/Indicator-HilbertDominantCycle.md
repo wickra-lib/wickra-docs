@@ -49,7 +49,7 @@ constructed estimator; `Default` is also implemented.
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python:
-`HilbertDominantCycle().batch(prices)` returns a 1-D `np.ndarray`
+`HilbertDominantCycle().batch(prices)` returns an `array.array('d')`
 with `NaN` in the long warmup prefix. Node: same shape; `update`
 returns `number | null`.
 

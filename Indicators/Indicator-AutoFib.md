@@ -42,7 +42,7 @@ const _: fn(&mut wickra::AutoFib, wickra::Candle) -> Option<wickra::AutoFibOutpu
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(level_0, level_236, level_382,
   level_500, level_618, level_786, level_1000)` or `None`; `batch(high, low)` →
-  `(n, 7)` `ndarray` (`NaN` warmup).
+  `(n, 7)` `Matrix` (`NaN` warmup).
 - **Node.** `update(high, low)` → `{ level0, level236, level382, level500,
   level618, level786, level1000 }` or `null`; `batch(high, low)` → flat
   `number[]` length `n*7`.

@@ -63,7 +63,7 @@ use wickra::{Indicator, Kama};
 const _: fn(&mut Kama, f64) -> Option<f64> = <Kama as Indicator>::update;
 ```
 
-Python returns `float | None` (streaming) / `numpy.ndarray` (batch,
+Python returns `float | None` (streaming) / `array.array('d')` (batch,
 `NaN` for warmup). Node returns `number | null` (streaming) /
 `Array<number>` with `NaN` (batch). `warmup_period()` is exposed in
 Rust and Python but **not** on the Node `KAMA` class (consult

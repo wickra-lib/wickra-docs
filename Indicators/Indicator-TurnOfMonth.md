@@ -45,7 +45,7 @@ const _: fn(&mut wickra::TurnOfMonth, wickra::Candle) -> Option<f64> =
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `float | None`;
-  `batch(...)` → 1-D `ndarray` (`NaN` until the first in-window day).
+  `batch(...)` → `array.array('d')` (`NaN` until the first in-window day).
 - **Node.** `update(...)` → `number | null`; `batch(...)` → `number[]`.
 - **WASM.** `update(...)` → `number | undefined`.
 

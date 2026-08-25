@@ -54,7 +54,7 @@ const _: fn(&mut Kst, f64) -> Option<KstOutput> = <Kst as Indicator>::update;
 ```
 
 - **Python.** `update(value)` returns `(kst, signal)` or `None`;
-  `batch(prices)` returns an `(n, 2)` `np.ndarray` with columns
+  `batch(prices)` returns an `(n, 2)` `Matrix` with columns
   `[kst, signal]`; warmup rows are `NaN`.
 - **Node.** `update(value)` returns a `{ kst, signal }` object or `null`;
   `batch(prices)` returns a flat `Array<number>` of length `2n`, interleaved

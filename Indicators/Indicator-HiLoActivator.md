@@ -52,7 +52,7 @@ The first input that fills the SMA window seeds a long. See
 
 `Indicator<Input = Candle, Output = f64>`. Python:
 `HiLoActivator(period).batch(high, low, close)` returns a 1-D
-`np.ndarray` with `NaN` for the warmup prefix. Node:
+`array.array('d')` with `NaN` for the warmup prefix. Node:
 `HiLoActivator(period).batch(...)` returns `Array<number>`;
 `update(candle)` returns `number | null`.
 

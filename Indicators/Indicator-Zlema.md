@@ -49,7 +49,7 @@ const _: fn(&mut Zlema, f64) -> Option<f64> = <Zlema as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. Python maps this to
-`float | None` / `numpy.ndarray` (NaN warmup); Node to `number | null` /
+`float | None` / `array.array('d')` (NaN warmup); Node to `number | null` /
 `Array<number>` (NaN warmup).
 
 ## Warmup

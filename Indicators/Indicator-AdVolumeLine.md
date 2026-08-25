@@ -53,7 +53,7 @@ A `CrossSection` is one tick carrying the universe as a list of `Member`s. The
 bindings pass a tick as four equal-length parallel arrays:
 
 - **Python**: `update(change, volume, new_high, new_low)`; `batch(...)` takes one
-  array group per tick and returns a 1-D `ndarray`.
+  array group per tick and returns an `array.array('d')`.
 - **Node**: `update(change, volume, newHigh, newLow)`; `batch` returns `number[]`.
 - **WASM**: `update(change, volume, newHigh, newLow)` only; the flag arrays are
   numeric (non-zero is true).

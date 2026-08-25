@@ -49,7 +49,7 @@ and `Error::InvalidPeriod` for `period == 1` (no smoothing possible).
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python:
-`SuperSmoother(period).batch(prices)` returns a 1-D `np.ndarray`
+`SuperSmoother(period).batch(prices)` returns an `array.array('d')`
 without warmup `NaN`s (Ehlers' "pass through input" initial
 condition). Node: same shape; `update(value)` returns `number`.
 

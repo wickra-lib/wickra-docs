@@ -52,7 +52,7 @@ members with `Member::with_signals(change, volume, new_high, new_low, above_ma,
 on_buy_signal)`.
 
 - **Python**: `update(change, volume, new_high, new_low, above_ma)`; `batch(...)`
-  takes five array groups per tick and returns a 1-D `ndarray`.
+  takes five array groups per tick and returns an `array.array('d')`.
 - **Node**: `update(change, volume, newHigh, newLow, aboveMa)`; `batch` returns
   `number[]`.
 - **WASM**: `update(change, volume, newHigh, newLow, aboveMa)` only; every array is

@@ -56,7 +56,7 @@ use wickra::{Indicator, Cci, Candle};
 const _: fn(&mut Cci, Candle) -> Option<f64> = <Cci as Indicator>::update;
 ```
 
-Python's `CCI.batch(high, low, close)` returns a 1-D `float64` `np.ndarray`
+Python's `CCI.batch(high, low, close)` returns an `array.array('d')`
 with `NaN` during warmup. Node's `CCI.batch(high, low, close)` returns a
 flat `number[]` (also `NaN` during warmup); the Node binding does not
 expose a streaming `update()` (`bindings/node/index.d.ts` lists only

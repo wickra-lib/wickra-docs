@@ -59,7 +59,7 @@ Two outputs per bar; the indicator reads high/low/close. Node:
 `update(high, low, close)` returns `{ fast, slow } | null`; `batch(h[], l[], c[])`
 returns a flat `Array<number>` of length `n*2` (`[fast, slow, fast, slow, …]`,
 `NaN` for warmup). Python: `update(candle)` returns `(fast, slow) | None`;
-`batch(high, low, close)` returns an `(n, 2)` `ndarray`.
+`batch(high, low, close)` returns an `(n, 2)` `Matrix`.
 
 ## Warmup
 

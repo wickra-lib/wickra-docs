@@ -34,8 +34,8 @@ None — `DrawdownDuration::new()` takes no arguments.
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = u32>`. Python:
-`DrawdownDuration().batch(equity)` returns a 1-D `np.ndarray` of
-`uint32` values (no warmup `NaN`). Node: `update(equity)` returns
+`DrawdownDuration().batch(equity)` returns an `array.array('d')` whose
+values are whole bar counts (no warmup `NaN`). Node: `update(equity)` returns
 `number` (always defined after first bar).
 
 ## Warmup

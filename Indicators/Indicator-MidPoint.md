@@ -47,7 +47,7 @@ use wickra::{Indicator, MidPoint};
 const _: fn(&mut MidPoint, f64) -> Option<f64> = <MidPoint as Indicator>::update;
 ```
 
-Python streams as `float | None`, batches as a 1-D `numpy.ndarray` (`NaN` for
+Python streams as `float | None`, batches as an `array.array('d')` (`NaN` for
 warmup). Node streams as `number | null`, batches as `Array<number>` with `NaN`
 placeholders.
 

@@ -62,7 +62,7 @@ appropriate error for invalid `fraction`.
 
 `Indicator<Input = f64, Output = f64>`. Python:
 `EmpiricalModeDecomposition(period, fraction).batch(prices)`
-returns a 1-D `np.ndarray` with `NaN` in the warmup prefix.
+returns an `array.array('d')` with `NaN` in the warmup prefix.
 Node: same shape; `update(value)` returns `number | null`.
 
 ## Warmup

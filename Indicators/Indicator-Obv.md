@@ -46,7 +46,7 @@ const _: fn(&mut Obv, Candle) -> Option<f64> = <Obv as Indicator>::update;
 - **Python streaming.** Accepts a 6-tuple or dict candle; returns
   `float | None`.
 - **Python batch.** `OBV.batch(close, volume)` takes two equal-length
-  1-D `numpy.ndarray` columns and returns a 1-D `np.ndarray`. The
+  `array.array('d')` columns and returns an `array.array('d')`. The
   first value is `0.0`, never `NaN`.
 - **Node streaming.** Not exposed; the Node binding ships only
   `batch` for `OBV`.

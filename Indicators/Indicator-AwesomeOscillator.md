@@ -56,7 +56,7 @@ The `close` and `volume` fields on the input candle are ignored — only
 `high` and `low` matter, via `Candle::median_price()`.
 
 Python's `AwesomeOscillator.batch(high, low)` returns a 1-D `float64`
-`np.ndarray`. Node's `AwesomeOscillator.batch(high, low)` returns a
+`array.array('d')`. Node's `AwesomeOscillator.batch(high, low)` returns a
 flat `number[]`. Both produce `NaN` during warmup; only Python exposes
 a streaming `update(candle)` method.
 

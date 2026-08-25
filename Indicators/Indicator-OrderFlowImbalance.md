@@ -52,7 +52,7 @@ const _: fn(&mut OrderFlowImbalance, OrderBook) -> Option<f64> =
 
 Node `update(bidPx[], bidSz[], askPx[], askSz[])` and `batch(snapshots)`; Python
 `update(bid_px, bid_sz, ask_px, ask_sz)` and `batch(list_of_snapshots)` → 1-D
-`ndarray`. Only the best (first) level of each side is read.
+`array.array('d')`. Only the best (first) level of each side is read.
 
 ## Warmup
 

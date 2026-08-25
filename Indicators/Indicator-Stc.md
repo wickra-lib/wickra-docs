@@ -57,7 +57,7 @@ const _: fn(&mut Stc, f64) -> Option<f64> = <Stc as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out in `[0, 100]`. Python maps
-this to `float | None` / a `float64` `np.ndarray` with `NaN` warmup; Node to
+this to `float | None` / an `array.array('d')` with `NaN` warmup; Node to
 `number | null` / `Array<number>`.
 
 ## Warmup

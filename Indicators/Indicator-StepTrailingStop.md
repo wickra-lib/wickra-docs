@@ -53,7 +53,7 @@ non-finite or non-positive `step_size`.
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python:
-`StepTrailingStop(step).batch(close)` returns a 1-D `np.ndarray`
+`StepTrailingStop(step).batch(close)` returns an `array.array('d')`
 without warmup `NaN`s. Node: same shape; `update(close)` returns
 `number`.
 

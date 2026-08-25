@@ -62,7 +62,7 @@ const _: fn(&mut TasukiGap, Candle) -> Option<f64> = <TasukiGap as Indicator>::u
 - **Node.** `update(open, high, low, close)` returns `number`; `batch(open, high,
   low, close)` returns `Array<number>`.
 - **Python.** `update(candle)` returns `float`; `batch(open, high, low, close)`
-  returns a 1-D `numpy.ndarray` (`0.0` on warmup / no-match, never `NaN`).
+  returns an `array.array('d')` (`0.0` on warmup / no-match, never `NaN`).
 
 ## Warmup
 

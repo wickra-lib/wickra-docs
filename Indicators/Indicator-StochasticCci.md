@@ -51,7 +51,7 @@ const _: fn(&mut StochasticCci, Candle) -> Option<f64> =
 ```
 
 Node: `update(high, low, close)` / `batch(h[], l[], c[])`. Python:
-`update(candle)` / `batch(high, low, close)` → 1-D `ndarray` (`NaN` for warmup).
+`update(candle)` / `batch(high, low, close)` → `array.array('d')` (`NaN` for warmup).
 Node returns `number | null` / `Array<number>` with `NaN`.
 
 ## Warmup

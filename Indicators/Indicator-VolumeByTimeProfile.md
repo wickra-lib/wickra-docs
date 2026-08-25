@@ -40,7 +40,7 @@ const _: fn(&mut wickra::VolumeByTimeProfile, wickra::Candle) -> Option<wickra::
     <wickra::VolumeByTimeProfile as wickra::Indicator>::update;
 ```
 
-- **Python.** `update((o,h,l,c,v,ts))` → `ndarray` of length `buckets`;
+- **Python.** `update((o,h,l,c,v,ts))` → `Matrix` of length `buckets`;
   `batch(...)` → `(n, buckets)` array.
 - **Node.** `update(...)` → `number[]`; `batch(...)` → flat `number[]` length `n*buckets`.
 - **WASM.** `update(...)` → `Float64Array`.

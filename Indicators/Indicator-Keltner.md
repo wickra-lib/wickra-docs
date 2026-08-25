@@ -51,7 +51,7 @@ const _: fn(&mut Keltner, Candle) -> Option<KeltnerOutput> = <Keltner as Indicat
 
 - **Python streaming.** Returns `(upper, middle, lower)` tuple or `None`.
 - **Python batch.** `Keltner.batch(high, low, close)` returns a 2-D
-  `np.ndarray` of shape `(n, 3)` with columns `[upper, middle, lower]`;
+  `Matrix` of shape `(n, 3)` with columns `[upper, middle, lower]`;
   warmup rows are `NaN` across all three columns.
 - **Node streaming.** Returns a `{ upper, middle, lower }` object or
   `null`.

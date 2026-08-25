@@ -49,7 +49,7 @@ initial condition so downstream consumers stay reactive. See
 
 `Indicator<Input = f64, Output = f64>`. Python:
 `CyberneticCycle(period).batch(prices)` returns a 1-D
-`np.ndarray`. Node: same shape; `update(value)` returns `number`.
+`array.array('d')`. Node: same shape; `update(value)` returns `number`.
 
 ## Warmup
 

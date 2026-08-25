@@ -43,7 +43,7 @@ annualised Sharpe. See
 ## Inputs / Outputs
 
 `Indicator<Input = f64, Output = f64>`. Python:
-`SharpeRatio(period, rf).batch(returns)` returns a 1-D `np.ndarray`
+`SharpeRatio(period, rf).batch(returns)` returns an `array.array('d')`
 with `NaN` for the warmup prefix. Node: same shape;
 `update(return)` returns `number | null`.
 

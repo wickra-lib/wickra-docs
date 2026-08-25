@@ -61,7 +61,7 @@ argument. `TdCountdown::classic()` returns `(4, 9, 2, 13)`.
 
 `Indicator<Input = Candle, Output = f64>`. Python:
 `TdCountdown(...).batch(high, low, close)` returns a 1-D
-`np.ndarray` with `NaN` for warmup. Node: same shape;
+`array.array('d')` with `NaN` for warmup. Node: same shape;
 `update(candle)` returns `number | null`.
 
 ## Warmup

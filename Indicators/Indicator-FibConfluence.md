@@ -42,7 +42,7 @@ const _: fn(&mut wickra::FibConfluence, wickra::Candle) -> Option<wickra::FibCon
 ```
 
 - **Python.** `update((o,h,l,c,v,ts))` → `(price, strength)` or `None`;
-  `batch(high, low)` → `(n, 2)` `ndarray` (`NaN` warmup).
+  `batch(high, low)` → `(n, 2)` `Matrix` (`NaN` warmup).
 - **Node.** `update(high, low)` → `{ price, strength }` or `null`;
   `batch(high, low)` → flat `number[]` length `n*2`.
 - **WASM.** `update(high, low)` → object (`price`/`strength`) or `null`.

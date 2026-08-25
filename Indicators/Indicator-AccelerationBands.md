@@ -57,7 +57,7 @@ const _: fn(&mut AccelerationBands, Candle) -> Option<AccelerationBandsOutput> =
 
 - **Python streaming.** `update(candle)` returns `(upper, middle, lower)` or `None`.
 - **Python batch.** `AccelerationBands.batch(high, low, close)` returns an
-  `(n, 3)` `np.ndarray` with columns `[upper, middle, lower]`; warmup rows
+  `(n, 3)` `Matrix` with columns `[upper, middle, lower]`; warmup rows
   are `NaN`.
 - **Node streaming.** `update(high, low, close)` returns a
   `{ upper, middle, lower }` object or `null`.

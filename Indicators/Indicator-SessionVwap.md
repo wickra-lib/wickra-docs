@@ -45,7 +45,7 @@ const _: fn(&mut wickra::SessionVwap, wickra::Candle) -> Option<f64> =
 ```
 
 - **Python.** `SessionVwap(utc_offset_minutes).update((o,h,l,c,v,ts))`;
-  `batch(open, high, low, close, volume, timestamp)` → 1-D `ndarray`.
+  `batch(open, high, low, close, volume, timestamp)` → `array.array('d')`.
 - **Node.** `update(open, high, low, close, volume, timestamp)`;
   `batch(...)` → `number[]`.
 - **WASM.** `update(open, high, low, close, volume, timestamp)` (`timestamp` is a `BigInt`).

@@ -50,7 +50,7 @@ const _: fn(&mut TdCamouflage, Candle) -> Option<f64> = <TdCamouflage as Indicat
 ```
 
 A `Candle` in, an `Option<f64>` out. Python `update(candle)` / `batch(open, high,
-low, close)` → 1-D ndarray (NaN warmup); Node `update(open, high, low, close)` /
+low, close)` → `array.array('d')` (NaN warmup); Node `update(open, high, low, close)` /
 `batch(o[], h[], l[], c[])`.
 
 ## Warmup

@@ -56,7 +56,7 @@ const _: fn(&mut BomarBands, f64) -> Option<BomarBandsOutput> =
 ```
 
 - **Python streaming.** `update(value)` returns `(upper, middle, lower)` or `None`.
-- **Python batch.** `BomarBands.batch(prices)` returns an `(n, 3)` `np.ndarray`
+- **Python batch.** `BomarBands.batch(prices)` returns an `(n, 3)` `Matrix`
   with columns `[upper, middle, lower]`; warmup rows are `NaN`.
 - **Node streaming.** `update(value)` returns a `{ upper, middle, lower }`
   object or `null`.

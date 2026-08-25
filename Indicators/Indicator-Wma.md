@@ -56,7 +56,7 @@ use wickra::{Indicator, Wma};
 const _: fn(&mut Wma, f64) -> Option<f64> = <Wma as Indicator>::update;
 ```
 
-Python returns `float | None` from `update` and a `numpy.ndarray`
+Python returns `float | None` from `update` and an `array.array('d')`
 (`float64`, `NaN` for warmup) from `batch`. Node returns `number | null`
 and `Array<number>` (with `NaN` placeholders) respectively.
 

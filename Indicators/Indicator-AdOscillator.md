@@ -56,7 +56,7 @@ const _: fn(&mut AdOscillator, Candle) -> Option<f64> = <AdOscillator as Indicat
 
 The native bindings expose this under the TA-Lib-style alias **`ADOSC`**. Python
 streams as `float | None` and batches `ADOSC().batch(high, low, close)` to a 1-D
-`numpy.ndarray` (`NaN` for warmup). Node streams as `number | null` via
+`array.array('d')` (`NaN` for warmup). Node streams as `number | null` via
 `update(high, low, close)` and batches `batch(high, low, close)` with `NaN`
 placeholders.
 

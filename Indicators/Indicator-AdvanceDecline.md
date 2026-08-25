@@ -57,7 +57,7 @@ four equal-length parallel arrays:
 
 - **Python**: `update(change, volume, new_high, new_low)` over one universe;
   `batch(change, volume, new_high, new_low)` takes one such array group per tick
-  (lists of lists) and returns a 1-D `ndarray`.
+  (lists of lists) and returns an `array.array('d')`.
 - **Node**: `update(change, volume, newHigh, newLow)`; `batch` takes the same
   arrays nested one level per tick and returns `number[]`.
 - **WASM**: `update(change, volume, newHigh, newLow)` only — the universe is

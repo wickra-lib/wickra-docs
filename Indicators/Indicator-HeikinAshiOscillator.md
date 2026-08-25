@@ -49,7 +49,7 @@ const _: fn(&mut HeikinAshiOscillator, Candle) -> Option<f64> =
 ```
 
 A `Candle` in, an `Option<f64>` out. Python `update(candle)` / `batch(open, high,
-low, close)` → 1-D ndarray (NaN warmup); Node `update(open, high, low, close)` /
+low, close)` → `array.array('d')` (NaN warmup); Node `update(open, high, low, close)` /
 `batch(...)`.
 
 ## Warmup

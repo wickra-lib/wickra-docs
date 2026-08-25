@@ -55,7 +55,7 @@ signed `change`, a `volume`, and `new_high` / `new_low` flags; the ratio reads o
 `change`). The bindings pass a tick as four equal-length parallel arrays:
 
 - **Python**: `update(change, volume, new_high, new_low)`; `batch(...)` takes one
-  array group per tick (lists of lists) and returns a 1-D `ndarray`.
+  array group per tick (lists of lists) and returns an `array.array('d')`.
 - **Node**: `update(change, volume, newHigh, newLow)`; `batch` nests the arrays one
   level per tick and returns `number[]`.
 - **WASM**: `update(change, volume, newHigh, newLow)` only (the universe is ragged

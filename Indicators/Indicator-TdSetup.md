@@ -54,7 +54,7 @@ zero argument. `TdSetup::classic()` returns the `(4, 9)` factory.
 
 `Indicator<Input = Candle, Output = f64>`. The signed value lets a
 single scalar carry both directions. Python:
-`TdSetup(lookback, target).batch(close)` returns a 1-D `np.ndarray`
+`TdSetup(lookback, target).batch(close)` returns an `array.array('d')`
 with `NaN` for the warmup prefix. Node: same shape; `update(candle)`
 returns `number | null`.
 

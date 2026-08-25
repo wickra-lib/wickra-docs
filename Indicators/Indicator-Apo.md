@@ -48,7 +48,7 @@ const _: fn(&mut Apo, f64) -> Option<f64> = <Apo as Indicator>::update;
 ```
 
 A single `f64` close in, an `Option<f64>` out. The Python binding maps this
-to `float | None` (streaming) or a `float64` `np.ndarray` with `NaN` warmup
+to `float | None` (streaming) or an `array.array('d')` with `NaN` warmup
 rows (batch). The Node binding maps it to `number | null` /
 `Array<number>` with `NaN` warmup.
 

@@ -51,7 +51,7 @@ opposite sign.
 
 `Indicator<Input = Candle, Output = f64>`. Python:
 `Hammer().batch(open, high, low, close)` returns a 1-D
-`np.ndarray`. Node: `update(candle)` returns `number | null`.
+`array.array('d')`. Node: `update(candle)` returns `number | null`.
 
 ## Warmup
 

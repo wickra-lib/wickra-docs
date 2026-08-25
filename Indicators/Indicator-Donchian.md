@@ -49,7 +49,7 @@ const _: fn(&mut Donchian, Candle) -> Option<DonchianOutput> = <Donchian as Indi
 
 - **Python streaming.** Returns `(upper, middle, lower)` tuple or `None`.
 - **Python batch.** `Donchian.batch(high, low)` returns a 2-D
-  `np.ndarray` of shape `(n, 3)` with columns `[upper, middle, lower]`;
+  `Matrix` of shape `(n, 3)` with columns `[upper, middle, lower]`;
   warmup rows are `NaN` across all three columns. (`close` is not
   required.)
 - **Node streaming.** Not exposed — the Node binding ships only the

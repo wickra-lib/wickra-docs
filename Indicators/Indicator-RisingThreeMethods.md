@@ -52,7 +52,7 @@ const _: fn(&mut RisingThreeMethods, Candle) -> Option<f64> = <RisingThreeMethod
 - **Node.** `update(open, high, low, close)` → `number`; `batch(open, high, low,
   close)` → `Array<number>`.
 - **Python.** `update(candle)` → `float`; `batch(open, high, low, close)` → 1-D
-  `numpy.ndarray` (`0.0` on warmup / no-match).
+  `array.array('d')` (`0.0` on warmup / no-match).
 
 ## Warmup
 

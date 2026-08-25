@@ -45,7 +45,7 @@ use wickra::{Indicator, LogReturn};
 const _: fn(&mut LogReturn, f64) -> Option<f64> = <LogReturn as Indicator>::update;
 ```
 
-Python streams as `float | None`, batches as a 1-D `numpy.ndarray` (`NaN` for
+Python streams as `float | None`, batches as an `array.array('d')` (`NaN` for
 warmup). Node streams as `number | null`, batches as `Array<number>` with `NaN`
 placeholders.
 

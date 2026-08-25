@@ -59,7 +59,7 @@ const _: fn(&mut TtmSqueeze, Candle) -> Option<TtmSqueezeOutput> = <TtmSqueeze a
 
 - **Python streaming.** `update(candle)` returns `(squeeze, momentum)` or `None`.
 - **Python batch.** `TtmSqueeze.batch(high, low, close)` returns an `(n, 2)`
-  `np.ndarray` with columns `[squeeze, momentum]`; warmup rows are `NaN`.
+  `Matrix` with columns `[squeeze, momentum]`; warmup rows are `NaN`.
 - **Node streaming.** `update(high, low, close)` returns a
   `{ squeeze, momentum }` object or `null`.
 - **Node batch.** `batch(high, low, close)` returns a flat `Array<number>`

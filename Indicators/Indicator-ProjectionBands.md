@@ -56,7 +56,7 @@ const _: fn(&mut ProjectionBands, Candle) -> Option<ProjectionBandsOutput> =
 
 - **Python streaming.** `update(candle)` returns `(upper, middle, lower)` or `None`.
 - **Python batch.** `ProjectionBands.batch(high, low)` returns an `(n, 3)`
-  `np.ndarray` with columns `[upper, middle, lower]`; warmup rows are `NaN`.
+  `Matrix` with columns `[upper, middle, lower]`; warmup rows are `NaN`.
 - **Node streaming.** `update(high, low)` returns a `{ upper, middle, lower }`
   object or `null`.
 - **Node batch.** `batch(high, low)` returns a flat `Array<number>` of length
