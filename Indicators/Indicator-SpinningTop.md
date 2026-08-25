@@ -102,7 +102,7 @@ h = np.array([103.0])
 l = np.array([ 97.0])
 c = np.array([100.5])
 
-st = ta.SpinningTop(0.3)
+st = ta.SpinningTop()
 print(st.batch(o, h, l, c))
 ```
 

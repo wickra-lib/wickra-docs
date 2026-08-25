@@ -99,7 +99,7 @@ import wickra as ta
 
 t = ta.TimeBasedStop(4)
 close = np.full(4, 100.0)   # only the length matters
-print(t.batch(close))       # [0.25 0.5  0.75 1.  ]
+print(t.batch(close + 1, close - 1, close))  # array('d', [0.25, 0.5, 0.75, 1.0])
 ```
 
 ### Node
@@ -108,7 +108,8 @@ print(t.batch(close))       # [0.25 0.5  0.75 1.  ]
 const ta = require('wickra');
 
 const t = new ta.TimeBasedStop(4);
-console.log(t.batch([100, 100, 100, 100])); // [0.25, 0.5, 0.75, 1]
+const close = [100, 100, 100, 100];
+console.log(t.batch(close.map(c => c + 1), close.map(c => c - 1), close)); // [0.25, 0.5, 0.75, 1]
 ```
 
 ### Streaming

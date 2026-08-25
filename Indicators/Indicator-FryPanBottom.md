@@ -99,7 +99,7 @@ import wickra as ta
 
 f = ta.FryPanBottom(9)
 close = np.array([100, 98, 96, 95, 96, 98, 101, 103, 105], float)
-print(f.batch(close)[-1])  # 1.0
+print(f.batch(close + 1, close - 1, close)[-1])  # 1.0
 ```
 
 ### Node
@@ -107,7 +107,8 @@ print(f.batch(close)[-1])  # 1.0
 ```javascript
 const ta = require('wickra');
 const f = new ta.FryPanBottom(9);
-console.log(f.batch([100, 98, 96, 95, 96, 98, 101, 103, 105]).at(-1)); // 1
+const close = [100, 98, 96, 95, 96, 98, 101, 103, 105];
+console.log(f.batch(close.map(c => c + 1), close.map(c => c - 1), close).at(-1)); // 1
 ```
 
 ### Streaming

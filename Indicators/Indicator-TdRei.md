@@ -97,8 +97,8 @@ import wickra as ta
 
 base = 100 + np.arange(30, dtype=float)
 r = ta.TDREI(5)
-out = r.batch(base + 1, base - 1, base)
-print('warmup:', r.warmup_period())  # 12
+out = r.batch(base + 1, base - 1)
+print('warmup:', r.warmup_period())  # 11
 print('row 20:', out[20])
 ```
 

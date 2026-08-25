@@ -96,7 +96,7 @@ h = np.array([101.0, 101.5])
 l = np.array([ 99.5, 99.5])
 c = np.array([100.0, 101.0])
 
-tw = ta.Tweezer(0.001)
+tw = ta.Tweezer()
 print(tw.batch(o, h, l, c))
 ```
 

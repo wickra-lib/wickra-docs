@@ -105,7 +105,7 @@ import wickra as ta
 
 t = ta.ThreeLineBreak(3)
 close = np.arange(20, dtype=float) + 100
-print(t.batch(close)[-1])  # 1.0
+print(t.batch(close + 1, close - 1, close)[-1])  # 1.0
 ```
 
 ### Node
@@ -114,7 +114,8 @@ print(t.batch(close)[-1])  # 1.0
 const ta = require('wickra');
 
 const t = new ta.ThreeLineBreak(3);
-console.log(t.batch(Array.from({length: 20}, (_, i) => 100 + i)).at(-1)); // 1
+const close = Array.from({ length: 20 }, (_, i) => 100 + i);
+console.log(t.batch(close.map(c => c + 1), close.map(c => c - 1), close).at(-1)); // 1
 ```
 
 ### Streaming

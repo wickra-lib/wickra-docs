@@ -101,7 +101,7 @@ import wickra as ta
 td = ta.TDMovingAverage(5, 13)
 high = np.arange(40, dtype=float) + 101
 low  = np.arange(40, dtype=float) + 99
-st1, st2 = td.batch(high, low).T
+st1, st2 = np.asarray(td.batch(high, low).tolist()).T
 print(st1[-1], st2[-1])
 ```
 

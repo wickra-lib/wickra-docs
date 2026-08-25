@@ -113,10 +113,12 @@ bv = ta.BetterVolume(20)
 n = 60
 high   = np.array([105.0] * n)
 low    = np.array([100.0] * n)
+close  = np.array([102.0] * n)
 volume = np.array([1000.0] * n)
 volume[-1] = 5000.0          # churn bar
 high[-1] = 100.5             # narrow range
-print(bv.batch(high, low, volume)[-1] > 0)  # True
+close[-1] = 100.2            # keep the last candle valid (low <= close <= high)
+print(bv.batch(high, low, close, volume)[-1] > 0)  # True
 ```
 
 ### Node

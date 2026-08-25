@@ -114,7 +114,7 @@ import wickra as ta
 e = ta.ElderSafeZone(14, 2.0)
 n = 60
 base = np.arange(n, dtype=float) + 100.0
-value, direction = e.batch(base + 2.0, base - 2.0, base + 1.0).T
+value, direction = np.asarray(e.batch(base + 2.0, base - 2.0, base + 1.0).tolist()).T
 print(value[-1], direction[-1])
 ```
 

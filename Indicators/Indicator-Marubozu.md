@@ -98,7 +98,7 @@ h = np.array([110.05])
 l = np.array([99.95])
 c = np.array([110.0])
 
-m = ta.Marubozu(0.05)
+m = ta.Marubozu()
 print(m.batch(o, h, l, c))
 ```
 

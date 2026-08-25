@@ -102,7 +102,7 @@ import wickra as ta
 
 p = ta.AndrewsPitchfork(2)
 base = 100 + np.sin(np.arange(120) * 0.5) * 10
-median, upper, lower = p.batch(base + 1, base - 1).T
+median, upper, lower = np.asarray(p.batch(base + 1, base - 1).tolist()).T
 ```
 
 ### Node

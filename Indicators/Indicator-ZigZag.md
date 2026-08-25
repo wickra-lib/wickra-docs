@@ -112,7 +112,7 @@ import wickra as ta
 # Price series with a clear swing
 p = np.array([100.0, 105.0, 115.0, 100.0, 90.0, 100.0])
 zz = ta.ZigZag(0.10)
-out = zz.batch(p + 0.5, p - 0.5, p)  # high, low, close
+out = zz.batch(p + 0.5, p - 0.5)  # high, low
 print(out)  # NaN on bars without confirmation
 ```
 

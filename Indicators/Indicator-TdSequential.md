@@ -122,7 +122,7 @@ print('row 30:', out[30])
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TDSequential();
+const td = new wickra.TDSequential(4, 9, 2, 13);
 const close = Array.from({ length: 60 }, (_, i) => 100 - i * 0.4);
 const flat = td.batch(close.map(c => c + 0.3), close.map(c => c - 0.3), close);
 console.log('row 30: setup =', flat[30 * 2], 'countdown =', flat[30 * 2 + 1]);

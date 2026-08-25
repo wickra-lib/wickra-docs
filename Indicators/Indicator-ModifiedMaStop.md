@@ -106,7 +106,7 @@ import wickra as ta
 
 m = ta.ModifiedMaStop(14)
 close = np.arange(60, dtype=float) + 100.0
-value, direction = m.batch(close).T
+value, direction = np.asarray(m.batch(close + 1, close - 1, close).tolist()).T
 print(value[-1], direction[-1])
 ```
 

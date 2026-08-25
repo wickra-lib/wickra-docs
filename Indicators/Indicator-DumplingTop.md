@@ -99,7 +99,7 @@ import wickra as ta
 
 d = ta.DumplingTop(9)
 close = np.array([100, 102, 104, 105, 104, 102, 99, 97, 95], float)
-print(d.batch(close)[-1])  # -1.0
+print(d.batch(close + 1, close - 1, close)[-1])  # -1.0
 ```
 
 ### Node
@@ -107,7 +107,8 @@ print(d.batch(close)[-1])  # -1.0
 ```javascript
 const ta = require('wickra');
 const d = new ta.DumplingTop(9);
-console.log(d.batch([100, 102, 104, 105, 104, 102, 99, 97, 95]).at(-1)); // -1
+const close = [100, 102, 104, 105, 104, 102, 99, 97, 95];
+console.log(d.batch(close.map(c => c + 1), close.map(c => c - 1), close).at(-1)); // -1
 ```
 
 ### Streaming

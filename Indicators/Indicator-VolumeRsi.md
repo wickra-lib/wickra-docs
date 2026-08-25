@@ -116,8 +116,9 @@ import numpy as np
 import wickra as ta
 
 vrsi = ta.VolumeRsi(3)
+close  = np.array([100, 101, 102, 101, 103, 104], dtype=float)
 volume = np.array([1000, 1100, 1200, 1300, 1400, 1500], dtype=float)
-print(vrsi.batch(volume))
+print(vrsi.batch(close, volume))
 ```
 
 Output:
@@ -133,8 +134,9 @@ const ta = require('wickra');
 
 const vrsi = new ta.VolumeRsi(14);
 console.log('warmupPeriod:', vrsi.warmupPeriod()); // 15
+const close = Array.from({ length: 40 }, (_, i) => 100 + i);
 const volume = Array.from({ length: 40 }, (_, i) => 1000 + i * 100);
-console.log(vrsi.batch(volume).at(-1)); // 100 (volume only rises)
+console.log(vrsi.batch(close, volume).at(-1)); // 100 (volume only rises)
 ```
 
 ### Streaming

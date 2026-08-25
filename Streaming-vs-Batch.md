@@ -83,8 +83,9 @@ import wickra as ta
 np.random.seed(0)
 prices = np.cumsum(np.random.randn(100)) + 100.0
 
-# Batch path.
-batch_out = ta.RSI(14).batch(prices)
+# Batch path. `batch` hands back an `array.array('d')`, which NumPy reads
+# through the buffer protocol; wrap it to index with a boolean mask below.
+batch_out = np.asarray(ta.RSI(14).batch(prices))
 
 # Streaming path: same inputs, fresh indicator, fed one at a time.
 rsi = ta.RSI(14)

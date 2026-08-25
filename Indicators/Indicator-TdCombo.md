@@ -107,7 +107,7 @@ print('max:', np.nanmax(td.batch(close + 0.3, close - 0.3, close)))
 
 ```javascript
 const wickra = require('wickra');
-const td = new wickra.TDCombo();
+const td = new wickra.TDCombo(4, 9, 2, 13);
 const close = Array.from({ length: 40 }, (_, i) => 100 - i * 0.6);
 console.log('max:',
   Math.max(...td.batch(close.map(c => c + 0.3), close.map(c => c - 0.3), close)

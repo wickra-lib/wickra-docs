@@ -91,7 +91,7 @@ import wickra as ta
 
 n = 120
 base = 100 + np.sin(np.linspace(0, 25, n)) * 5
-k = ta.KVO(34, 55, 13)
+k = ta.KVO(34, 55)
 out = k.batch(base + 1, base - 1, base + 0.3, np.full(n, 1000.0))
 print(out[80])
 ```

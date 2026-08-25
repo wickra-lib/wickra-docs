@@ -109,7 +109,7 @@ import wickra as ta
 
 n = ta.Nrtr(2.0)
 close = np.arange(40, dtype=float) + 100.0
-value, direction = n.batch(close).T
+value, direction = np.asarray(n.batch(close + 1, close - 1, close).tolist()).T
 print(value[-1], direction[-1])
 ```
 

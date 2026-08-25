@@ -89,9 +89,10 @@ import wickra as ta
 o = np.array([100.0, 96.0])
 h = np.array([102.0, 99.0])
 l = np.array([ 98.0, 95.0])
+c = np.array([101.0, 97.0])
 
 td = ta.TDOpen()
-print(td.batch(o, h, l))
+print(td.batch(o, h, l, c))
 ```
 
 ### Node
@@ -99,7 +100,7 @@ print(td.batch(o, h, l))
 ```javascript
 const wickra = require('wickra');
 const td = new wickra.TDOpen();
-console.log(td.batch([100, 96], [102, 99], [98, 95]));
+console.log(td.batch([100, 96], [102, 99], [98, 95], [101, 97]));
 ```
 
 ### Streaming

@@ -108,7 +108,7 @@ import wickra as ta
 r = ta.AtrRatchet(14, 4.0, 0.1)
 n = 60
 base = np.arange(n, dtype=float) + 100.0
-value, direction = r.batch(base + 2.0, base - 2.0, base + 1.0).T
+value, direction = np.asarray(r.batch(base + 2.0, base - 2.0, base + 1.0).tolist()).T
 print(value[-1], direction[-1])
 ```
 

@@ -114,7 +114,7 @@ import wickra as ta
 m = ta.VolumeWeightedMacd(12, 26, 9)
 close  = np.cumsum(np.ones(80)) + 100.0
 volume = np.full(80, 1000.0)
-macd, signal, hist = m.batch(close, volume).T
+macd, signal, hist = np.asarray(m.batch(close, volume).tolist()).T
 print(macd[-1], signal[-1], hist[-1])
 ```
 

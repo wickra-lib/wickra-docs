@@ -98,8 +98,9 @@ import numpy as np
 import wickra as ta
 
 td = ta.TDTrap()
-h = np.array([110, 108, 112]); l = np.array([90, 95, 100]); c = np.array([100, 102, 109])
-print(td.batch(h, l, c))  # [nan, nan, 1.0]
+o = np.array([95, 100, 103]); h = np.array([110, 108, 112])
+l = np.array([90, 95, 100]); c = np.array([100, 102, 109])
+print(td.batch(o, h, l, c))  # [nan, nan, 1.0]
 ```
 
 ### Node

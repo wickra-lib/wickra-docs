@@ -107,7 +107,7 @@ import wickra as ta
 
 n = ta.NewPriceLines(8)
 close = np.arange(12, dtype=float) + 100
-print(n.batch(close)[-1])  # -1.0
+print(n.batch(close + 1, close - 1, close)[-1])  # -1.0
 ```
 
 ### Node
@@ -115,7 +115,8 @@ print(n.batch(close)[-1])  # -1.0
 ```javascript
 const ta = require('wickra');
 const n = new ta.NewPriceLines(8);
-console.log(n.batch(Array.from({length: 12}, (_, i) => 100 + i)).at(-1)); // -1
+const close = Array.from({ length: 12 }, (_, i) => 100 + i);
+console.log(n.batch(close.map(c => c + 1), close.map(c => c - 1), close).at(-1)); // -1
 ```
 
 ### Streaming

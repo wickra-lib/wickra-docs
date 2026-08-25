@@ -100,7 +100,7 @@ import wickra as ta
 
 td = ta.TDDWave(2)
 base = 100 + np.sin(np.arange(200) * 0.5) * 10
-print(td.batch(base + 1, base - 1)[-1])  # 1..8
+print(td.batch(base + 1, base - 1, base)[-1])  # 1..8
 ```
 
 ### Node

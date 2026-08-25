@@ -113,7 +113,7 @@ op = np.array([10.0, 12.0, 14.0])
 hi = np.array([11.0, 13.0, 16.0])
 lo = np.array([9.0, 11.0, 13.0])
 cl = np.array([10.0, 12.0, 14.0])
-print(er.batch(op, hi, lo, cl))   # (3, 2): [bull, bear] rows, NaN for warmup
+print(er.batch(hi, lo, cl))   # (3, 2): [bull, bear] rows, NaN for warmup
 ```
 
 Output:
@@ -129,13 +129,12 @@ Output:
 ```javascript
 const ta = require('wickra');
 const er = new ta.ElderRay(3);
-const open = [10, 12, 14];
 const high = [11, 13, 16];
 const low = [9, 11, 13];
 const close = [10, 12, 14];
-console.log(er.batch(open, high, low, close)); // flat [bull, bear, …], NaN warmup
-const last = er.update(14, 16, 13, 14);
-console.log(last); // { bullPower: 4, bearPower: 1 }
+console.log(er.batch(high, low, close)); // flat [bull, bear, …], NaN warmup
+const last = er.update(16, 13, 14);
+console.log(last); // { bullPower: 3, bearPower: 0 }
 ```
 
 Output:

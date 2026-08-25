@@ -98,7 +98,7 @@ import numpy as np
 import wickra as ta
 
 cpr = ta.CentralPivotRange()
-pivot, tc, bc = cpr.batch(np.array([110.0]), np.array([90.0]), np.array([105.0])).T
+pivot, tc, bc = np.asarray(cpr.batch(np.array([110.0]), np.array([90.0]), np.array([105.0])).tolist()).T
 print(pivot[0], tc[0], bc[0])
 ```
 

@@ -116,7 +116,7 @@ import wickra as ta
 k = ta.KaseDevStop(30, 1.0)
 n = 80
 base = np.arange(n, dtype=float) + 100.0
-value, direction = k.batch(base + 2.0, base - 2.0, base + 1.0).T
+value, direction = np.asarray(k.batch(base + 2.0, base - 2.0, base + 1.0).tolist()).T
 print(value[-1], direction[-1])
 ```
 
