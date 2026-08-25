@@ -53,7 +53,7 @@ const _: fn(&mut RangeBars, Candle) -> Vec<RangeBar> = <RangeBars as BarBuilder>
 
 A `Candle` in, a `Vec<RangeBar>` out (empty until a full `range` is travelled). Bar
 builders are **close-driven** in the bindings: Python `update(close) -> list[tuple]`
-and `batch(closes) -> `Matrix` (k, 3)`; Node `update(close) -> RangeBar[]`. There is
+and `batch(closes) -> Matrix (k, 3)`; Node `update(close) -> RangeBar[]`. There is
 no `warmupPeriod`/`isReady` — a `BarBuilder` emits whenever a bar completes.
 
 ## Edge cases
