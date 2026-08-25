@@ -91,7 +91,7 @@ Output:
 ```python
 import wickra as ta
 f = ta.FundingImpliedApr(1095.0)
-print(f.update(0.0001, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0))  # 0.1095
+print(f.update(0.0001))  # funding_rate -> 0.1095
 ```
 
 ### Node

@@ -108,8 +108,8 @@ print(td.batch(o, h, l, c))  # [nan, nan, 1.0]
 ```javascript
 const ta = require('wickra');
 const td = new ta.TDTrap();
-td.update(110, 90, 100); td.update(108, 95, 102);
-console.log(td.update(112, 100, 109)); // 1
+td.update(95, 110, 90, 100); td.update(100, 108, 95, 102);
+console.log(td.update(103, 112, 100, 109)); // 1
 ```
 
 ### Streaming

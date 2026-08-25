@@ -92,7 +92,7 @@ Some(5.0)
 ```python
 import wickra as ta
 o = ta.OiToVolumeRatio()
-print(o.update(0, 100, 100, 100, 5000, 0, 0, 400, 600, 0, 0))  # 5.0
+print(o.update(5000, 400, 600))  # open_interest, taker buy/sell -> 5.0
 ```
 
 ### Node

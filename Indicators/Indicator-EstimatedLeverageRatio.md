@@ -95,7 +95,7 @@ Some(1.0)
 import wickra as ta
 
 e = ta.EstimatedLeverageRatio()
-print(e.update(0.0001, 100, 100, 100, 1000, 400, 600, 0, 0, 0, 0))  # 1.0
+print(e.update(1000, 400, 600))  # open_interest, long_size, short_size -> 1.0
 ```
 
 ### Node

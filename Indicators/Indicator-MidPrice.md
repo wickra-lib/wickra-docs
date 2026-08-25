@@ -122,7 +122,7 @@ Output:
 const ta = require('wickra');
 const mp = new ta.MIDPRICE(3);
 const bars = [[12, 8, 10], [14, 9, 11], [16, 10, 12]];
-for (const [h, l, c] of bars) console.log(mp.update(c, h, l, c));
+for (const [h, l, c] of bars) console.log(mp.update(h, l, c));
 ```
 
 Output:

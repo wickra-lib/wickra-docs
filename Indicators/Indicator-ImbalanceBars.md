@@ -118,8 +118,8 @@ import wickra as ta
 
 bars = ta.ImbalanceBars(3.0)
 for p in (10.0, 11.0, 12.0):
-    bars.update(p)
-print(bars.update(13.0))   # [(10.0, 13.0, 10.0, 13.0, 3.0, 1)]
+    bars.update(p, p, p, p)
+print(bars.update(13.0, 13.0, 13.0, 13.0))   # [(10.0, 13.0, 10.0, 13.0, 3.0, 1)]
 ```
 
 ### Node
@@ -127,8 +127,8 @@ print(bars.update(13.0))   # [(10.0, 13.0, 10.0, 13.0, 3.0, 1)]
 ```javascript
 const ta = require('wickra');
 const bars = new ta.ImbalanceBars(3.0);
-[10.0, 11.0, 12.0].forEach((p) => bars.update(p));
-console.log(bars.update(13.0)[0].direction); // 1
+[10.0, 11.0, 12.0].forEach((p) => bars.update(p, p, p, p));
+console.log(bars.update(13.0, 13.0, 13.0, 13.0)[0].direction); // 1
 ```
 
 ### Streaming

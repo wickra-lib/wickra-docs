@@ -102,9 +102,17 @@ jobs:
       - run: python -m pip install --upgrade wickra numpy
       - name: Check Python doc snippets
         run: python scripts/check_doc_examples.py
+      # Naming every symbol correctly is not the same as working: twenty-five
+      # blocks resolved every name and still raised, by calling `update` with the
+      # whole derivatives tick, feeding a close-only series to an indicator that
+      # takes high/low/close, or reaching for `.shape` on a type without one.
+      - name: Run Python doc snippets
+        run: python scripts/run_doc_snippets.py
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
       - run: npm install --no-save wickra
       - name: Check Node.js doc snippets
         run: node scripts/check-doc-examples.mjs
+      - name: Run Node.js doc snippets
+        run: node scripts/run-doc-snippets.mjs

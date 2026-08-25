@@ -89,7 +89,7 @@ Some(0.01)
 ```python
 import wickra as ta
 p = ta.PerpetualPremiumIndex()
-print(p.update(0, 101, 100, 101, 0, 0, 0, 0, 0, 0, 0))  # 0.01
+print(p.update(101, 100))  # mark_price, index_price -> 0.01
 ```
 
 ### Node
@@ -97,7 +97,7 @@ print(p.update(0, 101, 100, 101, 0, 0, 0, 0, 0, 0, 0))  # 0.01
 ```javascript
 const ta = require('wickra');
 const p = new ta.PerpetualPremiumIndex();
-console.log(p.update(0, 101, 100, 101, 0, 0, 0, 0, 0, 0, 0)); // 0.01
+console.log(p.update(101, 100)); // markPrice, indexPrice -> 0.01
 ```
 
 ### Streaming
