@@ -22,8 +22,8 @@
 ## Formula
 
 ```
-X = 2·H + L + C       if C  < O   (down bar)
-    H + 2·L + C       if C  > O   (up bar)
+X = H + 2·L + C       if C  < O   (down bar — the low is weighted)
+    2·H + L + C       if C  > O   (up bar — the high is weighted)
     H + L + 2·C       if C == O   (doji)
 
 PP = X / 4
@@ -56,11 +56,11 @@ fields (`pp, r1, s1`).
 
 - **Doji (`C == O`).** Takes the `H + L + 2C` branch. Equivalent to
   the Woodie-style weighting on a single bar.
-- **Up bar (`C > O`).** Doubled low — the formula assumes buyers
-  were defending the low; PP shifts down relative to the typical-
-  price midpoint.
-- **Down bar (`C < O`).** Doubled high — assumes sellers were
-  defending the high; PP shifts up.
+- **Up bar (`C > O`).** Doubled high — the close finished above the
+  open, so the formula leans on the session high; PP shifts up
+  relative to the typical-price midpoint.
+- **Down bar (`C < O`).** Doubled low — the close finished below the
+  open, so the low carries the weight; PP shifts down.
 - **Floating-point equality.** `C == O` uses strict equality;
   near-doji bars (`|C - O| < ε`) take the up or down branch
   depending on the rounding.
@@ -74,11 +74,11 @@ fields (`pp, r1, s1`).
 use wickra::{Candle, DemarkPivots, Indicator};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Up bar: O=100, H=120, L=80, C=110 → X = H + 2L + C = 120 + 160 + 110 = 390
+    // Up bar: O=100, H=120, L=80, C=110 → X = 2H + L + C = 240 + 80 + 110 = 430
     let prev = Candle::new(100.0, 120.0, 80.0, 110.0, 1.0, 0)?;
     let mut d = DemarkPivots::new();
     let l = d.update(prev).unwrap();
-    // PP = 97.5, R1 = 195/2 − 80 = 17.5, S1 = 195/2 − 120 = −22.5  (raw)
+    // PP = 107.5, R1 = 215 − 80 = 135, S1 = 215 − 120 = 95
     println!("PP={}  R1={}  S1={}", l.pp, l.r1, l.s1);
     Ok(())
 }
@@ -124,9 +124,9 @@ for bar in session_aggregator {
 ## Interpretation
 
 - **Sentiment-aware pivot.** The branching on bar direction
-  encodes the previous session's "tape sentiment". Up bars suggest
-  buyers were active near the low; the next-session pivot tilts
-  down toward where buyers will defend. Down bars do the opposite.
+  encodes the previous session's "tape sentiment". Up bars carry the
+  high forward, so the next-session pivot tilts up toward where the
+  advance stalled. Down bars do the opposite.
 - **Tighter R1/S1.** Compared to Classic Pivots, DeMark's R1/S1
   are typically tighter (closer to PP) because the formula uses
   `X / 2` rather than the full-range `2·PP − L`.

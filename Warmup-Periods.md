@@ -550,7 +550,7 @@ Parameter-free Fibonacci harmonic detectors. Warmup is the minimum bars to confi
 | `Crab` | `Crab::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
 | `Shark` | `Shark::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
 | `Cypher` | `Cypher::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
-| `ThreeDrives` | `ThreeDrives::new()` | 5 swing pivots | 6 | after the 5th confirmed pivot |
+| `ThreeDrives` | `ThreeDrives::new()` | 7 swing pivots | 8 | after the 7th confirmed pivot |
 
 ## Family 24 — Fibonacci
 

@@ -1,6 +1,6 @@
 # Cypher
 
-> Five-point (X-A-B-C-D) harmonic whose C leg is measured against XA (not AB) and
+> Five-point (X-A-B-C-D) harmonic whose C point projects the XA leg beyond A and
 > whose D retraces the XC leg by `0.786`. Bullish (D a swing low) → `+1`,
 > bearish → `-1`.
 
@@ -21,14 +21,14 @@
 ```
 last five pivots X-A-B-C-D:
   AB / XA ∈ [0.382, 0.618]
-  BC / XA ∈ [1.13, 1.414]  (C measured against XA, not AB — C extends beyond A)
-  CD / XC ∈ [0.74, 0.83]   (≈ 0.786 retracement of the XC leg — the D completion)
+  XC / XA ∈ [1.272, 1.414]  (the X-to-C projection — C extends beyond A)
+  CD / XC ∈ [0.74, 0.83]    (≈ 0.786 retracement of the XC leg — the D completion)
 direction: D a swing low → +1, a swing high → -1
 ```
 
-The Cypher's BC and D ratios are measured against XA and XC respectively, which
-sets it apart from the Gartley-family ratios. See
-`crates/wickra-core/src/indicators/cypher.rs`.
+The C constraint is the X-to-C projection, not B-to-C. That is what sets the
+Cypher apart from the Gartley family, where the third point is measured against
+AB. See `crates/wickra-core/src/indicators/cypher.rs`.
 
 ## Parameters
 
@@ -135,16 +135,17 @@ for o, h, l, c, v, ts in candle_feed:
 
 ## Interpretation
 
-1. **Different ratio basis.** Because BC is measured on XA and D on XC, the Cypher
-   often coexists with — but is not interchangeable with — the Gartley family;
-   run both if you want full coverage.
+1. **Different ratio basis.** Because C is measured X-to-C against XA and D
+   against XC, the Cypher often coexists with — but is not interchangeable
+   with — the Gartley family; run both if you want full coverage.
 2. **0.786 D of XC.** The reversal zone is the `0.786` retracement of the whole
    X→C move, not of a single sub-leg.
 
 ## Common pitfalls
 
-- **Ratio basis confusion.** Do not compare the Cypher's BC window to the
-  Gartley's BC/AB — they measure different legs.
+- **Ratio basis confusion.** The Cypher constrains XC/XA, measured from the
+  pattern origin. Comparing it to the Gartley's BC/AB reads a different leg and
+  will accept shapes the Cypher rejects.
 - **Confirmation lag.** Non-repainting but lags the visual D.
 
 ## References
