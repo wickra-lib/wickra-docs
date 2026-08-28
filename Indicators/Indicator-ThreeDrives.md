@@ -1,7 +1,7 @@
 # Three Drives
 
-> A symmetric harmonic of two visible drives separated by two retracements, read
-> from the last five pivots. Three rising drives → bearish `-1`; three falling
+> A symmetric harmonic of three drives separated by two retracements, read from
+> the last seven pivots. Three rising drives → bearish `-1`; three falling
 > drives → bullish `+1`.
 
 ## Quick reference
@@ -13,18 +13,19 @@
 | Output type        | `f64` (`+1` / `-1` / `0`)                              |
 | Output range       | `{-1.0, 0.0, +1.0}`                                    |
 | Default parameters | none (swing threshold 5%, baked)                       |
-| Warmup period      | `6`                                                    |
+| Warmup period      | `8`                                                    |
 | Interpretation     | Exhaustion after three symmetric drives                |
 
 ## Formula
 
 ```
-last five pivots X-A-B-C-D (drive legs A→B and C→D):
-  AB / XA ∈ [1.13, 1.75]   (drive 1 extends the prior retracement)
-  CD / BC ∈ [1.13, 1.75]   (drive 2 extends symmetrically)
-  AB ≈ CD (within 20%)      (the two drives are similar in size)
-  XA ≈ BC (within 30%)      (the two retracements are similar)
-direction: terminal D a swing high → -1 (drives up), a swing low → +1 (drives down)
+last seven pivots, six alternating legs R1 D1 R2 D2 R3 D3:
+  D1 / R1 ∈ [1.13, 1.75]        (each drive extends the leg before it)
+  D2 / R2 ∈ [1.13, 1.75]
+  D3 / R3 ∈ [1.13, 1.75]
+  D1 ≈ D2 ≈ D3 (within 20%)     (the three drives are similar in size)
+  R1 ≈ R2 ≈ R3 (within 30%)     (the retracements between them are similar)
+direction: terminal pivot a swing high → -1 (drives up), a swing low → +1
 ```
 
 See `crates/wickra-core/src/indicators/three_drives.rs`.
@@ -50,8 +51,10 @@ const _: fn(&mut wickra::ThreeDrives, wickra::Candle) -> Option<f64> =
 
 ## Warmup
 
-`warmup_period() == 6`. Five confirmed pivots are required. Pinned by test
-`accessors_and_metadata`.
+`warmup_period() == 8`. Seven confirmed pivots are required — a structure that
+stops after two drives is incomplete, not a match, and the detector keeps
+returning `None`. Pinned by tests `accessors_and_metadata` and
+`two_drives_alone_do_not_complete_the_pattern`.
 
 ## Edge cases
 
@@ -70,19 +73,24 @@ const _: fn(&mut wickra::ThreeDrives, wickra::Candle) -> Option<f64> =
 use wickra::{Candle, Indicator, ThreeDrives};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Three rising drives (120, 128, 136) with symmetric retracements → bearish.
+    // Three rising drives (124, 128, 132), each extending a 10-point
+    // retracement by 14 → bearish exhaustion.
     let bars = [
         (119.88, 120.0, 119.88, 119.88),
-        (100.0, 118.8, 100.0, 100.0),
-        (101.0, 128.0, 101.0, 101.0),
-        (108.0, 126.72, 108.0, 108.0),
-        (109.08, 136.0, 109.08, 109.08),
-        (122.4, 134.64, 122.4, 122.4), // third drive confirms → bearish
+        (110.0, 118.8, 110.0, 110.0),
+        (111.1, 124.0, 111.1, 111.1),
+        (114.0, 122.76, 114.0, 114.0),
+        (115.14, 128.0, 115.14, 115.14),
+        (118.0, 126.72, 118.0, 118.0),
+        (119.18, 132.0, 119.18, 119.18),
+        (118.8, 130.68, 118.8, 118.8), // third drive confirms → bearish
     ];
     let mut pat = ThreeDrives::new();
     let mut last = 0.0;
     for (ts, (o, h, l, c)) in bars.iter().enumerate() {
-        last = pat.update(Candle::new(*o, *h, *l, *c, 1.0, ts as i64)?).unwrap();
+        last = pat
+            .update(Candle::new(*o, *h, *l, *c, 1.0, ts as i64)?)
+            .unwrap_or(last);
     }
     println!("{last}"); // -1
     Ok(())
@@ -96,11 +104,13 @@ import wickra as ta
 
 bars = [
     (119.88, 120.0, 119.88, 119.88, 1.0, 0),
-    (100.0, 118.8, 100.0, 100.0, 1.0, 1),
-    (101.0, 128.0, 101.0, 101.0, 1.0, 2),
-    (108.0, 126.72, 108.0, 108.0, 1.0, 3),
-    (109.08, 136.0, 109.08, 109.08, 1.0, 4),
-    (122.4, 134.64, 122.4, 122.4, 1.0, 5),
+    (110.0, 118.8, 110.0, 110.0, 1.0, 1),
+    (111.1, 124.0, 111.1, 111.1, 1.0, 2),
+    (114.0, 122.76, 114.0, 114.0, 1.0, 3),
+    (115.14, 128.0, 115.14, 115.14, 1.0, 4),
+    (118.0, 126.72, 118.0, 118.0, 1.0, 5),
+    (119.18, 132.0, 119.18, 119.18, 1.0, 6),
+    (118.8, 130.68, 118.8, 118.8, 1.0, 7),
 ]
 pat = ta.ThreeDrives()
 print([pat.update(b) for b in bars][-1])  # -1.0
@@ -111,9 +121,10 @@ print([pat.update(b) for b in bars][-1])  # -1.0
 ```javascript
 const wickra = require('wickra');
 const bars = [
-  [119.88, 120.0, 119.88, 119.88], [100.0, 118.8, 100.0, 100.0],
-  [101.0, 128.0, 101.0, 101.0], [108.0, 126.72, 108.0, 108.0],
-  [109.08, 136.0, 109.08, 109.08], [122.4, 134.64, 122.4, 122.4],
+  [119.88, 120.0, 119.88, 119.88], [110.0, 118.8, 110.0, 110.0],
+  [111.1, 124.0, 111.1, 111.1], [114.0, 122.76, 114.0, 114.0],
+  [115.14, 128.0, 115.14, 115.14], [118.0, 126.72, 118.0, 118.0],
+  [119.18, 132.0, 119.18, 119.18], [118.8, 130.68, 118.8, 118.8],
 ];
 const pat = new wickra.ThreeDrives();
 let last = 0;
