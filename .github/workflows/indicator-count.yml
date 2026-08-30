@@ -1,0 +1,88 @@
+name: Indicator count
+
+# The indicator count is decided in wickra-lib/wickra and restated here in four
+# places. It used to arrive by push: that repository's sync-about.yml cloned this
+# one with a personal access token and committed the new number. That token
+# carried write access to four repositories, administration rights on wickra and
+# admin:org, and existed for no other reason.
+#
+# This pulls instead. The number changes in the OTHER repository, so a push here
+# is not the event that makes this site wrong -- only a schedule catches it. The
+# delay is bounded by the interval and costs nothing: the count moves a few times
+# a week, and nobody reads a documentation site expecting a figure that changed
+# in the last hour.
+#
+# The -site repositories run the same idea as a read-only check that fails when
+# the numbers disagree. This one patches, because the push model it replaces
+# existed precisely so the value would not have to be raised by hand; a checker
+# would hand that work back with a louder error.
+on:
+  schedule:
+    - cron: "43 * * * *" # hourly at :43, clear of refresh-badges at :17
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Pull the indicator count from wickra
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # commits the corrected count back to main
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      # Same derivation the source repository uses: parse the re-export block,
+      # drop the FAMILIES constant and the *Output companion structs, count what
+      # is left. Reading the source rather than a published number keeps this
+      # repository from restating a figure nobody checked.
+      - name: Read the count from wickra
+        id: count
+        run: |
+          set -euo pipefail
+          src=$(curl -fsSL --retry 5 --retry-all-errors \
+            https://raw.githubusercontent.com/wickra-lib/wickra/main/crates/wickra-core/src/lib.rs)
+          n=$(printf '%s' "$src" \
+            | sed -n '/^pub use indicators::{/,/^};/p' \
+            | tr ',{}' '\n' \
+            | sed 's/[[:space:]]//g' \
+            | grep -E '^[A-Z][A-Za-z0-9_]*$' \
+            | grep -vE '^FAMILIES$|Output$' \
+            | sort -u | wc -l)
+          if [ "$n" -lt 100 ]; then
+            echo "::error::parsed only ${n} indicators — the re-export block moved or the fetch was truncated; refusing to write a wrong number"
+            exit 1
+          fi
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+          echo "wickra exports ${n} indicators"
+
+      - name: Apply it
+        env:
+          N: ${{ steps.count.outputs.count }}
+        run: |
+          set -euo pipefail
+          sed -i -E "s/[0-9]+ (streaming-first )?indicators/${N} \1indicators/g" \
+            index.md overview.md Indicators-Overview.md .vitepress/config.ts
+
+      - name: Commit if changed
+        env:
+          N: ${{ steps.count.outputs.count }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "count already at ${N}; nothing to commit"
+            exit 0
+          fi
+          git config user.name "wickra-bot"
+          git config user.email "wickra-bot@users.noreply.github.com"
+          git add index.md overview.md Indicators-Overview.md .vitepress/config.ts
+          git commit -m "chore: sync indicator count to ${N}"
+          # refresh-badges commits to this branch on its own hourly schedule;
+          # rebase onto anything it landed in the meantime so the two never clash.
+          git pull --rebase "https://github.com/${GITHUB_REPOSITORY}.git" main
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
