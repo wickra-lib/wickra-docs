@@ -1,0 +1,111 @@
+name: Sync from wickra
+
+# Two values here are decided in wickra-lib/wickra: the indicator count and the
+# released version. Both used to arrive by push -- that repository's
+# sync-about.yml cloned this one with a personal access token and committed
+# them. The token carried write access to four repositories, administration
+# rights on wickra and admin:org, and existed for no other reason.
+#
+# This pulls instead. A schedule is also the only trigger that can work: both
+# values change in the OTHER repository, so a push here is not the event that
+# makes this site wrong. The delay is bounded by the hour and costs nothing --
+# nobody reads documentation expecting a figure that moved in the last hour.
+#
+# The -site repositories run the same idea as a read-only check that fails when
+# the numbers disagree. This one patches, because the push model it replaces
+# existed precisely so these values would not have to be raised by hand; a
+# checker would hand that work back with a louder error.
+on:
+  schedule:
+    - cron: "43 * * * *" # hourly at :43, clear of refresh-badges at :17
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Pull the count and the released version
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # commits the corrected values back to main
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      # Same derivation the source repository uses: parse the re-export block,
+      # drop the FAMILIES constant and the *Output companion structs, count what
+      # is left. Reading the source rather than a published number keeps this
+      # repository from restating a figure nobody checked.
+      - name: Read the count from wickra
+        id: count
+        run: |
+          set -euo pipefail
+          src=$(curl -fsSL --retry 5 --retry-all-errors \
+            https://raw.githubusercontent.com/wickra-lib/wickra/main/crates/wickra-core/src/lib.rs)
+          n=$(printf '%s' "$src" \
+            | sed -n '/^pub use indicators::{/,/^};/p' \
+            | tr ',{}' '\n' \
+            | sed 's/[[:space:]]//g' \
+            | grep -E '^[A-Z][A-Za-z0-9_]*$' \
+            | grep -vE '^FAMILIES$|Output$' \
+            | sort -u | wc -l)
+          if [ "$n" -lt 100 ]; then
+            echo "::error::parsed only ${n} indicators -- the re-export block moved or the fetch was truncated; refusing to write a wrong number"
+            exit 1
+          fi
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+          echo "wickra exports ${n} indicators"
+
+      # The released version, not the one on main: between a bump merging and its
+      # tag being pushed, Cargo.toml is ahead of anything a reader can install.
+      - name: Read the released version from wickra
+        id: version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tag=$(gh api repos/wickra-lib/wickra/releases/latest -q '.tag_name')
+          version="${tag#v}"
+          if ! printf '%s' "$version" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::latest release tag '${tag}' is not a plain vX.Y.Z; refusing to write it"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "wickra's latest release is ${version}"
+
+      - name: Apply both
+        env:
+          N: ${{ steps.count.outputs.count }}
+          V: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          sed -i -E "s/[0-9]+ (streaming-first )?indicators/${N} \1indicators/g" \
+            index.md overview.md Indicators-Overview.md .vitepress/config.ts
+          sed -i -E "s/^(\| \[?(crates\.io|PyPI|npm|NuGet|Maven Central|Go|r-universe)\]?.*\| )[0-9]+\.[0-9]+\.[0-9]+/\1${V}/" overview.md
+          sed -i -E "s/(published crate is at version .)[0-9]+\.[0-9]+\.[0-9]+/\1${V}/" Quickstart-Rust.md
+          sed -i -E "s|<version>[0-9]+\.[0-9]+\.[0-9]+</version>|<version>${V}</version>|" Quickstart-Java.md
+          sed -i -E "s|(org\.wickra:wickra:)[0-9]+\.[0-9]+\.[0-9]+|\1${V}|" Quickstart-Java.md
+
+      - name: Commit if changed
+        env:
+          N: ${{ steps.count.outputs.count }}
+          V: ${{ steps.version.outputs.version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "already at ${N} indicators and version ${V}; nothing to commit"
+            exit 0
+          fi
+          git config user.name "wickra-bot"
+          git config user.email "wickra-bot@users.noreply.github.com"
+          git add index.md overview.md Indicators-Overview.md .vitepress/config.ts \
+                  Quickstart-Rust.md Quickstart-Java.md
+          git commit -m "chore: sync indicator count to ${N} and version to ${V}"
+          # refresh-badges commits to this branch on its own hourly schedule;
+          # rebase onto anything it landed in the meantime so the two never clash.
+          git pull --rebase "https://github.com/${GITHUB_REPOSITORY}.git" main
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
