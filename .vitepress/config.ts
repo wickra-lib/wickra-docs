@@ -2,9 +2,9 @@ import { defineConfig } from 'vitepress'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
-// Sidebar is generated from the migrated wiki's _Sidebar.md by
-// `npm run migrate` — see scripts/migrate-wiki.mjs. Regenerate it whenever the
-// indicator catalogue changes; do not hand-edit sidebar.ts.
+// The indicator-family groups of the sidebar are generated from Indicators/*.md
+// by scripts/sync-doc-counts.mjs (CI checks them); the other groups are edited
+// by hand in sidebar.ts.
 import { sidebar } from './sidebar'
 
 // Versioning (findings P8.5): latest-only — Git is the version history, the nav

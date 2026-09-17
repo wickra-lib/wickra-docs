@@ -160,7 +160,7 @@ function syncSummaryTable({ byFamily }) {
 const SIDEBAR_HEADER =
   '// AUTO-GENERATED. Indicator family groups (items) are synced from\n' +
   '// Indicators/*.md by scripts/sync-doc-counts.mjs. Non-indicator groups\n' +
-  '// (Getting started / Reference / Guides) were seeded by migrate-wiki.mjs.\n'
+  '// (Getting started / Reference / Guides) are edited by hand.\n'
 
 function syncSidebar({ byFamily }) {
   const rel = '.vitepress/sidebar.ts'

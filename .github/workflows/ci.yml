@@ -19,7 +19,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
       # VitePress fails the build on dead internal links by default, so this
@@ -51,7 +51,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 20
+          node-version: 22
       # Every page-derived count (deep-dive total, per-family breakdown, the
       # alphabetical index, the sidebar) is regenerated from Indicators/*.md by
       # this script. The check fails if any of them drifts — run
@@ -80,7 +80,7 @@ jobs:
           workspaces: wickra
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 20
+          node-version: 22
       - name: Compile every runnable rust snippet
         working-directory: docs
         run: WICKRA_CRATE_PATH="$GITHUB_WORKSPACE/wickra/crates/wickra" node scripts/check-rust-snippets.mjs
@@ -110,7 +110,7 @@ jobs:
         run: python scripts/run_doc_snippets.py
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 20
+          node-version: 22
       - run: npm install --no-save wickra
       - name: Check Node.js doc snippets
         run: node scripts/check-doc-examples.mjs

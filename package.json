@@ -7,8 +7,7 @@
     "dev": "vitepress dev",
     "gen:banner": "node scripts/gen-og-banner.mjs",
     "build": "node scripts/gen-og-banner.mjs && vitepress build",
-    "preview": "vitepress preview",
-    "migrate": "node scripts/migrate-wiki.mjs"
+    "preview": "vitepress preview"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
