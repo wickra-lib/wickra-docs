@@ -12,7 +12,7 @@
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "vitepress": "^1.5.0",
-    "vue": "^3.5.0"
+    "vue": "^3.5.42"
   },
   "dependencies": {
     "sharp": "^0.35.4"
