@@ -11,14 +11,14 @@ the published package, and what extra you need to **build from source**.
 | ----------- | ------------------------------------- | ---------------------------- | ---------------------------------- |
 | **Rust**    | crates.io — `wickra`                  | **1.86** (MSRV)              | stable, Linux · macOS · Windows    |
 | **Python**  | PyPI — `wickra` (abi3 wheel)          | **3.9**                      | 3.9 · 3.10 · 3.11 · 3.12 · 3.13 × 3 OS |
-| **Node.js** | npm — `wickra` (N-API 8, prebuilt)    | **20**                       | 22 · 24 (active LTS) × 3 OS        |
+| **Node.js** | npm — `wickra` (N-API 8, prebuilt)    | **22**                       | 22 · 24 (active LTS) × 3 OS        |
 | **WASM**    | npm — `wickra-wasm`                   | any modern JS engine         | browsers · Node.js · Deno · Bun    |
 | **C**       | `wickra.h` + library (each release)   | **C99** compiler             | smoke + archetype ctests × 3 OS    |
 | **C++**     | `wickra.hpp` over the C ABI           | **C++14** compiler           | C++ smoke ctest                    |
 | **C#**      | NuGet — `Wickra`                      | **.NET 8** (`net8.0`)        | net8.0 × 3 OS                      |
 | **Go**      | module — `wickra-lib/wickra-go`       | **Go 1.23**                  | 1.23+ × 3 OS (cgo)                 |
 | **Java**    | Maven Central — `org.wickra:wickra`   | **Java 22** (FFM / Panama)   | built on JDK 25 LTS, target 22     |
-| **R**       | source package                        | **R ≥ 2.10**                 | —                                  |
+| **R**       | source package                        | **R ≥ 4.1**                  | —                                  |
 
 "Minimum supported" is the floor declared in the binding's manifest (Rust
 `rust-version`, Python `requires-python`, Node `engines`, C# `TargetFramework`,
@@ -47,9 +47,9 @@ range the CI matrix actually exercises on every push.
 
 ### Node.js
 
-- **Node.js 20+.** The binding is a prebuilt **N-API 8** (ABI-stable) addon, so
-  one binary works across Node versions without recompiling. Node 18 reached
-  end-of-life, so 20 is the floor; CI runs the active LTS lines (22 and 24).
+- **Node.js 22+.** The binding is a prebuilt **N-API 8** (ABI-stable) addon, so
+  one binary works across Node versions without recompiling. The package's
+  `engines` field requires 22, the oldest active LTS line; CI runs 22 and 24.
 - Prebuilt binaries ship per platform via npm `optionalDependencies` — `npm
   install wickra`, no compiler needed.
 
@@ -92,7 +92,7 @@ range the CI matrix actually exercises on every push.
 
 ### R
 
-- **R ≥ 2.10, plus a C toolchain.** The binding reaches the C ABI through R's
+- **R ≥ 4.1, plus a C toolchain.** The binding reaches the C ABI through R's
   native `.Call` interface, so installing the package compiles a thin C glue
   layer — you need a C toolchain (**Rtools** on Windows; the system compiler on
   Linux/macOS) and the Wickra C ABI header and library. `SystemRequirements`

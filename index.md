@@ -26,6 +26,9 @@ hero:
     - theme: alt
       text: Overview
       link: /overview
+    - theme: alt
+      text: Ecosystem
+      link: /Ecosystem
 
 features:
   - title: 514 indicators, 24 families

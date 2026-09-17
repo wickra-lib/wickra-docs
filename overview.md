@@ -27,6 +27,11 @@ Wickra is dual-licensed under the **MIT** and **Apache-2.0** licenses; you may
 use it under either at your option. It is OSI-approved, permissive open source —
 free for any use, commercial or not.
 
+The core is also the foundation of a family of twenty-four products — a
+backtester, an exchange client, a screener, a proof system, a terminal and
+more — each a Rust core with the same ten-language binding surface and its own
+documentation site. The [Ecosystem](/Ecosystem) page lists them by layer.
+
 ## Published versions
 
 | Registry  | Package        | Version |

@@ -93,6 +93,10 @@ export const sidebar = [
       {
         "text": "FAQ",
         "link": "/FAQ"
+      },
+      {
+        "text": "Ecosystem",
+        "link": "/Ecosystem"
       }
     ]
   },
