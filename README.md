@@ -15,7 +15,7 @@ Documentation site for [Wickra](https://github.com/wickra-lib/wickra) —
 streaming-first technical indicators. Built with [VitePress](https://vitepress.dev),
 deployed via **Cloudflare Pages**.
 
-## Local development
+## Develop
 
 ```bash
 npm install
@@ -25,6 +25,24 @@ npm run preview  # serve the built site
 ```
 
 Requires Node 22 (see `.nvmrc`).
+
+## What is kept current by workflow
+
+- **The indicator count and the released version** — the headline count on the
+  landing page and in `overview.md`, the version table, the crate version in
+  `Quickstart-Rust.md` and the Maven snippet in `Quickstart-Java.md` — are pulled
+  hourly from [wickra](https://github.com/wickra-lib/wickra) by
+  `sync-from-wickra.yml` (the count is derived from the core's re-export block,
+  the version from its latest release).
+- **The page-derived counts** — per-family indicator counts, the sidebar groups
+  and "N deep-dive pages" — are owned by `scripts/sync-doc-counts.mjs`; CI fails
+  when they disagree with the pages, and `node scripts/sync-doc-counts.mjs`
+  rewrites them.
+- **The status badges** in the footer are snapshots refreshed hourly by
+  `refresh-badges.yml`; the SVGs in `public/badges/` are generated, not edited.
+
+Everything else — every page, the hand-seeded sidebar groups (Getting started,
+Reference, Guides) — is edited here by hand.
 
 ## Content
 
@@ -44,16 +62,16 @@ npm run migrate   # copies pages + regenerates .vitepress/sidebar.ts
 It rewrites `kingchenc/wickra` → `wickra-lib/wickra`, bumps the version table,
 and turns `Home.md` into `overview.md` (`index.md` is the hand-written hero).
 
-## Deployment (Cloudflare Pages)
+## Deploy
 
-Connect this repo in Cloudflare → Workers & Pages → Pages → Connect to Git.
+Static build via Cloudflare Pages (Git integration, no deploy secret).
 
 | Setting | Value |
 |---|---|
 | Production branch | `main` |
 | Build command | `npm run build` |
 | Build output directory | `.vitepress/dist` |
-| Node version | `20` (env `NODE_VERSION` or `.nvmrc`) |
+| Node version | `22` (`.nvmrc`) |
 
 Every push to `main` redeploys production; every PR gets a preview deployment.
 
