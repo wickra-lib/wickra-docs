@@ -1,6 +1,6 @@
 // AUTO-GENERATED. Indicator family groups (items) are synced from
 // Indicators/*.md by scripts/sync-doc-counts.mjs. Non-indicator groups
-// (Getting started / Reference / Guides) were seeded by migrate-wiki.mjs.
+// (Getting started / Reference / Guides) are edited by hand.
 export const sidebar = [
   {
     "text": "Getting started",

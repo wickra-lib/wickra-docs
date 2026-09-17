@@ -46,21 +46,12 @@ Reference, Guides) — is edited here by hand.
 
 ## Content
 
-Pages are plain Markdown at the repo root. The indicator deep-dives
-(`Indicator-*.md`), quickstarts, and reference pages were migrated from the
-former GitHub Wiki. The sidebar (`.vitepress/sidebar.ts`) is **generated** —
-do not hand-edit it.
-
-### Re-running the wiki migration
-
-The migration script expects the wiki clone at `../wickra.wiki`:
-
-```bash
-npm run migrate   # copies pages + regenerates .vitepress/sidebar.ts
-```
-
-It rewrites `kingchenc/wickra` → `wickra-lib/wickra`, bumps the version table,
-and turns `Home.md` into `overview.md` (`index.md` is the hand-written hero).
+Pages are plain Markdown at the repo root; the indicator deep-dives live under
+`Indicators/`. The sidebar (`.vitepress/sidebar.ts`) is half generated: the
+indicator-family groups are written by `scripts/sync-doc-counts.mjs` from the
+pages that exist, the other groups (Getting started, Reference, Guides) are
+edited by hand. CI compiles every Rust snippet and runs the Python and Node
+ones against the published packages, so a page's code is code that works.
 
 ## Deploy
 
@@ -75,9 +66,6 @@ Static build via Cloudflare Pages (Git integration, no deploy secret).
 
 Every push to `main` redeploys production; every PR gets a preview deployment.
 
-## Notes
+## License
 
-- `base: '/'` — served at a domain root (e.g. `docs.wickra.org`), **not** the
-  `/wickra/` sub-path the marketing `site/` uses.
-- `ignoreDeadLinks: true` is set for now; tighten once the link transform is
-  finalised and the link-check CI lands.
+Dual-licensed under [MIT](https://github.com/wickra-lib/wickra/blob/main/LICENSE-MIT) or [Apache-2.0](https://github.com/wickra-lib/wickra/blob/main/LICENSE-APACHE), at your option.
