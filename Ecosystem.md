@@ -1,12 +1,12 @@
 ---
 title: Ecosystem
-description: The Wickra family — one indicator core and twenty-four products built on it, each with the same ten-language binding surface.
+description: The Wickra family — one indicator core and twenty-three products built on it, each with the same ten-language binding surface.
 ---
 
 # Ecosystem
 
-Wickra is a family of 25 open-source trading libraries: this indicator core and
-twenty-four data-driven products built on it. Every one of them is a Rust core
+Wickra is a family of 24 open-source trading libraries: this indicator core and
+twenty-three data-driven products built on it. Every one of them is a Rust core
 with a CLI and the same ten-language binding surface — native Python, Node.js
 and WASM, plus a C ABI for C, C++, C#, Go, Java and R — released to crates.io,
 PyPI, npm, NuGet, Maven Central, the Go module proxy and R-universe from one
