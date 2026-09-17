@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
       # Uses the repo's .markdownlint.jsonc (structural rules on, intentional
       # wiki-export style noise off).
-      - uses: DavidAnson/markdownlint-cli2-action@05f32210e84442804257b2a6f20b273450ec8265 # v19
+      - uses: DavidAnson/markdownlint-cli2-action@21c1be1b93ad9ed58fa840aacc3f279cde2a72ff # v24.2.0
         with:
           # Root pages plus the relocated indicator catalogue under Indicators/.
           globs: |
