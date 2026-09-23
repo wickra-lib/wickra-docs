@@ -36,16 +36,16 @@ documentation site. The [Ecosystem](/Ecosystem) page lists them by layer.
 
 | Registry  | Package        | Version |
 |-----------|----------------|---------|
-| [crates.io](https://crates.io/crates/wickra) | `wickra` | 1.0.5 |
-| [crates.io](https://crates.io/crates/wickra-core) | `wickra-core` | 1.0.5 |
-| [crates.io](https://crates.io/crates/wickra-data) | `wickra-data` | 1.0.5 |
-| [PyPI](https://pypi.org/project/wickra/) | `wickra` | 1.0.5 |
-| [npm](https://www.npmjs.com/package/wickra) | `wickra` | 1.0.5 |
-| [npm](https://www.npmjs.com/package/wickra-wasm) | `wickra-wasm` | 1.0.5 |
-| [NuGet](https://www.nuget.org/packages/Wickra) | `Wickra` | 1.0.5 |
-| [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) | `org.wickra:wickra` | 1.0.5 |
-| [Go](https://pkg.go.dev/github.com/wickra-lib/wickra-go) | `github.com/wickra-lib/wickra-go` | 1.0.5 |
-| [r-universe](https://wickra-lib.r-universe.dev/wickra) | `wickra` | 1.0.5 |
+| [crates.io](https://crates.io/crates/wickra) | `wickra` | 1.0.6 |
+| [crates.io](https://crates.io/crates/wickra-core) | `wickra-core` | 1.0.6 |
+| [crates.io](https://crates.io/crates/wickra-data) | `wickra-data` | 1.0.6 |
+| [PyPI](https://pypi.org/project/wickra/) | `wickra` | 1.0.6 |
+| [npm](https://www.npmjs.com/package/wickra) | `wickra` | 1.0.6 |
+| [npm](https://www.npmjs.com/package/wickra-wasm) | `wickra-wasm` | 1.0.6 |
+| [NuGet](https://www.nuget.org/packages/Wickra) | `Wickra` | 1.0.6 |
+| [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) | `org.wickra:wickra` | 1.0.6 |
+| [Go](https://pkg.go.dev/github.com/wickra-lib/wickra-go) | `github.com/wickra-lib/wickra-go` | 1.0.6 |
+| [r-universe](https://wickra-lib.r-universe.dev/wickra) | `wickra` | 1.0.6 |
 
 Release notes and tagged builds:
 <https://github.com/wickra-lib/wickra/releases>.
