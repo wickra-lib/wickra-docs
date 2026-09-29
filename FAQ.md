@@ -6,10 +6,28 @@ issue.
 
 ## Will batch and streaming produce the same result?
 
-Yes — bit-identical, by construction. `batch(prices)` is a one-line wrapper
-that calls `update(p)` for every `p` in the input. The same unit test —
-`batch_equals_streaming` — pins this for every indicator. See
-[Streaming vs Batch](Streaming-vs-Batch) for the full contract.
+Yes — bit-identical. For most indicators `batch(prices)` simply calls
+`update(p)` for every `p` in the input; the hot ones (SMA, EMA, RSI, MACD,
+Bollinger Bands, ATR, the Chaikin oscillator, Pearson correlation and a few
+more) run a fused path instead, written to perform the same arithmetic in the
+same order. The unit test `batch_equals_streaming` pins the equality for every
+indicator, an adversarial-input test replays every scalar indicator both ways
+and compares the bits, and the fuzz target does the same on arbitrary input.
+See [Streaming vs Batch](Streaming-vs-Batch) for the full contract.
+
+## What is the fast batch, and is it exact?
+
+`batch_fast` (`batchFast` / `BatchFast` in the camel- and Pascal-case bindings)
+is an opt-in batch for throughput. Where an indicator has a SIMD kernel —
+moving averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator,
+skewness, Pearson correlation and more — it reorders the arithmetic, so each
+value agrees with `batch` to within a few units in the last place rather than
+bit for bit. `NaN` placement and length are identical, the result is the same
+on every platform and CPU (the vector and portable paths compute identically),
+and afterwards the indicator streams on from the same state. Where there is no
+kernel it is `batch` exactly. Use `batch` when you need bit-for-bit agreement
+with streaming; use `batch_fast` when a backfill's speed matters more. See
+[Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
 
 ## Do all the language bindings compute the same values?
 
@@ -91,12 +109,13 @@ The streaming path is O(1) in the input length — the per-tick cost does not
 grow with how much history you have already seen. It is bounded by the window
 you configure instead: most indicators do constant work, and the ones that need
 an order statistic or a full-window pass scale with the period, never with the
-series. Against the pure-Python libraries the
-gap is large: roughly 6–47× faster than `finta` on batch workloads and 11–56×
-faster per tick than `talipp` (the only incremental Python peer). Against the
-other Rust TA crates (`kand`, `ta-rs`, `yata`) it is an honest mixed picture —
-Wickra leads on some indicators (RSI, Bollinger, ATR) and trails the leaner
-crates on others (EMA, MACD, SMA). The README has the full benchmark tables.
+series. In Python the exact batch beats TA-Lib on RSI, MACD and ATR, and the
+opt-in fast batch leads TA-Lib and tulipy on SMA, EMA, RSI and MACD; per tick
+Wickra is 8–66× faster than `talipp` (the only incremental Python peer) and
+thousands of times faster than the libraries that recompute. Against the other
+Rust TA crates (`kand`, `ta-rs`, `yata`) the fast batch wins every indicator and
+the exact batch RSI, MACD, Bollinger and ATR; per tick `ta-rs`, which skips
+warmup and validation, leads. BENCHMARKS.md has the full tables.
 
 ## How do I add a custom indicator?
 

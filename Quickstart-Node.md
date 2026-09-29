@@ -125,6 +125,37 @@ for (let i = 0; i < flat.length; i += 3) {
 underlying Rust `warmup_period()` is `slow + signal − 1 = 34` (the first
 ready row is `warmup_period - 1` in 0-indexed terms).
 
+## The opt-in fast batch
+
+Every batch accepts a `Float64Array` (read in place, without a copy) as well as a
+plain array. The single-output indicators — plus MACD, Bollinger Bands, ATR, the
+Chaikin oscillator and Pearson correlation — add `batchFast`, which returns a
+`Float64Array`, and `batchInto` / `batchFastInto`, which write into one you
+reuse:
+
+```js
+const input = Float64Array.from(prices);
+const out = new Float64Array(input.length);
+
+const fast = new wickra.EMA(20).batchFast(input);  // Float64Array, NaN during warmup
+new wickra.SMA(20).batchInto(input, out);          // exact, no allocation
+new wickra.EMA(20).batchFastInto(input, out);
+```
+
+`batch` itself still returns a plain `Array`. The output of the `Into` forms must
+be as long as the result, must not overlap an input and must not be backed by a
+`SharedArrayBuffer`.
+
+The fast batch runs a SIMD kernel where the indicator has one (moving
+averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+Pearson correlation and more). The kernel reassociates the arithmetic, so each
+value agrees with the exact batch to within a few units in the last place
+rather than bit for bit; `NaN` placement and length are identical, and the
+result is the same on every platform. Where an indicator has no kernel, the
+fast batch is the exact batch. Keep the exact batch wherever you compare
+against streaming bit for bit; reach for the fast one when throughput is the
+point. See [Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
+
 ## API surface
 
 The complete TypeScript definitions live at

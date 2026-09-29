@@ -122,6 +122,29 @@ exact layout is documented in the generated `pkg/wickra_wasm.d.ts`.
 > twelve of these classes; browser code no longer needs to replay `batch`
 > on every tick.
 
+## The opt-in fast batch
+
+The single-output indicators — plus MACD, Bollinger Bands, ATR, the Chaikin
+oscillator and Pearson correlation — add `batchFast` and the caller-buffer
+`batchInto` / `batchFastInto` next to `batch`:
+
+```js
+const out = new Float64Array(prices.length);
+const fast = new EMA(20).batchFast(prices);   // Float64Array, NaN during warmup
+new SMA(20).batchInto(prices, out);           // exact, into a reused buffer
+new EMA(20).batchFastInto(prices, out);
+```
+
+The fast batch runs a SIMD kernel where the indicator has one (moving
+averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+Pearson correlation and more). The kernel reassociates the arithmetic, so each
+value agrees with the exact batch to within a few units in the last place
+rather than bit for bit; `NaN` placement and length are identical, and the
+result is the same on every platform. Where an indicator has no kernel, the
+fast batch is the exact batch. Keep the exact batch wherever you compare
+against streaming bit for bit; reach for the fast one when throughput is the
+point. See [Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
+
 ## Errors
 
 Unlike the Node binding (whose constructors clamp pathological values), the
