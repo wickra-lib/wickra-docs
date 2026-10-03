@@ -21,6 +21,12 @@ Keltner, Donchian, SuperTrend, …) return a tuple from `update` and a `Matrix`
 (one column per output, with `.shape` and `[i, j]` access) from `batch` — no
 NumPy required.
 
+TA-Lib's functions reorder nothing and promise no agreement with a streaming
+path; Wickra's `batch` is bit for bit its `update`. For a backfill where
+throughput matters more than that, `batch_fast` takes the same arguments and
+runs SIMD kernels within a few units in the last place of `batch` — see
+[Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
+
 The names in the table below are the Python/Node.js/WASM aliases. C#, Go, Java
 and R use the canonical PascalCase name instead — see
 [Naming across bindings](Indicators-Overview#naming-across-bindings) for the

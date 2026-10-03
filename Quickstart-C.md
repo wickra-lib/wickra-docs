@@ -88,6 +88,30 @@ The first RSI value lands on tick 15 (`Rsi::new(14)` needs 14 diffs to seed
 Wilder's smoothing). Batch output is bit-for-bit identical to feeding the same
 inputs through `update` one at a time.
 
+## The opt-in fast batch
+
+Every scalar indicator, plus MACD, Bollinger Bands, ATR, the Chaikin oscillator
+and Pearson correlation, exports `wickra_<name>_batch_fast` with the signature of
+its `_batch`: the caller owns the output buffer, as ever.
+
+```c
+double *out = malloc(n * sizeof(double));
+struct Ema *ema = wickra_ema_new(20);
+wickra_ema_batch_fast(ema, prices, out, n);   /* NaN during warmup */
+wickra_ema_free(ema);
+free(out);
+```
+
+The fast batch runs a SIMD kernel where the indicator has one (moving
+averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+Pearson correlation and more). The kernel reassociates the arithmetic, so each
+value agrees with the exact batch to within a few units in the last place
+rather than bit for bit; `NaN` placement and length are identical, and the
+result is the same on every platform. Where an indicator has no kernel, the
+fast batch is the exact batch. Keep the exact batch wherever you compare
+against streaming bit for bit; reach for the fast one when throughput is the
+point. See [Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
+
 ## Multi-output indicators
 
 Indicators with several outputs (MACD, Bollinger, ADX, …) take a pointer to a

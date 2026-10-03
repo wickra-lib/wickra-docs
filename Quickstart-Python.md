@@ -36,7 +36,9 @@ print(ta.__version__)
 stdlib **`array.array('d')`** of `float64` outputs. Warmup steps come back as
 `NaN` so the result aligns 1:1 with your input prices. It supports indexing,
 slicing, iteration and `.tolist()`; if you use NumPy, `numpy.asarray(values)`
-wraps it zero-copy.
+wraps it zero-copy. A contiguous `float64` NumPy array or `array.array('d')` of
+8,192 values or more is read in place, without a copy, and from Python 3.11 a
+batch writes its result straight into the `array.array('d')` it returns.
 
 The first 15 prices below are the classic Wilder textbook example. RSI(14)
 emits its first value at index 14 (the 15th input) because it needs 14
@@ -172,6 +174,30 @@ import numpy as np
 arr = np.asarray(out.tolist())          # (40, 3)
 clean_rows = arr[~np.isnan(arr[:, 0])]
 ```
+
+## The opt-in fast batch
+
+Every single-output indicator, plus MACD, Bollinger Bands, ATR, the Chaikin
+oscillator and Pearson correlation, has `batch_fast` with the same arguments and
+return type as `batch`:
+
+```python
+import wickra as ta
+
+prices = [100.0 + i * 0.01 for i in range(10_000)]
+fast = ta.EMA(20).batch_fast(prices)          # array.array('d'), NaN during warmup
+rows = ta.MACD(12, 26, 9).batch_fast(prices)  # Matrix, like MACD.batch
+```
+
+The fast batch runs a SIMD kernel where the indicator has one (moving
+averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+Pearson correlation and more). The kernel reassociates the arithmetic, so each
+value agrees with the exact batch to within a few units in the last place
+rather than bit for bit; `NaN` placement and length are identical, and the
+result is the same on every platform. Where an indicator has no kernel, the
+fast batch is the exact batch. Keep the exact batch wherever you compare
+against streaming bit for bit; reach for the fast one when throughput is the
+point. See [Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
 
 ## A deeper example
 

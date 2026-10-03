@@ -90,6 +90,41 @@ try (Sma sma = new Sma(3)) {
 The first RSI value lands on tick 15. Batch output is bit-for-bit identical to
 feeding the same inputs through `update` one at a time.
 
+## The opt-in fast batch
+
+Every single-output `batch` has `batchInto` over a caller array and over native
+`MemorySegment`s, and a `batchFast` twin in all three forms; MACD and Bollinger
+Bands have a record-array `batchFast`. None of them copies: the segments go
+straight to the C ABI, and the array forms hand their arrays over in place
+through a downcall linked critical with heap access, so the garbage collector
+waits for the call:
+
+```java
+import java.lang.foreign.Arena;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
+
+double[] out = new double[prices.length];
+try (Sma sma = new Sma(20)) {
+    sma.batchInto(prices, out);                 // exact, into a reused array
+}
+try (Ema ema = new Ema(20); Arena arena = Arena.ofConfined()) {
+    MemorySegment in = arena.allocateFrom(ValueLayout.JAVA_DOUBLE, prices);
+    MemorySegment values = arena.allocate(ValueLayout.JAVA_DOUBLE, prices.length);
+    ema.batchFastInto(in, values);              // zero-copy
+}
+```
+
+The fast batch runs a SIMD kernel where the indicator has one (moving
+averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+Pearson correlation and more). The kernel reassociates the arithmetic, so each
+value agrees with the exact batch to within a few units in the last place
+rather than bit for bit; `NaN` placement and length are identical, and the
+result is the same on every platform. Where an indicator has no kernel, the
+fast batch is the exact batch. Keep the exact batch wherever you compare
+against streaming bit for bit; reach for the fast one when throughput is the
+point. See [Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
+
 ## Multi-output indicators
 
 Indicators with several outputs (MACD, Bollinger, ADX, …) return a `record` —

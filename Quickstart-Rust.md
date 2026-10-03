@@ -82,6 +82,40 @@ The first value lands on tick 15 because `Rsi::new(14)?.warmup_period() == 15`
 The `70.4641` value matches the textbook value pinned by the unit test
 `classic_wilder_textbook_values` in `crates/wickra-core/src/indicators/rsi.rs`.
 
+## The opt-in fast batch
+
+`batch_fast` (from `BatchNanExt`) has the shape of `batch_nan` — one `f64` per
+input, `NaN` during warmup — and `batch_fast_into` / `batch_nan_into` write into
+a buffer you reuse, so a hot loop allocates nothing:
+
+```rust
+use wickra::{BatchNanExt, Ema, Indicator};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let prices: Vec<f64> = (0..10_000).map(|i| 100.0 + (f64::from(i) * 0.01).sin()).collect();
+    let fast: Vec<f64> = Ema::new(20)?.batch_fast(&prices); // NaN during warmup
+
+    let mut out = vec![0.0; prices.len()];
+    Ema::new(20)?.batch_fast_into(&prices, &mut out); // into a reused buffer
+    println!("{:.4} {:.4}", fast[9_999], out[9_999]);
+    Ok(())
+}
+```
+
+MACD, Bollinger Bands, ATR, the Chaikin oscillator and Pearson correlation have
+their own forms: `batch_macd_fast`, `batch_bands_fast`, `batch_atr_fast`,
+`batch_hlcv_fast_into` and `batch_pairs_fast_into`.
+
+The fast batch runs a SIMD kernel where the indicator has one (moving
+averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+Pearson correlation and more). The kernel reassociates the arithmetic, so each
+value agrees with the exact batch to within a few units in the last place
+rather than bit for bit; `NaN` placement and length are identical, and the
+result is the same on every platform. Where an indicator has no kernel, the
+fast batch is the exact batch. Keep the exact batch wherever you compare
+against streaming bit for bit; reach for the fast one when throughput is the
+point. See [Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
+
 ## Composing indicators with `Chain`
 
 `Chain<A, B>` wires the output of `A` straight into the input of `B`, provided

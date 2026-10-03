@@ -73,6 +73,25 @@ batch(Sma(3), c(1, 2, 3, 4, 5))
 The first RSI value lands on tick 15. Batch output is bit-for-bit identical to
 feeding the same inputs through `update()` one at a time.
 
+## The opt-in fast batch
+
+`batch_fast()` takes the same arguments as `batch()` and returns the same shape:
+
+```r
+fast <- batch_fast(Ema(20), prices)
+macd <- batch_fast(MacdIndicator(12, 26, 9), prices)  # n x 3 matrix
+```
+
+The fast batch runs a SIMD kernel where the indicator has one (moving
+averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+Pearson correlation and more). The kernel reassociates the arithmetic, so each
+value agrees with the exact batch to within a few units in the last place
+rather than bit for bit; `NaN` placement and length are identical, and the
+result is the same on every platform. Where an indicator has no kernel, the
+fast batch is the exact batch. Keep the exact batch wherever you compare
+against streaming bit for bit; reach for the fast one when throughput is the
+point. See [Streaming vs Batch](Streaming-vs-Batch#the-opt-in-fast-batch).
+
 ## Multi-output indicators
 
 Indicators with several outputs (MACD, Bollinger, ADX, …) return a named numeric

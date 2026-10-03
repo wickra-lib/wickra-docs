@@ -115,20 +115,29 @@ Wickra's `update` is the opposite: a new bar costs the same whether it is the
 tenth or the ten-millionth, because the state it needs is already inside the
 indicator. You never carry history just to recompute it.
 
-The project README carries the full, current benchmark tables;
-`python -m benchmarks.compare_libraries` and `cargo bench -p wickra-bench` are
-the source scripts. In summary:
+The project's BENCHMARKS.md carries the full, current benchmark tables;
+`python -m benchmarks.compare_libraries`, `cargo bench -p wickra-bench` and the
+.NET harness in `bindings/csharp/cross-library` are the source scripts. In
+summary:
 
-- **Python batch** (20 000-bar full pass): Wickra runs each indicator in
-  roughly 22–130 µs — about 6–47× faster than `finta`, the fastest pure-Python
-  peer that installs cleanly on a desktop.
+- **Python batch** (20 000-bar full pass): the exact `batch` runs each indicator
+  in roughly 20–75 µs and beats TA-Lib on RSI, MACD and ATR; the opt-in
+  `batch_fast` runs in 9–33 µs and leads TA-Lib and tulipy on every indicator
+  measured.
 - **Python streaming** (one `update` per tick): Wickra updates in roughly
-  0.06–0.11 µs/tick, about 11–56× faster than `talipp`, the only Python library
-  with a true incremental API.
-- **Rust core** (vs the other Rust TA crates `kand`, `ta-rs`, `yata`): an
-  honest mixed picture — Wickra leads RSI, Bollinger and ATR, and trails the
-  leaner crates on the pure recurrences (EMA, MACD) and SMA. The per-indicator
-  numbers, including the losses, are in the README.
+  0.06–0.10 µs/tick, about 9–56× faster than `talipp`, the only Python library
+  with a true incremental API, and thousands of times faster than the libraries
+  that recompute the history on every tick.
+- **Rust core** (vs the other Rust TA crates `kand`, `ta-rs`, `yata`): the fast
+  batch beats `kand` on every indicator and the exact batch on RSI, MACD,
+  Bollinger and ATR; streaming is a mixed picture — Wickra leads `kand` on RSI,
+  Bollinger and ATR, and `ta-rs`, which skips warmup and validation, leads the
+  per-tick table. The per-indicator numbers, including the losses, are in
+  BENCHMARKS.md.
+- **.NET** (QuanTAlib's own setup, 500 000 bars, period 220): the fast batch
+  leads QuanTAlib's span batches on SMA, EMA and correlation and trails them by
+  3–20 % on WMA, HMA, ADOSC and skewness; streaming is level on SMA and EMA
+  and 1.3–4.2× faster than QuanTAlib's on the other five.
 
 The streaming advantage over batch-only libraries widens linearly with how much
 history they must recompute on every new tick.
@@ -137,30 +146,61 @@ history they must recompute on every new tick.
 
 Every binding calls the **same** Rust core, so the cost that differs between them
 is the FFI boundary, not the algorithm. Each ships a `throughput` benchmark; here
-is `SMA(20)` over 200 000 bars (median of 3, AMD Ryzen 9 9950X), in million
-updates per second:
+is `SMA(20)` over 200 000 bars (the better of two runs, each the median of 3,
+AMD Ryzen 9 9950X, all targets in one session), in million updates per second:
 
-| Target               | streaming (Mupd/s) | batch (Mupd/s) |
-|----------------------|-------------------:|---------------:|
-| Rust core (no FFI)   |                380 |            498 |
-| C / C++              |                365 |            358 |
-| C#                   |                348 |            259 |
-| Python               |                 31 |             46 |
-| Java                 |                 38 |            173 |
-| Go                   |                 23 |            394 |
-| WASM                 |                 21 |            169 |
-| Node.js              |                 16 |              9 |
-| R                    |                0.1 |            279 |
+| Target               | streaming | batch | fast batch | fast into a reused buffer |
+|----------------------|----------:|------:|-----------:|--------------------------:|
+| Rust core (no FFI)   |     1 362 | 1 144 |      3 068 |                     3 068 |
+| C / C++              |       397 | 1 131 |      3 140 |                     3 140 |
+| C#                   |       345 |   739 |      1 263 |                     3 072 |
+| Go                   |      24.5 |   998 |      2 290 |                     2 960 |
+| Java                 |       255 |   950 |      1 120 |                     2 778 |
+| R                    |       0.4 |   623 |      1 031 |                         — |
+| WASM                 |      34.8 |   380 |        402 |                         — |
+| Python               |      27.5 |   530 |        752 |                         — |
+| Node.js              |       5.4 |    11 |      1 256 |                     3 160 |
+
+The Rust core and the C ABI write their batches into a reused buffer; they have
+no allocating form.
 
 This is exactly the streaming-vs-batch story at the binding layer: a per-tick
 `update` crosses the boundary once per value, so streaming throughput exposes the
-boundary cost (the raw C ABI sits just under the FFI-free Rust ceiling; R's
-interpreter loop is ~2800× slower than its own batch). A single `batch` call
-crosses once and the core does the rest, so batch stays high for the bindings that
-return a contiguous buffer; Node (a JS `Array`) and Python (a stdlib `array.array`,
-now that NumPy is optional) copy on the way out and are the two low outliers. These
-are machine-dependent FFI-overhead numbers, not a speed claim —
-see [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md).
+boundary cost (the raw C ABI is nearly free; R's interpreter loop is thousands of
+times slower than its own batch). A single `batch` call crosses once and the core
+does the rest, so batch stays high for every binding that returns a contiguous
+buffer — Node's `batch` still returns a JS `Array` and is the low outlier, while
+its `batchFast` returns a `Float64Array`. Writing into a buffer the caller reuses
+(C#'s `Span` overloads, Go's `BatchFastInto`, Java's native `MemorySegment`s,
+Node's `batchFastInto`, the C ABI itself) takes the page faults of a fresh result
+out of the loop and reaches the Rust ceiling. These are machine-dependent FFI-overhead numbers, not a speed
+claim — see [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md).
+
+## The opt-in fast batch
+
+`batch` is bit for bit what `update` gives, and every binding keeps it that way.
+Beside it, every language has an opt-in fast batch — `batch_fast` (Rust,
+Python, R), `batchFast` (Node, WASM, Java), `BatchFast` (C#, Go),
+`wickra_<name>_batch_fast` (C) — with the same arguments and the same return
+shape:
+
+- **Where an indicator has a SIMD kernel** (SMA, EMA, WMA, HMA, TRIMA, SMMA,
+  DEMA, TEMA, RSI, MACD, Bollinger Bands, ATR, the Chaikin oscillator, skewness,
+  Pearson correlation), the kernel reorders the arithmetic, so each value agrees
+  with `batch` to within a few units in the last place rather than bit for bit.
+- **`NaN` placement and length are identical,** and so is the state afterwards:
+  the indicator streams on exactly as if it had been fed one value at a time.
+- **The result is the same on every platform and CPU.** The vector and portable
+  paths perform the same operations in the same order; nothing depends on
+  which instructions the machine happens to have.
+- **Without a kernel it is `batch` exactly,** and so is any input a kernel does
+  not take (a non-finite value, a magnitude beyond `1e100`, an indicator that
+  has already been fed): the fast batch falls back to the exact one.
+
+Use `batch` wherever you compare against streaming bit for bit (a backtest that
+must reproduce a live run, a regression fixture); use `batch_fast` when a
+backfill's throughput matters more. The per-language quickstarts show the calls,
+including the forms that write into a buffer you reuse.
 
 ## Practical consequences
 
