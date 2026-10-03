@@ -110,12 +110,15 @@ grow with how much history you have already seen. It is bounded by the window
 you configure instead: most indicators do constant work, and the ones that need
 an order statistic or a full-window pass scale with the period, never with the
 series. In Python the exact batch beats TA-Lib on RSI, MACD and ATR, and the
-opt-in fast batch leads TA-Lib and tulipy on SMA, EMA, RSI and MACD; per tick
-Wickra is 8–66× faster than `talipp` (the only incremental Python peer) and
+opt-in fast batch leads TA-Lib and tulipy on every indicator measured; per tick
+Wickra is 9–56× faster than `talipp` (the only incremental Python peer) and
 thousands of times faster than the libraries that recompute. Against the other
 Rust TA crates (`kand`, `ta-rs`, `yata`) the fast batch wins every indicator and
 the exact batch RSI, MACD, Bollinger and ATR; per tick `ta-rs`, which skips
-warmup and validation, leads. BENCHMARKS.md has the full tables.
+warmup and validation, leads. In .NET, on QuanTAlib's own benchmark setup, the
+fast batch leads SMA, EMA and correlation and comes within 3–20 % on the
+other four, and streaming is 1.3–4.2× faster than QuanTAlib's on five of
+seven indicators. BENCHMARKS.md has the full tables.
 
 ## How do I add a custom indicator?
 

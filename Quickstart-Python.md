@@ -36,7 +36,9 @@ print(ta.__version__)
 stdlib **`array.array('d')`** of `float64` outputs. Warmup steps come back as
 `NaN` so the result aligns 1:1 with your input prices. It supports indexing,
 slicing, iteration and `.tolist()`; if you use NumPy, `numpy.asarray(values)`
-wraps it zero-copy.
+wraps it zero-copy. A contiguous `float64` NumPy array or `array.array('d')` of
+8,192 values or more is read in place, without a copy, and from Python 3.11 a
+batch writes its result straight into the `array.array('d')` it returns.
 
 The first 15 prices below are the classic Wilder textbook example. RSI(14)
 emits its first value at index 14 (the 15th input) because it needs 14

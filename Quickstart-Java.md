@@ -93,9 +93,11 @@ feeding the same inputs through `update` one at a time.
 ## The opt-in fast batch
 
 Every single-output `batch` has `batchInto` over a caller array and over native
-`MemorySegment`s (zero-copy: the segments go straight to the C ABI), and a
-`batchFast` twin in all three forms; MACD and Bollinger Bands have a
-record-array `batchFast`:
+`MemorySegment`s, and a `batchFast` twin in all three forms; MACD and Bollinger
+Bands have a record-array `batchFast`. None of them copies: the segments go
+straight to the C ABI, and the array forms hand their arrays over in place
+through a downcall linked critical with heap access, so the garbage collector
+waits for the call:
 
 ```java
 import java.lang.foreign.Arena;
