@@ -90,22 +90,23 @@ jobs:
           sed -i -E "s|(org\.wickra:wickra:)[0-9]+\.[0-9]+\.[0-9]+|\1${V}|" Quickstart-Java.md
 
       - name: Commit if changed
+        id: commitcheck
         env:
           N: ${{ steps.count.outputs.count }}
           V: ${{ steps.version.outputs.version }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           if [ -z "$(git status --porcelain)" ]; then
             echo "already at ${N} indicators and version ${V}; nothing to commit"
+            echo "commit=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          git config user.name "wickra-bot"
-          git config user.email "wickra-bot@users.noreply.github.com"
-          git add index.md overview.md Indicators-Overview.md .vitepress/config.ts \
-                  Quickstart-Rust.md Quickstart-Java.md
-          git commit -m "chore: sync indicator count to ${N} and version to ${V}"
-          # refresh-badges commits to this branch on its own hourly schedule;
-          # rebase onto anything it landed in the meantime so the two never clash.
-          git pull --rebase "https://github.com/${GITHUB_REPOSITORY}.git" main
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
+          echo "commit=true" >> "$GITHUB_OUTPUT"
+
+      - name: Commit (signed)
+        if: steps.commitcheck.outputs.commit == 'true'
+        uses: wickra-lib/.github/actions/signed-commit@782bf3d7a8edb80ada87dc7ba9067e2bf5752710 # v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          message: "chore: sync indicator count to ${{ steps.count.outputs.count }} and version to ${{ steps.version.outputs.version }}"
+          paths: index.md overview.md Indicators-Overview.md .vitepress/config.ts Quickstart-Rust.md Quickstart-Java.md
