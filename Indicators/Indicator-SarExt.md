@@ -21,16 +21,43 @@
 stop advances toward the extreme point by the acceleration factor:
 
 ```
-SAR_next = SAR + AF · (EP − SAR)        // clamped not to cross the last two bars
+SAR_t = SAR_{t-1} + AF · (EP − SAR_{t-1})
+long:  SAR_t = min(SAR_t, low_{t-1},  low_{t-2})     // clamp with the two PREVIOUS bars
+short: SAR_t = max(SAR_t, high_{t-1}, high_{t-2})
+reversal if long and low_t <= SAR_t, or short and high_t >= SAR_t
 ```
 
-On a reversal the stop flips to the prior extreme point, the acceleration factor
-resets, and an optional offset pushes the new stop further from price. Beyond
-`Psar` it adds:
+The clamp uses the two bars *before* bar `t` (never bar `t`'s own low/high);
+only then is bar `t` tested for a reversal. This is Wilder's rule and TA-Lib's
+(which clamps tomorrow's SAR with today's and yesterday's extremes — the same
+rule one bar earlier).
 
-- **`start_value`** — the initial SAR. `0` auto-seeds long (like `Psar`); a
-  positive value starts a long phase at that SAR, a negative value starts a short
-  phase at its absolute value.
+**Seed.** The first candle only records its high and low; the first stop is
+emitted on the second candle, following TA-Lib:
+
+```
+start_value == 0  (automatic direction):
+    down_move = low_0 - low_1,  up_move = high_1 - high_0
+    short if down_move > 0 and down_move > up_move, else long
+    long:  SAR = low_0     short: SAR = high_0
+start_value  > 0:  long,  SAR = start_value
+start_value  < 0:  short, SAR = |start_value|
+EP = high_1 (long) or low_1 (short)
+```
+
+As in TA-Lib, the first step treats the second candle as both "today" and
+"yesterday", so the next clamp uses its range twice.
+
+On a reversal the stop flips to the prior extreme point, moved outside this
+bar's and the previous bar's range — `max(EP, high_{t-1}, high_t)` when flipping
+short, `min(EP, low_{t-1}, low_t)` when flipping long — the acceleration factor
+resets, and then `offset_on_reverse` pushes the new stop further from price.
+Beyond `Psar` it adds:
+
+- **`start_value`** — the initial SAR. `0` picks the direction automatically
+  from the first two candles (as above, identical to `Psar`); a positive value
+  forces a long start at that SAR, a negative value forces a short start at its
+  absolute value.
 - **`offset_on_reverse`** — a fractional offset applied to the new SAR on each
   reversal (`0` disables it).
 - **separate long / short acceleration** — independent `(init, step, max)`
@@ -40,14 +67,18 @@ The output is **signed**: positive during a long phase (SAR below price),
 negative during a short phase (SAR above price), so the sign alone encodes the
 current direction. See `crates/wickra-core/src/indicators/sar_ext.rs`.
 
+**TA-Lib parity.** `SarExt` matches TA-Lib `SAREXT` exactly from the first
+output bar (to `1e-9`, verified by the TA-Lib reference test suite), including
+the sign convention of the output.
+
 ## Parameters
 
 | Name | Type | Default | Valid range | Description | Source |
 |------|------|---------|-------------|-------------|--------|
-| `start_value` | `f64` | `0.0` | finite | `0` auto-seeds long; `> 0` starts long at that SAR; `< 0` starts short at its absolute value. | `sar_ext.rs:110` |
-| `offset_on_reverse` | `f64` | `0.0` | finite, `>= 0` | Fractional offset added to the new SAR on each reversal. | `sar_ext.rs:110` |
-| `accel_init_long` / `accel_long` / `accel_max_long` | `f64` | `0.02 / 0.02 / 0.20` | `> 0`, finite, `init <= max` | Long-phase acceleration `(init, step, max)`. | `sar_ext.rs:23` |
-| `accel_init_short` / `accel_short` / `accel_max_short` | `f64` | `0.02 / 0.02 / 0.20` | `> 0`, finite, `init <= max` | Short-phase acceleration `(init, step, max)`. | `sar_ext.rs:23` |
+| `start_value` | `f64` | `0.0` | finite | `0` picks the direction from the first two candles; `> 0` forces a long start at that SAR; `< 0` forces a short start at its absolute value. | `sar_ext.rs:102` |
+| `offset_on_reverse` | `f64` | `0.0` | finite, `>= 0` | Fractional offset added to the new SAR on each reversal. | `sar_ext.rs:102` |
+| `accel_init_long` / `accel_long` / `accel_max_long` | `f64` | `0.02 / 0.02 / 0.20` | `> 0`, finite, `init <= max` | Long-phase acceleration `(init, step, max)`. | `sar_ext.rs:22` |
+| `accel_init_short` / `accel_short` / `accel_max_short` | `f64` | `0.02 / 0.02 / 0.20` | `> 0`, finite, `init <= max` | Short-phase acceleration `(init, step, max)`. | `sar_ext.rs:22` |
 
 Non-positive or non-finite acceleration terms error with
 `Error::NonPositiveMultiplier`; an `init` above its `max` errors with
@@ -71,9 +102,9 @@ the matching `batch`.
 
 ## Warmup
 
-`SarExt::classic().warmup_period() == 2`. The first candle only seeds the trend
-and the extreme point and returns `None`; the first signed stop is emitted on the
-second candle. The unit tests `accessors_and_metadata` (pins
+`SarExt::classic().warmup_period() == 2`. The first candle only records its high
+and low and returns `None`; the second candle fixes the direction, the starting
+SAR and the extreme point and emits the first signed stop. The unit tests `accessors_and_metadata` (pins
 `warmup_period() == 2`) and `seed_returns_none_then_emits` pin this.
 
 ## Edge cases
@@ -114,9 +145,11 @@ Output:
 [None, Some(9.0)]
 ```
 
-The first candle seeds a long phase at `SAR = low = 9`, `EP = high = 11`. The
-second candle advances `SAR = 9 + 0.02·(11 − 9) = 9.04`, clamped not to exceed
-the prior low (`9`), so the long-phase (positive) stop is `9.0`. This is the
+With `start_value = 0` the direction comes from the first two candles: the
+up move is `12 − 11 = 1` and the down move `9 − 10 = −1`, so the seed is long.
+The SAR starts at the first candle's low (`9`) and the EP at the second
+candle's high (`12`); the second bar's low (`10`) stays above the stop, so
+there is no reversal and the long-phase (positive) stop is `9.0`. This is the
 `seed_returns_none_then_emits` contract; `uptrend_is_positive_and_below_lows`
 pins the "positive and below the low" invariant.
 
@@ -136,7 +169,7 @@ print(s.batch(high, low, close))
 Output:
 
 ```
-[nan  9.]
+array('d', [nan, 9.0])
 ```
 
 ### Node

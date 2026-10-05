@@ -1,3 +1,7 @@
+---
+description: "Compose Wickra indicators with Chain<A, B>: feed one indicator's output into another, nest chains, and use the result anywhere a single indicator is accepted."
+---
+
 # Indicator Chaining
 
 `Chain<A, B>` wires the output of one indicator straight into the input of

@@ -1,11 +1,12 @@
 # TD REI (Range Expansion Index)
 
 > DeMark's Range Expansion Index. A short-window (default 5-bar)
-> oscillator that conditionally weights the high/low expansions of
-> each bar — bars where the high or low has not expanded relative to
-> the recent baseline are zero-weighted — then normalises the signed
-> expansion to a `[-100, +100]` range. Designed as a fast
-> short-cycle momentum oscillator within DeMark's larger toolset.
+> oscillator that sums each bar's signed high/low change versus two
+> bars earlier — counted in the numerator only when the bar's range
+> overlaps the bars 5–6 back, or the bar two back overlaps the closes
+> 7–8 back — and divides by the sum of the absolute changes of every
+> bar, giving a `[-100, +100]` range. Designed as a fast short-cycle
+> momentum oscillator within DeMark's larger toolset.
 
 ## Quick reference
 
@@ -16,29 +17,33 @@
 | Output type         | `f64`                                                                |
 | Output range        | `[-100, +100]`                                                       |
 | Default parameters  | `period = 5`                                                         |
-| Warmup period       | `period + 7` (conditional weights need a 7-bar baseline)             |
+| Warmup period       | `8 + period` (the conditions look back 8 bars; classic `13`)         |
 | Interpretation      | Above `+60` overbought; below `−60` oversold; near 0 neutral         |
 
 ## Formula
 
-For each bar within the window:
+For each bar `t` (history through `t − 8` required):
 
 ```
-condition_up = (high_t >= max(close_{t-2}, close_{t-3}))   // expansion up
-condition_dn = (low_t  <= min(close_{t-2}, close_{t-3}))   // expansion down
+overlap      = (high_t     >= low_{t-5}   OR high_t     >= low_{t-6})
+           AND (low_t      <= high_{t-5}  OR low_t      <= high_{t-6})
+overlap_back = (high_{t-2} >= close_{t-7} OR high_{t-2} >= close_{t-8})
+           AND (low_{t-2}  <= close_{t-7} OR low_{t-2}  <= close_{t-8})
 
-w = 1 if (condition_up AND high_t >= low_{t-5} AND high_t >= low_{t-6})
-    AND (condition_dn AND low_t <= high_{t-5} AND low_t <= high_{t-6})
-    else 0
+num_t = (high_t − high_{t-2}) + (low_t − low_{t-2})   if overlap OR overlap_back
+      = 0                                             otherwise
+den_t = |high_t − high_{t-2}| + |low_t − low_{t-2}|   (every bar)
 
-num = sum over period: w · ((high_t − high_{t-2}) + (low_t − low_{t-2}))
-den = sum over period: w · (|high_t − high_{t-2}| + |low_t − low_{t-2}|)
-
-REI = 100 · num / den         (0 if den == 0)
+REI = 100 · Σ_period num / Σ_period den, clamped to [-100, +100]
+      (0 if Σ den == 0)
 ```
 
-The conditional weighting filters out bars that don't represent a
-"genuine" range expansion. See
+The gate only zeroes the **numerator**: a bar whose range does not
+overlap the bars 5–6 back (and whose bar-two-back does not overlap
+the closes 7–8 back — DeMark's alternative condition) still adds its
+absolute change to the denominator, pulling REI towards zero. Since
+`|num_t| ≤ den_t` bar by bar, the ratio is bounded; the clamp only
+absorbs last-bit rounding. See
 `crates/wickra-core/src/indicators/td_rei.rs`.
 
 ## Parameters
@@ -53,23 +58,36 @@ The conditional weighting filters out bars that don't represent a
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:
-`TdRei(period).batch(high, low, close)` returns an `array.array('d')`
-with `NaN` in the warmup prefix. Node: same shape;
-`update(candle)` returns `number | null`.
+`TDREI(period).batch(high, low, close)` returns an `array.array('d')`
+with `NaN` in the warmup prefix (`close` is required — the
+alternative condition reads the closes 7–8 bars back). Node and
+WASM: `batch(high, low, close)` returns `number[]` (`NaN` warmup);
+`update(high, low, close)` returns `number | null`.
 
 ## Warmup
 
-`warmup_period() == period + 7`. The 7-bar lag is the maximum
-look-back inside the conditional-weight check (`low_{t-5}`,
-`low_{t-6}` etc.).
+`warmup_period() == 8 + period` (`13` for the classic 5-bar
+window). The first 8 bars only fill the look-back (the alternative
+condition reaches `close_{t-8}`); then `period` per-bar
+numerator / denominator terms fill the window, so the first value
+lands at index `8 + period − 1` (index 12 for `period = 5`).
 
 ## Edge cases
 
-- **All weights zero.** Indicator returns `0.0` (neutral). Common
-  in ranging markets where neither high nor low has expanded.
-- **Pure expansion up.** All weighted differences positive → REI
-  approaches `+100`.
-- **Reset.** Clears the rolling buffers.
+- **Zero denominator.** When highs and lows do not change over the
+  window the indicator returns `0.0` (neutral)
+  (`flat_market_yields_neutral_zero`).
+- **Gate closed.** Bars failing both overlap conditions add `0` to
+  the numerator but their full change to the denominator, so a
+  steep, tight-ranged trend can read near `0`.
+- **Pure expansion up / down.** A slow steady trend (slope `0.1`,
+  spread `2`) passes the gate every bar → REI saturates at `+100`
+  (`pure_uptrend_pegs_indicator_at_100`) or `−100`
+  (`pure_downtrend_pegs_indicator_at_minus_100`).
+- **Bounded.** Output stays in `[-100, +100]`
+  (`stays_in_minus_100_to_100`).
+- **Zero period.** `TdRei::new(0)` errors (`rejects_zero_period`).
+- **Reset.** Clears the rolling buffers (`reset_clears_state`).
 
 ## Examples
 
@@ -80,11 +98,11 @@ use wickra::{BatchExt, Candle, Indicator, TdRei};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let candles: Vec<Candle> = (0..30).map(|i| {
-        let b = 100.0 + f64::from(i);
+        let b = 100.0 + f64::from(i) * 0.1;
         Candle::new(b, b + 1.0, b - 1.0, b, 1.0, i as i64).unwrap()
     }).collect();
     let mut r = TdRei::classic();
-    println!("row 20 = {:?}", r.batch(&candles)[20]);
+    println!("row 20 = {:?}", r.batch(&candles)[20]); // row 20 = Some(100.0)
     Ok(())
 }
 ```
@@ -95,11 +113,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 import numpy as np
 import wickra as ta
 
-base = 100 + np.arange(30, dtype=float)
+base = 100 + np.arange(30, dtype=float) * 0.1
 r = ta.TDREI(5)
-out = r.batch(base + 1, base - 1)
-print('warmup:', r.warmup_period())  # 11
-print('row 20:', out[20])
+out = r.batch(base + 1, base - 1, base)
+print('warmup:', r.warmup_period())  # 13
+print('row 20:', out[20])            # 100.0
 ```
 
 ### Node
@@ -107,9 +125,9 @@ print('row 20:', out[20])
 ```javascript
 const wickra = require('wickra');
 const r = new wickra.TDREI(5);
-const base = Array.from({ length: 30 }, (_, i) => 100 + i);
+const base = Array.from({ length: 30 }, (_, i) => 100 + i * 0.1);
 console.log('row 20:',
-  r.batch(base.map(b => b + 1), base.map(b => b - 1), base)[20]);
+  r.batch(base.map(b => b + 1), base.map(b => b - 1), base)[20]); // row 20: 100
 ```
 
 ### Streaming
@@ -135,8 +153,10 @@ toolbox:
 - **REI > +60.** Recent range expansion has been dominated by new
   highs — overbought.
 - **REI < −60.** Range expansion dominated by new lows — oversold.
-- **Persistent zero readings.** No genuine range expansion in
-  either direction; the market is consolidating.
+- **Persistent zero readings.** Either highs and lows are not
+  changing, or bars keep failing the overlap gate (their changes
+  count only in the denominator); the market has no qualified
+  range expansion in either direction.
 - **As Sequential precondition.** Some DeMark traders use
   `REI > +45 / < −45` as a momentum gate for TD Sequential
   signals — REI confirms the momentum context.
@@ -147,9 +167,10 @@ toolbox:
   vs `0..100`) and different neutral points (`0` vs `50`).
 - **Reading every zero-cross.** REI sits at zero for long periods
   in ranges; only the move *off* zero is meaningful.
-- **Conditional-weight surprise.** Two seemingly-similar price
+- **Conditional-gate surprise.** Two seemingly-similar price
   patterns can produce very different REI readings because the
-  weight gate kicks in differently. The implementation matches
+  overlap gate (or its close-based alternative) kicks in
+  differently. The implementation matches
   DeMark's published rules exactly; if you're getting unexpected
   output, compare against the rule, not against your intuition.
 
@@ -157,6 +178,8 @@ toolbox:
 
 - Tom DeMark, *The New Science of Technical Analysis* (1994),
   ch. 4: Range Expansion Index.
+- Jason Perl, *DeMark Indicators* (Bloomberg Press, 2008) — TD REI
+  conditions, including the alternative close-based condition.
 
 ## See also
 

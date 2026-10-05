@@ -1,7 +1,8 @@
 # ChaikinOscillator
 
 > Chaikin Oscillator — the MACD of the Accumulation/Distribution Line:
-> a fast EMA of the ADL minus a slow EMA of the ADL.
+> a fast EMA of the ADL minus a slow EMA of the ADL. With the classic
+> `(3, 10)` configuration this is TA-Lib's `ADOSC` (Chaikin A/D Oscillator).
 
 ## Quick reference
 
@@ -27,6 +28,18 @@ Oscillator applies the MACD construction to it: difference a fast and a slow
 EMA of the ADL to get a zero-centred momentum reading. Positive values mean
 short-term accumulation is outrunning the longer trend; negative values mean
 distribution leads.
+
+**TA-Lib `ADOSC`.** TA-Lib's `ADOSC` is this indicator —
+`EMA(ADL, 3) − EMA(ADL, 10)` on the volume-weighted A/D line. Code ported from
+TA-Lib should map `ADOSC(high, low, close, volume, 3, 10)` to
+`ChaikinOscillator(3, 10)`. Both emit their first value on the same bar, and
+the TA-Lib reference test suite shows them identical (to `1e-9`) from bar 120
+on. Before that only the EMA seed differs: Wickra seeds each EMA with the simple
+mean of its first `period` A/D values, TA-Lib seeds both with the first A/D
+value, and the gap decays with the slow EMA (a factor `9/11` per bar). Wickra's
+[`AdOscillator`](/Indicators/Indicator-AdOscillator) is an unrelated indicator —
+the volume-free Williams A/D line minus its 13-bar SMA — despite the similar
+name.
 
 ## Parameters
 
@@ -142,17 +155,23 @@ ADL gives, but packaged as a bounded, zero-centred series.
 - **Treating the level as meaningful.** Only the sign and the slope carry
   information; the magnitude scales with the instrument's volume.
 - **Feeding it scalar prices.** It needs the full OHLCV bar.
+- **Reaching for `AdOscillator` to replicate TA-Lib `ADOSC`.**
+  [`AdOscillator`](/Indicators/Indicator-AdOscillator) is the Williams
+  (volume-free) oscillator; TA-Lib's `ADOSC` is this Chaikin oscillator.
 
 ## References
 
 Marc Chaikin's Chaikin Oscillator — the MACD construction applied to his
-Accumulation/Distribution Line (StockCharts).
+Accumulation/Distribution Line (StockCharts). TA-Lib implements the same
+construction as `ADOSC` (Chaikin A/D Oscillator).
 
 ## See also
 
 - [Indicator-Adl](/Indicators/Indicator-Adl) — the cumulative line this oscillates.
 - [Indicator-ChaikinMoneyFlow](/Indicators/Indicator-ChaikinMoneyFlow) — a bounded
   ratio built from the same money-flow volume.
+- [Indicator-AdOscillator](/Indicators/Indicator-AdOscillator) — the unrelated
+  Williams A/D Oscillator (volume-free, `WAD − SMA(WAD, 13)`).
 - [Indicator-MacdIndicator](/Indicators/Indicator-MacdIndicator) — the
   same fast/slow EMA-difference construction on price.
 - [Indicators-Overview](/Indicators-Overview) — the full taxonomy.

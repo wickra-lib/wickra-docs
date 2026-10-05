@@ -34,24 +34,53 @@ The transition is:
 ```
 SAR_t = SAR_{t-1} + AF_{t-1} * (EP_{t-1} - SAR_{t-1})
 
-# Wilder rule: SAR cannot penetrate today's or yesterday's range
-if Up:    SAR_t = min(SAR_t, low_{t-1}, low_t)
-if Down:  SAR_t = max(SAR_t, high_{t-1}, high_t)
+# Wilder rule: SAR_t may not sit inside the ranges of the two previous bars
+if Up:    SAR_t = min(SAR_t, low_{t-1}, low_{t-2})
+if Down:  SAR_t = max(SAR_t, high_{t-1}, high_{t-2})
 
-# Reversal test
-if Up and low_t <= SAR_t:   flip to Down, SAR_t = EP_{t-1}, reset AF
-if Down and high_t >= SAR_t: flip to Up,   SAR_t = EP_{t-1}, reset AF
+# Reversal test -- the new SAR is the prior EP, moved outside this bar's
+# and the previous bar's range
+if Up and low_t <= SAR_t:    flip to Down, SAR_t = max(EP_{t-1}, high_{t-1}, high_t), reset AF
+if Down and high_t >= SAR_t: flip to Up,   SAR_t = min(EP_{t-1}, low_{t-1},  low_t),  reset AF
 ```
 
-The exact step-by-step is `crates/wickra-core/src/indicators/psar.rs:75-141`.
+The clamp uses the lows (Up) / highs (Down) of the **two previous bars**
+(`t-1`, `t-2`), never bar `t`'s own range; only then is bar `t` tested for a
+reversal against the clamped SAR. This is Wilder's rule and matches TA-Lib,
+which clamps *tomorrow's* SAR with today's and yesterday's extremes — the same
+rule, applied one bar earlier.
+
+**Seed (TA-Lib's).** The first candle only stores its high and low. On the
+second candle the starting direction comes from the one-bar directional
+movement of the first two candles:
+
+```
+down_move = low_0 - low_1
+up_move   = high_1 - high_0
+short if down_move > 0 and down_move > up_move, else long
+
+long:  SAR = low_0,  EP = high_1
+short: SAR = high_0, EP = low_1
+```
+
+So the SAR starts at the first candle's *opposite* extreme and the EP at the
+second candle's extreme. Like TA-Lib, the first step then treats the second
+candle as both "today" and "yesterday", so on the third bar the two-bar clamp
+uses the second candle's range twice.
+
+The exact step-by-step is `crates/wickra-core/src/indicators/psar.rs:112-208`.
+
+**TA-Lib parity.** With this seed and the reversal clamp, `Psar` matches
+TA-Lib `SAR` exactly from the first output bar (to `1e-9`, verified by the
+TA-Lib reference test suite).
 
 ## Parameters
 
 | Name       | Type  | Default | Constraint                                | Source                                |
 |------------|-------|---------|-------------------------------------------|---------------------------------------|
-| `af_start` | `f64` | `0.02`  | finite, `> 0`, `≤ af_max`                  | `Psar::new` (`psar.rs:39-50`)         |
-| `af_step`  | `f64` | `0.02`  | finite, `> 0`                              | `Psar::new` (`psar.rs:39-50`)         |
-| `af_max`   | `f64` | `0.20`  | finite, `> 0`                              | `Psar::new` (`psar.rs:39-50`)         |
+| `af_start` | `f64` | `0.02`  | finite, `> 0`, `≤ af_max`                  | `Psar::new` (`psar.rs:68-100`)        |
+| `af_step`  | `f64` | `0.02`  | finite, `> 0`                              | `Psar::new` (`psar.rs:68-100`)        |
+| `af_max`   | `f64` | `0.20`  | finite, `> 0`                              | `Psar::new` (`psar.rs:68-100`)        |
 
 Python defaults from
 `#[pyo3(signature = (af_start=0.02, af_step=0.02, af_max=0.20))]` in
@@ -91,14 +120,14 @@ const _: fn(&mut Psar, Candle) -> Option<f64> = <Psar as Indicator>::update;
 
 ## Warmup
 
-`warmup_period() == 2`. The very first candle seeds internal state
-(`prev_high`, `prev_low`, `sar = low`, `ep = high`, `trend = Up`,
-`af = af_start`) and returns `None`. The second candle produces the
-first SAR value.
+`warmup_period() == 2`. The very first candle only records its high and
+low and returns `None`. The second candle picks the starting direction
+from the directional movement of the two candles (see *Seed* above), sets
+`SAR` to the first candle's opposite extreme, `EP` to the second candle's
+extreme and `AF = af_start`, and emits that SAR as the first value.
 
-The seed trend is **always** `Up` (`psar.rs:83`); the indicator will
-reverse to `Down` on the first qualifying penetration. There is no
-look-ahead at the second candle's close — the seed is purely structural.
+Only the highs and lows of the first two candles decide the direction;
+closes are never consulted.
 
 ## Edge cases
 
@@ -112,7 +141,9 @@ look-ahead at the second candle's close — the seed is purely structural.
   the SAR sits above the highs after the trend establishes.
   `pure_downtrend_sar_above_highs` covers this.
 - **Reversal mechanics.** When the trend flips, `SAR` is set to the
-  previous EP (not the calculated parabola value), AF is reset to
+  previous EP (not the calculated parabola value) — pushed above the
+  highs (flip to short) or below the lows (flip to long) of the reversal
+  bar and the bar before it if they reach past the EP — AF is reset to
   `af_start`, and the new EP is the current bar's high (Down→Up) or
   low (Up→Down).
 - **Choppy regime.** Frequent reversals cause many AF resets; SAR
@@ -120,7 +151,8 @@ look-ahead at the second candle's close — the seed is purely structural.
 - **NaN / infinity.** `Candle::new` rejects non-finite OHLC values.
   `Psar::new` rejects non-finite AF parameters.
 - **Reset.** `reset()` clears the initialised flag and resets `af` to
-  `af_start`, `sar` to `0.0`, `ep` to `0.0`; the next `update` re-seeds.
+  `af_start`, and returns `sar`, `ep` and the stored previous-bar
+  extremes to `NaN` sentinels; the next `update` re-seeds.
 
 ## Examples
 
@@ -149,16 +181,19 @@ Output:
 ```
 i=0 -> None
 i=1 -> Some(99.5)
-i=2 -> Some(99.58)
-i=3 -> Some(99.7552)
-i=4 -> Some(100.054784)
-i=5 -> Some(100.4993056)
-i=6 -> Some(101.099388928)
-i=7 -> Some(101.85547447808)
+i=2 -> Some(99.54)
+i=3 -> Some(99.6584)
+i=4 -> Some(99.888896)
+i=5 -> Some(100.25778432)
+i=6 -> Some(100.782005888)
+i=7 -> Some(101.46816518144)
 ```
 
-The SAR starts at `99.5` (the first candle's low) and accelerates
-upward toward price as the EP makes new highs on every bar.
+The second candle moves up (`up_move = 1`, `down_move = −1`), so the seed
+is long: `SAR = 99.5` (the first candle's low) and `EP = 101.5` (the second
+candle's high). On bar 2 the SAR advances by `0.02·(101.5 − 99.5) = 0.04`
+to `99.54`; the EP then makes a new high on every bar, so AF climbs by
+`0.02` per bar and the SAR accelerates toward price.
 
 ### Python
 
@@ -176,8 +211,7 @@ print(p.batch(h, l, cl))
 Output:
 
 ```
-[         nan  99.5         99.58        99.7552     100.054784
- 100.4993056  101.09938893 101.85547448]
+array('d', [nan, 99.5, 99.54, 99.6584, 99.888896, 100.25778432, 100.782005888, 101.46816518144])
 ```
 
 ### Node
@@ -199,12 +233,12 @@ Output:
 [
   NaN,
   99.5,
-  99.58,
-  99.7552,
-  100.054784,
-  100.4993056,
-  101.099388928,
-  101.85547447808
+  99.54,
+  99.6584,
+  99.888896,
+  100.25778432,
+  100.782005888,
+  101.46816518144
 ]
 ```
 
@@ -227,12 +261,12 @@ Output:
   vector and does `out[i] = psar.update(c).unwrap()` will panic on
   the very first input. Use `if let Some(...)` or skip the first
   row explicitly.
-- **Initial trend is hard-coded to `Up`.** The seed bar always sets
-  `trend = Up`, regardless of whether the data is in a downtrend.
-  Expect a near-immediate reversal to `Down` if you feed PSAR a
-  decisively bearish series — the first emitted SAR may look
-  "wrong" because it is the prior EP from the artificial `Up`
-  seed, not from a real bullish run.
+- **The initial trend rests on two bars.** The starting direction is
+  read from the directional movement of the first two candles only. A
+  noisy first pair can start the SAR on the wrong side; the state machine
+  corrects itself on the first penetration, but the first few values
+  depend on where the series begins. Trim the input the same way when
+  comparing against another implementation.
 - **Acceleration cap matters.** `af_max = 0.20` is Wilder's choice;
   raising it produces an extremely tight stop near tops/bottoms but
   exits good trends prematurely. Lowering it produces a forgiving

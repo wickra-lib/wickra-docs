@@ -18,12 +18,15 @@
 ## Formula
 
 ```
-Filt      = SuperSmoother(price, period)
+Filt      = SuperSmoother(price, 0.5·period)   # a1 = exp(−1.414·π / (0.5·period))
 sum       = mean over i=1..period of ( Filt[0] − Filt[i] )
 ms        = 0.04·sum² + 0.96·ms[−1]
 Trendflex = sum / sqrt(ms)        (0 if ms == 0)
 ```
 
+The SuperSmoother prefilter runs with **half** the lookback as its critical
+period (Ehlers' `a1 = exp(−1.414·π / (0.5·Length))`), which may be fractional for
+an odd `period`; the deviation average still spans the full `period`.
 Trendflex measures the deviation of the SuperSmoothed price from its own past
 values (not from a fitted line, as [`Reflex`](/Indicators/Indicator-Reflex)
 does). That makes it trend-sensitive: it stays on one side of zero through a trend
@@ -35,7 +38,7 @@ band on any instrument. Source:
 
 | Name     | Type    | Default       | Valid range | Source | Description |
 |----------|---------|---------------|-------------|--------|-------------|
-| `period` | `usize` | `20` (Python) | `>= 1`      | `trendflex.rs:60` | Lookback for the prefilter and deviation average. `0` errors with `Error::PeriodZero`. |
+| `period` | `usize` | `20` (Python) | `>= 1`      | `trendflex.rs:61` | Lookback for the deviation average; the SuperSmoother prefilter uses half of it (`0.5·period`) as its critical period. `0` errors with `Error::PeriodZero`. |
 
 The `period` getter returns the window; `value` returns the current output if
 ready.
@@ -144,6 +147,10 @@ Streaming `update` and `batch` are equivalent tick-for-tick
 - **Not bounded exactly.** The `±3` band is a target, not a clamp.
 - **Confusing the pair.** Trendflex = trend, Reflex = cycle; do not swap their
   roles.
+- **Prefilter is half-period.** The SuperSmoother runs with critical period
+  `0.5·period`, not `period`; rebuilding the indicator from a
+  [`SuperSmoother`](/Indicators/Indicator-SuperSmoother) of the full `period`
+  will not reproduce Wickra's (or Ehlers') values.
 - **Period choice.** Longer `period` smooths the trend signal but adds lag.
 
 ## References

@@ -9,7 +9,7 @@ MACD, all as idiomatic Go.
 ## Install
 
 ```bash
-go get github.com/wickra-lib/wickra-go
+go get github.com/wickra-lib/wickra-go/v2
 ```
 
 The binding uses cgo, so a C compiler is required. The prebuilt Wickra C ABI
@@ -24,7 +24,7 @@ Every indicator is a type over an opaque native handle, with the same operations
 as the C ABI underneath:
 
 ```go
-import wickra "github.com/wickra-lib/wickra-go"
+import wickra "github.com/wickra-lib/wickra-go/v2"
 
 sma, err := wickra.NewSma(14) // err is ErrInvalidParams on invalid params
 if err != nil {
@@ -56,7 +56,7 @@ import (
     "fmt"
     "math"
 
-    wickra "github.com/wickra-lib/wickra-go"
+    wickra "github.com/wickra-lib/wickra-go/v2"
 )
 
 func main() {
@@ -90,7 +90,8 @@ feeding the same inputs through `Update` one at a time.
 
 Every single-output `Batch` has a `BatchInto(dst, ...)` form that writes into a
 slice you reuse (destination first, as `copy` does), and a `BatchFast` /
-`BatchFastInto` twin; MACD and Bollinger Bands have a record-slice `BatchFast`:
+`BatchFastInto` twin; MACD, `MacdFix` and Bollinger Bands have a record-slice
+`BatchFast`:
 
 ```go
 out := make([]float64, len(prices))
@@ -104,7 +105,7 @@ fast := ema.BatchFast(prices) // or ema.BatchFastInto(out, prices)
 ```
 
 The fast batch runs a SIMD kernel where the indicator has one (moving
-averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+averages, RSI, ATR, MACD and MACDFIX, Bollinger Bands, the Chaikin oscillator, skewness,
 Pearson correlation and more). The kernel reassociates the arithmetic, so each
 value agrees with the exact batch to within a few units in the last place
 rather than bit for bit; `NaN` placement and length are identical, and the

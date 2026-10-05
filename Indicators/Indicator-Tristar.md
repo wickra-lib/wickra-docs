@@ -1,7 +1,8 @@
 # Tristar
 
-> Three consecutive Doji where the middle gaps away from its neighbours — a rare
-> top (middle above) or bottom (middle below) reversal.
+> Three consecutive Doji where the middle one's body gaps away from the first — a
+> rare top (middle gaps above) or bottom (middle gaps below) reversal (Nison; TA-Lib
+> `CDLTRISTAR`).
 
 ## Quick reference
 
@@ -18,16 +19,24 @@
 ## Formula
 
 ```
-all three bars are doji:  |close − open| <= 0.1 * (high − low)
-mid = body centre of the middle doji,  n1/n3 = body centres of the outer two
-Bearish (−1): mid > n1 AND mid > n3   (middle star on top)
-Bullish (+1): mid < n1 AND mid < n3   (middle star on bottom)
+all three bars are doji:  |close − open| <= 0.1 * (high − low),  high > low
+Bearish (−1): min(o2, c2) > max(o1, c1)     (middle body gaps above the first)
+          AND max(o3, c3) < max(o2, c2)     (third body top below the middle's)
+Bullish (+1): max(o2, c2) < min(o1, c1)     (middle body gaps below the first)
+          AND min(o3, c3) > min(o2, c2)     (third body bottom above the middle's)
 otherwise 0
 ```
 
-A Tristar is three indecision candles in a row with the middle one isolated above
-(top) or below (bottom) the others — a strong signal of exhaustion after a trend.
+A Tristar is three indecision candles in a row with the middle one's real body
+gapping above (top) or below (bottom) the first — the body gap of the middle doji is
+the defining feature — while the third doji fails to extend past the middle one. It
+is a strong signal of exhaustion after a trend.
 Source: `crates/wickra-core/src/indicators/tristar.rs`.
+
+**TA-Lib parity.** On the TA-Lib reference pattern series the signals are
+identical to `CDLTRISTAR` (`±1` here, `±100` there). TA-Lib sizes bodies and
+shadows against 5- or 10-bar rolling averages ("candle settings"), while Wickra
+sizes them against the pattern's own bars.
 
 ## Parameters
 
@@ -60,9 +69,14 @@ low, close)` → `array.array('d')`; Node `update(open, high, low, close)` / `ba
 
 ## Edge cases
 
-- **Bearish top.** Middle doji highest → `−1` (`bearish_tristar_top` pins this).
-- **Bullish bottom.** Middle doji lowest → `+1` (`bullish_tristar_bottom` pins
-  this).
+- **Bearish top.** Middle doji body gaps above the first, third body top below the
+  middle's → `−1` (`bearish_tristar_top` pins this).
+- **Bullish bottom.** Middle doji body gaps below the first, third body bottom above
+  the middle's → `+1` (`bullish_tristar_bottom` pins this).
+- **No gap → 0.** A middle doji whose body overlaps the first doji's body is not a
+  star, however its centre compares.
+- **Third bar.** Only the third doji's body top (bearish) / bottom (bullish) is
+  checked against the middle; it need not gap away from the middle.
 - **Non-doji → 0.** Any solid body breaks the pattern (`non_doji_is_zero` pins
   this).
 - **Finiteness.** `Candle::new` rejects non-finite fields, so no in-method guard
@@ -81,7 +95,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut t = Tristar::new();
     let doji = |mid: f64| Candle::new(mid, mid + 1.0, mid - 1.0, mid + 0.02, 0.0, 0).unwrap();
     t.update(doji(100.0));
-    t.update(doji(105.0)); // middle highest
+    t.update(doji(105.0)); // middle body gaps above the first
     println!("{:?}", t.update(doji(100.0))); // Some(-1.0)
     Ok(())
 }
@@ -101,7 +115,7 @@ import wickra as ta
 
 t = ta.Tristar()
 o = np.array([100, 105, 100], float); h = o + 1; l = o - 1; c = o + 0.02
-print(t.batch(o, h, l, c))  # [nan, nan, -1.0]
+print(t.batch(o, h, l, c))  # array('d', [nan, nan, -1.0])
 ```
 
 ### Node
@@ -146,12 +160,14 @@ Streaming `update` and `batch` are equivalent tick-for-tick
   matters.
 - **Needs trend context.** A Tristar mid-range is meaningless; it is a reversal
   pattern.
-- **Gap definition.** This uses body-centre ordering rather than strict gaps to be
-  robust on gapless (24/7) markets.
+- **Gap definition.** The middle doji's *body* must gap clear of the first doji's
+  body (shadows may overlap). On gapless (24/7) markets, where each open equals the
+  prior close, true body gaps are rare and the pattern will seldom fire.
 
 ## References
 
-Nison, S. (1991), *Japanese Candlestick Charting Techniques*.
+Nison, S. (1991), *Japanese Candlestick Charting Techniques*. TA-Lib `CDLTRISTAR` —
+the body-gap rule implemented here.
 
 ## See also
 

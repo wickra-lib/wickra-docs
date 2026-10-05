@@ -177,7 +177,7 @@ clean_rows = arr[~np.isnan(arr[:, 0])]
 
 ## The opt-in fast batch
 
-Every single-output indicator, plus MACD, Bollinger Bands, ATR, the Chaikin
+Every single-output indicator, plus MACD, MACDFIX, Bollinger Bands, ATR, the Chaikin
 oscillator and Pearson correlation, has `batch_fast` with the same arguments and
 return type as `batch`:
 
@@ -190,7 +190,7 @@ rows = ta.MACD(12, 26, 9).batch_fast(prices)  # Matrix, like MACD.batch
 ```
 
 The fast batch runs a SIMD kernel where the indicator has one (moving
-averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+averages, RSI, ATR, MACD and MACDFIX, Bollinger Bands, the Chaikin oscillator, skewness,
 Pearson correlation and more). The kernel reassociates the arithmetic, so each
 value agrees with the exact batch to within a few units in the last place
 rather than bit for bit; `NaN` placement and length are identical, and the

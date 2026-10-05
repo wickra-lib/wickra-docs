@@ -4,8 +4,11 @@
 > by a Countdown count. Setup runs the 9-bar momentum-exhaustion
 > gate, Countdown then runs a separate 13-bar confirmation;
 > together a completed Sequential is the canonical DeMark
-> exhaustion signal. Emits both phases in a single `Output` so the
-> caller can read setup progress and countdown progress in one shot.
+> exhaustion signal. DeMark's bar-13 qualifier is enforced: the
+> final countdown bar must also trade through the close of countdown
+> bar 8, or it is deferred. Emits both phases in a single `Output` so
+> the caller can read setup progress and countdown progress in one
+> shot.
 
 ## Quick reference
 
@@ -13,7 +16,7 @@
 |---------------------|---------------------------------------------------------------------------------------------|
 | Family              | DeMark                                                                                      |
 | Input type          | `Candle` (uses `high`, `low`, `close`)                                                      |
-| Output type         | `TdSequentialOutput { setup, countdown: i32 }` (signed: positive = buy, negative = sell)    |
+| Output type         | `TdSequentialOutput { setup, countdown, direction: f64 }` (signed: positive = buy, negative = sell) |
 | Output range        | `setup ∈ [-setup_target, setup_target]`, `countdown ∈ [-countdown_target, countdown_target]` |
 | Default parameters  | `setup_lookback=4`, `setup_target=9`, `countdown_lookback=2`, `countdown_target=13`         |
 | Warmup period       | `max(setup_lookback, countdown_lookback) + 1`                                               |
@@ -37,7 +40,20 @@ if close[t] <= low[t - countdown_lookback]:   buy_countdown += 1
 if close[t] >= high[t - countdown_lookback]:  sell_countdown += 1
 ```
 
-Countdown completes at `countdown_target` (13). See
+Countdown bars do not need to be consecutive. The final bar is
+subject to DeMark's bar-13 qualifier: besides meeting the comparison
+above, it must trade through the close of countdown bar
+`countdown_target − 5` (bar 8 of 13):
+
+```
+buy  bar 13 counts only if  low[t]  <= close[countdown bar 8]
+sell bar 13 counts only if  high[t] >= close[countdown bar 8]
+otherwise the bar is deferred (count stays at 12)
+```
+
+Countdown completes at `countdown_target` (13). When
+`countdown_target <= 5` there is no bar `countdown_target − 5`, so no
+qualifier applies. See
 `crates/wickra-core/src/indicators/td_sequential.rs`.
 
 ## Parameters
@@ -55,13 +71,16 @@ Countdown completes at `countdown_target` (13). See
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = TdSequentialOutput>`.
-`TdSequentialOutput` carries `setup: i32` and `countdown: i32`,
-both signed (positive = buy-side counts, negative = sell-side).
+`TdSequentialOutput` carries `setup: f64`, `countdown: f64` and
+`direction: f64`. `setup` and `countdown` are signed (positive =
+buy-side counts, negative = sell-side); `direction` is `+1.0` while a
+buy countdown is active, `-1.0` for a sell countdown, `0.0` otherwise.
 
-- **Python.** Returns a `(setup, countdown)` 2-tuple per bar in an
-  `(n, 2)` array.
-- **Node.** Returns `{ setup, countdown } | null` per bar; flat
-  `number[]` of length `n * 2` for batch.
+- **Python.** `update` returns a `(setup, countdown, direction)`
+  3-tuple per bar; `batch` returns an `(n, 3)` matrix.
+- **Node.** `update` returns `{ setup, countdown, direction } | null`
+  per bar; `batch` returns a flat `number[]` of length `n * 3`
+  (`[setup0, countdown0, direction0, setup1, ...]`).
 
 ## Warmup
 
@@ -78,9 +97,16 @@ with both lookbacks available.
 - **Countdown interrupted.** Countdown counts can sit at a partial
   value (e.g. 7/13) across many bars while waiting for the next
   qualifying close.
+- **Deferred bar 13.** A bar that meets the countdown comparison
+  while the count is at 12 but does not trade through the close of
+  countdown bar 8 (buy: `low > close₈`; sell: `high < close₈`) is
+  deferred — the count stays at 12 until a later bar satisfies both
+  conditions.
 - **Opposite-direction invalidation.** A sell setup completion can
-  invalidate an active buy countdown — output direction flips.
-- **Reset.** `reset()` clears both setup and countdown streaks.
+  invalidate an active buy countdown — output direction flips and the
+  stored bar-8 qualifier close is cleared.
+- **Reset.** `reset()` clears both setup and countdown streaks and
+  the bar-8 qualifier close.
 
 ## Examples
 
@@ -114,7 +140,7 @@ import wickra as ta
 close = 100 - np.arange(60, dtype=float) * 0.4
 td = ta.TDSequential()
 out = td.batch(close + 0.3, close - 0.3, close)
-# out shape (60, 2): columns [setup, countdown]
+# out shape (60, 3): columns [setup, countdown, direction]
 print('row 30:', out[30])
 ```
 
@@ -125,7 +151,7 @@ const wickra = require('wickra');
 const td = new wickra.TDSequential(4, 9, 2, 13);
 const close = Array.from({ length: 60 }, (_, i) => 100 - i * 0.4);
 const flat = td.batch(close.map(c => c + 0.3), close.map(c => c - 0.3), close);
-console.log('row 30: setup =', flat[30 * 2], 'countdown =', flat[30 * 2 + 1]);
+console.log('row 30: setup =', flat[30 * 3], 'countdown =', flat[30 * 3 + 1]);
 ```
 
 ### Streaming
@@ -165,13 +191,20 @@ for bar in candle_stream {
   boundaries.
 - **Ignoring direction.** The signed output makes direction
   explicit; ignoring it produces inverted signals.
+- **Expecting 13 on the first comparison-qualifying bar.** Because
+  of the bar-13 qualifier, a bar can satisfy `close <= low[t-2]` (or
+  `close >= high[t-2]`) at count 12 and still not complete the
+  countdown. Implementations that skip the qualifier will print 13
+  earlier than Wickra.
 
 ## References
 
 - Tom DeMark, *The New Science of Technical Analysis* (1994) —
   original full Sequential treatment.
 - *DeMark on Day Trading Options* (1999) — recycle, deferred
-  countdown, and other edge-case rules.
+  countdown, and other edge-case rules. Wickra implements the bar-13
+  deferral (qualifier against the close of countdown bar 8); recycle
+  is not implemented.
 
 ## See also
 

@@ -1,3 +1,7 @@
+---
+description: "What Wickra is: a streaming-first technical-indicator library in Rust with native Python, Node.js and WASM bindings and a C ABI for C, C++, C#, Go, Java and R."
+---
+
 # Wickra
 
 Wickra is a streaming-first technical-indicators library. Every indicator is
@@ -44,7 +48,7 @@ documentation site. The [Ecosystem](/Ecosystem) page lists them by layer.
 | [npm](https://www.npmjs.com/package/wickra-wasm) | `wickra-wasm` | 1.0.7 |
 | [NuGet](https://www.nuget.org/packages/Wickra) | `Wickra` | 1.0.7 |
 | [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) | `org.wickra:wickra` | 1.0.7 |
-| [Go](https://pkg.go.dev/github.com/wickra-lib/wickra-go) | `github.com/wickra-lib/wickra-go` | 1.0.7 |
+| [Go](https://pkg.go.dev/github.com/wickra-lib/wickra-go/v2) | `github.com/wickra-lib/wickra-go/v2` | 1.0.7 |
 | [r-universe](https://wickra-lib.r-universe.dev/wickra) | `wickra` | 1.0.7 |
 
 Release notes and tagged builds:

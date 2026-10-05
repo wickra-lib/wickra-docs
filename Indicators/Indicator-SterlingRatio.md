@@ -1,7 +1,7 @@
 # SterlingRatio
 
-> Return per unit of *typical* pain — mean return over the average drawdown of the
-> compounded equity curve.
+> Return per unit of *typical* pain — mean return over the average depth of the
+> drawdown episodes of the compounded equity curve.
 
 ## Quick reference
 
@@ -11,33 +11,41 @@
 | Input type | `f64` (per-period returns) |
 | Output type | `f64` |
 | Output range | unbounded (negative for net-losing windows) |
-| Default parameters | `(period = 36)` (Python) |
+| Default parameters | `(period = 12)` (Python) |
 | Warmup period | `period` |
-| Interpretation | Higher = more return per average drawdown. |
+| Interpretation | Higher = more return per average drawdown episode. |
 
 ## Formula
 
 ```
 equity_t  = Π_{i<=t} (1 + return_i)          (compounded curve)
 peak_t    = max_{s<=t} equity_s
-dd_t      = (peak_t − equity_t) / peak_t      (fractional drawdown, >= 0)
-Sterling  = mean(returns) / mean(dd_t)
+episode   = a stretch below the running peak, closed by a full recovery
+D_j       = (peak_j − trough_j) / peak_j      (depth of episode j)
+Sterling  = mean(returns) / mean(D_j)
 ```
 
-The Sterling Ratio divides the average per-period return by the **average
-drawdown** along the compounded equity curve. Of Wickra's three drawdown-based
-ratios it is the gentlest on outliers: averaging the drawdowns means one deep
+The Sterling Ratio divides the average per-period return by the **average depth
+of the drawdown episodes** in the window (Bacon's form of Deane Sterling Jones'
+ratio, with every episode averaged). An episode opens when equity falls below the
+running peak and closes when equity regains that peak; its depth is the trough
+measured against that peak. An episode still open at the window's right edge is
+booked at its current trough. Each episode counts once, however many bars it
+lasts — averaging every bar's drawdown instead would be the
+[`PainIndex`](/Indicators/Indicator-PainIndex). Of Wickra's three drawdown-based
+ratios it is the gentlest on outliers: averaging episode depths means one deep
 crater does not dominate, unlike the [`BurkeRatio`](/Indicators/Indicator-BurkeRatio)
-(which sums *squared* drawdowns) or the [`MartinRatio`](/Indicators/Indicator-MartinRatio)
-(which uses the root-mean-square *percentage* drawdown). A window that never draws
-down has zero average drawdown and reports `0.0`. Source:
+(root of the summed *squared* episode depths) or the
+[`MartinRatio`](/Indicators/Indicator-MartinRatio) (which uses the root-mean-square
+*percentage* drawdown). A window that never draws down has no episodes and reports
+`0.0`. Source:
 `crates/wickra-core/src/indicators/sterling_ratio.rs`.
 
 ## Parameters
 
 | Name     | Type    | Default       | Valid range | Source | Description |
 |----------|---------|---------------|-------------|--------|-------------|
-| `period` | `usize` | `36` (Python) | `>= 2`      | `sterling_ratio.rs:50` | Window of returns (e.g. 36 months). `< 2` errors with `Error::InvalidPeriod`. |
+| `period` | `usize` | `12` (Python) | `>= 2`      | `sterling_ratio.rs:55` | Window of returns (e.g. 36 months). `< 2` errors with `Error::InvalidPeriod`. |
 
 The `period` getter returns the window.
 
@@ -61,8 +69,12 @@ An `f64` return in, an `Option<f64>` out. Python `update(ret)` / `batch(returns)
 
 ## Edge cases
 
-- **Reference value.** `[0.1, −0.1, 0.1]` → drawdowns `[0, 0.1, 0.01]`,
-  `(0.1/3) / (0.11/3) = 0.1/0.11` (`reference_value` pins this).
+- **Reference value.** `[0.1, −0.1, 0.1]` → equity `1.1, 0.99, 1.089`; the peak
+  stays `1.1`, so there is one episode, still open at the window edge, booked at
+  its trough: depth `(1.1 − 0.99) / 1.1 = 0.1`. Sterling `= (0.1/3) / 0.1 = 1/3`
+  (`reference_value` pins this).
+- **Open episode.** An episode that has not recovered by the window's last bar
+  is booked at its trough so far, not dropped.
 - **No drawdown.** A monotonically rising window reports `0.0`
   (`no_drawdown_is_zero` pins this).
 - **Losing window.** A net-losing window gives a negative ratio
@@ -80,7 +92,7 @@ use wickra::{BatchExt, Indicator, SterlingRatio};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut sr = SterlingRatio::new(3)?;
     let out = sr.batch(&[0.1, -0.1, 0.1]);
-    println!("{:?}", out[2]); // Some(0.9090...)
+    println!("{:?}", out[2]); // Some(0.3333...)
     Ok(())
 }
 ```
@@ -88,7 +100,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Output:
 
 ```
-Some(0.9090909090909091)
+Some(0.3333333333333334)
 ```
 
 ### Python
@@ -107,7 +119,7 @@ print(sr.batch(returns)[-1])
 ```javascript
 const ta = require('wickra');
 const sr = new ta.SterlingRatio(3);
-console.log(sr.batch([0.1, -0.1, 0.1]).at(-1)); // ~0.909
+console.log(sr.batch([0.1, -0.1, 0.1]).at(-1)); // ~0.3333
 ```
 
 ### Streaming
@@ -119,7 +131,7 @@ let mut sr = SterlingRatio::new(36).unwrap();
 let monthly_returns: Vec<f64> = Vec::new(); // your live stream
 for r in monthly_returns {
     if let Some(ratio) = sr.update(r) {
-        // higher ratio -> more return per average drawdown
+        // higher ratio -> more return per average drawdown episode
     }
 }
 ```
@@ -135,8 +147,9 @@ Streaming `update` and `batch` are equivalent tick-for-tick
    and [`MartinRatio`](/Indicators/Indicator-MartinRatio): a high Sterling but low
    Burke flags that the average drawdown is benign while a few are severe.
 3. **Classic definition note.** The original Sterling Ratio used the average of the
-   *largest annual* drawdowns; this rolling form averages every per-period drawdown
-   in the window — comparable in spirit, simpler to stream.
+   *largest annual* drawdowns; this rolling form averages the depth of every
+   drawdown episode in the window (Bacon's variant) — comparable in spirit, simpler
+   to stream. Averaging every bar under water would be the Pain Index instead.
 
 ## Common pitfalls
 
@@ -144,17 +157,22 @@ Streaming `update` and `batch` are equivalent tick-for-tick
   infinity.
 - **Frequency.** `mean(returns)` is per-period — annualise consistently if you quote
   an annualised Sterling Ratio.
-- **Outlier blindness.** Because it averages drawdowns, a single catastrophic
+- **Outlier blindness.** Because it averages episode depths, a single catastrophic
   drawdown is under-weighted — pair with Burke/Martin to catch tail risk.
+- **Episodes, not bars.** A long, shallow episode and a one-bar dip of the same
+  depth weigh the same; duration is not penalised (see the Pain Index / Ulcer
+  Index for time-under-water measures).
 
 ## References
 
 Deane Sterling Jones; popularised via Kestner, L. N., *Quantitative Trading
 Strategies* (2003) — the Sterling Ratio.
+Bacon, C. R., *Practical Portfolio Performance Measurement and Attribution*
+(2nd ed., 2008) — the average-drawdown (episode) form.
 
 ## See also
 
-- [Indicator-BurkeRatio](/Indicators/Indicator-BurkeRatio) — sum of squared drawdowns.
+- [Indicator-BurkeRatio](/Indicators/Indicator-BurkeRatio) — root of summed squared episode depths.
 - [Indicator-MartinRatio](/Indicators/Indicator-MartinRatio) — return over the Ulcer Index.
 - [Indicator-SharpeRatio](/Indicators/Indicator-SharpeRatio) — mean over total volatility.
 - [Indicators-Overview](/Indicators-Overview) — the full taxonomy.

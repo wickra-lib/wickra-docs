@@ -1,3 +1,7 @@
+---
+description: "Wickra's native data layer (wickra-data): CSV loading, tick-to-candle aggregation, resampling and live exchange feeds in all 10 languages with zero third-party packages."
+---
+
 # Data Layer (`wickra-data`)
 
 Wickra ships a complete **native data layer** — exposed in **all 10 languages**

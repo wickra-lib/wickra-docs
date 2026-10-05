@@ -3,7 +3,7 @@
 > Five-bar bullish reversal. Three long black candles step the market down
 > like rungs of a ladder, a fourth black candle finally shows an upper
 > shadow (the first sign of buying), and a white candle then gaps up into
-> its body to confirm the turn.
+> its body and closes above the fourth bar's high to confirm the turn.
 
 ## Quick reference
 
@@ -14,7 +14,7 @@
 | Output type | `f64` — `+1.0` bullish, `0.0` otherwise (never `-1.0`) |
 | Output range | `{0.0, +1.0}` |
 | Default parameters | none — `LadderBottom::new()` |
-| Warmup period | `5` (first four bars always `0.0`) |
+| Warmup period | `5` (first four bars return `None`) |
 | Interpretation | Bottoming reversal after a stepped decline |
 
 ## Formula
@@ -22,12 +22,19 @@
 ```
 bar1, bar2, bar3 black, with consecutively lower opens AND closes
 bar4 black with an upper shadow      (high4 > open4)
-bar5 white, opens above bar4's body   (open5 > open4) and closes up
+bar5 white, opens above bar4's body   (open5 > open4)
+     and closes above bar4's high       (close5 > high4)
 ```
 
 Bullish-only (never `−1.0`). The fourth candle's upper shadow is the first hint
-of buying; the white fifth confirms. See
+of buying; the white fifth confirms by closing above bar 4's high (Nison;
+TA-Lib `CDLLADDERBOTTOM`). See
 `crates/wickra-core/src/indicators/ladder_bottom.rs`.
+
+**TA-Lib parity.** On the TA-Lib reference pattern series the signals are
+identical to `CDLLADDERBOTTOM` (`+1` here, `+100` there). TA-Lib sizes bodies
+and shadows against 5- or 10-bar rolling averages ("candle settings"), while
+Wickra sizes them against the pattern's own bars.
 
 ## Parameters
 
@@ -46,15 +53,16 @@ use wickra::{Indicator, LadderBottom, Candle};
 const _: fn(&mut LadderBottom, Candle) -> Option<f64> = <LadderBottom as Indicator>::update;
 ```
 
-- **Always emits a value.** Never `None`; warmup and no-match bars return `0.0`.
-- **Node.** `update(open, high, low, close)` → `number`; `batch(open, high, low,
-  close)` → `Array<number>`.
-- **Python.** `update(candle)` → `float`; `batch(open, high, low, close)` → 1-D
-  `array.array('d')` (`0.0` on warmup / no-match).
+- **Warmup emits `None`.** The first four bars return `None`; from the fifth bar
+  on every bar emits `Some(1.0)` or `Some(0.0)`.
+- **Node.** `update(open, high, low, close)` → `number | null`; `batch(open, high,
+  low, close)` → `Array<number>` (`NaN` on warmup).
+- **Python.** `update(candle)` → `float | None`; `batch(open, high, low, close)` →
+  1-D `array.array('d')` (`nan` on warmup, `0.0` on no-match).
 
 ## Warmup
 
-`warmup_period() == 5`. The first four bars return `0.0`
+`warmup_period() == 5`. The first four bars return `None`
 (`first_four_bars_return_zero`, `accessors_and_metadata`).
 
 ## Edge cases
@@ -63,6 +71,8 @@ const _: fn(&mut LadderBottom, Candle) -> Option<f64> = <LadderBottom as Indicat
   result is `0.0` (`fourth_bar_without_upper_shadow_yields_zero`).
 - **First three must be descending blacks.** Otherwise `0.0`
   (`not_three_descending_blacks_yields_zero`).
+- **Fifth bar must close above bar 4's high.** A white bar that opens above
+  bar 4's open but closes at or below `high4` yields `0.0`.
 - **Reset.** `reset()` clears the four-bar cache (`reset_clears_state`).
 
 ## Examples
@@ -86,15 +96,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Output:
 
 ```
-Some(0.0)
-Some(0.0)
-Some(0.0)
-Some(0.0)
+None
+None
+None
+None
 Some(1.0)
 ```
 
 Three descending blacks, a fourth black with an upper shadow (high `15 > open
-14`), then a white candle opening above it — a ladder bottom. This matches
+14`), then a white candle opening above it (`15 > 14`) and closing above bar 4's
+high (`17 > 15`) — a ladder bottom. This matches
 `ladder_bottom_is_plus_one`.
 
 ### Python
@@ -108,7 +119,7 @@ h = np.array([20.1, 18.1, 16.1, 15.0, 17.1])
 l = np.array([17.9, 15.9, 13.9, 12.4, 14.9])
 c = np.array([18.0, 16.0, 14.0, 12.5, 17.0])
 
-print(ta.LadderBottom().batch(o, h, l, c))  # [0. 0. 0. 0. 1.]
+print(ta.LadderBottom().batch(o, h, l, c))  # array('d', [nan, nan, nan, nan, 1.0])
 ```
 
 ### Node
@@ -146,11 +157,14 @@ for bar in candle_stream {
 
 - **Missing the fourth-bar shadow.** The upper shadow on bar 4 is the defining
   early-buying signal; without it this is just a decline.
+- **Weak confirmation.** A white fifth bar that merely closes up, without
+  clearing bar 4's high, does not count.
 - **No downtrend context.** Only meaningful after a decline.
 
 ## References
 
 - Steve Nison, *Japanese Candlestick Charting Techniques* (1991).
+- TA-Lib `CDLLADDERBOTTOM`.
 
 ## See also
 

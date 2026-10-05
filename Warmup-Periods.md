@@ -1,3 +1,7 @@
+---
+description: "Warmup period of every Wickra indicator — the formula, the value for default parameters and the input index of the first emitted value."
+---
+
 # Warmup Periods
 
 Every Wickra indicator returns `None` (Rust), `None` (Python), or `null`
@@ -75,12 +79,12 @@ index" in 0-indexed terms is `warmup_period − 1`.
 | `Pmo`           | `Pmo::new(35, 20)`                           | constant `2`                     | 2                                | 2nd                      |
 | `StochRsi`      | `StochRsi::new(14, 14)`                      | `rsi_period + stoch_period`      | 28                               | 28th                     |
 | `UltimateOscillator` | `UltimateOscillator::new(7, 14, 28)`    | `max(short, mid, long) + 1`      | 29                               | 29th                     |
-| `Rvi`           | `Rvi::new(10)`                               | `period`                         | 10                               | 10th                     |
+| `Rvi`           | `Rvi::new(10)`                               | `period + 3`                     | 13                               | 13th                     |
 | `Pgo`           | `Pgo::new(14)`                               | `period`                         | 14                               | 14th                     |
 | `Smi`           | `Smi::new(5, 3, 3)`                          | `period + d_period + d2_period − 2` | 9                             | 9th                      |
 | `LaguerreRsi`   | `LaguerreRsi::new(0.5)`                      | constant `1`                     | 1                                | 1st                      |
 | `ConnorsRsi`    | `ConnorsRsi::new(3, 2, 100)`                 | `max(period_rsi+1, period_streak+2, period_rank+1)` | 101            | 101st                    |
-| `Inertia`       | `Inertia::new(14, 20)`                       | `rvi_period + linreg_period − 1` | 33                               | 33rd                     |
+| `Inertia`       | `Inertia::new(14, 20)`                       | `2·rvi_period − 1 + linreg_period − 1` | 46                         | 46th                     |
 | `Ppo`           | `Ppo::new(12, 26)`                           | `slow`                           | 26                               | 26th                     |
 | `Dpo`           | `Dpo::new(20)`                               | `max(period, period / 2 + 2)`    | 20                               | 20th                     |
 | `Coppock`       | `Coppock::new(14, 11, 10)`                   | `max(roc_long, roc_short) + wma_period` | 24                        | 24th                     |
@@ -163,7 +167,7 @@ ready" to "ready" together — there are no rows that have a `signal` but no
 | `ChandelierExit`  | `ChandelierExit::new(22, 3.0)`       | `period`                                 | 22                               | 22nd                     | `long_stop`, `short_stop`                              |
 | `ChandeKrollStop` | `ChandeKrollStop::new(10, 1.0, 9)`   | `atr_period + stop_period - 1`           | 18                               | 18th                     | `stop_long`, `stop_short`                              |
 | `MaEnvelope`      | `MaEnvelope::new(20, 0.025)`         | `period`                                 | 20                               | 20th                     | `upper`, `middle`, `lower`                             |
-| `AccelerationBands` | `AccelerationBands::new(20, 0.001)` | `period`                                 | 20                               | 20th                     | `upper`, `middle`, `lower`                             |
+| `AccelerationBands` | `AccelerationBands::new(20, 4.0)`   | `period`                                 | 20                               | 20th                     | `upper`, `middle`, `lower`                             |
 | `StarcBands`      | `StarcBands::new(6, 15, 2.0)`        | `max(sma_period, atr_period)`            | 15                               | 15th                     | `upper`, `middle`, `lower`                             |
 | `AtrBands`        | `AtrBands::new(14, 3.0)`             | `period`                                 | 14                               | 14th                     | `upper`, `middle`, `lower`                             |
 | `HurstChannel`    | `HurstChannel::new(10, 0.5)`         | `period`                                 | 10                               | 10th                     | `upper`, `middle`, `lower`                             |
@@ -203,27 +207,28 @@ ready" to "ready" together — there are no rows that have a `signal` but no
 
 The Hilbert-chain indicators (Mama / Fama / HilbertDominantCycle / SineWave /
 AdaptiveCycle) inherit a long warmup from the truncated-Hilbert phase
-extractor — `warmup_period()` reports a conservative ~50.
+extractor — `warmup_period()` reports `33` for MAMA / FAMA and `50` for the
+cycle-period and phase studies.
 
 | Indicator                    | Constructor                                | Formula                            | warmup         | Inputs at first emission |
 |------------------------------|--------------------------------------------|------------------------------------|----------------|--------------------------|
-| `Mama`                       | `Mama::classic()` (`0.5, 0.05`)            | Hilbert-chain warmup               | ~30            | ~30th                    |
-| `Fama`                       | `Fama::classic()` (`0.5, 0.05`)            | delegates to `Mama`                | ~30            | ~30th                    |
+| `Mama`                       | `Mama::classic()` (`0.5, 0.05`)            | Hilbert-chain warmup               | 33             | 33rd                     |
+| `Fama`                       | `Fama::classic()` (`0.5, 0.05`)            | delegates to `Mama`                | 33             | 33rd                     |
 | `FisherTransform`            | `FisherTransform::new(10)`                 | `period`                           | 10             | 10th                     |
 | `InverseFisherTransform`     | `InverseFisherTransform::new(1.0)`         | constant `1`                       | 1              | 1st                      |
 | `SuperSmoother`              | `SuperSmoother::new(10)`                   | constant `2` (pass-through warmup) | 2              | 2nd                      |
-| `HilbertDominantCycle`       | `HilbertDominantCycle::new()`              | Hilbert-chain warmup               | ~50            | ~50th                    |
-| `SineWave`                   | `SineWave::new()`                          | Hilbert-chain warmup               | ~50            | ~50th                    |
+| `HilbertDominantCycle`       | `HilbertDominantCycle::new()`              | Hilbert-chain warmup               | 50             | 50th                     |
+| `SineWave`                   | `SineWave::new()`                          | Hilbert-chain warmup               | 50             | 50th                     |
 | `Decycler`                   | `Decycler::new(20)`                        | constant `2`                       | 2              | 2nd                      |
 | `DecyclerOscillator`         | `DecyclerOscillator::new(10, 30)`          | constant `2`                       | 2              | 2nd                      |
 | `RoofingFilter`              | `RoofingFilter::new(10, 48)`               | constant `2`                       | 2              | 2nd                      |
 | `CenterOfGravity`            | `CenterOfGravity::new(10)`                 | `period`                           | 10             | 10th                     |
 | `CyberneticCycle`            | `CyberneticCycle::new(10)`                 | constant `6`                       | 6              | 6th                      |
 | `AdaptiveCycle`              | `AdaptiveCycle::new()`                     | inherits HilbertDominantCycle      | ~50            | ~50th                    |
-| `EmpiricalModeDecomposition` | `EmpiricalModeDecomposition::new(20, 0.5)` | `period`                           | 20             | 20th                     |
+| `EmpiricalModeDecomposition` | `EmpiricalModeDecomposition::new(20, 0.1)` | `max(2·period, 50)`                | 50             | 50th                     |
 | `EhlersStochastic`           | `EhlersStochastic::new(20)`                | `period` + RoofingFilter warmup    | ~70            | ~70th                    |
 | `InstantaneousTrendline`     | `InstantaneousTrendline::new(20)`          | `period`                           | 20             | 20th                     |
-| `HtPhasor`                   | `HtPhasor::new()`                          | Hilbert-chain warmup               | 19             | 19th                     |
+| `HtPhasor`                   | `HtPhasor::new()`                          | Hilbert-chain warmup               | 22             | 22nd                     |
 | `HtDcPhase`                  | `HtDcPhase::new()`                         | Hilbert-chain warmup               | 50             | 50th                     |
 | `HtTrendMode`                | `HtTrendMode::new()`                       | Hilbert-chain warmup               | 50             | 50th                     |
 | `AdaptiveCci`                | `AdaptiveCci::new(20)`                     | `period`                           | 20             | 20th                     |
@@ -264,10 +269,10 @@ extractor — `warmup_period()` reports a conservative ~50.
 | `TdCombo`           | `TdCombo::classic()` (`4, 9, 2, 13`)      | `max(setup_lookback, countdown_lookback) + 1` | 5                                      | 5th                      |
 | `TdLines` (TDST)    | `TdLines::new(4, 9)`                      | `lookback + 1` (NaN until first setup)        | 5                                      | 5th (level emits later)  |
 | `TdDeMarker`        | `TdDeMarker::new(14)`                     | `period + 1`                                  | 15                                     | 15th                     |
-| `TdRei`             | `TdRei::classic()` (`5`)                  | `period + 7`                                  | 12                                     | 12th                     |
+| `TdRei`             | `TdRei::classic()` (`5`)                  | `period + 8`                                  | 13                                     | 13th                     |
 | `TdPressure`        | `TdPressure::new(5)`                      | `period`                                      | 5                                      | 5th                      |
 | `TdRangeProjection` | `TdRangeProjection::new()`                | constant `1`                                  | 1                                      | 1st                      |
-| `TdDifferential`    | `TdDifferential::new()`                   | constant `2`                                  | 2                                      | 2nd                      |
+| `TdDifferential`    | `TdDifferential::new()`                   | constant `3`                                  | 3                                      | 3rd                      |
 | `TdOpen`            | `TdOpen::new()`                           | constant `2`                                  | 2                                      | 2nd                      |
 | `TdRiskLevel`       | `TdRiskLevel::new(4, 9)`                  | `lookback + 1` (NaN until first setup)        | 5                                      | 5th (level emits later)  |
 | `TdCamouflage`      | `TdCamouflage::new()`                     | `2`                                           | 2                                      | 2nd                      |
@@ -333,7 +338,7 @@ signals.
 | `GapSideBySideWhite`      | `GapSideBySideWhite::new()`      | constant `3` | 3      | 3rd                      |
 | `HighWave`                | `HighWave::new()`                | constant `1` | 1      | 1st                      |
 | `Hikkake`                 | `Hikkake::new()`                 | constant `3` | 3      | 3rd                      |
-| `HikkakeModified`         | `HikkakeModified::new()`         | constant `3` | 3      | 3rd                      |
+| `HikkakeModified`         | `HikkakeModified::new()`         | constant `4` | 4      | 4th                      |
 | `HomingPigeon`            | `HomingPigeon::new()`            | constant `2` | 2      | 2nd                      |
 | `OnNeck`                  | `OnNeck::new()`                  | constant `2` | 2      | 2nd                      |
 | `InNeck`                  | `InNeck::new()`                  | constant `2` | 2      | 2nd                      |
@@ -444,7 +449,7 @@ fixed-window; `Footprint` accumulates until `reset()`.
 | `Vpin`                      | `Vpin::new(8.0, 5)`                  | `num_buckets` (volume-driven) | 5      | 5th bucket                    |
 | `AmihudIlliquidity`         | `AmihudIlliquidity::new(20)`         | `period + 1`                  | 21     | 21st trade                    |
 | `RollMeasure`               | `RollMeasure::new(20)`               | `period + 1`                  | 21     | 21st trade                    |
-| `HasbrouckInformationShare` | `HasbrouckInformationShare::new(20)` | `period + 1`                  | 21     | 21st                          |
+| `HasbrouckInformationShare` | `HasbrouckInformationShare::new(20)` | `period + 2`                  | 22     | 22nd                          |
 | `Pin`                       | `Pin::new(20)`                       | `window`                      | 20     | 20th                          |
 | `TradeSignAutocorrelation`  | `TradeSignAutocorrelation::new(20)`  | `period`                      | 20     | 20th                          |
 
@@ -573,9 +578,9 @@ Parameter-free swing-based Fibonacci tools. `warmup_period()` is the minimum num
 
 | Indicator                 | Constructor                          | Formula             | warmup            | Inputs at first emission     |
 |---------------------------|--------------------------------------|---------------------|-------------------|------------------------------|
-| `AdOscillator`            | `AdOscillator::new()`                | constant `2`        | 2                 | 2nd                          |
+| `AdOscillator`            | `AdOscillator::new()`                | constant `14`       | 14                | 14th                         |
 | `AnchoredVwap`            | `AnchoredVwap::new()`                | `1` post-anchor     | n/a               | 1st bar after `set_anchor()` |
-| `Kvo`                     | `Kvo::classic()` (`34, 55, 13`)      | `slow + signal - 1` | 67                | 67th                         |
+| `Kvo`                     | `Kvo::classic()` (`34, 55`)          | `slow + 1`          | 56                | 56th                         |
 | `MarketFacilitationIndex` | `MarketFacilitationIndex::new()`     | constant `1`        | 1                 | 1st                          |
 | `Nvi`                     | `Nvi::new()`                         | constant `2`        | 2                 | 2nd                          |
 | `Pvi`                     | `Pvi::new()`                         | constant `2`        | 2                 | 2nd                          |

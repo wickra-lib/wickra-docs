@@ -12,14 +12,15 @@
 | Output type | `HtPhasorOutput { inphase, quadrature }` |
 | Output range | unbounded; the two components are 90° out of phase |
 | Default parameters | none (no parameters) |
-| Warmup period | `19` |
+| Warmup period | `22` |
 | Interpretation | The raw quadrature pair whose ratio tracks the instantaneous phase of the dominant cycle. |
 
 ## Formula
 
 `HtPhasor` runs the same adaptive Hilbert-transform engine as
 [`HilbertDominantCycle`](/Indicators/Indicator-HilbertDominantCycle) — a 4-bar weighted
-smoother, a Hilbert-transform detrender, and the in-phase/quadrature mixing that
+smoother, a Hilbert-transform detrender whose four taps (`t`, `t−2`, `t−4`,
+`t−6`) all read the smoothed price history, and the in-phase/quadrature mixing that
 produces the analytic signal `I1 + jQ1`. Instead of collapsing that signal into a
 cycle period, it reports the raw components:
 
@@ -33,10 +34,16 @@ instantaneous phase and `√(I1² + Q1²)` the amplitude. From *Rocket Science f
 Traders* (Ehlers 2001), aligned with TA-Lib's `HT_PHASOR`. See
 `crates/wickra-core/src/indicators/ht_phasor.rs`.
 
+**TA-Lib parity.** Both `HtPhasor` outputs are identical to TA-Lib `HT_PHASOR`
+(`inphase`, `quadrature`, to `1e-9`) from bar 189 on the 3000-bar TA-Lib
+reference series. Before that the two start-ups differ — TA-Lib primes its
+Hilbert state with zeros after a WMA burn-in, Wickra waits for its tap buffers
+to fill — and the shared recursion then converges.
+
 ## Parameters
 
 `HtPhasor` takes **no parameters** — `HtPhasor::new()` in Rust,
-`wickra.HtPhasor()` in Python, `new ta.HtPhasor()` in Node. The transform's
+`wickra.HT_PHASOR()` in Python, `new ta.HT_PHASOR()` in Node. The transform's
 coefficients are fixed.
 
 ## Inputs / Outputs
@@ -57,11 +64,12 @@ a `{ inphase, quadrature }` object (camelCase keys) and `batch` a flat
 
 ## Warmup
 
-`HtPhasor::new().warmup_period() == 19`. The first value is emitted once the
-transform's tap buffers fill — at or before index `19`. The unit tests
-`accessors_and_metadata` (pins `warmup_period() == 19`) and
+`HtPhasor::new().warmup_period() == 22`. The first value is emitted once the
+transform's tap buffers fill — the WMA-4 smoother (4 bars), then the smoothed
+price, detrender and `I1`/`Q1` histories (7 taps each) — at index `21`. The unit
+tests `accessors_and_metadata` (pins `warmup_period() == 22`) and
 `emits_after_warmup_and_stays_finite` (pins `out[0] == None` and the first value
-at an index `<= 19`) pin this.
+at an index `<= 21`) pin this.
 
 ## Edge cases
 

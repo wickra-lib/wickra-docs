@@ -76,8 +76,8 @@ feeding the same inputs through `Update` one at a time.
 ## The opt-in fast batch
 
 Every single-output `Batch` has a `Span<double>` overload that writes into a
-buffer you reuse, and a `BatchFast` twin in both forms; MACD and Bollinger Bands
-have a record-array `BatchFast`:
+buffer you reuse, and a `BatchFast` twin in both forms; MACD, `MacdFix` and Bollinger
+Bands have a record-array `BatchFast`:
 
 ```csharp
 var output = new double[prices.Length];
@@ -89,7 +89,7 @@ double[] fast = ema.BatchFast(prices);   // or ema.BatchFast(prices, output)
 ```
 
 The fast batch runs a SIMD kernel where the indicator has one (moving
-averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+averages, RSI, ATR, MACD and MACDFIX, Bollinger Bands, the Chaikin oscillator, skewness,
 Pearson correlation and more). The kernel reassociates the arithmetic, so each
 value agrees with the exact batch to within a few units in the last place
 rather than bit for bit; `NaN` placement and length are identical, and the

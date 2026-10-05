@@ -3,7 +3,9 @@
 > Larry Williams' volume-less Accumulation/Distribution line measured against its
 > own 13-bar simple moving average, so it oscillates around zero instead of
 > drifting like the cumulative line. Positive when accumulation is running ahead
-> of its recent average, negative when distribution is.
+> of its recent average, negative when distribution is. This is **not**
+> TA-Lib's `ADOSC` — that is the Chaikin A/D Oscillator, which Wickra ships as
+> [ChaikinOscillator](/Indicators/Indicator-ChaikinOscillator).
 
 ## Quick reference
 
@@ -16,6 +18,7 @@
 | Default parameters | none — `AdOscillator::new()` (fixed 13-bar signal) |
 | Warmup period | `14` |
 | Interpretation | Williams A/D line minus its 13-bar SMA |
+| Name | `name() == "WilliamsAdOscillator"`; binding class `AdOscillator` |
 
 ## Formula
 
@@ -25,7 +28,7 @@ TR_l_t  = min(close_{t−1}, low_t)
 WAD_t   = WAD_{t−1} + (close_t − TR_l_t)   if close_t > close_{t−1}   (accumulation)
 WAD_t   = WAD_{t−1} + (close_t − TR_h_t)   if close_t < close_{t−1}   (distribution)
 WAD_t   = WAD_{t−1}                          if close_t == close_{t−1}
-ADOSC_t = WAD_t − SMA(WAD, 13)_t
+WADOSC_t = WAD_t − SMA(WAD, 13)_t
 ```
 
 The underlying line is Larry Williams' volume-less A/D (1972): it anchors the
@@ -34,9 +37,14 @@ sums the directional component. The oscillator subtracts the line's own 13-bar
 simple moving average, which removes the drift and centres the series on zero —
 so it reads as a momentum/mean-reversion signal rather than a cumulative level.
 
+TA-Lib's `ADOSC` is a different indicator: the **Chaikin** A/D Oscillator,
+`EMA(ADL, 3) − EMA(ADL, 10)` on the volume-weighted A/D line. If you are porting
+TA-Lib code that calls `ADOSC`, use
+[ChaikinOscillator](/Indicators/Indicator-ChaikinOscillator), not this indicator.
+
 See `crates/wickra-core/src/indicators/ad_oscillator.rs` (the 13-bar signal
 constant `SIGNAL_PERIOD` lives at `ad_oscillator.rs:8`; the update at
-`ad_oscillator.rs:85`).
+`ad_oscillator.rs:86`).
 
 ## Parameters
 
@@ -54,11 +62,13 @@ use wickra::{AdOscillator, Candle, Indicator};
 const _: fn(&mut AdOscillator, Candle) -> Option<f64> = <AdOscillator as Indicator>::update;
 ```
 
-The native bindings expose this under the TA-Lib-style alias **`ADOSC`**. Python
-streams as `float | None` and batches `ADOSC().batch(high, low, close)` to a 1-D
-`array.array('d')` (`NaN` for warmup). Node streams as `number | null` via
-`update(high, low, close)` and batches `batch(high, low, close)` with `NaN`
-placeholders.
+`name()` returns `"WilliamsAdOscillator"`. Every binding (Python, Node, WASM, C,
+Go, Java, C#, R) exposes the class as **`AdOscillator`** — earlier releases used
+`ADOSC` in Python, Node and WASM, which was removed because TA-Lib's `ADOSC` is
+the Chaikin oscillator. Python streams as `float | None` and batches
+`AdOscillator().batch(high, low, close)` to a 1-D `array.array('d')` (`NaN` for
+warmup). Node streams as `number | null` via `update(high, low, close)` and
+batches `batch(high, low, close)` with `NaN` placeholders.
 
 ## Warmup
 
@@ -122,7 +132,7 @@ import wickra as ta
 
 # Flat market -> oscillator is zero once the 13-bar signal SMA fills.
 flat = np.full(16, 50.0)
-adosc = ta.ADOSC()
+adosc = ta.AdOscillator()
 out = adosc.batch(flat, flat, flat)  # high, low, close
 print('warmup:', adosc.warmup_period())
 print('out[13]:', out[13])
@@ -141,7 +151,7 @@ out[13]: 0.0
 const wickra = require('wickra');
 
 const flat = Array.from({ length: 16 }, () => 50.0);
-const adosc = new wickra.ADOSC();
+const adosc = new wickra.AdOscillator();
 const out = adosc.batch(flat, flat, flat); // high, low, close
 console.log('out[13]:', out[13]);
 ```
@@ -177,7 +187,7 @@ for bar in feed {
    high/low/close — useful for instruments where volume is poor or absent, where
    the Chaikin-style [`Adl`](/Indicators/Indicator-Adl) (volume-weighted) is not
    reliable.
-3. **Divergence.** Price makes a new high while `ADOSC` makes a lower high →
+3. **Divergence.** Price makes a new high while the oscillator makes a lower high →
    weakening accumulation, a classic divergence warning.
 4. **Vs the cumulative line.** Use [`Wad`](/Indicators/Indicator-Wad) (the raw
    drifting line) for long-horizon divergence against price; use this oscillator
@@ -185,11 +195,15 @@ for bar in feed {
 
 ## Common pitfalls
 
-- **Confusing it with the raw `Wad` line.** `Wad` drifts without bound; `ADOSC`
-  is `Wad − SMA(Wad, 13)` and oscillates around zero. They answer different
+- **Confusing it with the raw `Wad` line.** `Wad` drifts without bound;
+  `AdOscillator` is `Wad − SMA(Wad, 13)` and oscillates around zero. They answer different
   questions.
 - **Confusing it with `Adl`.** `Adl` is the volume-weighted Chaikin A/D line;
   this oscillator is volume-less (Williams').
+- **Treating it as TA-Lib `ADOSC`.** TA-Lib's `ADOSC` is the Chaikin A/D
+  Oscillator (`EMA(ADL, 3) − EMA(ADL, 10)`), available in Wickra as
+  [`ChaikinOscillator`](/Indicators/Indicator-ChaikinOscillator). Its values have
+  nothing in common with this Williams variant.
 - **Reading the absolute level.** Only the sign, zero-line crossings and
   divergences carry signal — not the magnitude.
 
@@ -197,11 +211,16 @@ for bar in feed {
 
 - Larry Williams, *How I Made One Million Dollars Last Year Trading Commodities*
   (1973) — the volume-less Accumulation/Distribution line.
+- TA-Lib `ADOSC` — for reference only: it is the Chaikin A/D Oscillator
+  (see [ChaikinOscillator](/Indicators/Indicator-ChaikinOscillator)), not this
+  indicator.
 
 ## See also
 
 - [Wad](/Indicators/Indicator-Wad) — the raw cumulative Williams A/D line this
   oscillator is built from.
 - [Adl](/Indicators/Indicator-Adl) — Chaikin's volume-weighted A/D line.
+- [ChaikinOscillator](/Indicators/Indicator-ChaikinOscillator) — TA-Lib's `ADOSC`
+  (`EMA(ADL, 3) − EMA(ADL, 10)`).
 - [ChaikinMoneyFlow](/Indicators/Indicator-ChaikinMoneyFlow) — volume-normalized money-flow cousin.
 - [Indicators-Overview](/Indicators-Overview) — the full taxonomy.

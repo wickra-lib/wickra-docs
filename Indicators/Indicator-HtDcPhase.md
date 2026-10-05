@@ -35,6 +35,12 @@ collapses to `±90°` by the sign of the real part — a degenerate guard pinned
 the `near_zero_imaginary_collapses_to_signed_ninety` unit test. See
 `crates/wickra-core/src/indicators/ht_dcphase.rs`.
 
+**TA-Lib parity.** `HtDcPhase` is identical to TA-Lib `HT_DCPHASE` (to `1e-9`)
+from bar 202 on the 3000-bar TA-Lib reference series. Before that the two
+start-ups differ — TA-Lib primes its Hilbert state with zeros after a WMA
+burn-in, Wickra waits for its tap buffers to fill — and the shared recursion
+then converges.
+
 ## Parameters
 
 `HtDcPhase` takes **no parameters** — `HtDcPhase::new()` in Rust,

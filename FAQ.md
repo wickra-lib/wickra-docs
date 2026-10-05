@@ -1,3 +1,7 @@
+---
+description: "Wickra FAQ — batch vs streaming parity, the exact fast batch, binding parity, warmup and NaN handling, thread safety, speed, custom indicators and how Wickra differs from TA-Lib."
+---
+
 # FAQ
 
 Frequently asked questions about Wickra. If yours is not here, check the

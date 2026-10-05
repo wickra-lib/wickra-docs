@@ -1,6 +1,6 @@
 # Roofing Filter
 
-> John Ehlers' bandpass formed by feeding a 2-pole high-pass into a
+> John Ehlers' bandpass formed by feeding a one-pole high-pass into a
 > [SuperSmoother](/Indicators/Indicator-SuperSmoother). The high-pass strips out
 > the trend (periods longer than `hp_period`) and the SuperSmoother
 > removes noise (periods shorter than `lp_period`). The result is
@@ -15,23 +15,27 @@
 | Input type          | `f64`                                                                  |
 | Output type         | `f64`                                                                  |
 | Output range        | unbounded; centred near zero                                           |
-| Default parameters  | `lp_period`, `hp_period` required (Ehlers' typical `(10, 48)`)        |
-| Warmup period       | `2` (initial-condition phase)                                          |
+| Default parameters  | `lp_period = 10`, `hp_period = 48` (Ehlers; Python defaults)           |
+| Warmup period       | `1` (emits from the first bar)                                         |
 | Interpretation      | Cycle-band signal; zero crossings = cycle-momentum reversals           |
 
 ## Formula
 
 ```
-alpha = (cos(.707·360°/hp_period) + sin(.707·360°/hp_period) - 1)
-        / cos(.707·360°/hp_period)
+alpha = (cos(360°/hp_period) + sin(360°/hp_period) - 1)
+        / cos(360°/hp_period)
 
-HP_t  = (1 - α/2) · (x_t - x_{t-1}) + (1 - α) · HP_{t-1}
+HP_t  = (1 - α/2) · (x_t - x_{t-1}) + (1 - α) · HP_{t-1}     (HP = 0 on the first bar)
 
-Roofing_t = SuperSmoother(lp_period).update(HP_t)
+Roofing_t = SuperSmoother(HP, lp_period)_t
 ```
 
-A single-pole high-pass (not the 2-pole used in Decycler) followed
-by the SuperSmoother lowpass. The combination passes only the band
+A one-pole high-pass (not the 2-pole used in Decycler) followed
+by the SuperSmoother lowpass. The `.707` factor inside the cosine/sine
+(`cos(.707·360°/hp_period)` …) belongs to the **two-pole** high-pass of
+Ehlers' *Cycle Analytics* Roofing Filter variant, which also uses
+`(1 − α/2)²` and second differences; Wickra implements the one-pole form
+above, so there is no `.707` in its alpha. The combination passes only the band
 between `lp_period` (lower) and `hp_period` (upper). See
 `crates/wickra-core/src/indicators/roofing_filter.rs`.
 
@@ -39,8 +43,8 @@ between `lp_period` (lower) and `hp_period` (upper). See
 
 | Name        | Type    | Default | Constraint            | Description |
 |-------------|---------|---------|-----------------------|-------------|
-| `lp_period` | `usize` | none    | `> 1`, `< hp_period`  | SuperSmoother critical period (lowpass). |
-| `hp_period` | `usize` | none    | `> 1`, `> lp_period`  | High-pass cutoff. |
+| `lp_period` | `usize` | `10` (Python) | `>= 1`, `< hp_period`  | SuperSmoother critical period (lowpass). |
+| `hp_period` | `usize` | `48` (Python) | `>= 2`, `> lp_period`  | High-pass cutoff. |
 
 `RoofingFilter::new` returns `Error::PeriodZero` for zero periods
 and `Error::InvalidPeriod` for `lp_period >= hp_period`.
@@ -53,18 +57,26 @@ Node: same shape; `update(value)` returns `number`.
 
 ## Warmup
 
-`warmup_period() == 2`. The first 2 bars are pass-through initial
-condition; from bar 3 the recursion runs. Stable output by
-~`2 · max(lp, hp) / 2` bars.
+`warmup_period() == 1`. The inner SuperSmoother emits on its first input,
+so the filter returns a value from the very first bar (the high-pass is `0`
+there, since it has no previous input). The high-pass needs two bars to be
+meaningful and the recursions need roughly `hp_period` bars to settle, so
+treat the first few dozen outputs as start-up transient.
 
 ## Edge cases
 
-- **Constant input.** Both filter outputs decay to zero.
-- **Trend input.** High-pass strips it out; output stays near zero.
+- **Constant input.** Both filter outputs decay to zero
+  (`constant_series_converges_to_zero` pins this).
+- **Trend input.** The high-pass removes the price level, but a one-pole
+  high-pass leaves a constant offset on a steady ramp of slope `s`
+  (`≈ (1 − α/2)·s / α`; about `2.29` for `s = 0.3` at `hp_period = 48`), so a
+  linear trend shows up as a flat, non-zero line rather than as zero.
 - **Pure cycle in band.** Passes through with mild attenuation;
   output oscillates around zero with the cycle's amplitude.
+- **Non-finite input.** A NaN/∞ input returns `None` and leaves the state
+  untouched (`ignores_non_finite_input` pins this).
 - **Reset.** `reset()` clears the high-pass state and the inner
-  SuperSmoother.
+  SuperSmoother (`reset_clears_state`).
 
 ## Examples
 

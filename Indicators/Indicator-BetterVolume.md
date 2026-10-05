@@ -1,46 +1,52 @@
 # BetterVolume
 
-> A Volume-Spread-Analysis "effort versus result" oscillator — positive means a
-> bar spent more volume than its range warranted (churn), negative means it moved
-> far on light volume (ease of movement).
+> Barry Taylor's (emini-watch) Better Volume — classifies each bar by its
+> **effort** (volume) against its **result** (range) over a lookback: low
+> volume, climax up/down, high churn, or climax + churn.
 
 ## Quick reference
 
 | Field | Value |
 |-------|-------|
 | Family | Volume |
-| Input type | `Candle` (high / low / volume) |
-| Output type | `f64` |
-| Output range | centred near `0` (`+` = churn, `−` = ease of movement) |
-| Default parameters | `(period = 20)` (Python) |
+| Input type | `Candle` (open / high / low / close / volume) |
+| Output type | `f64` (a category code) |
+| Output range | one of `0, 1, 2, 3, −3, 4` |
+| Default parameters | `(period = 14)` (Python) |
 | Warmup period | `period` |
-| Interpretation | `> 0` = effort exceeds result (absorption); `< 0` = efficient move. |
+| Interpretation | `1` low volume · `±3` climax up / down · `2` high churn · `4` climax + churn · `0` neutral. |
 
 ## Formula
 
 ```
-range_t   = high_t − low_t
-rel_vol   = volume_t / SMA(volume, period)
-rel_range = range_t  / SMA(range,  period)
-BetterVol = rel_vol − rel_range
+range      = high − low
+low volume : volume          is a new low  of the lookback   -> 1
+climax     : volume · range  is a new high of the lookback   -> +3 up bar (close ≥ open), −3 down bar
+churn      : volume / range  is a new high of the lookback   -> 2
+both       : climax and churn on the same bar                -> 4
+otherwise                                                    -> 0
 ```
 
-Volume-Spread Analysis reads price action through **effort** (volume) versus
-**result** (the bar's spread). Better Volume normalises both against their own
-`period` simple moving averages (current bar included) and subtracts: a positive
-reading means the bar used above-average volume to produce below-average range —
-*churn*, the signature of absorption near turning points — while a negative
-reading means an above-average range came on below-average volume — *ease of
-movement*, a trend meeting no resistance. Source:
+The rules are applied **in that order and a later match overrides an earlier
+one**, as in Taylor's original. "New high / low" means *strictly* beyond every
+one of the previous `period − 1` bars (the current bar is compared against the
+bars before it), so a run of identical bars stays neutral. A zero-range bar has
+no defined volume per range and never counts as churn.
+
+Volume-Spread Analysis reads price action through effort versus result. A
+**climax** is the most effort meeting the widest result — often the start or
+end of a move; **churn** is heavy volume going nowhere — professional
+absorption near turning points; a **low-volume** bar shows the absence of
+interest that marks pullbacks and tests. Source:
 `crates/wickra-core/src/indicators/better_volume.rs`.
 
 ## Parameters
 
 | Name     | Type    | Default       | Valid range | Source | Description |
 |----------|---------|---------------|-------------|--------|-------------|
-| `period` | `usize` | `20` (Python) | `>= 1`      | `better_volume.rs:60` | Averaging window for both the volume and range baselines. `0` errors with `Error::PeriodZero`. |
+| `period` | `usize` | `14` (Python) | `>= 1`      | `better_volume.rs:76` | Lookback length: the current bar is compared against the previous `period − 1` bars. `0` errors with `Error::PeriodZero`. |
 
-The `period` getter returns the window; `value` returns the current output if
+The `period` getter returns the lookback; `value` returns the current code if
 ready.
 
 ## Inputs / Outputs
@@ -53,29 +59,36 @@ use wickra::{Candle, Indicator, BetterVolume};
 const _: fn(&mut BetterVolume, Candle) -> Option<f64> = <BetterVolume as Indicator>::update;
 ```
 
-A `Candle` in, an `Option<f64>` out. The Python binding takes a candle for
-`update` and three numpy columns `(high, low, volume)` for `batch`; Node takes
-`update(high, low, volume)` and `batch(high[], low[], volume[])` (NaN warmup).
+A `Candle` in, an `Option<f64>` code out. The `open` matters: it decides the
+sign of a climax bar. The Python binding takes a candle for `update` and five
+numpy columns `(open, high, low, close, volume)` for `batch`; Node and WASM
+take `update(open, high, low, close, volume)` and
+`batch(open[], high[], low[], close[], volume[])` (NaN warmup).
 
 ## Warmup
 
-`warmup_period() == period`. The two simple moving averages need a full window
-before the first reading (`first_emission_at_warmup_period` pins this).
+`warmup_period() == period`. The lookback must hold `period` bars before the
+first classification (`first_emission_at_warmup_period` pins this for
+`period = 3`).
 
 ## Edge cases
 
-- **Steady bars → 0.** Identical volume and range every bar make both relative
-  legs `1`, so the oscillator is `0` (`steady_bars_are_neutral` pins this).
-- **Churn bar → positive.** A high-volume narrow-range bar reads positive
-  (`churn_bar_is_positive` pins this).
-- **Ease of movement → negative.** A wide-range light-volume bar reads negative
-  (`ease_of_movement_bar_is_negative` pins this).
-- **Degenerate averages.** Zero volume and zero range guard each leg to `0` rather
-  than dividing by zero (`zero_everything_is_zero` pins this).
+- **Steady bars → 0.** Identical bars are never a *strict* new high or low, so
+  they classify as neutral (`steady_bars_are_neutral` pins this).
+- **Low volume → 1.** A bar whose volume undercuts every previous bar in the
+  lookback (`low_volume_bar` pins this).
+- **Climax → ±3.** The largest `volume · range` of the lookback; `+3` when
+  `close ≥ open`, `−3` otherwise (`climax_bars_carry_direction` pins both).
+- **Churn → 2.** The largest `volume / range` of the lookback without being a
+  climax (`churn_bar` pins this).
+- **Climax + churn → 4.** Both on the same bar (`climax_and_churn_together`
+  pins this).
+- **Zero-range bars.** `volume / range` is undefined, so they never churn
+  (`zero_range_bars_never_churn` pins a run of flat, zero-volume bars to `0`).
 - **Finiteness.** `Candle::new` rejects non-finite fields, so no in-method guard
   is needed.
-- **Reset.** `bv.reset()` clears both rolling windows, both sums and the last
-  value (`reset_clears_state`).
+- **Reset.** `bv.reset()` clears the lookback window and the last value
+  (`reset_clears_state`).
 
 ## Examples
 
@@ -85,14 +98,15 @@ before the first reading (`first_emission_at_warmup_period` pins this).
 use wickra::{BatchExt, Candle, Indicator, BetterVolume};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut bv = BetterVolume::new(4)?;
-    let mut candles: Vec<Candle> = (0..3)
-        .map(|_| Candle::new(100.0, 105.0, 100.0, 102.0, 1_000.0, 0).unwrap())
-        .collect();
-    // A high-volume, narrow-range churn bar.
-    candles.push(Candle::new(100.0, 100.5, 100.0, 100.2, 5_000.0, 0)?);
-    let out = bv.batch(&candles);
-    println!("last > 0 (churn): {}", out.last().unwrap().unwrap() > 0.0);
+    let mut bv = BetterVolume::new(3)?;
+    let steady = Candle::new(100.0, 102.0, 100.0, 101.0, 1_000.0, 0)?;
+    let candles = vec![
+        steady,
+        steady,
+        // Same range, a bit more volume on a narrower bar: high churn.
+        Candle::new(100.0, 101.0, 100.0, 100.5, 1_500.0, 0)?,
+    ];
+    println!("{:?}", bv.batch(&candles));
     Ok(())
 }
 ```
@@ -100,7 +114,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Output:
 
 ```
-last > 0 (churn): true
+[None, None, Some(2.0)]
 ```
 
 ### Python
@@ -109,16 +123,15 @@ last > 0 (churn): true
 import numpy as np
 import wickra as ta
 
-bv = ta.BetterVolume(20)
-n = 60
-high   = np.array([105.0] * n)
-low    = np.array([100.0] * n)
-close  = np.array([102.0] * n)
-volume = np.array([1000.0] * n)
-volume[-1] = 5000.0          # churn bar
-high[-1] = 100.5             # narrow range
-close[-1] = 100.2            # keep the last candle valid (low <= close <= high)
-print(bv.batch(high, low, close, volume)[-1] > 0)  # True
+S = (100, 102, 100, 101, 1000)                  # steady bar: open, high, low, close, volume
+bars = [S, S, (100, 102, 100, 101, 200),        # low volume
+        S, S, (100, 110, 100, 109, 4000),       # climax up
+        S, S, (109, 110, 100, 100.5, 4000),     # climax down
+        S, S, (100, 101, 100, 100.5, 1500),     # high churn
+        S, S, (100, 103, 100, 102, 10000)]      # climax + churn
+o, h, l, c, v = (np.array(col, dtype=float) for col in zip(*bars))
+print(list(ta.BetterVolume(3).batch(o, h, l, c, v)))
+# [nan, nan, 1.0, 0.0, 0.0, 3.0, 0.0, 0.0, -3.0, 0.0, 0.0, 2.0, 0.0, 0.0, 4.0]
 ```
 
 ### Node
@@ -126,8 +139,11 @@ print(bv.batch(high, low, close, volume)[-1] > 0)  # True
 ```javascript
 const ta = require('wickra');
 
-const bv = new ta.BetterVolume(20);
-console.log('warmupPeriod:', bv.warmupPeriod()); // 20
+const bv = new ta.BetterVolume(3);
+bv.update(100, 102, 100, 101, 1000);
+bv.update(100, 102, 100, 101, 1000);
+console.log(bv.update(100, 101, 100, 100.5, 1500)); // 2 (high churn)
+console.log('warmupPeriod:', bv.warmupPeriod());     // 3
 ```
 
 ### Streaming
@@ -142,7 +158,7 @@ for i in 0..60 {
     let c = Candle::new(base, base + 2.0, base - 2.0, base + 0.5, 1_000.0, 0).unwrap();
     last = bv.update(c);
 }
-println!("{last:?}");
+println!("{last:?}"); // Some(0.0): constant volume and range never set a new extreme
 ```
 
 Streaming `update` and `batch` are equivalent tick-for-tick
@@ -150,28 +166,34 @@ Streaming `update` and `batch` are equivalent tick-for-tick
 
 ## Interpretation
 
-1. **Absorption / climax.** A strong positive spike — heavy volume, little range —
-   at the end of a trend warns that the move is being absorbed; a reversal often
-   follows.
-2. **Healthy trend.** Sustained mildly-negative readings mean price is advancing
-   efficiently on modest volume — the trend faces no resistance.
-3. **No-demand / no-supply.** Combine the sign with bar direction: a narrow-range
-   up-bar on low volume into resistance is "no demand"; the oscillator near zero
-   on a tiny bar confirms the lack of effort.
+1. **Climax (`±3`).** Maximum effort meeting maximum result. At the end of an
+   extended move it often marks exhaustion (a buying climax up, a selling
+   climax down); at the start of a range break it marks strong participation.
+2. **High churn (`2`).** Heavy volume relative to the range — effort without
+   result. Professionals are absorbing supply or demand; look for a turn,
+   especially near support / resistance.
+3. **Climax + churn (`4`).** Both signatures on one bar — the strongest
+   turning-point warning.
+4. **Low volume (`1`).** No interest: in a pullback it suggests the counter
+   move is weak ("no supply" / "no demand") and the trend may resume.
 
 ## Common pitfalls
 
-- **It is a digest, not the full VSA grid.** The classic Better Volume indicator
-  colours bars into several categories; this oscillator distils the core
-  effort-vs-result axis into one number — read it alongside price structure.
-- **Needs real volume.** On feeds without genuine volume the signal is noise.
-- **Period choice.** A short `period` makes every bar look extreme; a long one
-  buries genuine climaxes.
+- **Reading the codes as a scale.** The output is a categorical code, not an
+  oscillator — `4` is not "twice" `2`, and averaging or smoothing the codes is
+  meaningless. Branch on the value instead.
+- **Override order.** A bar that is both low-volume and churn (narrow range on
+  little volume) reports `2`, not `1`, because later rules override earlier ones.
+- **Needs real volume.** On feeds without genuine volume the classification is
+  noise.
+- **Period choice.** A short `period` makes many bars "new" extremes; a long one
+  flags only the rare outliers.
 
 ## References
 
-Williams, T., & Brooks, G. (2005), *Master the Markets* (Volume Spread Analysis);
-Wyckoff, R. D. — the original effort-versus-result principle.
+Barry Taylor, *Better Volume* indicator (emini-watch.com); Williams, T., &
+Brooks, G. (2005), *Master the Markets* (Volume Spread Analysis); Wyckoff,
+R. D. — the original effort-versus-result principle.
 
 ## See also
 

@@ -1,3 +1,7 @@
+---
+description: "Minimum toolchains for every Wickra binding — Rust, Python, Node.js, WASM, C, C++, C#, Go, Java and R — to use the published packages or build from source."
+---
+
 # Requirements
 
 Wickra is a Rust core with native bindings (Python, Node.js, WASM) and a C ABI
@@ -16,7 +20,7 @@ the published package, and what extra you need to **build from source**.
 | **C**       | `wickra.h` + library (each release)   | **C99** compiler             | smoke + archetype ctests × 3 OS    |
 | **C++**     | `wickra.hpp` over the C ABI           | **C++14** compiler           | C++ smoke ctest                    |
 | **C#**      | NuGet — `Wickra`                      | **.NET 8** (`net8.0`)        | net8.0 × 3 OS                      |
-| **Go**      | module — `wickra-lib/wickra-go`       | **Go 1.23**                  | 1.23+ × 3 OS (cgo)                 |
+| **Go**      | module — `wickra-lib/wickra-go/v2`    | **Go 1.23**                  | 1.23+ × 3 OS (cgo)                 |
 | **Java**    | Maven Central — `org.wickra:wickra`   | **Java 22** (FFM / Panama)   | built on JDK 25 LTS, target 22     |
 | **R**       | source package                        | **R ≥ 4.1**                  | —                                  |
 
@@ -79,7 +83,7 @@ range the CI matrix actually exercises on every push.
   so building any program that imports it needs a C toolchain (gcc/clang on
   Linux/macOS, MinGW or MSVC on Windows) with `CGO_ENABLED=1` (the default). The
   prebuilt native libraries are committed per platform in the
-  `wickra-lib/wickra-go` module.
+  `wickra-lib/wickra-go/v2` module.
 
 ### Java
 

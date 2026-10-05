@@ -1,8 +1,8 @@
 # CumulativeVolumeIndex
 
-> The Cumulative Volume Index — the running total of *volume-normalised* net
-> advancing volume. Like the AD Volume Line, but each tick is divided by its own
-> total volume so the index stays comparable across volume regimes.
+> The Cumulative Volume Index — the running total of net advancing volume,
+> `CVI_t = CVI_{t−1} + (advancing volume − declining volume)`. Only its slope and
+> divergences against a price index carry meaning, not its level.
 
 ## Quick reference
 
@@ -14,22 +14,22 @@
 | Output range        | unbounded; may be negative                                |
 | Default parameters  | none                                                        |
 | Warmup period       | `1`                                                         |
-| Interpretation      | Volume-normalised cumulative breadth                      |
+| Interpretation      | Cumulative volume breadth (slope / divergence)            |
 
 ## Formula
 
 ```
 net   = advancing_volume - declining_volume
-index = index + net / max(total_volume, MIN_POSITIVE)   # cumulative share
+index = index + net                                     # CVI_t = CVI_{t-1} + net
 ```
 
-Each tick contributes the share of its total volume that flowed, net, into advancing
-issues. Where the raw [AdVolumeLine](/Indicators/Indicator-AdVolumeLine) sums *absolute* net
-volume — and so drifts with secular growth in trading activity — the CVI normalises
-each tick by its own total volume, so a one-share-net day counts the same in a thin
-market as in a heavy one. When a tick has zero total volume the net is necessarily
-zero too, so the increment is zero (the divisor is floored to the smallest positive
-`f64` purely to keep the division defined). Stateful and O(universe size) per tick.
+Each tick adds the volume of advancing issues minus the volume of declining
+issues — the standard definition (StockCharts, MetaStock). Unchanged issues
+contribute to neither side, and a tick with no volume leaves the index
+unchanged. The increment is *not* divided by total volume, so the CVI carries
+the same values as the [AdVolumeLine](/Indicators/Indicator-AdVolumeLine); the
+index is path-dependent, so only its slope and divergences against a price
+index carry meaning. Stateful and O(universe size) per tick.
 See `crates/wickra-core/src/indicators/cumulative_volume_index.rs`.
 
 ## Parameters
@@ -61,14 +61,14 @@ The bindings pass a tick as four equal-length parallel arrays:
 ## Warmup
 
 `warmup_period() == 1`; defined from the first tick (tests
-`accessors_and_metadata`, `first_tick_emits_normalised_net`).
+`accessors_and_metadata`, `first_tick_emits_net_volume`).
 
 ## Edge cases
 
-- **Normalised increment.** Each tick adds net advancing volume divided by total
-  volume (test `first_tick_emits_normalised_net`, `index_accumulates_normalised_shares`).
-- **Zero total volume.** A volume-free tick leaves the index unchanged (test
-  `zero_total_volume_leaves_index_unchanged`).
+- **Raw net increment.** Each tick adds advancing volume minus declining volume
+  (tests `first_tick_emits_net_volume`, `index_accumulates_net_volume`).
+- **Zero volume.** A volume-free tick leaves the index unchanged (test
+  `zero_volume_leaves_index_unchanged`).
 - **Reset.** `reset()` restarts the index from zero (test `reset_clears_state`).
 - **Invalid / empty universe.** Rejected at construction by `CrossSection::new`.
 
@@ -80,7 +80,7 @@ The bindings pass a tick as four equal-length parallel arrays:
 use wickra::{CrossSection, CumulativeVolumeIndex, Indicator, Member};
 
 let mut cvi = CumulativeVolumeIndex::new();
-// adv vol 150, dec vol 50, total 200 -> (150 - 50) / 200 = 0.5.
+// adv vol 150, dec vol 50 -> 150 - 50 = 100.
 let tick = CrossSection::new(
     vec![
         Member::new(1.0, 150.0, false, false),
@@ -88,7 +88,7 @@ let tick = CrossSection::new(
     ],
     0,
 )?;
-assert_eq!(cvi.update(tick), Some(0.5));
+assert_eq!(cvi.update(tick), Some(100.0));
 ```
 
 ### Python
@@ -98,7 +98,7 @@ import wickra as ta
 
 cvi = ta.CumulativeVolumeIndex()
 print(cvi.update([1.0, -1.0], [150.0, 50.0], [False, False], [False, False]))
-# 0.5
+# 100.0
 ```
 
 ### Node
@@ -108,7 +108,7 @@ const { CumulativeVolumeIndex } = require('wickra');
 
 const cvi = new CumulativeVolumeIndex();
 console.log(cvi.update([1.0, -1.0], [150, 50], [false, false], [false, false]));
-// 0.5
+// 100
 ```
 
 ### Streaming
@@ -117,30 +117,32 @@ console.log(cvi.update([1.0, -1.0], [150, 50], [false, false], [false, false]));
 import wickra as ta
 
 cvi = ta.CumulativeVolumeIndex()
-print(cvi.update([1.0, -1.0], [150.0, 50.0], [False, False], [False, False]))  # 0.5
-print(cvi.update([1.0, -1.0], [60.0, 60.0], [False, False], [False, False]))   # 0.5  (net 0)
-print(cvi.update([0.0], [0.0], [False], [False]))                              # 0.5  (no volume)
+print(cvi.update([1.0, -1.0], [150.0, 50.0], [False, False], [False, False]))  # 100.0
+print(cvi.update([1.0, -1.0], [60.0, 60.0], [False, False], [False, False]))   # 100.0  (net 0)
+print(cvi.update([0.0], [0.0], [False], [False]))                              # 100.0  (no volume)
 ```
 
 ## Interpretation
 
-The CVI tracks money flow into and out of the whole market, regime-adjusted.
+The CVI tracks volume flowing into advancing versus declining issues across the
+whole market.
 
 1. **Slope.** A rising index is net accumulation across the universe; a falling
    index, distribution.
 2. **Divergence.** Like any cumulative line, divergence against price warns of a
    waning move.
-3. **vs. AD Volume Line.** Prefer the CVI when comparing across periods of very
-   different total volume; prefer the raw AD Volume Line when absolute net volume is
-   what you care about.
+3. **Confirmation.** A new price high confirmed by a new CVI high shows volume
+   participating in the advance; a price high on a lower CVI does not.
 
 ## Common pitfalls
 
 - **Level is arbitrary.** Only slope and divergences matter, never the absolute
   level.
-- **Normalisation bounds increments.** Each tick contributes at most ±1, so the CVI
-  rises more slowly than the raw volume line — do not compare their magnitudes.
-- **Universe must be stable.** Changing membership makes the shares incomparable.
+- **Not normalised.** Increments are raw volume, so the index drifts with secular
+  growth in trading activity; compare slopes within a regime, not magnitudes
+  across very different volume regimes. For a volume-normalised breadth
+  read use a ratio such as the [UpDownVolumeRatio](/Indicators/Indicator-UpDownVolumeRatio).
+- **Universe must be stable.** Changing membership makes the increments incomparable.
 
 ## References
 
@@ -149,6 +151,6 @@ The CVI tracks money flow into and out of the whole market, regime-adjusted.
 
 ## See also
 
-- [Indicator-AdVolumeLine](/Indicators/Indicator-AdVolumeLine) — the raw (un-normalised)
-  cumulative net-volume line.
+- [Indicator-AdVolumeLine](/Indicators/Indicator-AdVolumeLine) — the same cumulative
+  net-volume line under its other name.
 - [Indicators-Overview](/Indicators-Overview) — the full taxonomy.
