@@ -1,10 +1,12 @@
 # Demand Index
 
-> James Sibbet's Demand Index — a smoothed ratio of buying pressure
-> to selling pressure, classifying each bar's volume by whether the
-> close rose or fell relative to the previous close. Sibbet's
-> hypothesis is that volume confirms or denies price moves; the
-> Demand Index quantifies the confirmation.
+> James Sibbet's Demand Index — the ratio of smoothed buying pressure
+> to smoothed selling pressure, bounded in `[-100, +100]`. Each bar's
+> relative volume goes in full to the side the weighted close moved
+> towards, while the other side receives that volume damped
+> exponentially by the size of the move against the typical two-bar
+> range. Sibbet's hypothesis is that volume confirms or denies price
+> moves; the Demand Index quantifies the confirmation.
 
 ## Quick reference
 
@@ -13,32 +15,45 @@
 | Family              | Volume                                                               |
 | Input type          | `Candle` (uses `high`, `low`, `close`, `volume`)                     |
 | Output type         | `f64`                                                                |
-| Output range        | unbounded; typically `[-100, +100]`                                  |
-| Default parameters  | `period` required (Sibbet's typical `20`)                            |
+| Output range        | `[-100, +100]` (bounded)                                             |
+| Default parameters  | `period` required (common choice `20`)                               |
 | Warmup period       | `period + 1`                                                         |
-| Interpretation      | Net buying pressure smoothed; divergences flag exhaustion             |
+| Interpretation      | `> 0` buying pressure dominates, `< 0` selling; divergences flag exhaustion |
 
 ## Formula
 
 ```
-ε         = small epsilon to avoid division by zero
-pressure  = volume_t · ((close_t - close_{t-1}) / max(close_{t-1}, ε))
-           · (1 + (high_t - low_t) / max(close_{t-1}, ε))
+WC     = (high + low + 2·close) / 4
+ratio  = (WC_t − WC_{t−1}) / min(WC_t, WC_{t−1})
+vol    = volume_t / SMA(volume, period)
+K      = 3·WC_t / SMA(max(high_t, high_{t−1}) − min(low_t, low_{t−1}), period)
+damped = vol / exp(min(K · |ratio|, 88))
 
-DI_t = EMA(pressure, period)_t
+ratio > 0:  BP = vol,     SP = damped
+otherwise:  BP = damped,  SP = vol
+
+B, S = EMA(BP, period), EMA(SP, period)     (α = 2/(period+1), seeded with the first value)
+
+DI_t = +100 · (1 − S / B)   if B > S
+       −100 · (1 − B / S)   if B < S
+       0                    if B = S
 ```
 
-Wickra uses the textbook simplified form. Sibbet's original
-1970s formulation runs the raw pressure through several
-smoothings; this implementation captures the same signal in a
-streaming-friendly shape. See
+This is Sibbet's construction as published in the TradeStation
+`DemandIndex` function. The side the weighted close moved towards
+receives the bar's full relative volume; the opposite side receives
+it damped by `exp(K·|ratio|)`, so a large move relative to the
+market's typical two-bar range leaves almost nothing on the losing
+side. The exponent is capped at `88` to keep `exp` finite on a
+violent bar. Because `B` and `S` are both non-negative, the ratio
+form keeps DI within `[-100, +100]`. See
 `crates/wickra-core/src/indicators/demand_index.rs`.
 
 ## Parameters
 
 | Name     | Type    | Default | Constraint | Description |
 |----------|---------|---------|------------|-------------|
-| `period` | `usize` | none    | `> 0`      | EMA smoothing period. |
+| `period` | `usize` | none    | `> 0`      | Length of the volume and two-bar-range SMAs and of the two pressure EMAs. |
 
 ## Inputs / Outputs
 
@@ -48,14 +63,27 @@ streaming-friendly shape. See
 
 ## Warmup
 
-`warmup_period() == period + 1`. Needs one bar to establish
-prior close, then `period` bars for the EMA to seed.
+`warmup_period() == period + 1`. Needs one bar to establish the
+prior candle, then `period` two-bar ranges to fill the range
+average; the first value lands on bar `period + 1`. The pressure
+EMAs are seeded with their first value, so there is no extra EMA
+warmup.
 
 ## Edge cases
 
-- **Flat close.** Zero pressure contribution.
-- **Zero prior close.** Guarded by epsilon — won't blow up.
-- **Reset.** Clears the EMA and the prior-close cache.
+- **Flat bars.** Zero two-bar range means no measurable pressure;
+  DI stays at `0` (`constant_series_yields_zero`).
+- **Zero weighted close / zero averages.** A bar whose weighted
+  close (current or prior), average range or average volume is
+  zero carries no measurable pressure and repeats the previous
+  reading — no division by zero
+  (`zero_weighted_close_contributes_no_signal`).
+- **Direction.** Steadily rising closes end strictly positive,
+  steadily falling closes strictly negative
+  (`rising_series_yields_positive_signal`,
+  `falling_series_yields_negative_signal`).
+- **Reset.** Clears both EMAs, the SMA windows and the prior-candle
+  cache (`reset_clears_state`).
 
 ## Examples
 
@@ -70,7 +98,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Candle::new(b, b + 1.0, b - 1.0, b + 0.2, 1000.0, i as i64).unwrap()
     }).collect();
     let mut di = DemandIndex::new(20)?;
-    println!("row 30 = {:?}", di.batch(&candles)[30]);
+    println!("row 30 = {:?}", di.batch(&candles)[30]); // row 30 = Some(35.02925671228102)
     Ok(())
 }
 ```
@@ -84,7 +112,7 @@ import wickra as ta
 n = 40
 base = 100 + np.sin(np.linspace(0, 12, n)) * 5
 di = ta.DemandIndex(20)
-print(di.batch(base + 1, base - 1, base + 0.2, np.full(n, 1000.0))[30])
+print(di.batch(base + 1, base - 1, base + 0.2, np.full(n, 1000.0))[30])  # ≈ 29.2266
 ```
 
 ### Node
@@ -111,24 +139,31 @@ for bar in candle_stream {
 
 ## Interpretation
 
-- **Sign of DI.** Positive = net buying pressure, negative =
-  selling pressure. Smoothed by the EMA, so swings are slower
-  than raw bar-direction.
+- **Sign of DI.** Positive = buying pressure dominates, negative =
+  selling pressure dominates; the magnitude (up to `±100`) says by
+  how much. Smoothed by the EMAs, so swings are slower than raw
+  bar-direction.
+- **Zero crossings.** A move through zero marks the balance of
+  pressure changing sides.
 - **Divergences.** The flagship use — price makes a new high
   while DI flatlines or falls = bearish divergence (exhaustion).
 - **Vs ChaikinMoneyFlow.** Similar concept; CMF uses
-  close-position-within-range, DI uses close-vs-prior-close.
+  close-position-within-range, DI uses the change in weighted
+  close scaled by the typical range.
 
 ## Common pitfalls
 
-- **Treating extreme values as signals.** DI is unbounded;
-  extreme readings are normal in trending markets.
+- **Treating extreme values as signals.** DI is bounded at
+  `±100`, and readings near the bounds are normal in strongly
+  trending markets — they are not overbought/oversold levels.
 - **Period too short.** `period = 5` makes DI as noisy as raw
   pressure. Stick to 20+ for Sibbet's intended smoothing.
 
 ## References
 
 - James Sibbet, *Demand Index* (1970s) — original.
+- TradeStation `DemandIndex` function — the published reference
+  implementation this follows.
 - Steven B. Achelis, *Technical Analysis from A to Z* (2000) —
   modern reference.
 

@@ -19,8 +19,11 @@
 
 `HtTrendMode` runs the adaptive Hilbert-transform engine to recover the dominant
 cycle, computes the [dominant-cycle phase](/Indicators/Indicator-HtDcPhase), and derives the
-in-phase sine and lead-sine of that phase along with an instantaneous trendline
-(a smoothed average of price over one cycle window). It then classifies the bar:
+in-phase sine and lead-sine of that phase along with an instantaneous trendline.
+The trendline averages the **raw input price** (not the WMA-smoothed price) over
+the last `round(smooth_period)` bars — one dominant-cycle window, as TA-Lib does —
+and then applies a 4-3-2-1 weighted smoothing to that running average. It then
+classifies the bar:
 
 - when the sine / lead-sine crossover logic and the trendline agree that price is
   moving directionally rather than oscillating, it reports **`1.0`** (trend);
@@ -32,10 +35,15 @@ including the near-zero-imaginary `±90°` guard. The output is always exactly
 Traders* (Ehlers 2001), aligned with TA-Lib's `HT_TRENDMODE`. See
 `crates/wickra-core/src/indicators/ht_trendmode.rs`.
 
+**TA-Lib parity.** `HtTrendMode` matches TA-Lib `HT_TRENDMODE` exactly from bar
+75 on (on the 3000-bar TA-Lib reference series). Before that the two start-ups
+differ: TA-Lib primes its Hilbert state with zeros after a WMA burn-in, Wickra
+waits for its tap buffers to fill; the recursion then converges.
+
 ## Parameters
 
 `HtTrendMode` takes **no parameters** — `HtTrendMode::new()` in Rust,
-`wickra.HtTrendMode()` in Python, `new ta.HtTrendMode()` in Node.
+`wickra.HT_TRENDMODE()` in Python, `new ta.HT_TRENDMODE()` in Node.
 
 ## Inputs / Outputs
 
@@ -62,29 +70,54 @@ pins `warmup_period() == 50`.
 - **Output is strictly binary.** Every emitted value is exactly `0.0` or `1.0`.
   The unit test `emits_binary_flag_and_visits_both_modes` pins this and confirms
   both modes appear on a ramp-then-cycle series.
-- **Both modes are reachable.** A trending ramp segment reports `1.0`; a clean
-  cyclic segment reports `0.0`. The same test pins that both are visited.
+- **Both modes are reachable.** A steady ramp reports `1.0`; a clean
+  small-amplitude cycle reports `0.0`. With a large swing relative to the
+  price level the `|smooth − trendline| / trendline ≥ 1.5%` rule forces trend
+  mode on the cycle's steep legs, so `0.0` only shows up in short runs near the
+  sine / lead-sine crossings. The unit tests
+  `emits_binary_flag_and_visits_both_modes` and
+  `steady_ramp_reports_trend_and_clean_cycle_reports_cycle` pin this.
 - **Near-zero imaginary part.** The underlying phase recovery collapses to `±90°`
   when the homodyne imaginary part is ~zero. The unit test
   `near_zero_imaginary_collapses_to_signed_ninety` pins this guard.
 
 ## Examples
 
+The series is 150 bars of a pure 20-bar sine cycle (amplitude `1` around
+`100`) followed by 150 bars of a steady ramp (`+0.5` per bar). The first value
+is emitted at index `49`; the summary counts how many bars of each leg read
+`1` (trend).
+
 ### Rust
 
 ```rust
-use wickra::{BatchExt, HtTrendMode, Indicator};
+use std::f64::consts::PI;
+use wickra::{BatchExt, HtTrendMode};
 
 fn main() {
-    // A trending ramp followed by a clean 18-bar cycle exercises both modes.
-    let mut prices: Vec<f64> = (0..150).map(|i| 100.0 + f64::from(i) * 0.8).collect();
-    prices.extend((0..200).map(|i| 220.0 + (f64::from(i) * 0.45).sin() * 12.0));
-    let mut ht = HtTrendMode::new();
-    let out = ht.batch(&prices);
-    println!("ramp segment (expect 1.0): {:?}", out[120]);
-    println!("cycle segment (expect 0.0): {:?}", out[300]);
+    let mut prices: Vec<f64> = (0..150)
+        .map(|i| 100.0 + (2.0 * PI * f64::from(i) / 20.0).sin())
+        .collect();
+    prices.extend((0..150).map(|i| 100.0 + 0.5 * f64::from(i + 1)));
+    let out = HtTrendMode::new().batch(&prices);
+    let ones = |a: usize, b: usize| out[a..b].iter().filter(|v| **v == Some(1.0)).count();
+    println!("cycle leg: {}/101 bars read 1", ones(49, 150));
+    println!("trend leg: {}/150 bars read 1", ones(150, 300));
+    let first = out.iter().position(|v| *v == Some(1.0)).unwrap();
+    println!("first trend bar: {first}");
 }
 ```
+
+Output:
+
+```
+cycle leg: 0/101 bars read 1
+trend leg: 146/150 bars read 1
+first trend bar: 154
+```
+
+The whole cycle leg reads `0` (cycle mode). Four bars into the ramp the
+classifier switches, and from bar `154` on every bar reads `1` (trend mode).
 
 ### Python
 
@@ -92,24 +125,41 @@ fn main() {
 import numpy as np
 import wickra as ta
 
-ramp = 100 + np.arange(150) * 0.8
-cycle = 220 + np.sin(np.arange(200) * 0.45) * 12
-prices = np.concatenate([ramp, cycle])
-ht = ta.HT_TRENDMODE()
-out = ht.batch(prices)
-print('ramp (expect 1.0):', out[120])
-print('cycle (expect 0.0):', out[300])
+i = np.arange(150)
+prices = np.concatenate([100 + np.sin(2 * np.pi * i / 20), 100 + 0.5 * (i + 1)])
+out = np.asarray(ta.HT_TRENDMODE().batch(prices))
+print('cycle leg:', int((out[49:150] == 1).sum()), '/ 101 bars read 1')
+print('trend leg:', int((out[150:] == 1).sum()), '/ 150 bars read 1')
+print('first trend bar:', int(np.argmax(out == 1)))
+```
+
+Output:
+
+```
+cycle leg: 0 / 101 bars read 1
+trend leg: 146 / 150 bars read 1
+first trend bar: 154
 ```
 
 ### Node
 
 ```javascript
 const ta = require('wickra');
-const ramp = Array.from({ length: 150 }, (_, i) => 100 + i * 0.8);
-const cycle = Array.from({ length: 200 }, (_, i) => 220 + Math.sin(i * 0.45) * 12);
-const ht = new ta.HT_TRENDMODE();
-const out = ht.batch([...ramp, ...cycle]);
-console.log('ramp:', out[120], 'cycle:', out[300]);
+const cycle = Array.from({ length: 150 }, (_, i) => 100 + Math.sin(2 * Math.PI * i / 20));
+const ramp = Array.from({ length: 150 }, (_, i) => 100 + 0.5 * (i + 1));
+const out = new ta.HT_TRENDMODE().batch([...cycle, ...ramp]);
+const ones = (a, b) => out.slice(a, b).filter((v) => v === 1).length;
+console.log(`cycle leg: ${ones(49, 150)}/101 bars read 1`);
+console.log(`trend leg: ${ones(150, 300)}/150 bars read 1`);
+console.log('first trend bar:', out.indexOf(1));
+```
+
+Output:
+
+```
+cycle leg: 0/101 bars read 1
+trend leg: 146/150 bars read 1
+first trend bar: 154
 ```
 
 ### Streaming

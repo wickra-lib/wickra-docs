@@ -73,7 +73,12 @@ export default defineConfig({
   // Sitemap is emitted into the build output by VitePress' built-in generator
   // (no extra dependency); CF Pages serves dist/sitemap.xml at the domain root.
   // <lastmod> per page comes from `lastUpdated` (Git). robots.txt points here.
-  sitemap: { hostname: 'https://docs.wickra.org' },
+  sitemap: {
+    hostname: 'https://docs.wickra.org',
+    // Security's canonical copy lives on wickra.org/security; listing the docs
+    // mirror here would contradict its cross-domain canonical.
+    transformItems: (items) => items.filter((item) => !/(^|\/)Security$/.test(item.url)),
+  },
 
   // README.md is repo documentation, not a site page — keep it out of the build
   // so it never becomes a /README route or a stray sitemap entry.
@@ -122,7 +127,9 @@ export default defineConfig({
   // apex-domain canonical (consistent with `cleanUrls: true`).
   transformPageData(pageData, { siteConfig }) {
     const path = pageData.relativePath.replace(/(?:index)?\.md$/, '')
-    const canonical = `https://docs.wickra.org/${path}`
+    // A page may point its canonical elsewhere (e.g. Security, whose full
+    // copy lives on wickra.org) via `canonical:` in its frontmatter.
+    const canonical = pageData.frontmatter.canonical ?? `https://docs.wickra.org/${path}`
     pageData.frontmatter.head ??= []
     pageData.frontmatter.head.push(
       ['link', { rel: 'canonical', href: canonical }],
@@ -224,7 +231,7 @@ export default defineConfig({
           { text: 'npm', link: 'https://www.npmjs.com/package/wickra' },
           { text: 'NuGet', link: 'https://www.nuget.org/packages/Wickra' },
           { text: 'Maven Central', link: 'https://central.sonatype.com/artifact/org.wickra/wickra' },
-          { text: 'Go module', link: 'https://pkg.go.dev/github.com/wickra-lib/wickra-go' },
+          { text: 'Go module', link: 'https://pkg.go.dev/github.com/wickra-lib/wickra-go/v2' },
           { text: 'r-universe', link: 'https://wickra-lib.r-universe.dev' },
         ],
       },

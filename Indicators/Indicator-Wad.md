@@ -32,7 +32,8 @@ closed below the *true high*; an unchanged close contributes nothing. The runnin
 total is the line. This is deliberately different from Chaikin's volume-weighted
 [`Adl`](/Indicators/Indicator-Adl). For the zero-centred, mean-reverting form of
 this same line — `WAD − SMA(WAD, 13)` — see the
-[`AdOscillator`](/Indicators/Indicator-AdOscillator) (native alias `ADOSC`).
+[`AdOscillator`](/Indicators/Indicator-AdOscillator) (`name()`
+`"WilliamsAdOscillator"`; not TA-Lib's `ADOSC`, which is the Chaikin oscillator).
 Source: `crates/wickra-core/src/indicators/wad.rs`.
 
 ## Parameters
@@ -189,7 +190,7 @@ volume-free construction implemented here.
 
 ## See also
 
-- [AdOscillator](/Indicators/Indicator-AdOscillator) — this line minus its 13-bar SMA (`ADOSC`), zero-centred.
+- [AdOscillator](/Indicators/Indicator-AdOscillator) — this line minus its 13-bar SMA (Williams A/D Oscillator), zero-centred.
 - [Indicator-Adl](/Indicators/Indicator-Adl) — Chaikin's volume-weighted A/D line.
 - [Indicator-ChaikinMoneyFlow](/Indicators/Indicator-ChaikinMoneyFlow) — the bounded money-flow oscillator.
 - [Indicator-Obv](/Indicators/Indicator-Obv) — cumulative signed volume.

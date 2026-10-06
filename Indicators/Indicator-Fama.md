@@ -17,7 +17,7 @@
 | Output type         | `f64` (the FAMA scalar)                                                |
 | Output range        | unbounded (price-units)                                                |
 | Default parameters  | `fast_limit = 0.5`, `slow_limit = 0.05` (`Fama::classic()`)            |
-| Warmup period       | Inherited from [Mama](/Indicators/Indicator-Mama) — ~30 bars                       |
+| Warmup period       | Inherited from [Mama](/Indicators/Indicator-Mama) — `33` bars                      |
 | Interpretation      | Slower of the MAMA/FAMA pair; trend-confirmation line                  |
 
 ## Formula
@@ -39,6 +39,13 @@ FAMA_t = 0.5 * alpha_t * MAMA_t + (1 - 0.5 * alpha_t) * FAMA_{t-1}
 
 Half-alpha vs MAMA → roughly twice the lag.
 
+**TA-Lib parity.** With `(0.5, 0.05)` FAMA is identical to TA-Lib `MAMA`'s
+`fama` output (to `1e-9`) from bar 316 on the 3000-bar TA-Lib reference series
+(MAMA itself from bar 152). Before that the two start-ups differ — TA-Lib primes
+its Hilbert state with zeros after a WMA burn-in, Wickra waits for its tap
+buffers to fill — and the shared recursion then converges. Half-alpha smoothing
+makes FAMA forget the start-up more slowly than MAMA.
+
 ## Parameters
 
 | Name         | Type  | Default | Constraint                    | Description |
@@ -57,9 +64,9 @@ same shape; `update(value)` returns `number | null`.
 
 ## Warmup
 
-Same as [Mama](/Indicators/Indicator-Mama) — the Hilbert chain needs ~30 bars
+Same as [Mama](/Indicators/Indicator-Mama) — the Hilbert chain needs `33` bars
 to fill before adaptive alpha kicks in. `warmup_period()` delegates
-to the inner `Mama`.
+to the inner `Mama` (`== 33`).
 
 ## Edge cases
 

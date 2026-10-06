@@ -1,3 +1,7 @@
+---
+description: "The Wickra ecosystem: 24 open-source trading libraries built on the indicator core, each a Rust core with a CLI and the same ten-language binding surface."
+---
+
 # Ecosystem
 
 Wickra is a family of 24 open-source trading libraries: this indicator core and

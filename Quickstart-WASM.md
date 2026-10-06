@@ -124,7 +124,7 @@ exact layout is documented in the generated `pkg/wickra_wasm.d.ts`.
 
 ## The opt-in fast batch
 
-The single-output indicators — plus MACD, Bollinger Bands, ATR, the Chaikin
+The single-output indicators — plus MACD, MACDFIX, Bollinger Bands, ATR, the Chaikin
 oscillator and Pearson correlation — add `batchFast` and the caller-buffer
 `batchInto` / `batchFastInto` next to `batch`:
 
@@ -136,7 +136,7 @@ new EMA(20).batchFastInto(prices, out);
 ```
 
 The fast batch runs a SIMD kernel where the indicator has one (moving
-averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+averages, RSI, ATR, MACD and MACDFIX, Bollinger Bands, the Chaikin oscillator, skewness,
 Pearson correlation and more). The kernel reassociates the arithmetic, so each
 value agrees with the exact batch to within a few units in the last place
 rather than bit for bit; `NaN` placement and length are identical, and the

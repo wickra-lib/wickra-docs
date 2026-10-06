@@ -128,7 +128,7 @@ ready row is `warmup_period - 1` in 0-indexed terms).
 ## The opt-in fast batch
 
 Every batch accepts a `Float64Array` (read in place, without a copy) as well as a
-plain array. The single-output indicators — plus MACD, Bollinger Bands, ATR, the
+plain array. The single-output indicators — plus MACD, MACDFIX, Bollinger Bands, ATR, the
 Chaikin oscillator and Pearson correlation — add `batchFast`, which returns a
 `Float64Array`, and `batchInto` / `batchFastInto`, which write into one you
 reuse:
@@ -147,7 +147,7 @@ be as long as the result, must not overlap an input and must not be backed by a
 `SharedArrayBuffer`.
 
 The fast batch runs a SIMD kernel where the indicator has one (moving
-averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+averages, RSI, ATR, MACD and MACDFIX, Bollinger Bands, the Chaikin oscillator, skewness,
 Pearson correlation and more). The kernel reassociates the arithmetic, so each
 value agrees with the exact batch to within a few units in the last place
 rather than bit for bit; `NaN` placement and length are identical, and the

@@ -29,8 +29,9 @@ reports the trend's *t-statistic*. A steep slope with little scatter (a smooth,
 straight climb) scores high; the same total return earned in a few lucky jumps
 scatters the residuals, inflates the standard error, and scores lower. This is
 Kestner's original 1996 form. Later revisions scale by the period count
-(`slope / (SE · period)` in 2003, `slope / (SE · √period)` in 2013) — apply that
-downstream when comparing across window lengths. A perfectly linear window has zero
+(`slope / (SE · n)` in 2003, `slope · √n / SE` in 2013, with `n` the number of
+periods — note the `√n` sits in the numerator) — apply that downstream when
+comparing across window lengths. A perfectly linear window has zero
 residual scatter, so the slope's standard error is zero and the ratio is undefined;
 the indicator reports `0.0`. Source: `crates/wickra-core/src/indicators/k_ratio.rs`.
 
@@ -38,7 +39,7 @@ the indicator reports `0.0`. Source: `crates/wickra-core/src/indicators/k_ratio.
 
 | Name     | Type    | Default       | Valid range | Source | Description |
 |----------|---------|---------------|-------------|--------|-------------|
-| `period` | `usize` | `30` (Python) | `>= 3`      | `k_ratio.rs:66` | Window of returns. `< 3` errors with `Error::InvalidPeriod` (the SE divides by `period − 2`). |
+| `period` | `usize` | `30` (Python) | `>= 3`      | `k_ratio.rs:64` | Window of returns. `< 3` errors with `Error::InvalidPeriod` (the SE divides by `period − 2`). |
 
 The `period` getter returns the window.
 
@@ -88,7 +89,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Output:
 
 ```
-Some(8.660254037844387)
+Some(8.660254037844389)
 ```
 
 ### Python
@@ -134,14 +135,16 @@ Streaming `update` and `batch` are equivalent tick-for-tick
 2. **Drawdown early-warning.** A falling K-Ratio while the equity still rises means
    the climb is getting choppier — often a precursor to a drawdown.
 3. **Cross-window comparison.** Because the raw 1996 form grows with the window,
-   apply the period scaling before comparing 30-bar and 250-bar K-Ratios.
+   apply a period scaling (2003: `slope / (SE · n)`; 2013: `slope · √n / SE`)
+   before comparing 30-bar and 250-bar K-Ratios.
 
 ## Common pitfalls
 
 - **Needs dispersion.** Constant or near-constant returns make the curve linear and
   the ratio degenerate (`0.0`) — feed real, noisy returns.
-- **Version confusion.** This is the 1996 `slope / SE` form; cite the variant when
-  comparing against other libraries.
+- **Version confusion.** This is the 1996 `slope / SE` form; the 2003 revision
+  divides by `SE · n`, the 2013 revision uses `slope · √n / SE`. Cite the variant
+  when comparing against other libraries.
 - **Sign.** The K-Ratio is negative for a declining equity curve — read the sign,
   not just the magnitude.
 

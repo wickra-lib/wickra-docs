@@ -15,7 +15,7 @@
 | Output type         | `MamaOutput { mama, fama }`                                            |
 | Output range        | unbounded (price-units)                                                |
 | Default parameters  | `fast_limit = 0.5`, `slow_limit = 0.05` (`Mama::classic()`)            |
-| Warmup period       | ~30 bars (Hilbert chain fills then alpha adaptation begins)            |
+| Warmup period       | `33` bars (Hilbert chain fills then alpha adaptation begins)           |
 | Interpretation      | MAMA crosses above FAMA = bull trend confirmation; below = bear        |
 
 ## Formula
@@ -25,20 +25,31 @@ which the adaptive smoothing constant can vary:
 
 ```
 1. smooth(x) = WMA-4(x)                        (4-bar weighted MA)
-2. detrender = HT-derived in-phase component
+2. detrender = HT(smooth)                      (taps t, t-2, t-4, t-6 all on the smoothed history)
 3. i1, q1    = in-phase and quadrature
 4. period_t  = derived from phase rate of change (smoothed and clamped)
-5. delta_phase = phase_{t-1} - phase_t          (clamped >= 0.1)
+5. delta_phase = phase_{t-1} - phase_t          (degrees; if delta_phase < 1 then delta_phase = 1)
 6. alpha_t   = clamp(fast_limit / delta_phase, slow_limit, fast_limit)
 
 MAMA_t = alpha_t * x_t + (1 - alpha_t) * MAMA_{t-1}
 FAMA_t = 0.5 * alpha_t * MAMA_t + (1 - 0.5 * alpha_t) * FAMA_{t-1}
 ```
 
+The phase is measured in degrees and `delta_phase` is floored at `1`
+(degree), as in Ehlers' EasyLanguage — so `fast_limit / delta_phase`
+never exceeds `fast_limit` and only the `slow_limit` bound can bind.
+
 FAMA uses half MAMA's adaptive alpha, so it lags MAMA — crossovers
 signal trend reversals. Full math derivations in Ehlers'
 *Cycle Analytics for Traders* (2013, ch. 8) and the original 2001
 MESA paper. See `crates/wickra-core/src/indicators/mama.rs`.
+
+**TA-Lib parity.** With `(0.5, 0.05)` MAMA is identical to TA-Lib `MAMA` (to
+`1e-9`) from bar 152 and FAMA from bar 316 on the 3000-bar TA-Lib reference
+series. Before that the two start-ups differ — TA-Lib primes its Hilbert state
+with zeros after a WMA burn-in, Wickra waits for its tap buffers to fill — and
+the shared recursion then converges. FAMA, smoothed with half of MAMA's alpha,
+forgets the start-up more slowly.
 
 ## Parameters
 
@@ -69,18 +80,20 @@ when the `0 < slow_limit < fast_limit ≤ 1` ordering is violated.
 ## Warmup
 
 The Hilbert-transform chain needs the smoothing buffers and
-detrender history to fill before phase can be measured. Typical
-warmup ~30 bars, but `warmup_period()` reflects the conservative
-upper bound. See `Indicator-HilbertDominantCycle` for the underlying
+detrender history to fill before phase can be measured.
+`warmup_period() == 33`: the first `MamaOutput` is emitted on the
+33rd input (index `32`). See `Indicator-HilbertDominantCycle` for the underlying
 phase-extraction warmup.
 
 ## Edge cases
 
-- **Constant input.** Phase becomes undefined; `delta_phase` clamps
-  to the lower bound and alpha collapses to `slow_limit`. MAMA and
-  FAMA both converge to the constant.
-- **Sharp trend reversal.** `delta_phase` is large, alpha pushes up
-  to `fast_limit`, both lines react quickly — the regime change is
+- **Constant input.** The in-phase component is zero, so the phase
+  holds its previous value; `delta_phase` clamps to the floor of `1`
+  and alpha sits at `fast_limit`. MAMA and FAMA both converge to the
+  constant.
+- **Sharp trend reversal.** The phase stalls, `delta_phase` drops to
+  the floor of `1`, alpha pushes up to `fast_limit`, both lines react
+  quickly — the regime change is
   often visible as a sharp MAMA / FAMA convergence followed by a
   cross.
 - **Limit ordering enforced.** Constructor rejects swapped

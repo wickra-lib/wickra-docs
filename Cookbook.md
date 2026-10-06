@@ -1,3 +1,7 @@
+---
+description: "Runnable Wickra strategy recipes — RSI mean reversion, MACD crossovers, Bollinger breakouts and more — that work unchanged in backtests and live streaming loops."
+---
+
 # Cookbook
 
 Practical strategy recipes built on Wickra's streaming indicators. Each

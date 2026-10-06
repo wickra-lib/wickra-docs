@@ -20,8 +20,8 @@
 ```
 Filt = RoofingFilter(price)                                       (detrend + denoise)
 Corr[lag] = Pearson( Filt[0..AvgLength], Filt[lag..lag+AvgLength] )   (AvgLength = 3)
-power[period] = (Σ Corr[N]·cos(2πN/period))² + (Σ Corr[N]·sin(2πN/period))²
-R[period]     = 0.2·power[period] + 0.8·R[period]_{t−1}
+SqSum[period] = (Σ Corr[N]·cos(2πN/period))² + (Σ Corr[N]·sin(2πN/period))²
+R[period]     = 0.2·SqSum[period]² + 0.8·R[period]_{t−1}           (EMA of SqSum²)
 normalise by a decaying max, then
 DominantCycle = centre-of-gravity of periods whose normalised power ≥ 0.5
 ```
@@ -29,7 +29,9 @@ DominantCycle = centre-of-gravity of periods whose normalised power ≥ 0.5
 The autocorrelation function highlights whatever cycle is genuinely present and
 suppresses noise. Turning it into a periodogram (a discrete Fourier transform of
 the correlations) and taking the power-weighted centre of gravity yields a smooth,
-robust estimate of the dominant cycle. That number is the key input to every
+robust estimate of the dominant cycle. Following Ehlers, the EMA smooths the
+*square* of each period's summed power (`SqSum²`), which sharpens the dominant
+peak against the side lobes before normalisation. That number is the key input to every
 *adaptive* indicator. Source:
 `crates/wickra-core/src/indicators/autocorrelation_periodogram.rs`.
 
@@ -37,8 +39,8 @@ robust estimate of the dominant cycle. That number is the key input to every
 
 | Name         | Type    | Default | Valid range | Source | Description |
 |--------------|---------|---------|-------------|--------|-------------|
-| `min_period` | `usize` | `10`    | `>= 4`, `< max_period` | `autocorrelation_periodogram.rs:73` | Shortest cycle searched. |
-| `max_period` | `usize` | `48`    | `> min_period` | `autocorrelation_periodogram.rs:73` | Longest cycle searched (also the roofing highpass cutoff). `0` for either errors with `Error::PeriodZero`; bad ordering with `Error::InvalidPeriod`. |
+| `min_period` | `usize` | `10`    | `>= 4`, `< max_period` | `autocorrelation_periodogram.rs:83` | Shortest cycle searched. |
+| `max_period` | `usize` | `48`    | `> min_period` | `autocorrelation_periodogram.rs:83` | Longest cycle searched (also the roofing highpass cutoff). `0` for either errors with `Error::PeriodZero`; bad ordering with `Error::InvalidPeriod`. |
 
 `periods()` returns `(min_period, max_period)`; `value` returns the current cycle
 estimate if ready.
@@ -70,8 +72,11 @@ scalar for `update` and a 1-D numpy array for `batch` (NaN warmup); Node takes
   (`output_within_period_band` pins this).
 - **Detects a real cycle.** A clean 20-bar sine settles near `20`
   (`detects_injected_cycle` pins this).
-- **Non-finite input.** A NaN/∞ input is ignored and the last value returned
-  (`ignores_non_finite` pins this).
+- **Non-finite input.** A NaN/∞ input returns `None` and leaves the state
+  untouched (`ignores_non_finite` pins this).
+- **Flat input.** Constant prices give degenerate correlations, so no period
+  clears the 0.5 threshold and the estimate falls back to `min_period`
+  (`flat_input_falls_back_to_min_period` pins this).
 - **Reset.** `p.reset()` clears the roofing filter, the lag buffer, the power EMA
   and the last value (`reset_clears_state`).
 
@@ -94,7 +99,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Output (near the injected 20-bar cycle):
 
 ```
-dominant cycle ≈ 20.x
+dominant cycle ≈ 20.4
 ```
 
 ### Python
@@ -105,7 +110,7 @@ import wickra as ta
 
 p = ta.AUTOCORRPGRAM(10, 48)
 x = 100 + np.sin(2 * np.pi * np.arange(600) / 20) * 5
-print(round(p.batch(x)[-1], 1))   # ~20
+print(round(p.batch(x)[-1], 1))   # 20.4
 ```
 
 ### Node
@@ -128,7 +133,7 @@ let mut last = None;
 for i in 0..200 {
     last = p.update(100.0 + (TAU * f64::from(i) / 20.0).sin() * 5.0);
 }
-println!("{last:?}");
+println!("{last:?}"); // Some(20.42…)
 ```
 
 Streaming `update` and `batch` are equivalent tick-for-tick

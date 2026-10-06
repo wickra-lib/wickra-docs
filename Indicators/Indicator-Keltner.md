@@ -1,6 +1,6 @@
 # Keltner Channels
 
-> A pure composition of [EMA](/Indicators/Indicator-Ema) on typical price plus
+> A pure composition of [EMA](/Indicators/Indicator-Ema) on the close plus
 > ATR-scaled envelopes. The middle line is the trend filter, the bands are
 > the volatility cone.
 
@@ -19,22 +19,24 @@
 ## Formula
 
 ```
-middle_t = EMA_{ema_period}( typical_price_t )           // tp = (H+L+C)/3
+middle_t = EMA_{ema_period}( close_t )
 upper_t  = middle_t + multiplier * ATR_{atr_period}_t
 lower_t  = middle_t - multiplier * ATR_{atr_period}_t
 ```
 
-The middle line is an EMA of **typical price**, not of close
-(`crates/wickra-core/src/indicators/keltner.rs:62`,
-`candle.typical_price()`).
+The middle line is an EMA of the **close**, not of typical price
+(`crates/wickra-core/src/indicators/keltner.rs:88`,
+`self.ema.update(candle.close)`). This is the modern (Linda Raschke) form
+used by TradingView, StockCharts and most TA libraries; `high` and `low`
+enter only through the ATR.
 
 ## Parameters
 
 | Name         | Type    | Default | Constraint              | Source                                       |
 |--------------|---------|---------|-------------------------|----------------------------------------------|
-| `ema_period` | `usize` | `20`    | `> 0`                   | `Keltner::new` (`keltner.rs:33`)             |
-| `atr_period` | `usize` | `10`    | `> 0`                   | `Keltner::new` (`keltner.rs:33`)             |
-| `multiplier` | `f64`   | `2.0`   | finite and `> 0.0`      | `Keltner::new` (`keltner.rs:34-36`)          |
+| `ema_period` | `usize` | `20`    | `> 0`                   | `Keltner::new` (`keltner.rs:58`)             |
+| `atr_period` | `usize` | `10`    | `> 0`                   | `Keltner::new` (`keltner.rs:59`)             |
+| `multiplier` | `f64`   | `2.0`   | finite and `> 0.0`      | `Keltner::new` (`keltner.rs:54-56`)          |
 
 Python defaults from
 `#[pyo3(signature = (ema_period=20, atr_period=10, multiplier=2.0))]` in
@@ -116,9 +118,9 @@ Output:
 ```
 i=0 -> None
 i=1 -> None
-i=2 -> Some(KeltnerOutput { upper: 15.166666666666666, middle: 11.166666666666666, lower: 7.166666666666666 })
-i=3 -> Some(KeltnerOutput { upper: 16.166666666666664, middle: 12.166666666666666, lower: 8.166666666666666 })
-i=4 -> Some(KeltnerOutput { upper: 17.166666666666664, middle: 13.166666666666666, lower: 9.166666666666666 })
+i=2 -> Some(KeltnerOutput { upper: 15.5, middle: 11.5, lower: 7.5 })
+i=3 -> Some(KeltnerOutput { upper: 16.5, middle: 12.5, lower: 8.5 })
+i=4 -> Some(KeltnerOutput { upper: 17.5, middle: 13.5, lower: 9.5 })
 ```
 
 The first emission is at `i = 2` (the 3rd candle), exactly
@@ -136,17 +138,17 @@ k = ta.Keltner(3, 3, 2.0)
 h = np.array([11.0, 12.0, 13.0, 14.0, 15.0])
 l = np.array([ 9.0, 10.0, 11.0, 12.0, 13.0])
 c = np.array([10.5, 11.5, 12.5, 13.5, 14.5])
-print(k.batch(h, l, c))
+print(np.asarray(k.batch(h, l, c).tolist()))
 ```
 
 Output:
 
 ```
-[[        nan         nan         nan]
- [        nan         nan         nan]
- [        nan         nan         nan]
- [        nan         nan         nan]
- [17.16666667 13.16666667  9.16666667]]
+[[ nan  nan  nan]
+ [ nan  nan  nan]
+ [15.5 11.5  7.5]
+ [16.5 12.5  8.5]
+ [17.5 13.5  9.5]]
 ```
 
 ### Node
@@ -168,7 +170,7 @@ Output:
 
 ```
 length: 15
-row 4 [upper, middle, lower]: [ 17.166666666666664, 13.166666666666666, 9.166666666666666 ]
+row 4 [upper, middle, lower]: [ 17.5, 13.5, 9.5 ]
 ```
 
 ## Interpretation
@@ -186,17 +188,17 @@ row 4 [upper, middle, lower]: [ 17.166666666666664, 13.166666666666666, 9.166666
 
 ## Common pitfalls
 
-- **Typical price ≠ close.** The middle EMA runs on
-  `(H + L + C) / 3`, not on close. A pre-computed "EMA of close"
-  panel will not equal the Keltner middle line and trying to align
-  them at floating-point precision will fail.
+- **Close, not typical price.** The middle EMA runs on the close, not
+  on `(H + L + C) / 3`. Older Keltner variants (and some charting
+  packages) use typical price for the centerline; their middle line
+  will not match Wickra's at floating-point precision.
 
 ## References
 
 - Chester W. Keltner, *How to Make Money in Commodities*, 1960. The
   original construction used a 10-day SMA of typical price with an
   envelope sized by the 10-day average range. The modern variant
-  (EMA centerline + ATR envelope) is the form Wickra implements.
+  (EMA-of-close centerline + ATR envelope) is the form Wickra implements.
 - Linda Bradford Raschke popularised the EMA + ATR rephrasing in the
   1990s; this is the version most TA libraries ship today.
 

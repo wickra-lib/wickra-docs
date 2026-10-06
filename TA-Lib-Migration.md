@@ -1,3 +1,7 @@
+---
+description: "Port TA-Lib code to Wickra: a function-by-function lookup table from talib.X(...) to the matching Wickra indicator, with argument-order conventions."
+---
+
 # Migrating from TA-Lib
 
 A quick lookup table for users porting code from TA-Lib (the C library, or
@@ -68,6 +72,8 @@ full alias map.
 | `talib.AD(high, low, close, volume)`                | `wickra.ADL().batch(high, low, close, volume)`                                                   |
 | `talib.ADOSC(high, low, close, volume, fast, slow)` | `wickra.ChaikinOscillator(fast, slow).batch(high, low, close, volume)`                           |
 | `talib.SAR(high, low, accel, max)`                  | `wickra.PSAR(accel_start, accel_step, accel_max).batch(high, low, close)`                        |
+| `talib.SAREXT(high, low, start, offset, ...)`       | `wickra.SAREXT(start, offset, ...).batch(high, low, close)` *(signed, like TA-Lib)*              |
+| `talib.MACDFIX(close, signal)`                      | `wickra.MACDFIX(signal).batch(close)` → shape `(n, 3)`                                           |
 | `talib.LINEARREG(close, n)`                         | `wickra.LinearRegression(n).batch(close)`                                                        |
 | `talib.LINEARREG_SLOPE(close, n)`                   | `wickra.LinRegSlope(n).batch(close)`                                                             |
 | `talib.LINEARREG_ANGLE(close, n)`                   | `wickra.LinRegAngle(n).batch(close)`                                                             |
@@ -75,6 +81,69 @@ full alias map.
 | `talib.MEDPRICE(high, low)`                         | `wickra.MedianPrice().batch(high, low, close)`                                                   |
 | `talib.WCLPRICE(high, low, close)`                  | `wickra.WeightedClose().batch(high, low, close)`                                                 |
 | `talib.ULTOSC(high, low, close, p1, p2, p3)`        | `wickra.UltimateOscillator(p1, p2, p3).batch(high, low, close)`                                  |
+
+## Verified against TA-Lib
+
+The Wickra repository carries a TA-Lib reference test suite
+(`crates/wickra-core/tests/talib_reference.rs`). A generator script
+(`scripts/gen_talib_reference.py`) runs the real TA-Lib library over fixed
+input series — an 80-bar golden series, a 3000-bar OHLCV series and a
+candlestick pattern series — and commits TA-Lib's output as CSV fixtures under
+`testdata/talib/`. The test recomputes every series with Wickra, both
+streaming and in one `batch` call, checks that the two paths are bit-identical,
+and compares the result with TA-Lib's to a tolerance of `1e-9` (absolute below
+magnitude 1, relative above it). Candlestick signals must match exactly, with
+Wickra's `+1` / `-1` / `0` against TA-Lib's `+100` / `-100` / `0`.
+
+| TA-Lib | Wickra (Python) | Agreement |
+|--------|--------|-----------|
+| `ACCBANDS(20)` | [`AccelerationBands(20, 4.0)`](/Indicators/Indicator-AccelerationBands) | exact from the first bar |
+| `SAR(0.02, 0.2)` | [`PSAR(0.02, 0.02, 0.2)`](/Indicators/Indicator-Psar) | exact from the first bar |
+| `SAREXT` (defaults) | [`SAREXT()`](/Indicators/Indicator-SarExt) | exact from the first bar, including the signed output |
+| `MACDFIX(9)` | [`MACDFIX(9)`](/Indicators/Indicator-MacdFix) | identical from bar 164 |
+| `ADOSC(3, 10)` | [`ChaikinOscillator(3, 10)`](/Indicators/Indicator-ChaikinOscillator) | identical from bar 120 |
+| `HT_DCPERIOD` | [`HilbertDominantCycle()`](/Indicators/Indicator-HilbertDominantCycle) | identical from bar 186 |
+| `HT_DCPHASE` | [`HT_DCPHASE()`](/Indicators/Indicator-HtDcPhase) | identical from bar 202 |
+| `HT_PHASOR` | [`HT_PHASOR()`](/Indicators/Indicator-HtPhasor) | identical from bar 189 |
+| `HT_SINE` | [`SineWave()`](/Indicators/Indicator-SineWave) | identical from bar 193 (sine and lead sine) |
+| `HT_TRENDMODE` | [`HT_TRENDMODE()`](/Indicators/Indicator-HtTrendMode) | identical from bar 75 |
+| `MAMA(0.5, 0.05)` | [`MAMA(0.5, 0.05)`](/Indicators/Indicator-Mama) | MAMA from bar 152, [FAMA](/Indicators/Indicator-Fama) from bar 316 |
+| `CDLMORNINGSTAR` / `CDLEVENINGSTAR` (`penetration = 0.3`) | [`MorningEveningStar()`](/Indicators/Indicator-MorningEveningStar) | identical signals |
+| `CDLRISEFALL3METHODS` | [`RisingThreeMethods()`](/Indicators/Indicator-RisingThreeMethods) + [`FallingThreeMethods()`](/Indicators/Indicator-FallingThreeMethods) | identical signals |
+| `CDLLADDERBOTTOM` | [`LadderBottom()`](/Indicators/Indicator-LadderBottom) | identical signals |
+| `CDLTRISTAR` | [`Tristar()`](/Indicators/Indicator-Tristar) | identical signals |
+| `CDLHIKKAKEMOD` | [`HikkakeModified()`](/Indicators/Indicator-HikkakeModified) | identical setup-bar signals |
+
+The bar numbers are 0-based indices on the 3000-bar series; from that bar to
+the end of the series every value is within `1e-9`. Where a function is not
+exact from its first bar, the difference is in the start-up only:
+
+- **EMA seeds (`MACDFIX`, `ADOSC`).** Both emit their first value on the same
+  bar as TA-Lib, but Wickra seeds each EMA with the SMA of its own first
+  window. TA-Lib aligns the fast MACD EMA's seed with the slow one, and seeds
+  both `ADOSC` EMAs with the first A/D value. The seed difference decays
+  geometrically and is below `1e-9` from bar 164 (`MACDFIX`) and bar 120
+  (`ADOSC`) on. (TA-Lib's `ADOSC` is Wickra's
+  [`ChaikinOscillator`](/Indicators/Indicator-ChaikinOscillator), not
+  [`AdOscillator`](/Indicators/Indicator-AdOscillator).)
+- **Hilbert start-up (`HT_*`, `MAMA`).** TA-Lib primes its Hilbert-transform
+  state with zeros after a WMA burn-in; Wickra waits for its tap buffers to
+  fill. The two then run the same recursion and converge by the bars listed
+  above (186 / 202 / 189 / 193 / 75 / 152 / 316 for `HT_DCPERIOD`,
+  `HT_DCPHASE`, `HT_PHASOR`, `HT_SINE`, `HT_TRENDMODE`, `MAMA`, `FAMA`). These
+  are properties of the start-up, not of the series length.
+- **Candlestick sizing.** TA-Lib sizes bodies and shadows against 5- or 10-bar
+  rolling averages ("candle settings"); Wickra sizes them against the
+  pattern's own bars (for example, a doji is a body of at most a tenth of the
+  bar's range). The pattern series is built from neutral bars with constant
+  body and range so that both schemes agree on which bodies are long, short or
+  doji; the pattern rules themselves (colours, gaps, penetration, nesting,
+  closes) give identical signals, and the near misses next to each pattern
+  fire in neither library. On real data, where bar sizes vary, the two sizing
+  schemes can classify a borderline body differently.
+- **`CDLHIKKAKEMOD` confirmation.** TA-Lib emits `±100` on the setup bar and
+  `±200` on a later confirmation bar. Wickra's `HikkakeModified` flags only the
+  setup bar.
 
 ## What Wickra has that TA-Lib does not
 

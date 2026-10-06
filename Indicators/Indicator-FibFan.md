@@ -1,8 +1,8 @@
 # Fibonacci Fan
 
 > Three trendlines fanning from the start of the most recent swing leg through
-> its 38.2 / 50 / 61.8 % retracement levels at the leg's end bar, extended to the
-> current bar.
+> its 38.2 / 50 / 61.8 % retracement levels at the leg's end bar (measured back
+> from the leg's end, as in FibRetracement), extended to the current bar.
 
 ## Quick reference
 
@@ -21,13 +21,17 @@
 ```
 last two pivots define a leg start -> end at bars (start_bar, end_bar):
   progress = (cur - start_bar) / (end_bar - start_bar)
-  fan(r)   = start + r * (end - start) * progress
+  fan(r)   = start + (1 − r) * (end - start) * progress
 for r in {0.382, 0.5, 0.618}, cur = current bar index
 ```
 
 All three lines emanate from `(start_bar, start)` and pass through the
-retracement levels located at `end_bar`; as `cur` advances past the end bar the
-fan opens. Consecutive pivots sit at strictly increasing bars, so the span is
+retracement levels located at `end_bar`. The retracement is measured back from
+the end of the leg — the same convention as
+[FibRetracement](/Indicators/Indicator-FibRetracement) — so at the end bar the `r`
+line sits at `end − r·(end − start)`: `fan_382` is the shallowest retracement
+(closest to the leg's end) and `fan_618` the deepest (closest to the start). As
+`cur` advances past the end bar the fan opens. Consecutive pivots sit at strictly increasing bars, so the span is
 never zero. See `crates/wickra-core/src/indicators/fib_fan.rs`.
 
 ## Parameters
@@ -56,8 +60,9 @@ returns `None`. Pinned by tests `accessors_and_metadata` and
 
 ## Edge cases
 
-- **Fan lines open with elapsed time** — at one leg-width past the end the fan
-  has doubled its spread (test `fan_lines_open_with_elapsed_time`).
+- **Fan lines open with elapsed time** — one bar past the end of a two-bar leg
+  (`progress = 1.5`) each line sits at `start + (1 − r)·(end − start)·1.5`, wider
+  than at the end bar (test `fan_lines_open_with_elapsed_time`).
 - **`reset` clears all state** (test `reset_clears_state`).
 - **Streaming equals batch** (test `batch_equals_streaming`).
 
@@ -82,8 +87,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         last = fan.update(Candle::new(*o, *h, *l, *c, 1.0, ts as i64)?);
     }
     let v = last.unwrap();
-    // progress = 3 / 2 = 1.5.
-    println!("{} {} {}", v.fan_382, v.fan_500, v.fan_618); // 142.7 125 107.3
+    // progress = 3 / 2 = 1.5; fan(r) = 200 + (1 − r)·(−100)·1.5.
+    println!("{} {} {}", v.fan_382, v.fan_500, v.fan_618); // 107.30000000000001 125 142.7
     Ok(())
 }
 ```
@@ -100,7 +105,7 @@ bars = [
     (105.0, 110.0, 105.0, 105.0, 1.0, 3),
 ]
 fan = ta.FibFan()
-print([fan.update(b) for b in bars][-1])  # (142.7, 125.0, 107.3)
+print([fan.update(b) for b in bars][-1])  # (107.30000000000001, 125.0, 142.7)
 ```
 
 ### Node
@@ -111,7 +116,7 @@ const fan = new wickra.FibFan();
 const bars = [[200.0, 199.0], [190.0, 160.0], [150.0, 100.0], [110.0, 105.0]];
 let last = null;
 for (const [h, l] of bars) last = fan.update(h, l);
-console.log(last.fan382, last.fan500, last.fan618); // 142.7 125 107.3
+console.log(last.fan382, last.fan500, last.fan618); // 107.30000000000001 125 142.7
 ```
 
 ### Streaming
@@ -121,7 +126,7 @@ fan = ta.FibFan()
 for o, h, l, c, v, ts in candle_feed:
     lines = fan.update((o, h, l, c, v, ts))
     if lines is not None and c < lines[2]:
-        pass  # price below the 61.8% fan line — trend weakening
+        pass  # price below the 61.8% (deepest) fan line of an up leg — trend weakening
 ```
 
 ## Interpretation
@@ -136,6 +141,10 @@ for o, h, l, c, v, ts in candle_feed:
 - **Diverges without bound.** Far past the leg, the fan lines spread widely and
   lose practical meaning; they are most useful near the swing.
 - **Latest leg only.** Re-anchors when a new leg confirms.
+- **Label convention.** The `r` line passes through the `r` retracement measured
+  from the leg's *end* (`end − r·(end − start)`), matching FibRetracement. Earlier
+  releases had the `fan_382` and `fan_618` values swapped; `fan_500` is
+  unchanged.
 
 ## References
 

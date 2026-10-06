@@ -3,7 +3,8 @@
 > John Ehlers' Fisher Transform of price. Normalises the most recent
 > price to `[-1, +1]` via min/max over a `period` window, smooths the
 > normalised value with a 0.33 / 0.67 IIR step, and applies the
-> Fisher transform `0.5 * ln((1+x)/(1-x))`. The result has a
+> Fisher transform with Ehlers' own output smoothing,
+> `Fisher_t = 0.5 * ln((1+x)/(1-x)) + 0.5 * Fisher_{t-1}`. The result has a
 > near-Gaussian distribution, so extreme readings stand out cleanly —
 > much more cleanly than the raw normalised price, whose distribution
 > is heavy-tailed and hard to threshold consistently.
@@ -15,23 +16,29 @@
 | Family              | Ehlers / Cycle (DSP)                                                 |
 | Input type          | `f64`                                                                |
 | Output type         | `f64`                                                                |
-| Output range        | unbounded; in practice ±2 captures > 99% of mass                     |
+| Output range        | `±ln(1999) ≈ ±7.6` in the limit (clamp + feedback); typically within ±3 |
 | Default parameters  | `period` is required (Ehlers' typical value `10`)                    |
 | Warmup period       | `period`                                                             |
-| Interpretation      | Crossover with prior bar's value = signal; ±1.5 reading is extreme   |
+| Interpretation      | Crossover with prior bar's value = signal; beyond ±2–3 is extreme    |
 
 ## Formula
 
 ```
-n_t  = clamp(2 * (close_t - min(close, period)) / (max - min) - 1, -0.999, +0.999)
-s_t  = 0.33 * n_t + 0.67 * s_{t-1}            (IIR smoothing)
+n_t  = 2 * (close_t - min(close, period)) / (max - min) - 1      (0 when max == min)
+s_t  = clamp(0.33 * n_t + 0.67 * s_{t-1}, -0.999, +0.999)       (IIR smoothing)
 
-Fisher_t = 0.5 * ln((1 + s_t) / (1 - s_t))
+Fisher_t = 0.5 * ln((1 + s_t) / (1 - s_t)) + 0.5 * Fisher_{t-1}
 ```
 
-The `0.999` clamp avoids the singularity at `±1`. The 0.33 / 0.67
-IIR is the classic Ehlers smoothing step (a 2-bar EMA-equivalent).
-See `crates/wickra-core/src/indicators/fisher_transform.rs`.
+This is Ehlers' 2002 code: the `0.999` clamp avoids the singularity at
+`±1`, and it is the *clamped* value that recurs as `s_{t-1}` (Ehlers
+overwrites `Value1` after clamping). The 0.33 / 0.67 IIR is the classic
+Ehlers smoothing step, and the `+ 0.5 * Fisher_{t-1}` term is Ehlers'
+half-weight carry of the previous output (seeded with `0` on the first
+emission). Because of that carry, a fully saturated input settles at
+`ln((1 + 0.999) / (1 - 0.999)) = ln(1999) ≈ 7.6`, double the
+single-step value. See
+`crates/wickra-core/src/indicators/fisher_transform.rs`.
 
 A lagged "trigger" line — Fisher value one bar behind — is the
 canonical chart companion. Wickra exposes only the primary Fisher
@@ -61,15 +68,20 @@ exactly `period` inputs; the first emission lands on input
 ## Edge cases
 
 - **Constant input.** `max == min` → division by zero is avoided
-  by treating the normalised value as 0. After smoothing the output
-  approaches 0 (no signal).
+  by treating the normalised value as 0. With a zero history the
+  output is exactly 0 (no signal) — see
+  `constant_series_zero_range_yields_zero`.
 - **Sudden gap.** A single outlier dramatically widens the
   min/max range and pulls the normalised value toward ±1; the Fisher
   transform amplifies this near the saturation edges — useful for
   extreme-detection.
-- **Output rare-but-large excursions.** Although unbounded, ±2 is
-  visited only ~1% of the time. A reading above ±3 indicates an
-  unusual event.
+- **Output rare-but-large excursions.** The clamp plus the
+  `0.5 * Fisher_{t-1}` carry caps the output at `±ln(1999) ≈ ±7.6`.
+  On a random walk with `period = 10`, `|Fisher| > 2` occurs about a
+  quarter of the time and `|Fisher| > 3` about 6% of the time; a
+  reading beyond ±4 is unusual.
+- **Non-finite input.** `NaN` / `±inf` inputs return `None` and leave
+  the state untouched (`ignores_non_finite_input`).
 - **Reset.** `reset()` clears the rolling window, the smoothed
   accumulator, and the last value.
 
@@ -137,14 +149,15 @@ for px in price_stream {
 ## Interpretation
 
 - **Near-Gaussian distribution.** Unlike raw RSI or stochastic,
-  Fisher's output has fat-but-not-pathological tails. Standard
-  z-score-style thresholds (±1, ±1.5, ±2) work well.
+  Fisher's output has fat-but-not-pathological tails. Because of
+  Ehlers' `0.5 * Fisher_{t-1}` carry the scale is roughly double the
+  bare transform, so thresholds around ±2 / ±3 mark extremes.
 - **Trigger crossover.** The classic two-line Fisher chart pairs the
   primary line against its 1-bar lag; a cross signals a momentum
   shift. Wickra omits the trigger line — bottle it yourself by
   caching the previous output.
 - **Trend-state vs cycle-state.** In strong trends Fisher saturates
-  near ±1 and stays there for long stretches. In cycle regimes it
+  at large readings and stays there for long stretches. In cycle regimes it
   oscillates rapidly with each bar — pair with a trend filter to
   pick the right interpretation.
 

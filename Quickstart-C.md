@@ -90,7 +90,7 @@ inputs through `update` one at a time.
 
 ## The opt-in fast batch
 
-Every scalar indicator, plus MACD, Bollinger Bands, ATR, the Chaikin oscillator
+Every scalar indicator, plus MACD, MACD Fix, Bollinger Bands, ATR, the Chaikin oscillator
 and Pearson correlation, exports `wickra_<name>_batch_fast` with the signature of
 its `_batch`: the caller owns the output buffer, as ever.
 
@@ -103,7 +103,7 @@ free(out);
 ```
 
 The fast batch runs a SIMD kernel where the indicator has one (moving
-averages, RSI, ATR, MACD, Bollinger Bands, the Chaikin oscillator, skewness,
+averages, RSI, ATR, MACD and MACDFIX, Bollinger Bands, the Chaikin oscillator, skewness,
 Pearson correlation and more). The kernel reassociates the arithmetic, so each
 value agrees with the exact batch to within a few units in the last place
 rather than bit for bit; `NaN` placement and length are identical, and the

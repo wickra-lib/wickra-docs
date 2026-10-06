@@ -55,8 +55,8 @@ adds no additional state beyond the round/clamp.
   code can `.round() as usize` safely.
 - **Lower clamp at `3`.** Hilbert reads of `[6, 50]` become
   `[3, 25]` after halving and clamping.
-- **Constant input.** Hilbert reads max period → output reads `25`
-  (the upper clamp).
+- **Constant input.** No phase is measured, so Hilbert stays at its
+  lower clamp (`6`) → output reads `3` (the lower clamp).
 - **Reset.** `reset()` clears the inner Hilbert estimator and the
   last value.
 

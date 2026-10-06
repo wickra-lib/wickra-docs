@@ -4,7 +4,9 @@
 > standalone indicator. Runs the 9-bar setup detection internally and
 > then exposes only the countdown count (and direction). Useful when
 > callers only need the countdown value and not the running setup
-> state — smaller streaming payload than
+> state. Enforces DeMark's bar-13 qualifier (the final countdown bar
+> must trade through the close of countdown bar 8, or it is
+> deferred). Smaller streaming payload than
 > [TdSequential](/Indicators/Indicator-TdSequential).
 
 ## Quick reference
@@ -35,6 +37,14 @@ Buy countdown phase (after a buy setup completion):
 Sell countdown phase (mirror):
   advances on close[i] >= high[i - countdown_lookback]
 
+Bar-13 qualifier (final countdown bar only):
+  q = close of countdown bar (countdown_target - 5)   # bar 8 of 13
+  buy:  bar 13 counts only if low[i]  <= q
+  sell: bar 13 counts only if high[i] >= q
+  a bar meeting the comparison but not the qualifier is deferred
+  (count stays at countdown_target - 1)
+  no qualifier when countdown_target <= 5
+
 Opposite-direction setup completion invalidates the active countdown.
 
 Output:
@@ -60,9 +70,10 @@ argument. `TdCountdown::classic()` returns `(4, 9, 2, 13)`.
 ## Inputs / Outputs
 
 `Indicator<Input = Candle, Output = f64>`. Python:
-`TdCountdown(...).batch(high, low, close)` returns a 1-D
-`array.array('d')` with `NaN` for warmup. Node: same shape;
-`update(candle)` returns `number | null`.
+`TDCountdown(...).batch(high, low, close)` returns a 1-D
+`array.array('d')` with `NaN` for warmup; `update(candle)` returns
+`float | None`. Node: `TDCountdown`, same batch shape;
+`update(high, low, close)` returns `number | null`.
 
 ## Warmup
 
@@ -74,9 +85,15 @@ For classic params, that's `5`.
 - **Countdown can sit at a partial value.** A countdown count of
   `7/13` may sit across many bars while waiting for the next
   qualifying close.
+- **Deferred bar 13.** At count `12/13`, a bar that meets the
+  countdown comparison but does not trade through the close of
+  countdown bar 8 (buy: `low > close₈`; sell: `high < close₈`) is
+  not counted; the output stays at `±12` until a later bar meets
+  both conditions.
 - **Opposite-direction setup invalidates.** A buy setup completion
   while a sell countdown is active resets the sell countdown to
-  zero in the buy direction (re-arming).
+  zero in the buy direction (re-arming) and clears the stored bar-8
+  qualifier close.
 - **No countdown armed.** Output is `0.0` when no countdown is
   active in either direction.
 - **Reset.** `reset()` clears all internal state.
@@ -163,13 +180,18 @@ for bar in candle_stream {
 - **Missing the invalidation.** A countdown can be invalidated by
   an opposite-direction setup completion. Watch the *direction*
   of the output, not just its magnitude.
+- **Comparing against a qualifier-free implementation.** Charting
+  packages that skip the bar-13 qualifier will print 13 on the first
+  bar that meets the close-vs-low/high comparison; Wickra may hold at
+  12 for one or more bars (deferral).
 
 ## References
 
 - Tom DeMark, *The New Science of Technical Analysis* (1994) —
   original Countdown formulation.
 - *DeMark on Day Trading Options* (1999) — refined edge-case
-  rules.
+  rules, including the bar-13 deferral against the close of
+  countdown bar 8.
 
 ## See also
 

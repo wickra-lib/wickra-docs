@@ -12,7 +12,7 @@
 | Input type | `Candle` (uses `high`, `low`, `close`) |
 | Output type | `AccelerationBandsOutput { upper, middle, lower }` |
 | Output range | unbounded; `lower ≤ middle ≤ upper` (on non-degenerate input) |
-| Default parameters | `period = 20`, `factor = 0.001` |
+| Default parameters | `period = 20`, `factor = 4.0` |
 | Warmup period | `period` (exact) |
 | Interpretation | Breakout-style. Headley enters on closes outside the band; exits on a tag of the middle. |
 
@@ -27,24 +27,29 @@ middle   = SMA(close,  period)
 lower    = SMA(raw_lo, period)
 ```
 
-`ratio` is a *fractional* range measure, so the literal `factor` for
-intraday equity markets is small (`~0.001` in Headley's reference
-publication). On crypto and other higher-volatility assets traders
-typically raise it to `0.01`–`0.05`. The three component series are each
-smoothed by their own SMA, so the bands inherit the SMA's warmup and
-ordering.
+`ratio` is a *fractional* range measure. Headley's reference setting is
+`factor = 4`, which is exactly the expression TA-Lib's `ACCBANDS` uses
+(`high · (1 + 4 · (H − L) / (H + L))`). Headley's own scaled spelling,
+`2 · ((H − L) / ((H + L) / 2)) · 1000 · 0.001`, reduces to the same factor
+of 4 — the `0.001` there is multiplied by `1000`, so it is *not* the value
+to pass as `factor`. The three component series are each smoothed by their
+own SMA, so the bands inherit the SMA's warmup and ordering.
+
+**TA-Lib parity.** `AccelerationBands::new(20, 4.0)` matches TA-Lib
+`ACCBANDS(20)` exactly (to `1e-9`) on all three bands from the first bar both
+emit, as verified by the TA-Lib reference test suite.
 
 ## Parameters
 
 | Name     | Type    | Default | Constraint    | Source |
 |----------|---------|---------|---------------|--------|
-| `period` | `usize` | `20`    | `>= 1`        | `AccelerationBands::new` (`acceleration_bands.rs:69`) |
-| `factor` | `f64`   | `0.001` | finite, `> 0` | `acceleration_bands.rs:70` |
+| `period` | `usize` | `20`    | `>= 1`        | `AccelerationBands::new` (`acceleration_bands.rs:71`) |
+| `factor` | `f64`   | `4.0`   | finite, `> 0` | `acceleration_bands.rs:72` |
 
 `period == 0` returns [`Error::PeriodZero`]; a non-finite or non-positive
 `factor` returns [`Error::NonPositiveMultiplier`]. `AccelerationBands::classic()`
-returns `(20, 0.001)`. Python defaults come from
-`#[pyo3(signature = (period=20, factor=0.001))]`; the Node constructor takes
+returns `(20, 4.0)`. Python defaults come from
+`#[pyo3(signature = (period=20, factor=4.0))]`; the Node constructor takes
 both arguments explicitly.
 
 ## Inputs / Outputs
@@ -104,7 +109,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Output:
 
 ```
-upper=13.2 middle=10 lower=7.2
+upper=13.200000000000001 middle=10 lower=7.2
 ```
 
 This matches the `reference_value_single_bar` test.
@@ -116,7 +121,8 @@ import numpy as np
 import wickra as ta
 
 ab = ta.AccelerationBands(1, 0.5)
-print(ab.batch(np.array([12.0]), np.array([8.0]), np.array([10.0])))  # [[13.2 10.  7.2]]
+print(ab.batch(np.array([12.0]), np.array([8.0]), np.array([10.0])).tolist())
+# [[13.200000000000001, 10.0, 7.2]]
 ```
 
 ### Node
@@ -124,7 +130,8 @@ print(ab.batch(np.array([12.0]), np.array([8.0]), np.array([10.0])))  # [[13.2 1
 ```javascript
 const ta = require('wickra');
 const ab = new ta.AccelerationBands(1, 0.5);
-console.log(ab.update(12, 8, 10)); // { upper: 13.2, middle: 10, lower: 7.2 }
+console.log(ab.update(12, 8, 10));
+// { upper: 13.200000000000001, middle: 10, lower: 7.2 }
 ```
 
 ## Interpretation
@@ -144,9 +151,11 @@ slower-reacting [BollingerBands](/Indicators/Indicator-BollingerBands) or
 
 ## Common pitfalls
 
-- **Leaving `factor` at the equity default on crypto.** `0.001` produces a
-  near-invisible band on assets with large fractional ranges — raise it to
-  `0.01`–`0.05`.
+- **Passing Headley's `0.001` as `factor`.** In Headley's published
+  formula the `0.001` is multiplied by `1000` (and by `2` against the
+  midpoint), so the equivalent `factor` here is `4`. Passing `0.001`
+  directly produces bands that sit almost exactly on the SMAs of `high` and
+  `low` — 4000× narrower than Headley's / TA-Lib's `ACCBANDS`.
 - **Confusing the band geometry.** The width comes from `high`/`low`
   geometry smoothed by an SMA, not from a stddev or ATR — it will not match
   any sigma- or ATR-based band even qualitatively in choppy conditions.
@@ -156,6 +165,7 @@ slower-reacting [BollingerBands](/Indicators/Indicator-BollingerBands) or
 - Price Headley, *Big Trends in Trading: Strategies to Master Major Market
   Moves*, Wiley, 2002. The "Acceleration Bands" chapter describes the
   original setup.
+- TA-Lib `ACCBANDS` — the same `factor = 4` form of the band.
 
 ## See also
 

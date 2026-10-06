@@ -18,14 +18,17 @@
 ## Formula
 
 ```
-Filt   = SuperSmoother(price, period)
+Filt   = SuperSmoother(price, 0.5·period)   # a1 = exp(−1.414·π / (0.5·period))
 slope  = (Filt[period] − Filt[0]) / period
 sum    = mean over i=1..period of ( Filt[0] + i·slope − Filt[i] )
 ms     = 0.04·sum² + 0.96·ms[−1]
 Reflex = sum / sqrt(ms)        (0 if ms == 0)
 ```
 
-Reflex draws the straight line connecting the SuperSmoothed price at the two ends
+The SuperSmoother prefilter runs with **half** the lookback as its critical
+period (Ehlers' `a1 = exp(−1.414·π / (0.5·Length))`), which may be fractional for
+an odd `period`; the line fit and the deviation average still span the full
+`period`. Reflex draws the straight line connecting the SuperSmoothed price at the two ends
 of the window and averages the curve's deviation from it. Using both endpoints
 gives it almost no lag, so it crosses zero right at cycle turns. The adaptive
 mean-square term rescales the output to a roughly `±3` band on any instrument.
@@ -35,7 +38,7 @@ Source: `crates/wickra-core/src/indicators/reflex.rs`.
 
 | Name     | Type    | Default       | Valid range | Source | Description |
 |----------|---------|---------------|-------------|--------|-------------|
-| `period` | `usize` | `20` (Python) | `>= 1`      | `reflex.rs:62` | Lookback for the prefilter and the line fit. `0` errors with `Error::PeriodZero`. |
+| `period` | `usize` | `20` (Python) | `>= 1`      | `reflex.rs:64` | Lookback for the line fit; the SuperSmoother prefilter uses half of it (`0.5·period`) as its critical period. `0` errors with `Error::PeriodZero`. |
 
 The `period` getter returns the window; `value` returns the current output if
 ready.
@@ -135,6 +138,10 @@ Streaming `update` and `batch` are equivalent tick-for-tick
 
 - **Not bounded exactly.** The normaliser targets `±3` but does not clamp; rare
   spikes can exceed it.
+- **Prefilter is half-period.** The SuperSmoother runs with critical period
+  `0.5·period`, not `period`; rebuilding the indicator from a
+  [`SuperSmoother`](/Indicators/Indicator-SuperSmoother) of the full `period`
+  will not reproduce Wickra's (or Ehlers') values.
 - **Period sets the cycle.** Match `period` to the cycle you want to time.
 - **Prefilter lag.** The SuperSmoother adds a touch of lag the line-fit largely
   cancels — but in violent gaps a little remains.

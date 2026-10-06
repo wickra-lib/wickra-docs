@@ -1,3 +1,7 @@
+---
+description: "Why Wickra's batch API is a loop over Indicator::update: the update contract, bit-identical batch/streaming results, the SIMD fast batch and benchmark numbers."
+---
+
 # Streaming vs Batch
 
 Wickra has one engine, not two. Every indicator is a state machine driven by
@@ -185,7 +189,7 @@ Python, R), `batchFast` (Node, WASM, Java), `BatchFast` (C#, Go),
 shape:
 
 - **Where an indicator has a SIMD kernel** (SMA, EMA, WMA, HMA, TRIMA, SMMA,
-  DEMA, TEMA, RSI, MACD, Bollinger Bands, ATR, the Chaikin oscillator, skewness,
+  DEMA, TEMA, RSI, MACD, MACDFIX, Bollinger Bands, ATR, the Chaikin oscillator, skewness,
   Pearson correlation), the kernel reorders the arithmetic, so each value agrees
   with `batch` to within a few units in the last place rather than bit for bit.
 - **`NaN` placement and length are identical,** and so is the state afterwards:

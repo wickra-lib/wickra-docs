@@ -1,3 +1,8 @@
+---
+description: "How to report a security vulnerability in Wickra privately, via GitHub security advisories or support@wickra.org."
+canonical: https://wickra.org/security
+---
+
 # Security
 
 Found a vulnerability in Wickra? **Please do not open a public issue.**

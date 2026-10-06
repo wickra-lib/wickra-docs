@@ -144,7 +144,7 @@ OI-to-volume analysis is standard futures practice; see Schwager, J. D. (1996),
 
 ## See also
 
-- [Indicator-EstimatedLeverageRatio](/Indicators/Indicator-EstimatedLeverageRatio) — OI vs. position base.
+- [Indicator-EstimatedLeverageRatio](/Indicators/Indicator-EstimatedLeverageRatio) — OI vs. the exchange's coin reserve.
 - [Indicator-OpenInterestMomentum](/Indicators/Indicator-OpenInterestMomentum) — OI rate of change.
 - [Indicator-OpenInterestDelta](/Indicators/Indicator-OpenInterestDelta) — per-tick OI change.
 - [Indicators-Overview](/Indicators-Overview) — the full taxonomy.
