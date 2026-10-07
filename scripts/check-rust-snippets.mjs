@@ -125,7 +125,10 @@ function main() {
     .map((p) => path.relative(repoRoot, p))
     .sort()
 
-  const work = path.join(os.tmpdir(), 'wickra-doctest-' + process.pid)
+  // The crate builds a debug binary per snippet, gigabytes in all. On a runner
+  // it goes to RUNNER_TEMP (the work disk), not /tmp: Ubuntu 26.04 mounts /tmp
+  // as a size-capped tmpfs and the build stopped on "Disk quota exceeded".
+  const work = path.join(process.env.RUNNER_TEMP || os.tmpdir(), 'wickra-doctest-' + process.pid)
   fs.rmSync(work, { recursive: true, force: true })
   fs.mkdirSync(path.join(work, 'src', 'bin'), { recursive: true })
 
