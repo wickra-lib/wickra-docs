@@ -12,7 +12,7 @@ permissions:
 jobs:
   build:
     name: Build site
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -28,7 +28,7 @@ jobs:
 
   markdownlint:
     name: Markdown lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -44,7 +44,7 @@ jobs:
 
   doc-counts:
     name: Doc counts in sync
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -60,7 +60,7 @@ jobs:
 
   rust-snippets:
     name: Rust doc snippets compile
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       # The docs live here; the wickra crate source is checked out alongside so
       # every runnable ```rust block is compiled against the real API. A doc
@@ -87,7 +87,7 @@ jobs:
 
   native-snippets:
     name: Python/Node doc snippets reference real names
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

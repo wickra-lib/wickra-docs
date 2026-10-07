@@ -26,7 +26,7 @@ permissions:
 jobs:
   sync:
     name: Pull the count and the released version
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     permissions:
       contents: write # commits the corrected values back to main
