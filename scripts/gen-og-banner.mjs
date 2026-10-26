@@ -1,7 +1,7 @@
 /*
  * Generate public/og-banner.webp from scripts/og-banner.svg, with the indicator
- * count taken from this site's own content (overview.md, which sync-about.yml
- * keeps current). Runs as a prebuild step, so the social-card banner is
+ * count taken from this site's own content (overview.md, which
+ * sync-from-wickra.yml keeps current). Runs as a prebuild step, so the social-card banner is
  * regenerated on every deploy and can never drift from the count — no committed
  * image, no manual step. The generated file is git-ignored.
  *
@@ -18,7 +18,8 @@ import sharp from 'sharp'
 const here = dirname(fileURLToPath(import.meta.url))
 const root = resolve(here, '..')
 
-// Count from the site's own content (kept in sync by sync-about.yml).
+// Count from the site's own content (overview.md: its first "N indicators" is the
+// core's, kept current by sync-from-wickra.yml).
 const content = readFileSync(resolve(root, 'overview.md'), 'utf-8')
 const m = content.match(/(\d+)\s+indicators/i)
 if (!m) {

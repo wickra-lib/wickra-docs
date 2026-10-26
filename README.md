@@ -28,12 +28,16 @@ Requires Node 22 (see `.nvmrc`).
 
 ## What is kept current by workflow
 
-- **The indicator count and the released version** — the headline count on the
-  landing page and in `overview.md`, the version table, the crate version in
+- **The indicator counts and the released version** — every count a page states
+  (the core's, and the backtest registry's where `Ecosystem.md` describes the
+  products that resolve through it), the version table, the crate version in
   `Quickstart-Rust.md` and the Maven snippet in `Quickstart-Java.md` — are pulled
-  hourly from [wickra](https://github.com/wickra-lib/wickra) by
-  `sync-from-wickra.yml` (the count is derived from the core's re-export block,
-  the version from its latest release).
+  hourly by `sync-from-wickra.yml`, from the latest releases of
+  [wickra](https://github.com/wickra-lib/wickra) and
+  [wickra-backtest](https://github.com/wickra-lib/wickra-backtest). The counts
+  are set by the org's one rule set,
+  [`scripts/sync-counts.mjs`](https://github.com/wickra-lib/.github/blob/main/scripts/sync-counts.mjs)
+  in wickra-lib/.github.
 - **The page-derived counts** — per-family indicator counts, the sidebar groups
   and "N deep-dive pages" — are owned by `scripts/sync-doc-counts.mjs`; CI fails
   when they disagree with the pages, and `node scripts/sync-doc-counts.mjs`
