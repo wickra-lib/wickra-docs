@@ -52,7 +52,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: wickra-lib/.github
-          ref: 18562d915e1a303e6a155c6a8a32aef14e2fcd17
+          ref: d683af6320d14973d311968842600b332b7d3e79
           path: .wickra-org
           sparse-checkout: scripts/sync-counts.mjs
           sparse-checkout-cone-mode: false
