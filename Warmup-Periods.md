@@ -390,6 +390,7 @@ Some risk metrics take a single `f64` (returns / equity), others take an
 | `ProfitFactor`           | `ProfitFactor::new(20)`                  | `period`     | 20     | 20th                     |
 | `GainLossRatio`          | `GainLossRatio::new(20)`                 | `period`     | 20     | 20th                     |
 | `RecoveryFactor`         | `RecoveryFactor::new()`                  | constant `1` | 1      | 1st                      |
+| `RunningDrawdown`        | `RunningDrawdown::new()`                 | constant `1` | 1      | 1st                      |
 | `KellyCriterion`         | `KellyCriterion::new(100)`               | `period`     | 100    | 100th                    |
 | `TreynorRatio`           | `TreynorRatio::new(50, 0.0)`             | `period`     | 50     | 50th                     |
 | `InformationRatio`       | `InformationRatio::new(50)`              | `period`     | 50     | 50th                     |

@@ -41,7 +41,7 @@ The twenty-four families:
 | 13 | [Ichimoku & Charts](#ichimoku--charts) | 7 | Japanese cloud chart and smoothed candles. |
 | 14 | [Candlestick Patterns](#candlestick-patterns) | 66 | Classical 1- / 2- / 3-bar candle patterns. |
 | 15 | [Market Profile](#market-profile) | 10 | Session value-area / opening-range / IB levels. |
-| 16 | [Risk / Performance](#risk--performance) | 28 | Risk-adjusted return, drawdown, and tail-risk metrics. |
+| 16 | [Risk / Performance](#risk--performance) | 29 | Risk-adjusted return, drawdown, and tail-risk metrics. |
 | 17 | [Microstructure](#microstructure) | 20 | Order-book, trade-flow, price-impact and footprint analytics. |
 | 18 | [Derivatives](#derivatives) | 17 | Funding, open-interest, positioning, flow and basis on a perp/futures feed. |
 | 19 | [Alt-Chart Bars](#alt-chart-bars) | 10 | Price-driven Renko / Kagi / Point & Figure bar builders. |
@@ -642,6 +642,7 @@ take `(asset, benchmark)` pairs.
 | `ProfitFactor` | `Σ positive / Σ \|negative\|` over window. | `f64` | `f64` | `[0, ∞)` (`Inf` if all-positive) | `period` | `period` | [Indicator-ProfitFactor](/Indicators/Indicator-ProfitFactor) |
 | `GainLossRatio` | `mean(wins) / mean(\|losses\|)`. | `f64` | `f64` | `[0, ∞)` | `period` | `period` | [Indicator-GainLossRatio](/Indicators/Indicator-GainLossRatio) |
 | `RecoveryFactor` | Cumulative `net_return / max_drawdown`. | `f64` (equity) | `f64` | unbounded; `0` if no DD | (no parameters) | `1` | [Indicator-RecoveryFactor](/Indicators/Indicator-RecoveryFactor) |
+| `RunningDrawdown` | Since-inception worst peak-to-trough decline, O(1) memory. | `f64` (equity) | `f64` | `[0, 1]` | (no parameters) | `1` | [Indicator-RunningDrawdown](/Indicators/Indicator-RunningDrawdown) |
 | `KellyCriterion` | Rolling Kelly fraction `winrate − (1−winrate)/payoff_ratio`. | `f64` | `f64` | unbounded; typically `(0, 1)` | `period` | `period` | [Indicator-KellyCriterion](/Indicators/Indicator-KellyCriterion) |
 | `TreynorRatio` | `(mean_asset − rf) / Beta`. | `(f64, f64)` | `f64` | unbounded | `(period, rf)` | `period` | [Indicator-TreynorRatio](/Indicators/Indicator-TreynorRatio) |
 | `InformationRatio` | `mean(active) / tracking_error`. | `(f64, f64)` | `f64` | unbounded | `period` | `period` | [Indicator-InformationRatio](/Indicators/Indicator-InformationRatio) |
