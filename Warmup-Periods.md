@@ -381,7 +381,7 @@ Some risk metrics take a single `f64` (returns / equity), others take an
 | `SortinoRatio`           | `SortinoRatio::new(20, 0.0)`             | `period`     | 20     | 20th                     |
 | `CalmarRatio`            | `CalmarRatio::new(20)`                   | `period`     | 20     | 20th                     |
 | `OmegaRatio`             | `OmegaRatio::new(20, 0.0)`               | `period`     | 20     | 20th                     |
-| `MaxDrawdown`            | `MaxDrawdown::new(252)`                  | constant `1` | 1      | 1st                      |
+| `MaxDrawdown`            | `MaxDrawdown::new(252)`                  | `period`     | 252    | 252nd                    |
 | `AverageDrawdown`        | `AverageDrawdown::new(20)`               | `period`     | 20     | 20th                     |
 | `DrawdownDuration`       | `DrawdownDuration::new()`                | constant `1` | 1      | 1st                      |
 | `PainIndex`              | `PainIndex::new(20)`                     | `period`     | 20     | 20th                     |
