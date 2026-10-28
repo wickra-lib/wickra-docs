@@ -1941,6 +1941,10 @@ export const sidebar = [
         "link": "/Indicators/Indicator-RecoveryFactor"
       },
       {
+        "text": "RunningDrawdown",
+        "link": "/Indicators/Indicator-RunningDrawdown"
+      },
+      {
         "text": "SharpeRatio",
         "link": "/Indicators/Indicator-SharpeRatio"
       },

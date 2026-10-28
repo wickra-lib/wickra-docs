@@ -104,7 +104,7 @@ Release notes and tagged builds:
 Start with [Indicators-Overview](Indicators-Overview) for the full
 twenty-four-family taxonomy with per-indicator formula / parameter / warmup
 tables. The links below are a quick alphabetical-by-family index into the
-514 deep-dive pages.
+515 deep-dive pages.
 
 ### Moving Averages (26)
 
@@ -347,7 +347,7 @@ tables. The links below are a quick alphabetical-by-family index into the
 [SinglePrints](/Indicators/Indicator-SinglePrints) · [TpoProfile](/Indicators/Indicator-TpoProfile) ·
 [ValueArea](/Indicators/Indicator-ValueArea) · [VolumeProfile](/Indicators/Indicator-VolumeProfile)
 
-### Risk / Performance (28)
+### Risk / Performance (29)
 
 [Alpha](/Indicators/Indicator-Alpha) · [AverageDrawdown](/Indicators/Indicator-AverageDrawdown) ·
 [BurkeRatio](/Indicators/Indicator-BurkeRatio) · [CalmarRatio](/Indicators/Indicator-CalmarRatio) ·
@@ -359,10 +359,11 @@ tables. The links below are a quick alphabetical-by-family index into the
 [MartinRatio](/Indicators/Indicator-MartinRatio) · [MaxDrawdown](/Indicators/Indicator-MaxDrawdown) ·
 [OmegaRatio](/Indicators/Indicator-OmegaRatio) · [PainIndex](/Indicators/Indicator-PainIndex) ·
 [ProfitFactor](/Indicators/Indicator-ProfitFactor) · [RecoveryFactor](/Indicators/Indicator-RecoveryFactor) ·
-[SharpeRatio](/Indicators/Indicator-SharpeRatio) · [SortinoRatio](/Indicators/Indicator-SortinoRatio) ·
-[SterlingRatio](/Indicators/Indicator-SterlingRatio) · [TailRatio](/Indicators/Indicator-TailRatio) ·
-[TreynorRatio](/Indicators/Indicator-TreynorRatio) · [UpsidePotentialRatio](/Indicators/Indicator-UpsidePotentialRatio) ·
-[ValueAtRisk](/Indicators/Indicator-ValueAtRisk) · [WinRate](/Indicators/Indicator-WinRate)
+[RunningDrawdown](/Indicators/Indicator-RunningDrawdown) · [SharpeRatio](/Indicators/Indicator-SharpeRatio) ·
+[SortinoRatio](/Indicators/Indicator-SortinoRatio) · [SterlingRatio](/Indicators/Indicator-SterlingRatio) ·
+[TailRatio](/Indicators/Indicator-TailRatio) · [TreynorRatio](/Indicators/Indicator-TreynorRatio) ·
+[UpsidePotentialRatio](/Indicators/Indicator-UpsidePotentialRatio) · [ValueAtRisk](/Indicators/Indicator-ValueAtRisk) ·
+[WinRate](/Indicators/Indicator-WinRate)
 
 ### Microstructure (20)
 
