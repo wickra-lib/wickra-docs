@@ -61,7 +61,7 @@ const structuredData = {
 export default defineConfig({
   title: 'Wickra',
   description:
-    'Streaming-first technical indicators. Native Rust, Python, Node.js, WASM + C ABI hub → C, C++, C#, Go, Java, R — 514 indicators, install-free. Same code for backtest and live tick.',
+    'Streaming-first technical indicators. Native Rust, Python, Node.js, WASM + C ABI hub → C, C++, C#, Go, Java, R — 515 indicators, install-free. Same code for backtest and live tick.',
   lang: 'en-US',
 
   // Served at the domain root (e.g. docs.wickra.org), so the base is '/'.
@@ -113,7 +113,7 @@ export default defineConfig({
       {
         property: 'og:description',
         content:
-          '514 streaming-first technical indicators. Rust core, Python / Node.js / WASM / C / C++ / C# / Go / Java / R bindings.',
+          '515 streaming-first technical indicators. Rust core, Python / Node.js / WASM / C / C++ / C# / Go / Java / R bindings.',
       },
     ],
     ['meta', { property: 'og:image', content: 'https://docs.wickra.org/og-banner.webp' }],

@@ -1,6 +1,6 @@
 # Quickstart: Rust
 
-> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
+> **Verified against the Rust reference.** Every one of Wickra's 515 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
 
 A five-minute tour of the Wickra Rust crate. By the end you will have run a
 batch SMA, fed an RSI tick by tick, and composed two indicators with `Chain`.
@@ -17,7 +17,7 @@ build. The `wickra` crate is a thin façade that re-exports everything from
 `wickra-core`; you can also depend on `wickra-core` directly if you want to
 skip the façade.
 
-The published crate is at version `2.0.0` on
+The published crate is at version `2.1.1` on
 [crates.io](https://crates.io/crates/wickra).
 
 ## The `Indicator` trait in 30 seconds

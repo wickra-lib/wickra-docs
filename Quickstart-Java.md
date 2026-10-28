@@ -1,6 +1,6 @@
 # Quickstart: Java
 
-> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
+> **Verified against the Rust reference.** Every one of Wickra's 515 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](FAQ#do-all-the-language-bindings-compute-the-same-values)).
 
 A five-minute tour of the Wickra Java binding — a language shim on the C ABI
 hub built on the Java Foreign Function & Memory API (Panama). By the end you
@@ -25,14 +25,14 @@ Maven:
 <dependency>
   <groupId>org.wickra</groupId>
   <artifactId>wickra</artifactId>
-  <version>2.0.0</version>
+  <version>2.1.1</version>
 </dependency>
 ```
 
 Gradle:
 
 ```kotlin
-implementation("org.wickra:wickra:2.0.0")
+implementation("org.wickra:wickra:2.1.1")
 ```
 
 ## The class shape

@@ -73,7 +73,7 @@ the install line and quick start for each language.
 
 ## Sites and demos
 
-- [**live.wickra.org**](https://live.wickra.org) — all 514 indicators over a real Binance feed, in the browser ([wickra-live](https://github.com/wickra-lib/wickra-live))
+- [**live.wickra.org**](https://live.wickra.org) — all 515 indicators over a real Binance feed, in the browser ([wickra-live](https://github.com/wickra-lib/wickra-live))
 - [**backtest-live.wickra.org**](https://backtest-live.wickra.org) — the backtester compiled to WebAssembly, an equity curve building bar by bar ([wickra-backtest-live](https://github.com/wickra-lib/wickra-backtest-live))
 - [**playground.wickra.org**](https://playground.wickra.org) — one StrategySpec side by side in Python, Rust, JS and Go ([wickra-playground](https://github.com/wickra-lib/wickra-playground))
 - [**wickra.org**](https://wickra.org) — the marketing site, with the in-browser demo and the benchmarks ([webpage](https://github.com/wickra-lib/webpage))
@@ -81,7 +81,7 @@ the install line and quick start for each language.
 
 ## What every repository shares
 
-- **One core, 514 indicators**, every one an O(1) state machine — the same numbers in every product.
+- **One core, 515 indicators**, every one an O(1) state machine — the same numbers in every product.
 - **Data, not code**: a strategy, a scan, a fingerprint, a proof is a JSON spec the Rust core executes, so the same spec runs unchanged from any of the ten languages and produces the same bytes.
 - **Identical across all 10 languages, proven**: a golden corpus per repository, replayed through every binding in CI.
 - **Zero third-party dependencies in every language**, `unsafe`-forbidden Rust cores, hash-locked CI, SHA-pinned actions, signed commits and build provenance on every release.

@@ -36,7 +36,7 @@ with streaming; use `batch_fast` when a backfill's speed matters more. See
 ## Do all the language bindings compute the same values?
 
 Yes — proven, not promised. The Rust core emits a shared golden fixture (a
-deterministic input series plus its reference output) for every one of the 514
+deterministic input series plus its reference output) for every one of the 515
 indicators, and **all 10 languages** — Rust, Python, Node.js, WASM, C, C++, C#,
 Go, Java and R — replay that input and are checked **bit-for-bit against the
 Rust reference in CI**. There is one implementation; every binding is verified

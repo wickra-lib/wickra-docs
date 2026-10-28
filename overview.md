@@ -11,12 +11,12 @@ Node.js, WASM, and Rust itself, plus a C ABI that any C-capable language
 (C, C++, C#, Go, Java, R) links against. The same `update` call you write inside
 a live trading loop also drives the historical backtest of that same
 strategy — there is no second code path that drifts behind the streaming one.
-There is also only one *implementation*: every one of the 514 indicators is
+There is also only one *implementation*: every one of the 515 indicators is
 replayed through all 10 languages and checked bit-for-bit against the Rust
 reference (golden fixtures, in CI), so the math is verifiably identical
 everywhere.
 
-The project ships 514 indicators across twenty-four families — moving averages,
+The project ships 515 indicators across twenty-four families — moving averages,
 momentum oscillators, trend & directional, price oscillators, volatility &
 bands, bands & channels, trailing stops, volume, price statistics, Ehlers /
 cycle (DSP), pivots & S/R, DeMark, Ichimoku & charts, candlestick patterns,
@@ -40,16 +40,16 @@ documentation site. The [Ecosystem](/Ecosystem) page lists them by layer.
 
 | Registry  | Package        | Version |
 |-----------|----------------|---------|
-| [crates.io](https://crates.io/crates/wickra) | `wickra` | 2.0.0 |
-| [crates.io](https://crates.io/crates/wickra-core) | `wickra-core` | 2.0.0 |
-| [crates.io](https://crates.io/crates/wickra-data) | `wickra-data` | 2.0.0 |
-| [PyPI](https://pypi.org/project/wickra/) | `wickra` | 2.0.0 |
-| [npm](https://www.npmjs.com/package/wickra) | `wickra` | 2.0.0 |
-| [npm](https://www.npmjs.com/package/wickra-wasm) | `wickra-wasm` | 2.0.0 |
-| [NuGet](https://www.nuget.org/packages/Wickra) | `Wickra` | 2.0.0 |
-| [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) | `org.wickra:wickra` | 2.0.0 |
-| [Go](https://pkg.go.dev/github.com/wickra-lib/wickra-go/v2) | `github.com/wickra-lib/wickra-go/v2` | 2.0.0 |
-| [r-universe](https://wickra-lib.r-universe.dev/wickra) | `wickra` | 2.0.0 |
+| [crates.io](https://crates.io/crates/wickra) | `wickra` | 2.1.1 |
+| [crates.io](https://crates.io/crates/wickra-core) | `wickra-core` | 2.1.1 |
+| [crates.io](https://crates.io/crates/wickra-data) | `wickra-data` | 2.1.1 |
+| [PyPI](https://pypi.org/project/wickra/) | `wickra` | 2.1.1 |
+| [npm](https://www.npmjs.com/package/wickra) | `wickra` | 2.1.1 |
+| [npm](https://www.npmjs.com/package/wickra-wasm) | `wickra-wasm` | 2.1.1 |
+| [NuGet](https://www.nuget.org/packages/Wickra) | `Wickra` | 2.1.1 |
+| [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) | `org.wickra:wickra` | 2.1.1 |
+| [Go](https://pkg.go.dev/github.com/wickra-lib/wickra-go/v2) | `github.com/wickra-lib/wickra-go/v2` | 2.1.1 |
+| [r-universe](https://wickra-lib.r-universe.dev/wickra) | `wickra` | 2.1.1 |
 
 Release notes and tagged builds:
 <https://github.com/wickra-lib/wickra/releases>.
