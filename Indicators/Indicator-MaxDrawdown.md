@@ -4,7 +4,7 @@
 > Operates on an equity-curve sample (or any non-negative value
 > series). Output is the magnitude of the worst drawdown as a
 > non-negative fraction (`0.20` = 20% drop from peak). Amortised
-> O(1) per update via a monotonically-decreasing deque.
+> O(1) per update.
 
 ## Quick reference
 
@@ -13,24 +13,36 @@
 | Family              | Risk / Performance                                                   |
 | Input type          | `f64` — one equity-curve sample per update                           |
 | Output type         | `f64`                                                                |
-| Output range        | `[0, 1]` (fraction of peak)                                          |
+| Output range        | `[0, 1]` (fraction of peak) for non-negative equity                  |
 | Default parameters  | `period` required                                                    |
-| Warmup period       | `1` (running peak emits from first input)                            |
+| Warmup period       | `period` (first value once the window is full)                       |
 | Interpretation      | Worst drawdown over the rolling window                                |
 
 ## Formula
 
 ```
-peak_t      = running max of equity over the trailing period bars
+peak_t      = running max of equity from the oldest bar in the window up to t
 drawdown_t  = (equity_t - peak_t) / peak_t                  (negative)
 MaxDrawdown = -min(drawdown_t over window)                  (positive magnitude)
 ```
 
-A monotonically rising equity curve has MDD = 0. Setting `period`
-≥ the number of bars you will ever feed makes the metric
-effectively *cumulative* — the running peak is never dropped from
-the window. See
+Only a positive peak counts; while the running peak is zero or
+negative, a bar adds no drawdown. A monotonically rising equity
+curve has MDD = 0. Setting `period` ≥ the number of bars you will
+ever feed makes the metric effectively *cumulative* — the running
+peak is never dropped from the window. See
 `crates/wickra-core/src/indicators/max_drawdown.rs`.
+
+**Cost.** Each update is amortised O(1), whatever the `period`.
+The running peaks split the window into segments, a peak followed
+by the bars below it, and a segment's deepest drawdown is
+`(peak - low) / peak`. The window is held as two halves: the older
+one is rebuilt from the newer one every `period` updates, storing
+for each bar the peak and worst drawdown from it to the end of the
+half, and the newer one keeps its own running peaks with the low of
+each segment. The result is bit for bit what rescanning the window
+gives (unit tests `matches_rescan_bit_for_bit` and
+`matches_rescan_on_long_series`).
 
 ## Parameters
 
@@ -45,18 +57,27 @@ each value the MDD over the trailing window ending at that bar.
 
 ## Warmup
 
-`warmup_period() == 1`. Emits from the first input (MDD = 0).
+`warmup_period() == period`. The first value comes with the
+`period`-th input, once the window is full; before that `update`
+returns `None` (Python `None`, Node `null`, `NaN` in `batch`). Unit
+tests `accessors_and_metadata` and `reference_drawdown`.
 
 ## Edge cases
 
-- **Monotonically rising input.** MDD = 0 throughout.
+- **Monotonically rising input.** MDD = 0 throughout (test
+  `pure_uptrend_yields_zero`).
+- **Flat input.** MDD = 0 (test `constant_series_yields_zero`).
 - **Recovery to new peak.** Once equity exceeds the prior peak,
   the running peak updates and subsequent drawdowns are measured
   from the new peak.
-- **Negative equity.** Possible with leveraged products; this
-  indicator assumes positive equity for the fractional drawdown
-  to be meaningful.
-- **Reset.** Clears the rolling deque.
+- **Non-positive peak.** While the running peak is zero or
+  negative no drawdown is measured, so an all-zero window gives 0
+  (test `non_positive_peak_yields_zero`). A dip below zero after a
+  positive peak gives a value above 1.
+- **Non-finite input.** `NaN` and `±∞` return `None` and leave the
+  window untouched (test `ignores_non_finite_input`).
+- **Reset.** Clears the window; the next value comes after another
+  `period` inputs (test `reset_clears_state`).
 
 ## Examples
 
@@ -101,8 +122,10 @@ use wickra::{Indicator, MaxDrawdown};
 let mut mdd = MaxDrawdown::new(252).unwrap();
 let equity_stream: Vec<f64> = Vec::new(); // your equity-curve feed
 for equity in equity_stream {
-    let dd = mdd.update(equity).unwrap();
-    if dd > 0.10 { /* warning: > 10% drawdown */ }
+    // `None` until 252 values have arrived.
+    if let Some(dd) = mdd.update(equity) {
+        if dd > 0.10 { /* warning: > 10% drawdown */ }
+    }
 }
 ```
 

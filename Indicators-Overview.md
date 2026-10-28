@@ -633,7 +633,7 @@ take `(asset, benchmark)` pairs.
 | `SortinoRatio` | Sharpe with downside-only deviation. | `f64` | `f64` | unbounded | `(period, mar)` | `period` | [Indicator-SortinoRatio](/Indicators/Indicator-SortinoRatio) |
 | `CalmarRatio` | `mean(returns) / max_drawdown(equity)` from window. | `f64` | `f64` | unbounded; `0` if no DD | `period` | `period` | [Indicator-CalmarRatio](/Indicators/Indicator-CalmarRatio) |
 | `OmegaRatio` | `Σ gains-above-threshold / Σ losses-below`. | `f64` | `f64` | `[0, ∞)` (`Inf` if all-positive) | `(period, threshold)` | `period` | [Indicator-OmegaRatio](/Indicators/Indicator-OmegaRatio) |
-| `MaxDrawdown` | Rolling worst peak-to-trough decline. | `f64` (equity) | `f64` | `[0, 1]` | `period` | `1` | [Indicator-MaxDrawdown](/Indicators/Indicator-MaxDrawdown) |
+| `MaxDrawdown` | Rolling worst peak-to-trough decline. | `f64` (equity) | `f64` | `[0, 1]` | `period` | `period` | [Indicator-MaxDrawdown](/Indicators/Indicator-MaxDrawdown) |
 | `AverageDrawdown` | Rolling mean drawdown depth (same as PainIndex). | `f64` (equity) | `f64` | `[0, 1]` | `period` | `period` | [Indicator-AverageDrawdown](/Indicators/Indicator-AverageDrawdown) |
 | `DrawdownDuration` | Bars elapsed since all-time peak. | `f64` (equity) | `u32` | `[0, ∞)` | (no parameters) | `1` | [Indicator-DrawdownDuration](/Indicators/Indicator-DrawdownDuration) |
 | `PainIndex` | Mean drawdown depth (Becker). | `f64` (equity) | `f64` | `[0, 1]` | `period` | `period` | [Indicator-PainIndex](/Indicators/Indicator-PainIndex) |
