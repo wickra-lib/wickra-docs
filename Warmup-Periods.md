@@ -287,7 +287,7 @@ cycle-period and phase studies.
 
 | Indicator              | Constructor                             | Formula                              | warmup                   | Inputs at first emission |
 |------------------------|-----------------------------------------|--------------------------------------|--------------------------|--------------------------|
-| `Ichimoku`             | `Ichimoku::classic()` (`9, 26, 52, 26`) | `senkou_b_period + displacement - 1` | 77                       | 77th                     |
+| `Ichimoku`             | `Ichimoku::classic()` (`9, 26, 52, 26`) | constant `1` (row complete after `senkou_b_period + displacement - 1`) | 1 (complete: 77) | 1st (complete: 77th) |
 | `HeikinAshi`           | `HeikinAshi::new()`                     | constant `1`                         | 1                        | 1st                      |
 | `CandleVolume`         | `CandleVolume::new(14)`                 | `period`                             | 14                       | 14th                     |
 | `Equivolume`           | `Equivolume::new(14)`                   | `period`                             | 14                       | 14th                     |

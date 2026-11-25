@@ -519,7 +519,7 @@ Japanese cloud charting and candle-smoothing transforms.
 
 | Indicator | One-liner | Input | Output | Range | Defaults | Warmup | Deep dive |
 |-----------|-----------|-------|--------|-------|----------|--------|-----------|
-| `Ichimoku` | Five-line cloud system (Tenkan, Kijun, Senkou A/B, Chikou). | `Candle` | 5 `Option<f64>` fields | unbounded (price scale) | `(9, 26, 52, 26)` | `senkou_b + displacement - 1` (77 at defaults) | [Indicator-Ichimoku](/Indicators/Indicator-Ichimoku) |
+| `Ichimoku` | Five-line cloud system (Tenkan, Kijun, Senkou A/B, Chikou). | `Candle` | 5 `Option<f64>` fields | unbounded (price scale) | `(9, 26, 52, 26)` | `1`; row complete after `senkou_b + displacement - 1` (77 at defaults) | [Indicator-Ichimoku](/Indicators/Indicator-Ichimoku) |
 | `HeikinAshi` | "Average bar" candle-smoothing transform. | `Candle` | `(open, high, low, close)` | unbounded (price scale) | (no parameters) | `1` | [Indicator-HeikinAshi](/Indicators/Indicator-HeikinAshi) |
 | `CandleVolume` | The candlestick analogue of Equivolume — each bar's signed body paired with a width proportional to its volume relative to the recent average. | `Candle` | `CandleVolumeOutput { body, width }` | `body` signed (price units); `width` ≥ 0 (1.0 = average) | `(period = 14)` (Python) | `period` | [Indicator-CandleVolume](/Indicators/Indicator-CandleVolume) |
 | `Equivolume` | Richard Arms' Equivolume chart as numbers — each bar is a box whose height is its price range and whose width is its volume relative to the recent average. | `Candle` | `EquivolumeOutput { height, width }` | `height` ≥ 0 (price units); `width` ≥ 0 (1.0 = average volume) | `(period = 14)` (Python) | `period` | [Indicator-Equivolume](/Indicators/Indicator-Equivolume) |
