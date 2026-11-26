@@ -16,7 +16,7 @@
 | Output type         | `IchimokuOutput { tenkan, kijun, senkou_a, senkou_b, chikou: Option<f64> }`                                 |
 | Output range        | unbounded (price-units)                                                                                     |
 | Default parameters  | `tenkan = 9`, `kijun = 26`, `senkou_b = 52`, `displacement = 26`                                            |
-| Warmup period       | `senkou_b_period + displacement - 1` (77 at defaults)                                                       |
+| Warmup period       | `1` (first row); every field `Some` after `senkou_b_period + displacement - 1` bars (77 at defaults)        |
 | Interpretation      | Multi-line trend / support / resistance system; price above cloud = bull, below = bear                       |
 
 ## Formula
@@ -28,17 +28,25 @@ kijun_t    = (max(high, kijun_period)  + min(low, kijun_period))  / 2
 leading_a_t = (tenkan_t + kijun_t) / 2
 leading_b_t = (max(high, senkou_b_period) + min(low, senkou_b_period)) / 2
 
-// What's visible at step t:
-senkou_a_visible_t = leading_a_{t - displacement}
-senkou_b_visible_t = leading_b_{t - displacement}
-chikou_visible_t   = close_{t - displacement}
+// What's visible at step t (displacement counted inclusively):
+senkou_a_visible_t = leading_a_{t - (displacement - 1)}
+senkou_b_visible_t = leading_b_{t - (displacement - 1)}
+chikou_visible_t   = close_{t - (displacement - 1)}
 ```
 
-The two Senkou spans are computed at time `t - displacement` and
-displayed at time `t` — the indicator emits the *visible* values
-(i.e. lagged), which matches every TA library that processes
-candles in chronological order. See
-`crates/wickra-core/src/indicators/ichimoku.rs`.
+The displacement counts the current bar as bar 1, the way the
+built-in Ichimoku on TradingView does (it plots with
+`offset = displacement - 1`). The spans therefore move
+`displacement - 1` bars: 25 at the classic setting of 26, and none
+at all for `displacement = 1`.
+
+The two Senkou spans are computed at time `t - (displacement - 1)`
+and displayed at time `t` — the indicator emits the *visible*
+values (i.e. lagged), so it can run over candles in chronological
+order. See `crates/wickra-core/src/indicators/ichimoku.rs`; the
+unit tests `senkou_spans_shift_forward_displacement_minus_one_bars`
+and `chikou_is_close_displacement_minus_one_bars_back` pin the
+shift.
 
 ## Parameters
 
@@ -47,7 +55,7 @@ candles in chronological order. See
 | `tenkan_period`   | `usize` | `9`     | `> 0`      | Conversion-line midpoint window. |
 | `kijun_period`    | `usize` | `26`    | `> 0`      | Base-line midpoint window. |
 | `senkou_b_period` | `usize` | `52`    | `> 0`      | Leading Span B midpoint window. |
-| `displacement`    | `usize` | `26`    | `> 0`      | Forward shift for Senkou A/B and backward shift for Chikou. |
+| `displacement`    | `usize` | `26`    | `> 0`      | Forward shift for Senkou A/B and backward shift for Chikou, counted inclusively (moves `displacement - 1` bars). |
 
 `Ichimoku::new` returns `Error::PeriodZero` for any zero argument.
 `Ichimoku::classic()` returns the `(9, 26, 52, 26)` factory.
@@ -68,18 +76,21 @@ candles in chronological order. See
 
 ## Warmup
 
-`warmup_period() == senkou_b_period + displacement − 1`. At
-defaults that's `52 + 26 − 1 = 77` — Senkou B needs its own 52-bar
-midpoint **and** a 26-bar history of those midpoints to displace
-from. Intermediate fields fill earlier:
+`warmup_period() == 1`: a row is emitted from the first bar, with
+each field `None` until its own history allows it (the unit test
+`accessors_and_metadata` pins the `1`). The row is *complete* —
+every field `Some` — after `senkou_b_period + displacement − 1`
+bars. At defaults that's `52 + 26 − 1 = 77`: Senkou B needs its own
+52-bar midpoint, which is then shifted forward 25 bars. The fields
+fill in at:
 
-- `tenkan`: `tenkan_period` bars.
+- `tenkan`: `tenkan_period` bars (test `tenkan_emits_at_period`).
 - `kijun`: `kijun_period` bars.
-- `senkou_a` (visible): requires `kijun_period + displacement − 1`
-  bars (`51` at defaults).
-- `senkou_b` (visible): requires `senkou_b_period + displacement
-  − 1` bars (`77`).
-- `chikou`: `displacement + 1` bars.
+- `senkou_a` (visible): `kijun_period + displacement − 1` bars
+  (`51` at defaults).
+- `senkou_b` (visible): `senkou_b_period + displacement − 1` bars
+  (`77`).
+- `chikou`: `displacement` bars (`26`).
 
 ## Edge cases
 
@@ -174,9 +185,9 @@ for bar in candle_stream {
   = bullish confirmation.
 - **Cloud twist (Senkou A crosses B).** Foreshadows a future
   trend shift. Because Senkou spans are displaced forward by
-  `displacement` bars in their *target* representation, a visible
-  twist today happened in the underlying data `displacement` bars
-  ago — read carefully.
+  `displacement - 1` bars in their *target* representation, a
+  visible twist today happened in the underlying data
+  `displacement - 1` bars ago (25 at defaults) — read carefully.
 
 ## Common pitfalls
 
@@ -184,6 +195,10 @@ for bar in candle_stream {
   displaced forward (shown ahead of the current bar);
   Chikou backward (shown behind). Wickra emits the values that
   are *visible at the current bar* — i.e. the lagged versions.
+- **Off-by-one against other libraries.** Wickra counts the
+  displacement inclusively (shift = `displacement - 1`), like
+  TradingView. A library that shifts by the full `displacement`
+  lines up with Wickra at `displacement + 1`.
 - **Reading partial output.** Tenkan can be `Some` while Senkou B
   is `None` — each field is independent. Downstream code must
   check each `Option` separately.
