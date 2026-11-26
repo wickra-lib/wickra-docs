@@ -68,9 +68,13 @@ RSI values, so the first non-`None` output lands on input
   example a constant price (RSI pinned at `50`) or a pure trend (RSI
   pinned at `100`) — the range is zero and StochRSI reports the neutral
   `50.0` (`flat_rsi_window_yields_50` and `pure_uptrend_yields_50` pin
-  this).
+  this). A saturated RSI is exactly `100` on every bar, so an uptrend with
+  uneven steps also reads exactly `50`, not `0` or `100` from one-ulp noise
+  in the range (`irregular_uptrend_yields_exactly_50`).
 - **Bounds.** The output is always within `[0, 100]`
-  (`output_stays_within_0_100` pins this).
+  (`output_stays_within_0_100` pins this). The scaling divides before it
+  multiplies, `100 · ((rsi − min) / range)`, so a bar at the window maximum
+  reads exactly `100`, never one ulp above (`window_maximum_reads_exactly_100`).
 - **NaN / infinity inputs.** Non-finite inputs are silently dropped; the
   RSI and the window are not advanced.
 - **Reset.** `stoch_rsi.reset()` clears the inner RSI and the window.

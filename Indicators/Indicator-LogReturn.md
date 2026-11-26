@@ -62,11 +62,12 @@ current price plus the `period`-bar-ago price. The unit test
   test `constant_series_yields_zero` pins this.
 - **Additivity.** The 2-bar log return equals the sum of the two 1-bar log
   returns; the unit test `additive_across_time` pins it.
-- **Non-finite inputs.** NaN / ±inf are ignored: state is untouched and the last
-  value is returned. The unit test `ignores_non_finite_input` pins this.
+- **Non-finite inputs.** NaN / ±inf are ignored: state is untouched and
+  `update` returns `None` (`NaN` / `null` in the bindings) for that tick. The
+  unit test `ignores_non_finite_input` pins this.
 - **Non-positive prices.** `ln` is undefined for `price <= 0`, so such ticks are
-  skipped (the previous valid price is kept as the reference). The unit test
-  `skips_non_positive_prices` pins this.
+  skipped the same way: `update` returns `None` and the previous valid price is
+  kept as the reference. The unit test `skips_non_positive_prices` pins this.
 - **Reset.** `reset()` clears the window; the next `update` restarts warmup.
 
 ## Examples

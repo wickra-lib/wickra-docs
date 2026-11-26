@@ -34,9 +34,11 @@ RS_t  = avg_gain_t / avg_loss_t
 RSI_t = 100 − 100 / (1 + RS_t)
 ```
 
-When `avg_loss_t == 0` and `avg_gain_t > 0`, RSI is `100` directly; when both
-are zero (a perfectly flat series) the implementation returns the standard
-`50` convention.
+The implementation evaluates the same value as `100 · (avg_gain / (avg_gain +
+avg_loss))`, one division instead of two. Dividing before scaling keeps the
+saturated case exact: when `avg_loss_t == 0` and `avg_gain_t > 0` the quotient
+is exactly `1`, so RSI is exactly `100`. When both are zero (a perfectly flat
+series) the implementation returns the standard `50` convention.
 
 ## Parameters
 
@@ -81,12 +83,15 @@ the `(period + 1)`-th call returns the first `Some(value)`.
   returns `50.0` by convention (see `Rsi::rsi_from_avgs`). The unit test
   `flat_series_yields_rsi_50` pins this behaviour.
 - **Pure uptrend / pure downtrend.** `avg_loss == 0` with `avg_gain > 0`
-  short-circuits to `100`; the mirror case returns `0`. Tests
-  `pure_uptrend_yields_rsi_100` and `pure_downtrend_yields_rsi_0` cover
-  this.
-- **Non-finite input.** `update()` returns the previously emitted value
-  (or `None` if no value has been emitted yet) when the input is `NaN` or
-  infinite — the internal state is *not* advanced.
+  gives exactly `100` (not `100.00000000000001`), whatever the step sizes;
+  the mirror case returns `0`. Tests `pure_uptrend_yields_rsi_100`,
+  `pure_downtrend_yields_rsi_0`, `saturated_average_gain_is_exactly_100` and
+  `uptrend_rsi_is_exactly_100_on_every_path` cover this, the last on the
+  streaming, batch and `batch_fast` paths alike.
+- **Non-finite input.** `update()` returns `None` (`NaN` / `null` in the
+  bindings) when the input is `NaN` or infinite — the internal state is
+  *not* advanced, and the next finite price continues from the last valid
+  one.
 - **Reset.** `reset()` returns the indicator to the freshly-constructed
   state: `prev_close`, both seed buffers, both averages, and `last_value`
   are cleared.

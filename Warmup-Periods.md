@@ -174,7 +174,7 @@ ready" to "ready" together — there are no rows that have a `signal` but no
 | `LinRegChannel`   | `LinRegChannel::new(20, 2.0)`        | `period`                                 | 20                               | 20th                     | `upper`, `middle`, `lower`                             |
 | `StandardErrorBands` | `StandardErrorBands::new(21, 2.0)` | `period`                                 | 21                               | 21st                     | `upper`, `middle`, `lower`                             |
 | `DoubleBollinger` | `DoubleBollinger::new(20, 1.0, 2.0)` | `period`                                 | 20                               | 20th                     | `upper_outer`, `upper_inner`, `middle`, `lower_inner`, `lower_outer` |
-| `TtmSqueeze`      | `TtmSqueeze::new(20, 2.0, 1.5)`      | `period`                                 | 20                               | 20th                     | `squeeze`, `momentum`                                  |
+| `TtmSqueeze`      | `TtmSqueeze::new(20, 2.0, 1.5)`      | `2·period − 1`                           | 39                               | 39th                     | `squeeze`, `momentum`                                  |
 | `FractalChaosBands` | `FractalChaosBands::new(2)`         | `2k + 1` + first fractal of each kind    | ≥ 5                              | first bar with both fractals confirmed | `upper`, `lower`                          |
 | `VwapStdDevBands` | `VwapStdDevBands::new(2.0)`          | first bar with non-zero volume           | 1                                | 1st                      | `upper`, `middle`, `lower`, `stddev`                   |
 | `Rwi`             | `Rwi::new(14)`                       | `period`                                 | 14                               | 14th                     | `high`, `low`                                          |
@@ -287,7 +287,7 @@ cycle-period and phase studies.
 
 | Indicator              | Constructor                             | Formula                              | warmup                   | Inputs at first emission |
 |------------------------|-----------------------------------------|--------------------------------------|--------------------------|--------------------------|
-| `Ichimoku`             | `Ichimoku::classic()` (`9, 26, 52, 26`) | `senkou_b_period + displacement - 1` | 77                       | 77th                     |
+| `Ichimoku`             | `Ichimoku::classic()` (`9, 26, 52, 26`) | constant `1` (row complete after `senkou_b_period + displacement - 1`) | 1 (complete: 77) | 1st (complete: 77th) |
 | `HeikinAshi`           | `HeikinAshi::new()`                     | constant `1`                         | 1                        | 1st                      |
 | `CandleVolume`         | `CandleVolume::new(14)`                 | `period`                             | 14                       | 14th                     |
 | `Equivolume`           | `Equivolume::new(14)`                   | `period`                             | 14                       | 14th                     |

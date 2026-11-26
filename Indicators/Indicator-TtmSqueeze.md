@@ -13,7 +13,7 @@
 | Output type | `TtmSqueezeOutput { squeeze, momentum }` |
 | Output range | `squeeze ∈ {0.0, 1.0}`; `momentum` unbounded |
 | Default parameters | `period = 20`, `bb_mult = 2.0`, `kc_mult = 1.5` |
-| Warmup period | `period` |
+| Warmup period | `2 · period − 1` (39 at `period = 20`) |
 | Interpretation | Squeeze releases (`squeeze` flips from `1.0` to `0.0`) signal a breakout; trade in the direction of `sign(momentum)`. |
 
 ## Formula
@@ -23,10 +23,17 @@ squeeze  = 1.0 if BollingerBands(period, bb_mult)
                ⊂ KeltnerChannels-like(SMA(period), ATR(period), kc_mult)
            else 0.0
 
-hl_mid   = (max(high, period) + min(low, period)) / 2
-detrend  = close − (hl_mid + SMA(close, period)) / 2
-momentum = LinearRegression(detrend, period)        // endpoint
+hl_mid_t   = (max(high, period) + min(low, period)) / 2      // at bar t
+detrend_t  = close_t − (hl_mid_t + SMA(close, period)_t) / 2
+momentum_t = LinearRegression(detrend, period)_t           // endpoint
 ```
+
+Every bar's detrended close is measured against that bar's *own*
+baseline, and the regression runs over the last `period` of those values —
+the common `linreg(close − avg(avg(highest(high, n), lowest(low, n)),
+sma(close, n)), n, 0)`. Wickra 2.1 and earlier subtracted the *current*
+bar's baseline from the whole window instead (#508); see the warmup
+change below.
 
 The "Keltner-like" envelope here uses an *SMA* centerline (not the EMA
 of typical price that [Keltner](/Indicators/Indicator-Keltner) uses) plus an ATR
@@ -38,9 +45,9 @@ rails sit inside the corresponding Keltner-like rails.
 
 | Name      | Type    | Default | Constraint    | Source |
 |-----------|---------|---------|---------------|--------|
-| `period`  | `usize` | `20`    | `>= 2`        | `TtmSqueeze::new` (`ttm_squeeze.rs:85`) |
-| `bb_mult` | `f64`   | `2.0`   | finite, `> 0` | `ttm_squeeze.rs:91` |
-| `kc_mult` | `f64`   | `1.5`   | finite, `> 0` | `ttm_squeeze.rs:91` |
+| `period`  | `usize` | `20`    | `>= 2`        | `TtmSqueeze::new` (`ttm_squeeze.rs:93`) |
+| `bb_mult` | `f64`   | `2.0`   | finite, `> 0` | `ttm_squeeze.rs:104` |
+| `kc_mult` | `f64`   | `1.5`   | finite, `> 0` | `ttm_squeeze.rs:104` |
 
 `period < 2` returns [`Error::InvalidPeriod`] (the momentum regression needs
 at least 2 points); a non-finite or non-positive multiplier returns
@@ -67,11 +74,17 @@ const _: fn(&mut TtmSqueeze, Candle) -> Option<TtmSqueezeOutput> = <TtmSqueeze a
 
 ## Warmup
 
-`warmup_period()` returns `period`. The three sub-indicators (Bollinger, SMA
-of close, ATR) are fed unconditionally so they warm up in lock-step, and
-`update` emits once all three are ready — candle `period` (index
-`period − 1`). Pinned by `warmup_returns_none` (period 20: candles 1–19
-return `None`, candle 20 emits).
+`warmup_period()` returns `2 · period − 1`. The three sub-indicators
+(Bollinger, SMA of close, ATR) are fed unconditionally so they warm up in
+lock-step and are ready on candle `period`; that is the first bar with a
+baseline, so the first detrended close. The regression then needs `period`
+detrended closes, so `update` first emits on candle `2 · period − 1` (index
+`2 · period − 2`). Pinned by `warmup_returns_none` (period 20: candles 1–38
+return `None` and `is_ready()` stays `false`, candle 39 emits).
+
+Before 2.2 the warmup was `period`; code that sized buffers or skipped rows
+from `warmup_period()` adapts by itself, code that hard-coded `period` does
+not.
 
 ## Edge cases
 
@@ -80,8 +93,12 @@ return `None`, candle 20 emits).
   `momentum == 0` (test `flat_market_has_zero_momentum`).
 - **Binary flag.** `squeeze` is always exactly `0.0` or `1.0` — never a
   fraction (test `squeeze_is_binary`).
+- **Per-bar baseline.** `momentum` matches an independent from-scratch
+  computation of every bar's own detrended close within `1e-9`, on a
+  300-candle path where the old current-baseline form differs by more than
+  `1e-3` (test `momentum_matches_per_bar_detrend_reference`).
 - **Reset.** `reset()` resets all three sub-indicators and clears the
-  rolling high/low/close windows.
+  rolling high/low windows and the detrended-close window.
 
 ## Examples
 
